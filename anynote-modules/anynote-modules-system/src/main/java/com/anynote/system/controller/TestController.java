@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 称霸幼儿园
  */
 @RestController
-@RequestMapping("/api/system")
+@RequestMapping("/")
 public class TestController {
 
     @GetMapping("hello")

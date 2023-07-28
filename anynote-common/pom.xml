@@ -13,6 +13,7 @@
         <module>anynote-common-security</module>
         <module>anynote-common-redis</module>
         <module>anynote-common-core</module>
+        <module>anynote-common-swagger</module>
     </modules>
 
 

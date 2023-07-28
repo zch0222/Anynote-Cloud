@@ -1,0 +1,3 @@
+com.anynote.common.swagger.config.SwaggerAutoConfiguration
+com.anynote.common.swagger.config.SwaggerWebConfiguration
+com.anynote.common.swagger.config.SwaggerBeanPostProcessor

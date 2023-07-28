@@ -18,6 +18,8 @@
         <module>anynote-common</module>
         <module>anynote-modules</module>
         <module>anynote-gateway</module>
+        <module>anynote-auth</module>
+        <module>anynote-api</module>
     </modules>
     <properties>
         <anynote.version>0.0.1-SNAPSHOT</anynote.version>
@@ -41,6 +43,12 @@
     <!--            <groupId>org.springframework.boot</groupId>-->
     <!--            <artifactId>spring-boot-starter-web</artifactId>-->
     <!--        </dependency>-->
+
+            <dependency>
+                <groupId>com.anynote</groupId>
+                <artifactId>anynote-common-swagger</artifactId>
+                <version>${anynote.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.anynote</groupId>
