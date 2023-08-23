@@ -20,11 +20,11 @@ spring:
     nacos:
       discovery:
         # 服务注册地址
-        server-addr: 178.253.53.100:8848
+        server-addr: 111.229.158.174:8848
         namespace: 0587fa28-1301-43db-a7a1-599c00fc3f70
       config:
         # 配置中心地址
-        server-addr: 178.253.53.100:8848
+        server-addr: 111.229.158.174:8848
         # 配置文件格式
         file-extension: yml
         namespace: 0587fa28-1301-43db-a7a1-599c00fc3f70

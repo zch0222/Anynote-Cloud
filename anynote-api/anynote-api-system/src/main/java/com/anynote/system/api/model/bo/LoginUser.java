@@ -1,6 +1,6 @@
-package com.anynote.system.api.model;
+package com.anynote.system.api.model.bo;
 
-import com.anynote.system.api.demain.SysUser;
+import com.anynote.system.api.model.po.SysUser;
 import lombok.Data;
 import java.util.Set;
 

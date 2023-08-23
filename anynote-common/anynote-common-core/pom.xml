@@ -26,11 +26,11 @@
             <artifactId>fastjson2</artifactId>
         </dependency>
 
-        <!-- Jwt -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; Jwt &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.jsonwebtoken</groupId>-->
+<!--            <artifactId>jjwt</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Commons Io -->
         <dependency>
