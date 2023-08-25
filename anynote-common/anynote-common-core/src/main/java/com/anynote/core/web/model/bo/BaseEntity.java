@@ -1,4 +1,5 @@
-package com.anynote.core.web.domain;
+package com.anynote.core.web.model.bo;
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

@@ -9,7 +9,11 @@ public enum ResCode {
     SUCCESS("00000", "成功", "操作成功"),
     USER_ERROR("A0001", "用户端错误", "操作错误"),
     USER_REGISTER_ERROR("A0100", "用户注册错误", "注册失败"),
-    USER_AUTH_ERROR("A0300", "访问权限异常", "访问权限异常")
+
+    AUTH_ERROR("A0300", "访问权限异常", "访问权限异常"),
+    TOKEN_EXPIRED("A0311", "授权已过期", "授权已过期"),
+
+    BUSINESS_ERROR("B0001", "系统执行出错 ", "系统执行出错")
     ;
 
     /**

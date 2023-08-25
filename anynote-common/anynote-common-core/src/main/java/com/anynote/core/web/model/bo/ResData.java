@@ -1,4 +1,4 @@
-package com.anynote.core.web.domain;
+package com.anynote.core.web.model.bo;
 
 import com.anynote.core.web.enums.ResCode;
 import lombok.Data;
@@ -50,8 +50,18 @@ public class ResData<T> implements Serializable {
         return resData;
     }
 
+    public static <K> ResData<K> error(ResCode resCode) {
+        ResData<K> resData = new ResData<>(resCode.getCode(), resCode.getMsg(), null);
+        return resData;
+    }
+
     public static <K> ResData<K> error(ResCode resCode, String msg, K data) {
         ResData<K> resData = new ResData<>(resCode.getCode(), msg, data);
+        return resData;
+    }
+
+    public static <K> ResData<K> error(ResCode resCode, String msg) {
+        ResData<K> resData = new ResData<>(resCode.getCode(), msg, null);
         return resData;
     }
 

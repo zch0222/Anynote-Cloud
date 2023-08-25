@@ -55,4 +55,9 @@ public class LoginUser implements Serializable {
      */
     private SysUser sysUser;
 
+    /**
+     * 长期有效
+     */
+    private boolean longTerm;
+
 }

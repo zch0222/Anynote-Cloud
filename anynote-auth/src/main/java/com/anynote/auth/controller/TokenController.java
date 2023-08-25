@@ -1,6 +1,6 @@
 package com.anynote.auth.controller;
 
-import com.anynote.core.web.domain.ResData;
+import com.anynote.core.web.model.bo.ResData;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

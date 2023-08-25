@@ -1,6 +1,6 @@
 package com.anynote.system.api.model.po;
 
-import com.anynote.core.web.domain.BaseEntity;
+import com.anynote.core.web.model.bo.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
