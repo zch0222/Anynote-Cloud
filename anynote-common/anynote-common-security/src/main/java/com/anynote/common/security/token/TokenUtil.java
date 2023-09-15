@@ -79,8 +79,8 @@ public class TokenUtil {
         }
 
         Token token = createToken(loginUser);
-        redisService.deleteObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix())
-
+        redisService.deleteObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix(tokenLoginUser.getUsername()) + oldRefreshToken);
+        return token;
     }
 
 

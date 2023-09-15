@@ -12,6 +12,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-system</artifactId>
+        </dependency>
+
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
