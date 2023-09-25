@@ -1,11 +1,13 @@
 package com.anynote.system.api.model.po;
 
 import com.anynote.core.web.model.bo.BaseEntity;
+import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象
@@ -24,13 +26,11 @@ public class SysUser extends BaseEntity {
     /**
      * 用户名
      */
-    @TableField("user_name")
     private String username;
 
     /**
      * 昵称
      */
-    @TableField("nick_name")
     private String nickname;
 
     /**
@@ -69,6 +69,7 @@ public class SysUser extends BaseEntity {
     @TableField("is_delete")
     private Integer deleted;
 
+
     /**
      * 最后登录IP
      */
@@ -79,4 +80,12 @@ public class SysUser extends BaseEntity {
      */
     private Date loginDate;
 
+    /**
+     * 角色对象
+     */
+    @TableField(exist = false)
+    private SysRole role;
+
+    @TableField(exist = false)
+    private List<SysOrganization> organizations;
 }

@@ -51,10 +51,15 @@
             <version>${mbp.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.anynote</groupId>-->
-<!--            <artifactId>anynote-common-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-system</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-security</artifactId>
+        </dependency>
 
     </dependencies>
 

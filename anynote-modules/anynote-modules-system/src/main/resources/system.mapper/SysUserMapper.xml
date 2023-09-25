@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.system.mapper.SysUserMapper">
+
+    <resultMap id="SysUserResult" type="com.anynote.system.api.model.po.SysUser">
+        <id property="id" column="id" />
+        <result property="username" column="username" />
+        <result property="nickname" column="nickname" />
+        <result property="email" column="email" />
+        <result property="phoneNumber" column="phone_number" />
+        <result property="sex" column="sex" />
+        <result property="avatar" column="avatar" />
+        <result property="password" column="password" />
+        <result property="status" column="status" />
+        <result property="deleted" column="is_delete" />
+        <result property="loginIp" column="login_ip" />
+        <result property="loginDate" column="login_date" />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+        <association property="role" javaType="com.anynote.system.api.model.po.SysRole" resultMap="SysRoleResult" />
+        <collection property="organizations" javaType="java.util.List" resultMap="SysOrganization" />
+    </resultMap>
+
+    <resultMap id="SysRoleResult" type="com.anynote.system.api.model.po.SysRole">
+        <id property="id" column="role_id" />
+        <result property="roleName" column="role_name" />
+        <result property="roleKey" column="role_key" />
+        <result property="roleSort" column="role_sort" />
+        <result property="dataScope" column="data_scope" />
+        <result property="status" column="role_status" />
+    </resultMap>
+    
+    <resultMap id="SysOrganization" type="com.anynote.system.api.model.po.SysOrganization">
+        <id property="id" column="organization_id" />
+        <result property="parentId" column="parent_id" />
+        <result property="ancestors" column="ancestors" />
+        <result property="organizationName" column="organization_name" />
+        <result property="orderNum" column="order_num" />
+        <result property="status" column="organization_status" />
+    </resultMap>
+
+    <select id="selectUserByUserName" parameterType="java.lang.String" resultMap="SysUserResult">
+        SELECT
+            sys_user.id, sys_user.username, sys_user.nickname, sys_user.email, sys_user.phone_number,
+            sys_user.sex, sys_user.avatar, sys_user.password, sys_user.status, sys_user.is_delete,
+            sys_user.login_ip, sys_user.login_date, sys_user.create_by, sys_user.create_time, sys_user.update_by,
+            sys_user.update_time, sys_user.remark, sys_role.id as role_id, sys_role.role_name, sys_role.role_key,
+            sys_role.role_sort, sys_role.data_scope, sys_role.status as role_status, sys_organization.id as organization_id,
+            sys_organization.parent_id, sys_organization.ancestors, sys_organization.organization_name,
+            sys_organization.order_num, sys_organization.status as organization_status
+        FROM
+            sys_user
+                LEFT JOIN
+            sys_user_organization
+            ON
+                sys_user.id = sys_user_organization.user_id
+                LEFT JOIN
+            sys_organization
+            ON
+                sys_user_organization.organization_id = sys_organization.id
+                LEFT JOIN
+            sys_user_role
+            ON
+                sys_user.id = sys_user_role.user_id
+                LEFT JOIN
+            sys_role
+            ON
+                sys_user_role.role_id = sys_role.id
+        WHERE
+            sys_user.username = #{username};
+    </select>
+
+
+</mapper>

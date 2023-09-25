@@ -14,6 +14,6 @@
         <module>anynote-modules-system</module>
     </modules>
     <build>
-        <finalName>kindergarten-modules</finalName>
+        <finalName>anynote-modules</finalName>
     </build>
 </project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.system.mapper.SysRoleMapper">
+    <select id="selectRolePermissionByUserId" resultType="java.lang.String">
+        SELECT
+            distinct sys_menu.perms
+        FROM
+            sys_menu
+                LEFT JOIN
+            sys_role_menu
+            ON
+                sys_menu.id = sys_role_menu.menu_id
+                LEFT JOIN
+            sys_user_role
+            ON
+                sys_role_menu.role_id = sys_user_role.role_id
+                LEFT JOIN
+            sys_user
+            ON
+                sys_user_role.user_id = sys_user.id
+        WHERE
+            sys_user.id = #{userId}
+    </select>
+
+</mapper>
