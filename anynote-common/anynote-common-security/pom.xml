@@ -31,7 +31,21 @@
         <dependency>
             <groupId>com.anynote</groupId>
             <artifactId>anynote-api-system</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-core</artifactId>
+        </dependency>
+
+
+
 
         <!-- JWT -->
         <dependency>
@@ -39,5 +53,17 @@
             <artifactId>java-jwt</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

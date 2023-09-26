@@ -29,6 +29,6 @@ public class SysUserController {
     @InnerAuth
     @GetMapping("/info/{username}")
     public ResData<LoginUser> getUserInfo(@PathVariable("username") String username) {
-
+        return ResData.success(sysUserService.getUserInfo(username));
     }
 }

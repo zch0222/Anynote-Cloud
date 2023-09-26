@@ -123,6 +123,16 @@ public class Constants
     public static final String[] JOB_WHITELIST_STR = { "com.ruoyi" };
 
     /**
+     * 最多密码重试次数
+     */
+    public static final int PASSWORD_MAX_RETRY_COUNT = 5;
+
+    /**
+     * 密码错误次数超过后禁用时间（单位分钟）
+     */
+    public static final Long PASSWORD_ERROR_LACK_TIME = 5L;
+
+    /**
      * 定时任务违规的字符
      */
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",

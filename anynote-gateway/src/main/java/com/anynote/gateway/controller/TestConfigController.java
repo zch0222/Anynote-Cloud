@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 测试nacos配置
  * @author 称霸幼儿园
  */
-@RefreshScope
-@RestController
+//@RefreshScope
+//@RestController
 public class TestConfigController {
 
 

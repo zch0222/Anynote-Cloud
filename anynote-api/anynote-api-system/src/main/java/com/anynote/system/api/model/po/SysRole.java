@@ -25,6 +25,9 @@ public class SysRole extends BaseEntity {
 
     private Long roleSort;
 
+    /**
+     * 数据权限
+     */
     private String dataScope;
 
     private String status;

@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class ResData<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public static final String SUCCESS = ResCode.SUCCESS.getCode();
 
     private String code;
 
@@ -51,7 +52,7 @@ public class ResData<T> implements Serializable {
     }
 
     public static <K> ResData<K> error(ResCode resCode) {
-        ResData<K> resData = new ResData<>(resCode.getCode(), resCode.getMsg(), null);
+        ResData resData = new ResData<>(resCode.getCode(), resCode.getMsg(), new String[0]);
         return resData;
     }
 
@@ -61,7 +62,7 @@ public class ResData<T> implements Serializable {
     }
 
     public static <K> ResData<K> error(ResCode resCode, String msg) {
-        ResData<K> resData = new ResData<>(resCode.getCode(), msg, null);
+        ResData resData = new ResData<>(resCode.getCode(), msg, new String[0]);
         return resData;
     }
 

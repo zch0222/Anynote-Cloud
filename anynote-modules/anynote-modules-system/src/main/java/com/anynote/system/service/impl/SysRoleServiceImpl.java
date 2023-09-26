@@ -20,4 +20,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public Set<String> selectRolePermissionByUserId(Long userId) {
         return this.baseMapper.selectRolePermissionByUserId(userId);
     }
+
+
+    @Override
+    public String selectRoleKeysByUserId(Long userId) {
+        return this.baseMapper.selectRoleKeysByUserId(userId);
+    }
 }

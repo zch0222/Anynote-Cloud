@@ -20,4 +20,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @return 权限列表
      */
     public Set<String> selectRolePermissionByUserId(@Param("userId") Long userId);
+
+
+    public String selectRoleKeysByUserId(@Param("userId") Long userId);
 }

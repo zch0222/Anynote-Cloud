@@ -10,6 +10,7 @@
     <name>Archetype - anynote-common-swagger</name>
     <url>http://maven.apache.org</url>
 
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -23,4 +24,16 @@
             <version>${swagger.fox.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -25,6 +25,6 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      */
     @Override
     public Set<String> getRolePermission(SysUser sysUser) {
-
+        return sysRoleService.selectRolePermissionByUserId(sysUser.getId());
     }
 }

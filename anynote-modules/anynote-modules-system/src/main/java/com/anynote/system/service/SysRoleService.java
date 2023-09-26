@@ -13,4 +13,6 @@ import java.util.Set;
  */
 public interface SysRoleService extends IService<SysRole> {
     public Set<String> selectRolePermissionByUserId(Long userId);
+
+    public String selectRoleKeysByUserId(Long userId);
 }

@@ -8,6 +8,7 @@ import com.anynote.common.security.properties.JWTTokenProperties;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.auth.AuthException;
 import com.anynote.core.exception.auth.LoginException;
+import com.anynote.core.exception.auth.TokenException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.system.api.model.bo.LoginUser;
@@ -53,11 +54,23 @@ public class TokenUtil {
         String refreshToken = createToken(loginUser, expireTime);
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
+        loginUser.setToken(token);
         redisService.setCacheObject(CachePrefixEnum.ACCESS_TOKEN.getPrefix(loginUser.getUsername()) + accessToken,
-                loginUser, token.getAccessTokenExpirationTime(), TimeUnit.SECONDS);
+                loginUser, jwtTokenProperties.getTokenExpireTime(), TimeUnit.SECONDS);
         redisService.setCacheObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix(loginUser.getUsername()),
                 loginUser, expireTime, TimeUnit.SECONDS);
         return token;
+    }
+
+    public LoginUser getLoginUser(String accessToken) {
+        if (StringUtils.isNotNull(accessToken)) {
+            LoginUser loginUser = this.authToken(accessToken);
+            if (StringUtils.isNotNull(loginUser)) {
+                return redisService.getCacheObject(CachePrefixEnum.ACCESS_TOKEN.getPrefix(loginUser.getUsername()) + accessToken);
+            }
+
+        }
+        return null;
     }
 
 
@@ -69,13 +82,13 @@ public class TokenUtil {
     public Token refreshToken(String oldRefreshToken) {
         LoginUser tokenLoginUser = authToken(oldRefreshToken);
         if (tokenLoginUser == null) {
-            throw new LoginException("refreshToken过期", ResCode.TOKEN_EXPIRED);
+            throw new TokenException("refreshToken过期", ResCode.TOKEN_EXPIRED);
         }
 
         LoginUser loginUser =
                 redisService.getCacheObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix(tokenLoginUser.getUsername()) + oldRefreshToken);
         if (loginUser == null) {
-            throw new LoginException("refreshToken过期", ResCode.TOKEN_EXPIRED);
+            throw new TokenException("refreshToken过期", ResCode.TOKEN_EXPIRED);
         }
 
         Token token = createToken(loginUser);

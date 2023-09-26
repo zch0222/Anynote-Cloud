@@ -1,7 +1,10 @@
 package com.anynote.system.api.model.bo;
 
 import com.anynote.system.api.model.po.SysUser;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
 import java.io.Serializable;
@@ -12,6 +15,8 @@ import java.io.Serializable;
  * @author 称霸幼儿园
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +28,7 @@ public class LoginUser implements Serializable {
     /**
      * 用户id
      */
-    private Long user_id;
+    private Long userId;
 
     /**
      * 用户名
@@ -48,7 +53,7 @@ public class LoginUser implements Serializable {
     /**
      * 角色列表
      */
-    private Set<String> roles;
+    private String role;
 
     /**
      * 用户信息
@@ -59,5 +64,17 @@ public class LoginUser implements Serializable {
      * 长期有效
      */
     private boolean longTerm;
+
+    public LoginUser(SysUser sysUser, Set<String> permissions,
+                     String role, boolean longTerm) {
+        this.sysUser = sysUser;
+        this.permissions = permissions;
+        this.role = role;
+        this.longTerm = longTerm;
+
+        this.userId = sysUser.getId();
+        this.username = sysUser.getUsername();
+        this.loginTime = System.currentTimeMillis();
+    }
 
 }
