@@ -12,6 +12,9 @@
 
     <modules>
         <module>anynote-modules-system</module>
+        <module>anynote-modules-note</module>
+        <module>anynote-modules-file</module>
+        <module>anynote-modules-manage</module>
     </modules>
     <build>
         <finalName>anynote-modules</finalName>

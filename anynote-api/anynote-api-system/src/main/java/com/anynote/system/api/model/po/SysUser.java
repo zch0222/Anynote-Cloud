@@ -1,5 +1,6 @@
 package com.anynote.system.api.model.po;
 
+import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.web.model.bo.BaseEntity;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -88,4 +89,8 @@ public class SysUser extends BaseEntity {
 
     @TableField(exist = false)
     private List<SysOrganization> organizations;
+
+    public static boolean isAdminX(SysRole role) {
+        return role.getRoleKey().equals(SecurityConstants.ADMIN_X);
+    }
 }

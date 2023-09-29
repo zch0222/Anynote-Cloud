@@ -14,6 +14,7 @@
         <module>anynote-common-redis</module>
         <module>anynote-common-core</module>
         <module>anynote-common-swagger</module>
+        <module>anynote-common-datascope</module>
     </modules>
 
 

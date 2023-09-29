@@ -1,12 +1,15 @@
 package com.anynote.common.security.handler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import com.anynote.core.context.HttpContextHolder;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.auth.LoginException;
 import com.anynote.core.exception.auth.TokenException;
+import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.enums.HttpStatusEnum;
+import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.ResData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +48,18 @@ public class GlobalExceptionHandler {
         log.error(e.getErrorMessage(), e);
         HttpContextHolder.setStatus(HttpStatusEnum.UNAUTHORIZED);
         return ResData.error(e.getErrorCode(), e.getErrorMessage());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResData handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest httpServletRequest) {
+        log.error(e.getMessage(), e);
+        return ResData.error(ResCode.USER_REQUEST_PARAM_ERROR, e.getConstraintViolations().iterator().next().getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResData handleException(Exception e, HttpServletRequest httpServletRequest) {
+        log.error(e.getMessage(), e);
+        return ResUtil.error(ResCode.BUSINESS_ERROR, "未知错误，请联系管理员");
     }
 
 }

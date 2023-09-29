@@ -11,6 +11,8 @@ public class SecurityConstants {
      */
     public static final String FROM_SOURCE = "from-source";
 
+    public static final String ADMIN_X = "ADMIN_X";
+
     /**
      * 内部请求
      */

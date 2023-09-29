@@ -1,0 +1,2 @@
+com.anynote.common.datascope.aspect.DataScopeAspect
+com.anynote.common.datascope.aspect.DataScopeInterceptorAspect

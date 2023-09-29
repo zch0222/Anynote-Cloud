@@ -5,14 +5,13 @@ import com.anynote.common.redis.enums.CachePrefixEnum;
 import com.anynote.common.redis.service.RedisService;
 import com.anynote.common.security.enums.SecurityEnum;
 import com.anynote.common.security.properties.JWTTokenProperties;
-import com.anynote.core.exception.BusinessException;
-import com.anynote.core.exception.auth.AuthException;
-import com.anynote.core.exception.auth.LoginException;
+import com.anynote.common.security.utils.SecurityUtils;
 import com.anynote.core.exception.auth.TokenException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.bo.Token;
+import com.anynote.system.api.model.po.SysUser;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -50,16 +49,39 @@ public class TokenUtil {
         // 创建Token
         String accessToken = createToken(loginUser, jwtTokenProperties.getTokenExpireTime());
 
-        Long expireTime = loginUser.isLongTerm() ? 15 * 24 * 60 : jwtTokenProperties.getTokenExpireTime() * 2;
+        Long expireTime = loginUser.isLongTerm() ? 15 * 24 * 60 : jwtTokenProperties.getTokenExpireTime() * 60 * 2;
         String refreshToken = createToken(loginUser, expireTime);
         token.setAccessToken(accessToken);
         token.setRefreshToken(refreshToken);
         loginUser.setToken(token);
         redisService.setCacheObject(CachePrefixEnum.ACCESS_TOKEN.getPrefix(loginUser.getUsername()) + accessToken,
-                loginUser, jwtTokenProperties.getTokenExpireTime(), TimeUnit.SECONDS);
+                loginUser, jwtTokenProperties.getTokenExpireTime() * 60, TimeUnit.SECONDS);
         redisService.setCacheObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix(loginUser.getUsername()),
                 loginUser, expireTime, TimeUnit.SECONDS);
         return token;
+    }
+
+    public LoginUser getLoginUser() {
+        String accessToken = SecurityUtils.getAccessToken();
+        LoginUser loginUser = getLoginUser(accessToken);
+        checkLoginUser(loginUser);
+        return loginUser;
+    }
+
+    private void checkLoginUser(LoginUser loginUser) {
+        if (loginUser == null) {
+            throw new TokenException(ResCode.AUTH_ERROR);
+        }
+        if (loginUser.getUserId() == null) {
+            throw new TokenException(ResCode.AUTH_ERROR);
+        }
+        SysUser sysUser = loginUser.getSysUser();
+        if (sysUser == null) {
+            throw new TokenException(ResCode.AUTH_ERROR);
+        }
+        if (sysUser.getId() == null) {
+            throw new TokenException(ResCode.AUTH_ERROR);
+        }
     }
 
     public LoginUser getLoginUser(String accessToken) {
@@ -115,8 +137,6 @@ public class TokenUtil {
         return loginUser;
     }
 
-
-
     private String createToken(LoginUser loginUser, Long expirationTime) {
         Date expireDate = new Date(System.currentTimeMillis() + expirationTime * 60 * 1000);
         Map<String, Object> map = new HashMap<>();
@@ -129,11 +149,4 @@ public class TokenUtil {
                 .withIssuedAt(new Date())
                 .sign(Algorithm.HMAC256(jwtTokenProperties.getSecret()));
     }
-
-
-
-
-
-
-
 }

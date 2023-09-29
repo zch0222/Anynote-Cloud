@@ -52,7 +52,7 @@ public class ResData<T> implements Serializable {
     }
 
     public static <K> ResData<K> error(ResCode resCode) {
-        ResData resData = new ResData<>(resCode.getCode(), resCode.getMsg(), new String[0]);
+        ResData resData = new ResData<>(resCode.getCode(), resCode.getMsg(), null);
         return resData;
     }
 
@@ -62,7 +62,7 @@ public class ResData<T> implements Serializable {
     }
 
     public static <K> ResData<K> error(ResCode resCode, String msg) {
-        ResData resData = new ResData<>(resCode.getCode(), msg, new String[0]);
+        ResData resData = new ResData<>(resCode.getCode(), msg, null);
         return resData;
     }
 

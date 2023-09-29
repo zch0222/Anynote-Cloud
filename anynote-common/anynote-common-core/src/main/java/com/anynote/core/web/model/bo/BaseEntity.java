@@ -2,10 +2,12 @@ package com.anynote.core.web.model.bo;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 数据库映射基类
@@ -33,4 +35,9 @@ public class BaseEntity implements Serializable {
 
     /** 备注 */
     private String remark;
+
+    /** 请求参数 */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Map<String, Object> params;
+
 }

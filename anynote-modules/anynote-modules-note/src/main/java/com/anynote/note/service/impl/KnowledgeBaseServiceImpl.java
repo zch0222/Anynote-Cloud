@@ -1,0 +1,67 @@
+package com.anynote.note.service.impl;
+
+import com.anynote.common.security.token.TokenUtil;
+import com.anynote.common.security.utils.SecurityUtils;
+import com.anynote.core.exception.user.UserParamException;
+import com.anynote.core.utils.StringUtils;
+import com.anynote.core.web.enums.ResCode;
+import com.anynote.core.web.model.bo.PageBean;
+import com.anynote.note.api.model.po.NoteKnowledgeBase;
+import com.anynote.note.mapper.KnowledgeBaseMapper;
+import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
+import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.service.KnowledgeBaseService;
+import com.anynote.system.api.model.bo.LoginUser;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * 知识库服务
+ * @author 称霸幼儿园
+ */
+@Service
+public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, NoteKnowledgeBase>
+        implements KnowledgeBaseService {
+
+    @Autowired
+    private TokenUtil tokenUtil;
+
+
+    @Override
+    public NoteKnowledgeBaseDTO getKnowledgeBaseById(Long id) {
+//        LoginUser loginUser = tokenUtil.getLoginUser();
+        KnowledgeBaseQueryParam queryParam = new KnowledgeBaseQueryParam();
+        queryParam.setId(id);
+        NoteKnowledgeBaseDTO noteKnowledgeBaseDTO = this.baseMapper.selectKnowledgeBaseById(queryParam);
+        if (StringUtils.isNull(noteKnowledgeBaseDTO)) {
+            throw new UserParamException("获取知识库失败", ResCode.INVALID_USER_INPUT_NOT_FOUND);
+        }
+        return noteKnowledgeBaseDTO;
+    }
+
+    @Override
+    public PageBean<NoteKnowledgeBaseDTO> getUsersOrganizationKnowledgeBase(Integer page, Integer pageSize) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        PageHelper.startPage(page, pageSize,"update_time desc");
+        List<NoteKnowledgeBaseDTO> noteKnowledgeBaseDTOList =
+                this.selectOrganizationKnowledgeBasesByUserIdByPage(loginUser.getUserId());
+        PageInfo<NoteKnowledgeBaseDTO> pageInfo = new PageInfo<>(noteKnowledgeBaseDTOList);
+        PageBean pageBean = new PageBean();
+        pageBean.setRows(noteKnowledgeBaseDTOList);
+        pageBean.setTotal(pageInfo.getTotal());
+        pageBean.setPages(pageInfo.getPages());
+        return pageBean;
+    }
+
+    @Override
+    public List<NoteKnowledgeBaseDTO> selectOrganizationKnowledgeBasesByUserIdByPage(Long userId) {
+        KnowledgeBaseQueryParam queryParam = new KnowledgeBaseQueryParam();
+        queryParam.setStatus(0);
+        return this.baseMapper.selectOrganizationKnowledgeBaseList(queryParam);
+    }
+}
