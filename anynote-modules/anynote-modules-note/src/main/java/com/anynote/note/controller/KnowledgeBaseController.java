@@ -4,14 +4,12 @@ import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
+import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -34,12 +32,21 @@ public class KnowledgeBaseController {
                 .getUsersOrganizationKnowledgeBase(page, pageSize));
     }
 
+    @PostMapping
+    public ResData<Long> createDataBase() {
+        return null;
+    }
+
+
 
     @DataScope(userAlias = "sys_user",
             organizationAlias = "sys_organization")
     @GetMapping("{id}")
     public ResData<NoteKnowledgeBaseDTO> getKnowledgeBaseById(@NotNull(message = "知识库id不能为空") @PathVariable Long id) {
-        return ResData.success(knowledgeBaseService.getKnowledgeBaseById(id));
+        KnowledgeBaseQueryParam queryParam = KnowledgeBaseQueryParam.builder()
+                .id(id)
+                .build();
+        return ResData.success(knowledgeBaseService.getKnowledgeBaseById(queryParam));
     }
 
 

@@ -73,7 +73,7 @@
           AND
             n_knowledge_base.organization_id > 0
           <if test="name != null and name != ''">
-              AND n_knowledge_base.name = like concat('%', #{name}, '%')
+              AND n_knowledge_base.name like concat('%', #{name}, '%')
           </if>
           <if test="type != null">
               AND n_knowledge_base.type = #{type}
@@ -116,11 +116,27 @@
         ${params.dataScope}
     </select>
 
+    <select id="selectUserKnowledgeBasePermissions" resultType="java.lang.Integer">
+        SELECT
+            n_user_knowledge_base.permissions
+        FROM
+            n_user_knowledge_base
+        WHERE
+            n_user_knowledge_base.user_id = #{userId}
+          AND
+            n_user_knowledge_base.knowledge_base_id = #{knowledgeBaseId}
+    </select>
 
-
-
-
-
-
-
+    <select id="selectUserKnowledgeBasePermissionsByNoteId" resultType="java.lang.Integer">
+        SELECT
+            n_user_knowledge_base.permissions
+        FROM
+            n_user_knowledge_base
+        LEFT JOIN
+            n_note ON n_note.knowledge_base_id = n_user_knowledge_base.knowledge_base_id
+        WHERE
+            n_note.id = #{noteId}
+          AND
+            n_user_knowledge_base.user_id = #{userId}
+    </select>
 </mapper>

@@ -7,6 +7,8 @@ package com.anynote.core.constant;
  */
 public class Constants
 {
+    public static final String SUCCESS_RES = "SUCCESS";
+
     /**
      * UTF-8 字符集
      */

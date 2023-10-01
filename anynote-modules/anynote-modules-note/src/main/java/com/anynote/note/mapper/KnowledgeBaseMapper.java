@@ -20,7 +20,13 @@ public interface KnowledgeBaseMapper extends BaseMapper<NoteKnowledgeBase> {
     @DataScopeInterceptor
     public List<NoteKnowledgeBaseDTO> selectOrganizationKnowledgeBaseList(KnowledgeBaseQueryParam param);
 
-    @DataScopeInterceptor
+//    @DataScopeInterceptor
     public NoteKnowledgeBaseDTO selectKnowledgeBaseById(KnowledgeBaseQueryParam param);
+
+    public Integer selectUserKnowledgeBasePermissions(@Param("userId") Long userId,
+                                                      @Param("knowledgeBaseId") Long knowledgeBaseId);
+
+    public Integer selectUserKnowledgeBasePermissionsByNoteId(@Param("userId") Long userId,
+                                                              @Param("noteId") Long noteId);
 
 }

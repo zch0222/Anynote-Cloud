@@ -7,12 +7,12 @@ package com.anynote.note.enums;
 public enum KnowledgeBasePermissions {
 
     /**
-     * 可管理(管理员)
+     * 可管理(管理员) (查看、编辑)
      */
     MANAGE(1),
 
     /**
-     * 可编辑
+     * 可编辑(查看)
      */
     EDIT(2),
 
