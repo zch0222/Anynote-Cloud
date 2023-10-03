@@ -5,6 +5,7 @@ import com.anynote.common.security.annotation.EnableAnyNoteFeignClients;
 import com.anynote.common.swagger.annotation.EnableCustomSwagger2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 /**
  *
@@ -12,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableCustomSwagger2
 @EnableAnyNoteFeignClients
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class AnyNoteAuthApplication {
 
     public static void main(String[] args) {
