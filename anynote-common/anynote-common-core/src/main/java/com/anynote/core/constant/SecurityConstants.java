@@ -6,6 +6,9 @@ package com.anynote.core.constant;
  * @author 称霸幼儿园
  */
 public class SecurityConstants {
+
+    public static final String CONTENT_TYPE = "Content-Type";
+
     /**
      * 请求来源
      */

@@ -73,6 +73,11 @@
 
         <dependency>
             <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-file</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
             <artifactId>anynote-common-security</artifactId>
             <exclusions>
                 <exclusion>

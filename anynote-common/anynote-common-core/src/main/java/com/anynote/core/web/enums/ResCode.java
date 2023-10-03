@@ -30,7 +30,11 @@ public enum ResCode {
 
     BUSINESS_ERROR("B0001", "系统执行出错 ", "系统执行出错"),
     INNER_SERVICE_ERROR("B0400", "系统内部调用失败", "系统内部调用失败"),
-    INNER_SYSTEM_SERVICE_ERROR("B0401", "系统模块内部调用失败", "系统模块内部调用失败")
+    INNER_SYSTEM_SERVICE_ERROR("B0401", "系统模块内部调用失败", "系统模块内部调用失败"),
+    INNER_FILE_SERVICE_ERROR("B0402", "文件模块内部调用失败", "文件模块内部调用失败"),
+
+    CALLING_SERVICE_ERROR("C0001", "调用第三方服务出错", "调用第三方服务出错"),
+    HUAWEI_OBS_UPLOAD_ERROR("C160", "华为OBS上传错误", "华为OBS上传错误")
     ;
 
     /**

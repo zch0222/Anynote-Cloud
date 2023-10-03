@@ -16,6 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `f_note_image`
+--
+
+DROP TABLE IF EXISTS `f_note_image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `f_note_image` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '图片id',
+  `original_file_name` varchar(512) NOT NULL DEFAULT '' COMMENT '原始文件名',
+  `file_name` varchar(512) NOT NULL DEFAULT '' COMMENT '文件名',
+  `url` varchar(512) NOT NULL DEFAULT '' COMMENT '文件URL地址',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标记 0正常 1删除',
+  `create_by` bigint unsigned DEFAULT '0' COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint unsigned DEFAULT '0' COMMENT '更新者',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',
+  `user_id` bigint unsigned NOT NULL COMMENT '用户id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `f_note_image`
+--
+
+LOCK TABLES `f_note_image` WRITE;
+/*!40000 ALTER TABLE `f_note_image` DISABLE KEYS */;
+INSERT INTO `f_note_image` VALUES (1,'sticker.webp','b3c7a48c0199489ea8fa45f2b9481b44_sticker.webp','https://anynote.obs.cn-east-3.myhuaweicloud.com:443/anynote_+Shanghai%2Fnote%2F1%2Fb3c7a48c0199489ea8fa45f2b9481b44_sticker.webp',0,0,'2023-10-02 19:12:39',0,'2023-10-02 19:12:39','',2),(2,'sticker.webp','9008fa12ce514ec99e9f65c23149f11c_sticker.webp','https://anynote.obs.cn-east-3.myhuaweicloud.com:443/anynote_+Shanghai%2Fnote%2F1%2F9008fa12ce514ec99e9f65c23149f11c_sticker.webp',0,0,'2023-10-02 19:16:42',0,'2023-10-02 19:16:42','',2),(3,'sticker.webp','fe66f3f8f0874b159fd90c4f20a5a369_sticker.webp','https://anynote.obs.cn-east-3.myhuaweicloud.com:443/anynote_+Shanghai%2Fnote%2F1%2Ffe66f3f8f0874b159fd90c4f20a5a369_sticker.webp',0,0,'2023-10-02 19:19:30',0,'2023-10-02 19:19:30','',2),(4,'sticker.webp','0bd9fab94080453c8c7b2dd8563b2052_sticker.webp','https://anynote.obs.cn-east-3.myhuaweicloud.com:443/anynote_+Shanghai%2Fnote%2F1%2F0bd9fab94080453c8c7b2dd8563b2052_sticker.webp',0,0,'2023-10-02 22:02:45',0,'2023-10-02 22:02:45','',2);
+/*!40000 ALTER TABLE `f_note_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `n_knowledge_base`
 --
 
@@ -37,7 +70,7 @@ CREATE TABLE `n_knowledge_base` (
   `remark` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   `organization_id` bigint NOT NULL DEFAULT '0' COMMENT '所属组织ID 0表示不属于任何组织',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='知识库表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='知识库表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +79,7 @@ CREATE TABLE `n_knowledge_base` (
 
 LOCK TABLES `n_knowledge_base` WRITE;
 /*!40000 ALTER TABLE `n_knowledge_base` DISABLE KEYS */;
-INSERT INTO `n_knowledge_base` VALUES (1,'测试知识库1','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-27 18:02:26',0,'2023-09-27 18:02:26','1',1),(2,'测试知识库2','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-27 18:02:40',0,'2023-09-27 18:02:40','2',1),(3,'测试知识库3','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-29 15:59:54',0,'2023-09-29 15:59:54','',0);
+INSERT INTO `n_knowledge_base` VALUES (1,'测试知识库1','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-27 18:02:26',0,'2023-09-27 18:02:26','1',1),(2,'测试知识库2','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-27 18:02:40',0,'2023-09-27 18:02:40','2',1),(3,'测试知识库3','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-29 15:59:54',0,'2023-09-29 15:59:54','',0),(4,'测试知识库1001','https://i0.hdslb.com/bfs/new_dyn/18d03597c3df44d36c50891685d8d3153494361880856991.jpg@662w_560h_1e_1c.avif',NULL,0,0,0,2,'2023-10-01 23:51:13',2,'2023-10-01 23:51:13','',0);
 /*!40000 ALTER TABLE `n_knowledge_base` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,8 +114,74 @@ CREATE TABLE `n_note` (
 
 LOCK TABLES `n_note` WRITE;
 /*!40000 ALTER TABLE `n_note` DISABLE KEYS */;
-INSERT INTO `n_note` VALUES (1,'修改测试14445',1,2,0,2,'70000',0,2,'2023-09-30 00:45:55',2,'2023-10-01 00:57:01',''),(2,'修改测试14445',2,2,0,2,'70600',0,1,'2023-09-30 00:58:51',2,'2023-10-01 00:56:45',''),(4,'知识库2的测试笔记3',3,2,0,1,'70000',0,1,'2023-09-30 01:09:29',0,'2023-09-30 01:09:29',''),(5,'知识库2的测试笔记4',1,2,0,3,'70000',0,1,'2023-09-30 01:10:10',0,'2023-09-30 01:10:10',''),(6,'测试笔记',3,2,0,1,'70000',1,2,'2023-10-01 20:31:09',2,'2023-10-01 20:31:08',''),(7,'修改测试14445',4,2,0,1,'70000',0,2,'2023-10-01 20:32:51',2,'2023-10-01 21:36:18',''),(8,'测试笔记23333',5,2,0,1,'70000',0,2,'2023-10-01 21:28:40',2,'2023-10-01 21:28:40','');
+INSERT INTO `n_note` VALUES (1,'修改测试14445',1,2,0,2,'70000',0,2,'2023-09-30 00:45:55',2,'2023-10-01 00:57:01',''),(2,'修改测试14445',2,2,0,2,'70600',0,1,'2023-09-30 00:58:51',2,'2023-10-01 00:56:45',''),(4,'知识库2的测试笔记3',3,3,0,1,'70000',0,1,'2023-09-30 01:09:29',0,'2023-09-30 01:09:29',''),(5,'知识库2的测试笔记4',1,2,0,3,'70000',0,1,'2023-09-30 01:10:10',0,'2023-09-30 01:10:10',''),(6,'测试笔记',3,3,0,1,'70000',1,2,'2023-10-01 20:31:09',2,'2023-10-01 20:31:08',''),(7,'修改测试14445',4,3,0,1,'44000',0,2,'2023-10-01 20:32:51',2,'2023-10-01 21:36:18',''),(8,'测试笔记23333',5,3,0,1,'44000',0,2,'2023-10-01 21:28:40',2,'2023-10-01 21:28:40','');
 /*!40000 ALTER TABLE `n_note` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `n_note_task`
+--
+
+DROP TABLE IF EXISTS `n_note_task`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `n_note_task` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '笔记任务id',
+  `task_name` varchar(256) NOT NULL DEFAULT '' COMMENT '任务名称',
+  `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '任务开始时间',
+  `end_time` datetime NOT NULL COMMENT '任务结束时间',
+  `knowledge_base_id` bigint unsigned NOT NULL DEFAULT '0' COMMENT '知识库',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '任务状态 0.进行中 1.已结束',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0.未删除 1.删除',
+  `create_by` bigint unsigned DEFAULT '0' COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint unsigned DEFAULT '0' COMMENT '更新者',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='笔记提交任务表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `n_note_task`
+--
+
+LOCK TABLES `n_note_task` WRITE;
+/*!40000 ALTER TABLE `n_note_task` DISABLE KEYS */;
+INSERT INTO `n_note_task` VALUES (1,'测试任务','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,0,'2023-10-02 21:39:33',0,'2023-10-02 21:39:33',''),(2,'测试任务2','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,2,'2023-10-03 13:44:09',2,'2023-10-03 13:44:09','');
+/*!40000 ALTER TABLE `n_note_task` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `n_note_task_submission_record`
+--
+
+DROP TABLE IF EXISTS `n_note_task_submission_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `n_note_task_submission_record` (
+  `note_task_id` bigint unsigned NOT NULL COMMENT '笔记任务id',
+  `user_id` bigint unsigned NOT NULL COMMENT '用户id',
+  `note_id` bigint unsigned NOT NULL COMMENT '笔记id',
+  `submit_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0.未删除 1.删除',
+  `create_by` bigint unsigned DEFAULT '0' COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint unsigned DEFAULT '0' COMMENT '更新者',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remark` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`note_task_id`,`note_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='笔记提交任务记录表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `n_note_task_submission_record`
+--
+
+LOCK TABLES `n_note_task_submission_record` WRITE;
+/*!40000 ALTER TABLE `n_note_task_submission_record` DISABLE KEYS */;
+INSERT INTO `n_note_task_submission_record` VALUES (1,2,7,'2023-10-03 13:34:42',0,2,'2023-10-03 13:34:42',2,'2023-10-03 13:34:42',''),(2,2,8,'2023-10-03 13:44:17',0,2,'2023-10-03 13:44:17',2,'2023-10-03 13:44:17','');
+/*!40000 ALTER TABLE `n_note_task_submission_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -160,8 +259,34 @@ CREATE TABLE `n_user_knowledge_base` (
 
 LOCK TABLES `n_user_knowledge_base` WRITE;
 /*!40000 ALTER TABLE `n_user_knowledge_base` DISABLE KEYS */;
-INSERT INTO `n_user_knowledge_base` VALUES (2,1,1),(2,2,2),(2,3,2);
+INSERT INTO `n_user_knowledge_base` VALUES (2,1,1),(2,2,2),(2,3,1);
 /*!40000 ALTER TABLE `n_user_knowledge_base` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sys_config`
+--
+
+DROP TABLE IF EXISTS `sys_config`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sys_config` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '配置id',
+  `name` varchar(50) NOT NULL COMMENT '配置名称',
+  `value` varchar(2048) NOT NULL COMMENT '配置值',
+  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='配置表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_config`
+--
+
+LOCK TABLES `sys_config` WRITE;
+/*!40000 ALTER TABLE `sys_config` DISABLE KEYS */;
+INSERT INTO `sys_config` VALUES (1,'OSS_TYPE','HUAWEI_OBS','对象存储类别'),(2,'HUAWEI_OBS_CONFIG','{\n	\"endPoint\": \"obs.cn-east-3.myhuaweicloud.com\",\n	\"accessKey\": \"RJZU7OJSW0LVYMIF3LYC\",\n	\"accessSecret\": \"kRzDrTMhz7gbngzFDeDFyAV3CB58h1k88ZUN7HRx\",\n	\"bucketName\": \"anynote\",\n	\"basePath\": \"anynote_ Shanghai\"\n}','华为对象存储配置');
+/*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -393,4 +518,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-01 22:07:18
+-- Dump completed on 2023-10-03 13:47:18

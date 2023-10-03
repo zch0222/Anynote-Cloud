@@ -11,4 +11,6 @@ public class ServiceNameConstants {
      * 系统模块的serviceid
      */
     public static final String SYSTEM_SERVICE = "anynote-system";
+
+    public static final String FILE_SERVICE = "anynote-file";
 }

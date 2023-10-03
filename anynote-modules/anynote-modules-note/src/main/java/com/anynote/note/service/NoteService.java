@@ -6,10 +6,7 @@ import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NotePermissions;
-import com.anynote.note.model.bo.NoteCreateParam;
-import com.anynote.note.model.bo.NoteDeleteParam;
-import com.anynote.note.model.bo.NoteQueryParam;
-import com.anynote.note.model.bo.NoteUpdateParam;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.NoteCreateDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -36,4 +33,8 @@ public interface NoteService extends IService<Note> {
     public Long createNote(NoteCreateParam param);
 
     public NotePermissions getNotePermissions(Long noteId);
+
+    public MarkdownImage uploadNoteImage(NoteImageUploadParam uploadParam);
+
+    public Integer submitNote(Long noteId);
 }

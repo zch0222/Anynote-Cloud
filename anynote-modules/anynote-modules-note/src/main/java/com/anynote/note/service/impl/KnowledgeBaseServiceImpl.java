@@ -1,7 +1,6 @@
 package com.anynote.note.service.impl;
 
 import com.anynote.common.security.token.TokenUtil;
-import com.anynote.common.security.utils.SecurityUtils;
 import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
@@ -11,6 +10,7 @@ import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.aspect.KnowledgeBasePermissionsAspect;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.mapper.KnowledgeBaseMapper;
+import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
@@ -22,6 +22,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,25 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     @Autowired
     private TokenUtil tokenUtil;
 
+    @Override
+    public Long createKnowledgeBase(KnowledgeBaseCreateParam createParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        Date date = new Date();
+        NoteKnowledgeBase noteKnowledgeBase = NoteKnowledgeBase.builder()
+                .id(createParam.getId())
+                .name(createParam.getName())
+                .cover(createParam.getCover())
+                .type(createParam.getType())
+                .status(0)
+                .deleted(0)
+                .build();
+        noteKnowledgeBase.setCreateBy(loginUser.getSysUser().getId());
+        noteKnowledgeBase.setCreateTime(date);
+        noteKnowledgeBase.setUpdateBy(loginUser.getSysUser().getId());
+        noteKnowledgeBase.setCreateTime(date);
+        this.baseMapper.insert(noteKnowledgeBase);
+        return noteKnowledgeBase.getId();
+    }
 
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.READ, message = "没有获取该知识库权限")
     @Override

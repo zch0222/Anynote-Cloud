@@ -1,10 +1,12 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.datascope.annotation.DataScope;
+import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
-import com.anynote.note.api.model.po.NoteKnowledgeBase;
+import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
+import com.anynote.note.model.dto.KnowledgeBaseCreateDTO;
 import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,13 @@ public class KnowledgeBaseController {
     }
 
     @PostMapping
-    public ResData<Long> createDataBase() {
-        return null;
+    public ResData<Long> createDataBase(@Validated @RequestBody KnowledgeBaseCreateDTO knowledgeBaseCreateDTO) {
+        KnowledgeBaseCreateParam knowledgeBaseCreateParam =
+                new KnowledgeBaseCreateParam(knowledgeBaseCreateDTO);
+        return ResUtil.success(knowledgeBaseService.createKnowledgeBase(knowledgeBaseCreateParam));
     }
+
+
 
 
 

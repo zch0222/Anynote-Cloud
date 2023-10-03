@@ -9,17 +9,45 @@
     <artifactId>anynote-modules-file</artifactId>
     <dependencies>
 
-<!--        &lt;!&ndash; SpringCloud Alibaba Nacos &ndash;&gt;-->
+        <!-- SpringCloud Alibaba Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Alibaba Nacos Config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.huaweicloud/esdk-obs-java-bundle -->
+        <dependency>
+            <groupId>com.huaweicloud</groupId>
+            <artifactId>esdk-obs-java-bundle</artifactId>
+        </dependency>
+
 <!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+<!--            <groupId>com.anynote</groupId>-->
+<!--            <artifactId>anynote-common-datascope</artifactId>-->
 <!--        </dependency>-->
 
-<!--        &lt;!&ndash; SpringCloud Alibaba Nacos Config &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-file</artifactId>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-redis</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.anynote</groupId>
@@ -71,16 +99,16 @@
 <!--            <artifactId>anynote-api-system</artifactId>-->
 <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>com.anynote</groupId>-->
-<!--            <artifactId>anynote-common-security</artifactId>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-security</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
     </dependencies>
 

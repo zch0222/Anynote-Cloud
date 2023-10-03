@@ -10,16 +10,14 @@ import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.enums.NotePermissions;
-import com.anynote.note.model.bo.NoteCreateParam;
-import com.anynote.note.model.bo.NoteDeleteParam;
-import com.anynote.note.model.bo.NoteQueryParam;
-import com.anynote.note.model.bo.NoteUpdateParam;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.NoteCreateDTO;
 import com.anynote.note.model.dto.NoteEditDTO;
 import com.anynote.note.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
@@ -88,6 +86,15 @@ public class NoteController {
                                     @RequestBody NoteEditDTO noteEditDTO) {
         noteEditDTO.setNoteId(noteId);
         return ResUtil.success(noteService.editNote(new NoteUpdateParam(noteEditDTO)));
+    }
+
+    @PostMapping("images")
+    public ResData<MarkdownImage> uploadNoteImage(@RequestParam("image") @NotNull(message = "图片文件不能为空") MultipartFile image,
+                                                  @RequestParam("noteId") @NotNull(message = "笔记id不能为空") Long noteId) {
+        NoteImageUploadParam imageUploadParam = new NoteImageUploadParam();
+        imageUploadParam.setId(noteId);
+        imageUploadParam.setImage(image);
+        return ResUtil.success(noteService.uploadNoteImage(imageUploadParam));
     }
 
 

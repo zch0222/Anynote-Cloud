@@ -8,6 +8,7 @@ import feign.RequestTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.util.Map;
 
 /**
@@ -45,7 +46,15 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             {
                 requestTemplate.header(SecurityConstants.AUTHORIZATION_HEADER, authentication);
             }
+            String accessToken = headers.get(SecurityConstants.ACCESS_TOKEN);
+            if (StringUtils.isNotEmpty(accessToken)) {
+                requestTemplate.header(SecurityConstants.ACCESS_TOKEN, accessToken);
+            }
 
+//            String contentType = headers.get(SecurityConstants.CONTENT_TYPE);
+//            if (StringUtils.isNotEmpty(contentType)) {
+//                requestTemplate.header(SecurityConstants.CONTENT_TYPE, contentType);
+//            }
 
         }
     }

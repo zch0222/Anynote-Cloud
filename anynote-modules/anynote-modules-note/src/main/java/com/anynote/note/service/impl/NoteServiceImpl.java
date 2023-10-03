@@ -8,7 +8,12 @@ import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
+import com.anynote.core.web.model.bo.ResData;
+import com.anynote.file.api.RemoteFileService;
+import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.bo.FileUploadParam;
 import com.anynote.note.api.model.po.Note;
+import com.anynote.note.api.model.po.NoteImage;
 import com.anynote.note.api.model.po.NoteText;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
@@ -17,12 +22,11 @@ import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.mapper.NoteTextMapper;
-import com.anynote.note.model.bo.NoteCreateParam;
-import com.anynote.note.model.bo.NoteDeleteParam;
-import com.anynote.note.model.bo.NoteQueryParam;
-import com.anynote.note.model.bo.NoteUpdateParam;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.service.KnowledgeBaseService;
+import com.anynote.note.service.NoteImageService;
 import com.anynote.note.service.NoteService;
+import com.anynote.note.utils.MarkdownUtil;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.po.SysUser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -52,7 +56,13 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     private KnowledgeBaseService knowledgeBaseService;
 
     @Autowired
+    private NoteImageService noteImageService;
+
+    @Autowired
     private NoteTextMapper noteTextMapper;
+
+    @Autowired
+    private RemoteFileService remoteFileService;
 
     @Override
     public PageBean<Note> getNotesByKnowledgeBaseId(NoteQueryParam queryParam) {
@@ -113,6 +123,20 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     }
 
     /**
+     * 提交笔记
+     * 已经鉴权过无需再次鉴权
+     * @param noteId
+     */
+    @Override
+    public Integer submitNote(Long noteId) {
+        Note note = Note.builder()
+                .id(noteId)
+                .permissions("44000")
+                .build();
+        return this.baseMapper.updateById(note);
+    }
+
+    /**
      * 删除笔记
      * @param param
      * @return
@@ -151,6 +175,38 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
             throw new BusinessException("更新笔记失败", ResCode.USER_ERROR);
         }
         return Constants.SUCCESS_RES;
+    }
+
+    @RequiresNotePermissions(NotePermissions.EDIT)
+    @Override
+    public MarkdownImage uploadNoteImage(NoteImageUploadParam uploadParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+//        FileUploadParam fileUploadParam = FileUploadParam.builder()
+//                .file(uploadParam.getImage())
+//                .path(StringUtils.format("note/{}", uploadParam.getId()))
+//                .build();
+        ResData<FileDTO> fileDTOResData = remoteFileService.uploadFile(uploadParam.getImage(),
+                StringUtils.format("note/{}", uploadParam.getId()));
+        if (StringUtils.isNull(fileDTOResData) || StringUtils.isNull(fileDTOResData.getData())) {
+            throw new BusinessException("图片保存失败", ResCode.INNER_FILE_SERVICE_ERROR);
+        }
+
+        if (!ResData.SUCCESS.equals(fileDTOResData.getCode())) {
+            throw new BusinessException("图片保存失败", ResCode.INNER_FILE_SERVICE_ERROR);
+        }
+        FileDTO fileDTO = fileDTOResData.getData();
+
+        NoteImage noteImage = NoteImage.builder()
+                .originalFileName(fileDTO.getOriginalFileName())
+                .fileName(fileDTO.getFileName())
+                .url(fileDTO.getUrl())
+                .userId(loginUser.getSysUser().getId())
+                .build();
+        noteImageService.getBaseMapper().insert(noteImage);
+        return MarkdownImage.builder()
+                .image(MarkdownUtil.buildMarkdownImage(noteImage.getOriginalFileName(),
+                        noteImage.getUrl()))
+                .build();
     }
 
     @Override

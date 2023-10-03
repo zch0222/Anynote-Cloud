@@ -38,6 +38,9 @@
         <java.version>1.8</java.version>
         <druid.version>1.2.15</druid.version>
         <mbp.version>3.5.2</mbp.version>
+        <feign.form.version>3.3.0</feign.form.version>
+        <feign.form.spring.version>3.3.0</feign.form.spring.version>
+        <bundle.huawei.obs.vsersion>3.23.9</bundle.huawei.obs.vsersion>
         <commons-lang3.version>3.12.0</commons-lang3.version>
     </properties>
     <dependencyManagement>
@@ -53,6 +56,18 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.boot.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form</artifactId>
+                <version>${feign.form.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form-spring</artifactId>
+                <version>${feign.form.spring.version}</version>
+            </dependency>
+
 
             <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
             <dependency>
@@ -93,6 +108,18 @@
 
             <dependency>
                 <groupId>com.anynote</groupId>
+                <artifactId>anynote-api-file</artifactId>
+                <version>${anynote.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.anynote</groupId>
+                <artifactId>anynote-modules-file</artifactId>
+                <version>${anynote.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.anynote</groupId>
                 <artifactId>anynote-modules-note</artifactId>
                 <version>${anynote.version}</version>
             </dependency>
@@ -102,6 +129,7 @@
                 <artifactId>anynote-common-redis</artifactId>
                 <version>${anynote.version}</version>
             </dependency>
+
 
             <dependency>
                 <groupId>com.anynote</groupId>
@@ -182,8 +210,16 @@
                 <version>3.12.0</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.huaweicloud/esdk-obs-java-bundle -->
+            <dependency>
+                <groupId>com.huaweicloud</groupId>
+                <artifactId>esdk-obs-java-bundle</artifactId>
+                <version>${bundle.huawei.obs.vsersion}</version>
+            </dependency>
 
-    <!--        <dependency>-->
+
+
+            <!--        <dependency>-->
     <!--            <groupId>org.springframework.boot</groupId>-->
     <!--            <artifactId>spring-boot-starter-test</artifactId>-->
     <!--            <scope>test</scope>-->

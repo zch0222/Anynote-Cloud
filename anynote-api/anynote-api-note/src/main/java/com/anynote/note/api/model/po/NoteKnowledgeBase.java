@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,10 +13,11 @@ import lombok.NoArgsConstructor;
  * 知识库表
  * @author 称霸幼儿园
  */
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("n_knowledge")
+@TableName("n_knowledge_base")
 public class NoteKnowledgeBase extends BaseEntity {
 
     /**
