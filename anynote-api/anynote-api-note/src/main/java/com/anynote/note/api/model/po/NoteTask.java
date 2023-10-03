@@ -4,6 +4,7 @@ import com.anynote.core.web.model.bo.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,7 +39,14 @@ public class NoteTask extends BaseEntity {
 
     private Integer status;
 
+    /**
+     * 已经提交的数量
+     */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private Long submittedCount;
+
     @TableLogic
     @TableField("is_delete")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer deleted;
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.note.mapper.NoteTaskSubmissionRecordMapper">
+
+    <resultMap id="NoteTaskSubmissionRecordDTOResult" type="com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO">
+        <id property="noteTaskId" column="note_task_id"/>
+        <id property="userId" column="user_id"/>
+        <result property="noteId" column="note_id"/>
+        <result property="submitTime" column="submit_time"/>
+        <result property="submissionUsername" column="username"/>
+        <result property="submissionNickname" column="nickname"/>
+        <result property="deleted" column="is_delete" />
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+    </resultMap>
+
+    <select id="selectNoteTaskSubmissionRecordList" resultMap="NoteTaskSubmissionRecordDTOResult">
+        SELECT
+            n_note_task_submission_record.note_task_id, n_note_task_submission_record.user_id, n_note_task_submission_record.note_id,
+            n_note_task_submission_record.submit_time, n_note_task_submission_record.is_delete, n_note_task_submission_record.create_by,
+            n_note_task_submission_record.create_time, n_note_task_submission_record.update_by, n_note_task_submission_record.update_time,
+            n_note_task_submission_record.remark, sys_user.username, sys_user.nickname
+        FROM
+            n_note_task_submission_record
+        LEFT JOIN
+            sys_user ON n_note_task_submission_record.user_id = sys_user.id
+        WHERE
+            n_note_task_submission_record.is_delete = 0
+        <if test="userId != null">
+            AND n_note_task_submission_record.user_id = #{userId}
+        </if>
+        <if test="noteTaskId != null">
+            AND n_note_task_submission_record.note_task_id = #{noteTaskId}
+        </if>
+        <if test="noteId != null">
+            AND n_note_task_submission_record.note_id = #{noteId}
+        </if>
+
+    </select>
+
+
+
+
+</mapper>

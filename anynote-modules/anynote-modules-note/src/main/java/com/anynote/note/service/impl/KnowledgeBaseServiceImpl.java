@@ -16,6 +16,7 @@ import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.po.SysUser;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -99,6 +100,20 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
             return 1;
         }
         return this.baseMapper.selectUserKnowledgeBasePermissions(userId, knowledgeBaseId);
+    }
+
+    /**
+     * 获取知识库成员数量
+     * @param queryParam
+     * @return
+     */
+    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.READ, message = "没有权限查看知识库总人数")
+    @Override
+    public Long getKnowledgeBaseMemberCount(KnowledgeBaseQueryParam queryParam) {
+        LambdaQueryWrapper<NoteKnowledgeBase> noteKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteKnowledgeBaseLambdaQueryWrapper
+                .eq(NoteKnowledgeBase::getId, queryParam.getId());
+        return this.baseMapper.selectCount(noteKnowledgeBaseLambdaQueryWrapper);
     }
 
     @Override

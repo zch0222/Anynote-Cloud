@@ -25,4 +25,14 @@ public class KnowledgeBaseQueryParam extends BaseEntity {
     private Integer status;
 
     private Long organizationId;
+
+    private Integer page;
+
+    private Integer pageSize;
+
+    public KnowledgeBaseQueryParam(Long id, Integer page, Integer pageSize) {
+        this.id = id;
+        this.page = page;
+        this.pageSize = pageSize;
+    }
 }

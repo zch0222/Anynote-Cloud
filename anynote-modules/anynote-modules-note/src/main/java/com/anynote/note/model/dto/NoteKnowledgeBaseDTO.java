@@ -49,5 +49,10 @@ public class NoteKnowledgeBaseDTO extends BaseEntity {
      */
     private Integer permissions;
 
+    /**
+     * 知识库简介
+     */
+    private String detail;
+
 
 }

@@ -50,6 +50,13 @@
     <!--            <artifactId>spring-boot-starter-web</artifactId>-->
     <!--        </dependency>-->
 
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-annotation -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mbp.version}</version>
+            </dependency>
+
             <!-- pagehelper 分页插件 -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>

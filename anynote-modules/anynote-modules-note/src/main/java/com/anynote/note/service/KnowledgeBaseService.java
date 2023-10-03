@@ -27,5 +27,7 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
 
     public Integer getUserKnowledgeBasePermissionsByNoteId(Long userId, Long noteId);
 
+    public Long getKnowledgeBaseMemberCount(KnowledgeBaseQueryParam queryParam);
+
 
 }

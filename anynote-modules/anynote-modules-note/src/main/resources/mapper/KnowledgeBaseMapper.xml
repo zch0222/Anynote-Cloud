@@ -26,6 +26,7 @@
         <result property="status" column="status" />
         <result property="organizationId" column="organization_id" />
         <result property="organizationName" column="organization_name" />
+        <result property="detail" column="detail"/>
         <result property="createBy"     column="create_by"    />
         <result property="createTime"   column="create_time"  />
         <result property="updateBy"     column="update_by"    />

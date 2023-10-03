@@ -35,16 +35,19 @@ public class Note extends BaseEntity {
     /**
      * 笔记正文id
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Long noteTextId;
 
     /**
      * 所属知识库id
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Long knowledgeBaseId;
 
     /**
      * 状态  0.正常 1.垃圾桶
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer status;
 
     /**
