@@ -131,6 +131,7 @@ CREATE TABLE `n_note_task` (
   `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '任务开始时间',
   `end_time` datetime NOT NULL COMMENT '任务结束时间',
   `knowledge_base_id` bigint unsigned NOT NULL DEFAULT '0' COMMENT '知识库',
+  `submitted_count` bigint unsigned NOT NULL DEFAULT '0' COMMENT '已提交数量',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '任务状态 0.进行中 1.已结束',
   `is_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0.未删除 1.删除',
   `create_by` bigint unsigned DEFAULT '0' COMMENT '创建者',
@@ -139,7 +140,7 @@ CREATE TABLE `n_note_task` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='笔记提交任务表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='笔记提交任务表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +149,7 @@ CREATE TABLE `n_note_task` (
 
 LOCK TABLES `n_note_task` WRITE;
 /*!40000 ALTER TABLE `n_note_task` DISABLE KEYS */;
-INSERT INTO `n_note_task` VALUES (1,'测试任务','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,0,'2023-10-02 21:39:33',0,'2023-10-02 21:39:33',''),(2,'测试任务2','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,2,'2023-10-03 13:44:09',2,'2023-10-03 13:44:09','');
+INSERT INTO `n_note_task` VALUES (1,'测试任务','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,0,1,'2023-10-02 21:39:33',0,'2023-10-02 21:39:33',''),(2,'测试任务2','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,0,2,'2023-10-03 13:44:09',2,'2023-10-03 13:44:09',''),(3,'测试任务2','2023-09-27 00:00:00','2023-10-28 00:00:00',3,0,0,0,2,'2023-10-03 14:59:36',2,'2023-10-03 14:59:36','');
 /*!40000 ALTER TABLE `n_note_task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,4 +519,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-03 13:47:18
+-- Dump completed on 2023-10-04  1:04:38
