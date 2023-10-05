@@ -40,10 +40,10 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.anynote</groupId>-->
-<!--            <artifactId>anynote-common-core</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-core</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.anynote</groupId>

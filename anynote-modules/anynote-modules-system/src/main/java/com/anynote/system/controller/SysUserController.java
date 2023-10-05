@@ -1,6 +1,7 @@
 package com.anynote.system.controller;
 
 import com.anynote.common.security.annotation.InnerAuth;
+import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
@@ -61,5 +62,19 @@ public class SysUserController {
                                                                         @NotNull(message = "页码不能为空") Integer page,
                                                                         @NotNull(message = "页面大小不能为空") Integer pageSize) {
         return ResData.success(sysUserService.getKnowledgeBaseUsers(knowledgeBaseId, page, pageSize));
+    }
+
+    @InnerAuth
+    @GetMapping("{userId}")
+    public ResData<SysUser> getSysUserById(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId) {
+        return ResData.success(sysUserService.getSysUserById(userId));
+    }
+
+    @InnerAuth
+    @PutMapping("{userId}")
+    public ResData<Integer> updateSysUser(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId,
+                                         @RequestBody SysUser sysUser) {
+        sysUser.setId(userId);
+        return ResUtil.success(sysUserService.updateSysUser(sysUser));
     }
 }

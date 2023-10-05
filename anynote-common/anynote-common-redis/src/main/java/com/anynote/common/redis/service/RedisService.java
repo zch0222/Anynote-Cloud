@@ -1,10 +1,8 @@
 package com.anynote.common.redis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundSetOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
+import org.springframework.data.util.CloseableIterator;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -124,6 +122,19 @@ public class RedisService {
     public boolean deleteObject(final Collection collection)
     {
         return redisTemplate.delete(collection) > 0;
+    }
+
+
+    public void deleteObjects(Object prefix) {
+        ScanOptions options = ScanOptions.scanOptions()
+                .match(prefix + "*")
+                .count(20)
+                .build();
+
+        CloseableIterator<Object> keyIterator = redisTemplate.opsForValue().getOperations().scan(options);
+        while (keyIterator.hasNext()) {
+            redisTemplate.delete(keyIterator.next());
+        }
     }
 
     /**

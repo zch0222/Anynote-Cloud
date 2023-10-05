@@ -1,5 +1,6 @@
 package com.anynote.auth.service;
 
+import com.anynote.auth.model.dto.ResetPasswordDTO;
 import com.anynote.system.api.model.bo.LoginUser;
 
 /**
@@ -15,4 +16,6 @@ public interface LoginService {
      * @return 登录用户信息
      */
     public LoginUser login(String username, String password);
+
+    public LoginUser resetPassword(ResetPasswordDTO resetPasswordDTO);
 }

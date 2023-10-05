@@ -37,4 +37,9 @@ public interface SysUserService extends IService<SysUser> {
     public KnowledgeBaseUserImportDTO importKnowledgeBaseUser(KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO);
 
     public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize);
+
+    public SysUser getSysUserById(Long userId);
+
+
+    public Integer updateSysUser(SysUser sysUser);
 }

@@ -56,7 +56,7 @@ public class TokenUtil {
         loginUser.setToken(token);
         redisService.setCacheObject(CachePrefixEnum.ACCESS_TOKEN.getPrefix(loginUser.getUsername()) + accessToken,
                 loginUser, jwtTokenProperties.getTokenExpireTime() * 60, TimeUnit.SECONDS);
-        redisService.setCacheObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix(loginUser.getUsername()),
+        redisService.setCacheObject(CachePrefixEnum.REFRESH_TOKEN.getPrefix(loginUser.getUsername()) + refreshToken,
                 loginUser, expireTime, TimeUnit.SECONDS);
         return token;
     }
@@ -94,6 +94,18 @@ public class TokenUtil {
         }
         return null;
     }
+
+
+    /**
+     * 删除用户的所有token
+     * @param username
+     */
+    public void removeTokens(String username) {
+        redisService.deleteObjects(CachePrefixEnum.ACCESS_TOKEN.getPrefix(username));
+        redisService.deleteObjects(CachePrefixEnum.REFRESH_TOKEN.getPrefix(username));
+    }
+
+
 
 
     /**

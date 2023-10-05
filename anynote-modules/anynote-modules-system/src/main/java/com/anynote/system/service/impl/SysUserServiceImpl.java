@@ -2,6 +2,7 @@ package com.anynote.system.service.impl;
 
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.common.security.utils.SecurityUtils;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
@@ -150,5 +151,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .pages(pageInfo.getPages())
                 .total(pageInfo.getTotal())
                 .build();
+    }
+
+    @Override
+    public SysUser getSysUserById(Long userId) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper
+                .eq(SysUser::getId, userId)
+                .select(SysUser::getUsername, SysUser::getPassword);
+        return this.baseMapper.selectOne(sysUserLambdaQueryWrapper);
+    }
+
+    @Override
+    public Integer updateSysUser(SysUser sysUser) {
+        return this.baseMapper.updateById(sysUser);
     }
 }

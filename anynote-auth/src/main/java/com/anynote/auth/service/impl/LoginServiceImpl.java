@@ -1,10 +1,13 @@
 package com.anynote.auth.service.impl;
 
+import com.anynote.auth.model.dto.ResetPasswordDTO;
 import com.anynote.auth.service.LoginService;
 import com.anynote.auth.service.PasswordService;
 import com.anynote.common.security.token.TokenUtil;
+import com.anynote.common.security.utils.SecurityUtils;
 import com.anynote.core.constant.UserConstants;
 import com.anynote.core.enums.UserStatus;
+import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.auth.LoginException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
@@ -16,6 +19,7 @@ import com.anynote.system.api.model.po.SysUser;
 import org.apache.catalina.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,6 +37,10 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private TokenUtil tokenUtil;
+
+
+    @Autowired
+    private ThreadPoolTaskExecutor asyncExecutor;
 
     @Override
     public LoginUser login(String username, String password) {
@@ -78,5 +86,50 @@ public class LoginServiceImpl implements LoginService {
         Token token = tokenUtil.createToken(loginUser);
 
         return loginUser;
+    }
+
+    @Override
+    public LoginUser resetPassword(ResetPasswordDTO resetPasswordDTO) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        ResData<SysUser> sysUserResData =
+                remoteUserService.getSysUserById(loginUser.getSysUser().getId());
+
+
+        if (StringUtils.isNull(sysUserResData) || StringUtils.isNull(sysUserResData.getData())) {
+            throw new BusinessException("重置密码失败，请联系管理员");
+        }
+
+        if (!ResData.SUCCESS.equals(sysUserResData.getCode())) {
+            throw new BusinessException("重置密码失败，请联系管理员");
+        }
+
+
+        SysUser sysUser = sysUserResData.getData();
+        try {
+            passwordService.validate(sysUser, resetPasswordDTO.getOldPassword());
+        } catch (LoginException e) {
+            e.printStackTrace();
+            throw new BusinessException("重置密码失败，旧密码错误");
+        }
+
+        sysUser.setPassword(SecurityUtils.encryptPassword(resetPasswordDTO.getNewPassword()));
+
+        ResData<Integer> updateUserRes = remoteUserService.updateSysUser(loginUser.getSysUser().getId(),
+                sysUser);
+
+        if (StringUtils.isNull(updateUserRes) || StringUtils.isNull(updateUserRes.getData())) {
+            throw new BusinessException("重置密码失败，请联系管理员");
+        }
+        if (!ResData.SUCCESS.equals(updateUserRes.getCode())) {
+            throw new BusinessException("重置密码失败，请联系管理员");
+        }
+
+        if (1 != updateUserRes.getData()) {
+            throw new BusinessException("重置密码失败，请联系管理员");
+        }
+        asyncExecutor.submit(() -> {
+            tokenUtil.removeTokens(loginUser.getSysUser().getUsername());
+        });
+        return this.login(sysUser.getUsername(), resetPasswordDTO.getNewPassword());
     }
 }

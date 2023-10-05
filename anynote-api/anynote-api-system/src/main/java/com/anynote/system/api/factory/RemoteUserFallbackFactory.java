@@ -7,6 +7,7 @@ import com.anynote.system.api.RemoteUserService;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
+import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -38,6 +39,16 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
 
             @Override
             public ResData<PageBean<KnowledgeBaseUserVO>> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize) {
+                return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
+            }
+
+            @Override
+            public ResData<SysUser> getSysUserById(Long userId) {
+                return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
+            }
+
+            @Override
+            public ResData<Integer> updateSysUser(Long userId, SysUser sysUser) {
                 return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
             }
         };
