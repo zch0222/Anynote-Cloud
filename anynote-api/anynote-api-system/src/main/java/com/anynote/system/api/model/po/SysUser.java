@@ -5,6 +5,7 @@ import com.anynote.core.web.model.bo.BaseEntity;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;

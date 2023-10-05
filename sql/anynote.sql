@@ -60,7 +60,7 @@ CREATE TABLE `n_knowledge_base` (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '知识库名称',
   `cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '知识库封面',
   `detail` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
-  `type` tinyint(1) NOT NULL COMMENT '类型 (0.普通知识库 1.课程知识库)',
+  `type` tinyint(1) NOT NULL COMMENT '类型 (0.普通知识库 1.组织知识库)',
   `status` tinyint(1) DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
   `is_delete` tinyint(1) DEFAULT '0' COMMENT '删除标志(0标识未删除 1表示删除)',
   `create_by` bigint unsigned DEFAULT '0' COMMENT '创建者',
@@ -79,7 +79,7 @@ CREATE TABLE `n_knowledge_base` (
 
 LOCK TABLES `n_knowledge_base` WRITE;
 /*!40000 ALTER TABLE `n_knowledge_base` DISABLE KEYS */;
-INSERT INTO `n_knowledge_base` VALUES (1,'测试知识库1','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-27 18:02:26',0,'2023-09-27 18:02:26','1',1),(2,'测试知识库2','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-27 18:02:40',0,'2023-09-27 18:02:40','2',1),(3,'测试知识库3','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-29 15:59:54',0,'2023-09-29 15:59:54','',0),(4,'测试知识库1001','https://i0.hdslb.com/bfs/new_dyn/18d03597c3df44d36c50891685d8d3153494361880856991.jpg@662w_560h_1e_1c.avif',NULL,0,0,0,2,'2023-10-01 23:51:13',2,'2023-10-01 23:51:13','',0);
+INSERT INTO `n_knowledge_base` VALUES (1,'测试知识库1','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,1,0,0,0,'2023-09-27 18:02:26',0,'2023-09-27 18:02:26','1',1),(2,'测试知识库2','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,1,0,0,0,'2023-09-27 18:02:40',0,'2023-09-27 18:02:40','2',1),(3,'测试知识库3','https://anynote.obs.cn-east-3.myhuaweicloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20230427135917.jpg',NULL,0,0,0,0,'2023-09-29 15:59:54',0,'2023-09-29 15:59:54','',0),(4,'测试知识库1001','https://i0.hdslb.com/bfs/new_dyn/18d03597c3df44d36c50891685d8d3153494361880856991.jpg@662w_560h_1e_1c.avif',NULL,0,0,0,2,'2023-10-01 23:51:13',2,'2023-10-01 23:51:13','',0);
 /*!40000 ALTER TABLE `n_knowledge_base` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,7 +105,7 @@ CREATE TABLE `n_note` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='笔记表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='笔记表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `n_note` (
 
 LOCK TABLES `n_note` WRITE;
 /*!40000 ALTER TABLE `n_note` DISABLE KEYS */;
-INSERT INTO `n_note` VALUES (1,'修改测试14445',1,2,0,2,'70000',0,2,'2023-09-30 00:45:55',2,'2023-10-01 00:57:01',''),(2,'修改测试14445',2,2,0,2,'70600',0,1,'2023-09-30 00:58:51',2,'2023-10-01 00:56:45',''),(4,'知识库2的测试笔记3',3,3,0,1,'70000',0,1,'2023-09-30 01:09:29',0,'2023-09-30 01:09:29',''),(5,'知识库2的测试笔记4',1,2,0,3,'70000',0,1,'2023-09-30 01:10:10',0,'2023-09-30 01:10:10',''),(6,'测试笔记',3,3,0,1,'70000',1,2,'2023-10-01 20:31:09',2,'2023-10-01 20:31:08',''),(7,'修改测试14445',4,3,0,1,'44000',0,2,'2023-10-01 20:32:51',2,'2023-10-01 21:36:18',''),(8,'测试笔记23333',5,3,0,1,'44000',0,2,'2023-10-01 21:28:40',2,'2023-10-01 21:28:40','');
+INSERT INTO `n_note` VALUES (1,'修改测试14445',1,2,0,2,'70000',0,2,'2023-09-30 00:45:55',2,'2023-10-01 00:57:01',''),(2,'修改测试14445',2,2,0,2,'70600',0,1,'2023-09-30 00:58:51',2,'2023-10-01 00:56:45',''),(4,'知识库2的测试笔记3',3,3,0,1,'70000',0,1,'2023-09-30 01:09:29',0,'2023-09-30 01:09:29',''),(5,'知识库2的测试笔记4',1,2,0,3,'70000',0,1,'2023-09-30 01:10:10',0,'2023-09-30 01:10:10',''),(6,'测试笔记',3,3,0,1,'70000',1,2,'2023-10-01 20:31:09',2,'2023-10-01 20:31:08',''),(7,'修改测试14445',4,3,0,1,'44000',0,2,'2023-10-01 20:32:51',2,'2023-10-01 21:36:18',''),(8,'测试笔记23333',5,3,0,1,'44000',0,2,'2023-10-01 21:28:40',2,'2023-10-01 21:28:40',''),(9,'测试笔记23333333',6,3,0,1,'70000',0,11,'2023-10-05 01:18:11',11,'2023-10-05 01:18:10',''),(10,'修改测试14445',7,3,0,1,'70000',1,11,'2023-10-05 01:18:53',11,'2023-10-05 01:19:10',''),(11,'测试笔记3335656',8,3,0,1,'70000',0,11,'2023-10-05 15:37:13',11,'2023-10-05 15:37:13','');
 /*!40000 ALTER TABLE `n_note` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +202,7 @@ CREATE TABLE `n_note_text` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `remark` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +211,7 @@ CREATE TABLE `n_note_text` (
 
 LOCK TABLES `n_note_text` WRITE;
 /*!40000 ALTER TABLE `n_note_text` DISABLE KEYS */;
-INSERT INTO `n_note_text` VALUES (1,'666664411111',0,2,'2023-09-30 00:45:19',2,'2023-10-01 00:57:01',''),(2,'666664411111',0,0,'2023-09-30 21:59:25',2,'2023-10-01 00:56:45',''),(3,'# 测试笔记',1,2,'2023-10-01 20:31:09',2,'2023-10-01 20:31:09',''),(4,'666664411111',0,2,'2023-10-01 20:32:51',2,'2023-10-01 21:36:18',''),(5,'# 测试笔记23333',0,2,'2023-10-01 21:28:40',2,'2023-10-01 21:28:40','');
+INSERT INTO `n_note_text` VALUES (1,'666664411111',0,2,'2023-09-30 00:45:19',2,'2023-10-01 00:57:01',''),(2,'666664411111',0,0,'2023-09-30 21:59:25',2,'2023-10-01 00:56:45',''),(3,'# 测试笔记',1,2,'2023-10-01 20:31:09',2,'2023-10-01 20:31:09',''),(4,'666664411111',0,2,'2023-10-01 20:32:51',2,'2023-10-01 21:36:18',''),(5,'# 测试笔记23333',0,2,'2023-10-01 21:28:40',2,'2023-10-01 21:28:40',''),(6,'# 测试笔记23333333',0,11,'2023-10-05 01:18:11',11,'2023-10-05 01:18:11',''),(7,'666664411111',1,11,'2023-10-05 01:18:53',11,'2023-10-05 01:19:10',''),(8,'# 测试笔记3335656',0,11,'2023-10-05 15:37:13',11,'2023-10-05 15:37:13','');
 /*!40000 ALTER TABLE `n_note_text` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +260,7 @@ CREATE TABLE `n_user_knowledge_base` (
 
 LOCK TABLES `n_user_knowledge_base` WRITE;
 /*!40000 ALTER TABLE `n_user_knowledge_base` DISABLE KEYS */;
-INSERT INTO `n_user_knowledge_base` VALUES (2,1,1),(2,2,2),(2,3,1);
+INSERT INTO `n_user_knowledge_base` VALUES (2,1,1),(2,2,2),(2,3,1),(7,3,2),(8,3,2),(10,3,2),(11,3,2),(12,3,2);
 /*!40000 ALTER TABLE `n_user_knowledge_base` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -352,7 +352,7 @@ CREATE TABLE `sys_organization` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='组织表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='组织表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +361,7 @@ CREATE TABLE `sys_organization` (
 
 LOCK TABLES `sys_organization` WRITE;
 /*!40000 ALTER TABLE `sys_organization` DISABLE KEYS */;
-INSERT INTO `sys_organization` VALUES (1,0,'0','测试组织',1,NULL,NULL,NULL,0,0,0,'2023-09-27 18:01:36',0,NULL,'测试组织');
+INSERT INTO `sys_organization` VALUES (1,0,'0','测试组织',1,NULL,NULL,NULL,0,0,0,'2023-09-27 18:01:36',0,NULL,'测试组织'),(2,0,'0','计算机214',-1,NULL,NULL,NULL,0,0,0,'2023-10-05 00:25:20',0,NULL,''),(3,0,'0','计算机215',-1,NULL,NULL,NULL,0,0,0,'2023-10-05 00:40:13',0,NULL,''),(4,0,'0','898989',-1,NULL,NULL,NULL,0,0,0,'2023-10-05 01:22:04',0,NULL,'');
 /*!40000 ALTER TABLE `sys_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,7 +448,7 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,7 +457,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES (1,'adminX','adminX','yxlmzch0222@gmail.com','19883526582',1,'','$2a$10$gNx2Qrg1HgUkjukwQwmDc.H0hHXWk9KJYJNZkV2YjuHRYwr6LGt3m',0,0,'','2023-09-26 12:07:31',0,NULL,0,NULL,NULL),(2,'testStudent','testStudent','','',0,'','$2a$10$gNx2Qrg1HgUkjukwQwmDc.H0hHXWk9KJYJNZkV2YjuHRYwr6LGt3m',0,0,'',NULL,0,NULL,0,NULL,NULL);
+INSERT INTO `sys_user` VALUES (1,'adminX','adminX','yxlmzch0222@gmail.com','19883526582',1,'','$2a$10$gNx2Qrg1HgUkjukwQwmDc.H0hHXWk9KJYJNZkV2YjuHRYwr6LGt3m',0,0,'','2023-09-26 12:07:31',0,NULL,0,NULL,NULL),(2,'testStudent','testStudent','','',0,'','$2a$10$gNx2Qrg1HgUkjukwQwmDc.H0hHXWk9KJYJNZkV2YjuHRYwr6LGt3m',0,0,'',NULL,0,NULL,0,NULL,NULL),(3,'1.832542206E9','测试用户','','',2,'','$2a$10$v.jRirtrgOOeFHc8WLLPquwXFRYu9b6.Q3TI3WcJXdHx8KbQUQd2G',0,0,'',NULL,2,'2023-10-05 00:25:20',2,'2023-10-05 00:25:20',NULL),(4,'1832542206','测试用户','','',2,'','$2a$10$Jb5aDs2M9lz9UMl/l0RkuuEC/mLOxJdnwgRscW31qTlxmitsbxm.i',0,0,'',NULL,2,'2023-10-05 00:33:41',2,'2023-10-05 00:33:41',NULL),(5,'18325422222206','测试用户666','','',2,'','$2a$10$5T1TwDYHOUFEcjfVvgTvjuslSEEUugHMTF9X73YkrecjQ9JWR3l8.',0,0,'',NULL,2,'2023-10-05 00:36:18',2,'2023-10-05 00:36:18',NULL),(6,'183254222099','测试用户666','','',2,'','$2a$10$/maxAE5UCl5IPha0mSx4ge3R0tM91C0bGpnHRwnioW9n7D.g.sX5a',0,0,'',NULL,2,'2023-10-05 00:37:30',2,'2023-10-05 00:37:30',NULL),(7,'1899','测试用户6996','','',2,'','$2a$10$9RJIbMXYgU/zyT9gpZSc1.l8Nw84Vw/OEsBweHomyTGk8Q4z4EvzS',0,0,'',NULL,2,'2023-10-05 00:39:17',2,'2023-10-05 00:39:17',NULL),(8,'189988','测试用户69969','','',2,'','$2a$10$pEmBArixDkFFj8LeuR7xoOFtOWCsHfxtp.JzBNlfnXmE8hDc3J.BS',0,0,'',NULL,2,'2023-10-05 00:40:12',2,'2023-10-05 00:40:12',NULL),(9,'188365656','测试用户666565656','','',2,'','$2a$10$R1gRD1zEm94rtklSGCwLEOSZDS48qheGTt4pQZvyRNUDiC2xME8Zu',0,0,'',NULL,2,'2023-10-05 01:01:16',2,'2023-10-05 01:01:16',NULL),(10,'15454564','ccccccc','','',2,'','$2a$10$tQqZkZvHMs.XGAQCl4p3DO84a9.zCJr5g0sQ9ZvzVCFZauYgN3Mxu',0,0,'',NULL,2,'2023-10-05 01:03:50',2,'2023-10-05 01:03:50',NULL),(11,'454546464654','151616','','',2,'','$2a$10$WqNjjepjdvZvDEX6t.0rauLsJDlx6sRhBPNgLSeb8MHgYJIeOM6TK',0,0,'',NULL,2,'2023-10-05 01:07:57',2,'2023-10-05 01:07:57',NULL),(12,'6558877','777777','','',2,'','$2a$10$BWd1rQXT6lfS3XqI1l20jOxzLLC2mdQPgyEHM3pqAFRsPwYG9aQsu',0,0,'',NULL,2,'2023-10-05 01:22:04',2,'2023-10-05 01:22:04',NULL);
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,7 +482,7 @@ CREATE TABLE `sys_user_organization` (
 
 LOCK TABLES `sys_user_organization` WRITE;
 /*!40000 ALTER TABLE `sys_user_organization` DISABLE KEYS */;
-INSERT INTO `sys_user_organization` VALUES (1,1,0);
+INSERT INTO `sys_user_organization` VALUES (1,1,0),(3,2,0),(4,2,0),(5,2,0),(6,2,0),(7,2,0),(8,3,0),(12,4,0);
 /*!40000 ALTER TABLE `sys_user_organization` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +506,7 @@ CREATE TABLE `sys_user_role` (
 
 LOCK TABLES `sys_user_role` WRITE;
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
-INSERT INTO `sys_user_role` VALUES (1,1),(2,2);
+INSERT INTO `sys_user_role` VALUES (1,1),(2,2),(9,2),(10,2),(11,2),(12,2);
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -519,4 +519,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-04  1:04:38
+-- Dump completed on 2023-10-05 18:51:52

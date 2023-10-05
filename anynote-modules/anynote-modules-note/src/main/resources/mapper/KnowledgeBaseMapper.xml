@@ -26,6 +26,7 @@
         <result property="status" column="status" />
         <result property="organizationId" column="organization_id" />
         <result property="organizationName" column="organization_name" />
+        <result property="permissions" column="permissions"/>
         <result property="detail" column="detail"/>
         <result property="createBy"     column="create_by"    />
         <result property="createTime"   column="create_time"  />
@@ -33,6 +34,12 @@
         <result property="updateTime"   column="update_time"  />
         <result property="remark"       column="remark"       />
     </resultMap>
+
+    <insert id="insertUserKnowledgeBase">
+        INSERT INTO
+            n_user_knowledge_base(user_id, knowledge_base_id, permissions)
+        VALUES(#{userId}, #{knowledgeBaseId}, #{permission})
+    </insert>
 
     <sql id="selectKnowledgeBaseDTOVO">
         SELECT
@@ -56,11 +63,11 @@
     <select id="selectOrganizationKnowledgeBaseList"
             parameterType="com.anynote.note.model.bo.KnowledgeBaseQueryParam"
             resultMap="NoteKnowledgeBaseDTOResult">
-        SELECT
+        SELECT DISTINCT
             n_knowledge_base.id, n_knowledge_base.name as knowledge_base_name, n_knowledge_base.cover,
             n_knowledge_base.detail, n_knowledge_base.type, n_knowledge_base.status, sys_organization.id as organization_id,
             n_knowledge_base.create_by, n_knowledge_base.create_time, sys_organization.organization_name,
-            n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark
+            n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark, n_user_knowledge_base.permissions
         FROM
             n_knowledge_base
         LEFT JOIN
@@ -72,7 +79,7 @@
         WHERE
             n_knowledge_base.is_delete = 0
           AND
-            n_knowledge_base.organization_id > 0
+            n_knowledge_base.type = 1
           <if test="name != null and name != ''">
               AND n_knowledge_base.name like concat('%', #{name}, '%')
           </if>
@@ -93,10 +100,42 @@
 --         ORDER BY n_knowledge_base.update_time DESC;
     </select>
 
+    <select id="selectUserKnowledgeBaseList" resultMap="NoteKnowledgeBaseDTOResult">
+        SELECT DISTINCT
+        n_knowledge_base.id, n_knowledge_base.name as knowledge_base_name, n_knowledge_base.cover,
+        n_knowledge_base.detail, n_knowledge_base.type, n_knowledge_base.status,
+        n_knowledge_base.create_by, n_knowledge_base.create_time,
+        n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark, n_user_knowledge_base.permissions
+        FROM
+            n_knowledge_base
+        LEFT JOIN
+            n_user_knowledge_base ON n_knowledge_base.id = n_user_knowledge_base.knowledge_base_id
+        LEFT JOIN
+            sys_user ON n_user_knowledge_base.user_id = sys_user.id
+        WHERE
+            n_knowledge_base.is_delete = 0
+        AND
+            n_knowledge_base.type = 0
+        <if test="name != null and name != ''">
+            AND n_knowledge_base.name like concat('%', #{name}, '%')
+        </if>
+        <if test="type != null">
+            AND n_knowledge_base.type = #{type}
+        </if>
+        <if test="status != null">
+            AND n_knowledge_base.status = #{status}
+        </if>
+        <if test="organizationId != null">
+            AND n_organization_knowledge_base.organization_id = {organizationId}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
     
     <select id="selectKnowledgeBaseById" resultMap="NoteKnowledgeBaseDTOResult">
 <!--        <include refid="selectKnowledgeBaseDTOVO"/>-->
-        SELECT
+        SELECT DISTINCT
             n_knowledge_base.id, n_knowledge_base.name as knowledge_base_name, n_knowledge_base.cover,
             n_knowledge_base.detail, n_knowledge_base.type, n_knowledge_base.status, sys_organization.id as organization_id,
             n_knowledge_base.create_by, n_knowledge_base.create_time, sys_organization.organization_name,

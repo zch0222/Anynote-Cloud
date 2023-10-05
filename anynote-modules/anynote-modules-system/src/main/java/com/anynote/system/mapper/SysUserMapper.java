@@ -1,6 +1,7 @@
 package com.anynote.system.mapper;
 
 import com.anynote.system.api.model.po.SysUser;
+import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,9 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return 用户信息
      */
     public SysUser selectUserByUserName(@Param("username") String username);
+
+    public Integer insertUserRole(@Param("userId") Long userId,
+                                  @Param("roleId") Long roleId);
+
+    public List<KnowledgeBaseUserVO> selectKnowledgeBaseUsers(@Param("knowledgeBaseId") Long knowledgeBaseId);
 }

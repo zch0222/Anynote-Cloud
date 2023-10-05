@@ -4,7 +4,10 @@ import com.anynote.core.web.model.bo.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 组织表
@@ -12,6 +15,9 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_organization")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysOrganization extends BaseEntity {
     /**
      * 组织id

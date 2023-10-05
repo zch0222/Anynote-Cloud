@@ -2,6 +2,7 @@ package com.anynote.note.model.dto;
 
 import com.anynote.core.web.model.bo.BaseEntity;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -37,11 +38,13 @@ public class NoteKnowledgeBaseDTO extends BaseEntity {
     /**
      * 机构id
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Long organizationId;
 
     /**
      * 机构名称
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String organizationName;
 
     /**

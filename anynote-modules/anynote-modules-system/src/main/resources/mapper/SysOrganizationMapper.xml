@@ -22,6 +22,12 @@
         <result property="remark"       column="remark"       />
     </resultMap>
 
+    <insert id="insertUserSysOrganization">
+        INSERT INTO
+            sys_user_organization(user_id, organization_id, status)
+        VALUES (#{userId}, #{sysOrganizationId}, #{status})
+    </insert>
+
 <!--    <select id="selectOrganizationInfoByKnowledgeBaseId"-->
 <!--            resultMap="SysOrganizationResult">-->
 <!--        SELECT-->

@@ -26,6 +26,14 @@
         <collection property="organizations" javaType="java.util.List" resultMap="SysOrganization" />
     </resultMap>
 
+    <resultMap id="KnowledgeBaseUserVOResult"
+               type="com.anynote.system.api.model.vo.KnowledgeBaseUserVO">
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="permissions" column="permissions"/>
+    </resultMap>
+
     <resultMap id="SysRoleResult" type="com.anynote.system.api.model.po.SysRole">
         <id property="id" column="role_id" />
         <result property="roleName" column="role_name" />
@@ -74,6 +82,26 @@
         WHERE
             sys_user.username = #{username};
     </select>
+    
+    <select id="selectKnowledgeBaseUsers" resultMap="KnowledgeBaseUserVOResult">
+        SELECT
+            sys_user.id as user_id, sys_user.username, sys_user.nickname,
+            n_user_knowledge_base.permissions
+        FROM
+            sys_user
+        LEFT JOIN
+            n_user_knowledge_base ON sys_user.id = n_user_knowledge_base.user_id
+        WHERE
+            sys_user.is_delete = 0
+          AND
+            n_user_knowledge_base.knowledge_base_id = #{knowledgeBaseId};
+    </select>
+
+    <insert id="insertUserRole">
+        INSERT INTO
+            sys_user_role(user_id, role_id)
+        VALUES (#{userId}, #{roleId})
+    </insert>
 
 
 </mapper>

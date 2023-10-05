@@ -1,12 +1,18 @@
 package com.anynote.system.api.factory;
 
 import com.anynote.core.web.enums.ResCode;
+import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.system.api.RemoteUserService;
+import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
+import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 用户服务降级
@@ -22,6 +28,16 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
         return new RemoteUserService() {
             @Override
             public ResData<LoginUser> getUserInfo(String username) {
+                return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
+            }
+
+            @Override
+            public ResData<KnowledgeBaseUserImportDTO> importKnowledgeBaseUser(KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO) {
+                return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
+            }
+
+            @Override
+            public ResData<PageBean<KnowledgeBaseUserVO>> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize) {
                 return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
             }
         };
