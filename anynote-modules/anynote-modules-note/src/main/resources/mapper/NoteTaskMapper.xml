@@ -27,13 +27,14 @@
         FROM
             n_note_task
         LEFT JOIN
-            n_note_task_submission_record ON n_note_task.id = n_note_task_submission_record.note_task_id
+            n_note_task_submission_record ON
+                (n_note_task.id = n_note_task_submission_record.note_task_id
+                    AND
+                n_note_task_submission_record.user_id = #{submitUserId})
         LEFT JOIN
             sys_user ON n_note_task.create_by = sys_user.id
         WHERE
             n_note_task.is_delete = 0
-          AND
-            n_note_task_submission_record.user_id = #{submitUserId}
         <if test="noteTaskId != null">
             AND n_note_task.id = #{noteTaskId}
         </if>

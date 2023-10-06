@@ -289,17 +289,14 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     }
 
     /**
-     * 获取知识库成员数量
+     * 获取知识库成员数量(不包含管理员)
      * @param queryParam
      * @return
      */
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.READ, message = "没有权限查看知识库总人数")
     @Override
     public Long getKnowledgeBaseMemberCount(KnowledgeBaseQueryParam queryParam) {
-        LambdaQueryWrapper<NoteKnowledgeBase> noteKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        noteKnowledgeBaseLambdaQueryWrapper
-                .eq(NoteKnowledgeBase::getId, queryParam.getId());
-        return this.baseMapper.selectCount(noteKnowledgeBaseLambdaQueryWrapper);
+        return this.baseMapper.selectKnowledgeBaseMembersCount(queryParam.getId());
     }
 
     @Override

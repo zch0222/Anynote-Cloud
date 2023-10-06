@@ -132,6 +132,17 @@
         ${params.dataScope}
     </select>
 
+    <select id="selectKnowledgeBaseMembersCount" resultType="java.lang.Long">
+        SELECT
+            COUNT(*)
+        FROM
+            n_user_knowledge_base
+        WHERE
+            knowledge_base_id = #{knowledgeBaseId}
+          AND
+            permissions > 1
+    </select>
+
     
     <select id="selectKnowledgeBaseById" resultMap="NoteKnowledgeBaseDTOResult">
 <!--        <include refid="selectKnowledgeBaseDTOVO"/>-->

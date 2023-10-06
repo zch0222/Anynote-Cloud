@@ -37,4 +37,5 @@ public interface KnowledgeBaseMapper extends BaseMapper<NoteKnowledgeBase> {
                                            @Param("knowledgeBaseId") Long knowledgeBaseId,
                                            @Param("permission") Integer permission);
 
+    public Long selectKnowledgeBaseMembersCount(@Param("knowledgeBaseId") Long knowledgeBaseId);
 }
