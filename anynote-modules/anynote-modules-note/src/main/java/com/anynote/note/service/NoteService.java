@@ -16,6 +16,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface NoteService extends IService<Note> {
 
+    /**
+     * 获取最近更新的笔记
+     * @param queryParam
+     * @return
+     */
+    public PageBean<Note> getNoteInfoList(NoteQueryParam queryParam);
+
     public PageBean<Note> getNotesByKnowledgeBaseId(NoteQueryParam queryParam);
 
     public Note getNoteById(NoteQueryParam queryParam);

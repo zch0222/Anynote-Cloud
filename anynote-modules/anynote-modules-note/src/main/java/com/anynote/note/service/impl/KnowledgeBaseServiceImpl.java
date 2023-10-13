@@ -2,6 +2,7 @@ package com.anynote.note.service.impl;
 
 import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.common.security.token.TokenUtil;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.constant.FileConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.user.UserParamException;
@@ -12,7 +13,9 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.bo.FileDTO;
-import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
+import com.anynote.note.api.model.po.UserKnowledgeBase;
+import com.anynote.note.mapper.UserKnowledgeBaseMapper;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.validate.annotation.PageValid;
 import com.anynote.system.api.RemoteUserService;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
@@ -21,9 +24,6 @@ import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.aspect.KnowledgeBasePermissionsAspect;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.mapper.KnowledgeBaseMapper;
-import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
-import com.anynote.note.model.bo.KnowledgeBaseImportUserParam;
-import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
 import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
@@ -46,6 +46,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 知识库服务
@@ -57,6 +58,9 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
 
     @Autowired
     private TokenUtil tokenUtil;
+
+    @Autowired
+    private UserKnowledgeBaseMapper userKnowledgeBaseMapper;
 
     @Autowired
     private RemoteUserService remoteUserService;
@@ -98,7 +102,6 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
                 .get(KnowledgeBasePermissionsAspect.KNOWLEDGE_BASE_PERMISSIONS)));
         return noteKnowledgeBaseDTO;
     }
-
     @Override
     @DataScope
     public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize) {
@@ -113,6 +116,40 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
                 .total(pageInfo.getTotal())
                 .pages(pageInfo.getPages())
                 .build();
+    }
+
+    @Override
+    public List<Long> getAllKnowledgeBaseUserId(Long knowledgeBaseId) {
+        LambdaQueryWrapper<UserKnowledgeBase> userKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userKnowledgeBaseLambdaQueryWrapper
+                .eq(UserKnowledgeBase::getKnowledgeBaseId, knowledgeBaseId)
+                .select(UserKnowledgeBase::getUserId);
+        List<UserKnowledgeBase> userIdList = userKnowledgeBaseMapper.selectList(userKnowledgeBaseLambdaQueryWrapper);
+        return userIdList.stream().map(userKnowledgeBase -> {
+            return userKnowledgeBase.getUserId();
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> getAllKnowledgeBaseManagerId(Long knowledgeBaseId) {
+        LambdaQueryWrapper<UserKnowledgeBase> userKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userKnowledgeBaseLambdaQueryWrapper
+                .eq(UserKnowledgeBase::getKnowledgeBaseId, knowledgeBaseId)
+                .eq(UserKnowledgeBase::getPermissions, KnowledgeBasePermissions.MANAGE.getValue())
+                .select(UserKnowledgeBase::getUserId);
+        List<UserKnowledgeBase> userIdList = userKnowledgeBaseMapper.selectList(userKnowledgeBaseLambdaQueryWrapper);
+        return userIdList.stream().map(userKnowledgeBase -> userKnowledgeBase.getUserId()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> getAllMemberKnowledgeBaseUserId(Long knowledgeBaseId) {
+        LambdaQueryWrapper<UserKnowledgeBase> userKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userKnowledgeBaseLambdaQueryWrapper
+                .eq(UserKnowledgeBase::getKnowledgeBaseId, knowledgeBaseId)
+                .gt(UserKnowledgeBase::getPermissions, KnowledgeBasePermissions.MANAGE.getValue())
+                .select(UserKnowledgeBase::getUserId);;
+        List<UserKnowledgeBase> userIdList = userKnowledgeBaseMapper.selectList(userKnowledgeBaseLambdaQueryWrapper);
+        return userIdList.stream().map(userKnowledgeBase -> userKnowledgeBase.getUserId()).collect(Collectors.toList());
     }
 
     @Override
@@ -306,5 +343,21 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
             return 1;
         }
         return this.baseMapper.selectUserKnowledgeBasePermissionsByNoteId(userId, noteId);
+    }
+
+    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "没有权限更新知识库信息")
+    @Override
+    public String updateKnowledgeBase(KnowledgeBaseUpdateParam updateParam) {
+        NoteKnowledgeBase knowledgeBase = NoteKnowledgeBase.builder()
+                .id(updateParam.getId())
+                .name(updateParam.getName())
+                .detail(updateParam.getDetail())
+                .cover(updateParam.getCover())
+                .build();
+        Integer count = this.baseMapper.updateById(knowledgeBase);
+        if (1 != count) {
+            throw new BusinessException("更新知识库失败，请联系管理员");
+        }
+        return Constants.SUCCESS_RES;
     }
 }

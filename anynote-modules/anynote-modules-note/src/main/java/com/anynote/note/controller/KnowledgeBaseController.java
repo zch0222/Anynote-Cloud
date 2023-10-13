@@ -6,8 +6,10 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
+import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
 import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
 import com.anynote.note.model.dto.KnowledgeBaseCreateDTO;
+import com.anynote.note.model.dto.KnowledgeBaseUpdateDTO;
 import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
@@ -68,6 +70,16 @@ public class KnowledgeBaseController {
                 .id(id)
                 .build();
         return ResData.success(knowledgeBaseService.getKnowledgeBaseById(queryParam));
+    }
+
+    @PutMapping("{id}")
+    public ResData<String> updateKnowledgeBase(
+            @PathVariable("id") Long id,
+            @RequestBody KnowledgeBaseUpdateDTO knowledgeBaseUpdateDTO) {
+        knowledgeBaseUpdateDTO.setKnowledgeBaseId(id);
+        KnowledgeBaseUpdateParam updateParam =
+                new KnowledgeBaseUpdateParam(knowledgeBaseUpdateDTO);
+        return ResData.success(knowledgeBaseService.updateKnowledgeBase(updateParam));
     }
 
 

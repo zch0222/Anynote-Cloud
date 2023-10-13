@@ -41,6 +41,11 @@ public class NoteKnowledgeBase extends BaseEntity {
     private Integer type;
 
     /**
+     * 知识库描述
+     */
+    private String detail;
+
+    /**
      * 知识库状态（0正常 1停用）
      */
     private Integer status;

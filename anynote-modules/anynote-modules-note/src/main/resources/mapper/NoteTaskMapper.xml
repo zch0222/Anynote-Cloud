@@ -19,7 +19,37 @@
     </resultMap>
 
     <select id="selectMemberNoteTaskList" resultMap="MemberNoteTaskDTOResult">
-        SELECT
+<!--        SELECT DISTINCT-->
+<!--            n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time,-->
+<!--            n_note_task.knowledge_base_id, n_note_task.status, creator_user.username as creator_username,-->
+<!--            creator_user.nickname as creator_nickname, n_note_task.update_time, n_note_task_submission_record.note_id,-->
+<!--            n_note_task_submission_record.submit_time-->
+<!--        FROM-->
+<!--            n_note_task-->
+<!--        LEFT JOIN-->
+<!--            n_note_task_submission_record ON-->
+<!--                (n_note_task.id = n_note_task_submission_record.note_task_id-->
+<!--                AND-->
+<!--                n_note_task_submission_record.user_id = #{submitUserId})-->
+<!--        LEFT JOIN-->
+<!--            sys_user as creator_user ON n_note_task.create_by = creator_user.id-->
+<!--        LEFT JOIN-->
+<!--            n_knowledge_base ON n_note_task.knowledge_base_id = n_knowledge_base.id-->
+<!--        LEFT JOIN-->
+<!--            n_user_knowledge_base ON n_knowledge_base.id = n_user_knowledge_base.knowledge_base_id-->
+<!--        LEFT JOIN-->
+<!--            sys_user ON n_user_knowledge_base.user_id = sys_user.id-->
+<!--        WHERE-->
+<!--            n_note_task.is_delete = 0-->
+<!--        <if test="taskStatus ！= null">-->
+<!--            AND n_note_task.status = #{taskStatus}-->
+<!--        </if>-->
+<!--        <if test="id != null">-->
+<!--            AND n_note_task.knowledge_base_id = #{id}-->
+<!--        </if>-->
+<!--        AND-->
+<!--            sys_user.id = #{submitUserId};-->
+        SELECT DISTINCT
             n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time,
             n_note_task.knowledge_base_id, n_note_task.status, n_note_task_submission_record.note_id,
             n_note_task_submission_record.submit_time, sys_user.username as creator_username,

@@ -11,6 +11,7 @@
         <result property="submitTime" column="submit_time"/>
         <result property="submissionUsername" column="username"/>
         <result property="submissionNickname" column="nickname"/>
+        <result property="noteTitle" column="note_title"/>
         <result property="deleted" column="is_delete" />
         <result property="createBy"     column="create_by"    />
         <result property="createTime"   column="create_time"  />
@@ -24,9 +25,11 @@
             n_note_task_submission_record.note_task_id, n_note_task_submission_record.user_id, n_note_task_submission_record.note_id,
             n_note_task_submission_record.submit_time, n_note_task_submission_record.is_delete, n_note_task_submission_record.create_by,
             n_note_task_submission_record.create_time, n_note_task_submission_record.update_by, n_note_task_submission_record.update_time,
-            n_note_task_submission_record.remark, sys_user.username, sys_user.nickname
+            n_note_task_submission_record.remark, sys_user.username, sys_user.nickname, n_note.title as note_title
         FROM
             n_note_task_submission_record
+        LEFT JOIN
+            n_note ON n_note_task_submission_record.note_id = n_note.id
         LEFT JOIN
             sys_user ON n_note_task_submission_record.user_id = sys_user.id
         WHERE

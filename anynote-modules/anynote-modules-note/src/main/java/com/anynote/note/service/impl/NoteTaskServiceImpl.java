@@ -10,12 +10,15 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
+import com.anynote.note.api.model.po.UserNoteTask;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NotePermissions;
+import com.anynote.note.enums.NoteTaskPermissions;
 import com.anynote.note.mapper.NoteTaskMapper;
 import com.anynote.note.mapper.NoteTaskSubmissionRecordMapper;
+import com.anynote.note.mapper.UserNoteTaskMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
@@ -30,16 +33,19 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.SendStatus;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,11 +53,15 @@ import java.util.stream.Collectors;
  * @author 称霸幼儿园
  */
 @Service
+@Slf4j
 public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         implements NoteTaskService {
 
     @Autowired
     private NoteTaskSubmissionRecordService noteTaskSubmissionRecordService;
+
+    @Autowired
+    private UserNoteTaskMapper userNoteTaskMapper;
 
     @Autowired
     private NoteService noteService;
@@ -62,9 +72,19 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     @Autowired
     private KnowledgeBaseService knowledgeBaseService;
 
+    @Autowired
+    private ThreadPoolTaskExecutor asyncExecutor;
+
+    @Autowired
+    private NoteTaskMapper noteTaskMapper;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
 
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限创建任务")
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Long createNoteTask(NoteTaskCreateParam taskCreateParam) {
         LoginUser loginUser = tokenUtil.getLoginUser();
@@ -82,9 +102,40 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         noteTask.setCreateTime(date);
         noteTask.setUpdateTime(date);
         this.baseMapper.insert(noteTask);
+        // 异步执行
+        asyncExecutor.submit(() -> {
+            // 获取知识库内所有非管理员用户的id
+            List<Long> knowledgeBaseMemberIds = knowledgeBaseService.getAllMemberKnowledgeBaseUserId(taskCreateParam.getId());
+            // 给非管理员用户添加编辑权限
+            for (Long userId : knowledgeBaseMemberIds) {
+                userNoteTaskMapper.insert(UserNoteTask.builder()
+                        .userId(userId)
+                        .noteTaskId(noteTask.getId())
+                        .permissions(NoteTaskPermissions.SUBMIT.getValue())
+                        .build());
+            }
+
+            List<Long> knowledgeBaseManagerIds = knowledgeBaseService.getAllKnowledgeBaseManagerId(taskCreateParam.getId());
+            // 给管理员用户添加管理权限
+            for (Long userId : knowledgeBaseManagerIds) {
+                userNoteTaskMapper.insert(UserNoteTask.builder()
+                        .userId(userId)
+                        .noteTaskId(noteTask.getId())
+                        .permissions(NoteTaskPermissions.MANAGE.getValue())
+                        .build());
+            }
+        });
         return noteTask.getId();
     }
 
+    @Override
+    public Long getNoteTaskNeedSubmitCount(NoteTaskQueryParam queryParam) {
+        LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userNoteTaskLambdaQueryWrapper
+                .eq(UserNoteTask::getNoteTaskId, queryParam.getNoteTaskId())
+                .gt(UserNoteTask::getPermissions, NoteTaskPermissions.MANAGE.getValue());
+        return userNoteTaskMapper.selectCount(userNoteTaskLambdaQueryWrapper);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.EDIT,
@@ -137,6 +188,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
             throw new UserParamException("提交失败，你已经提交过该任务", ResCode.USER_REQUEST_PARAM_ERROR);
         }
 
+
         NoteTaskSubmissionRecord noteTaskSubmissionRecord = NoteTaskSubmissionRecord.builder()
                 .noteTaskId(submitParam.getTaskId())
                 .userId(loginUser.getSysUser().getId())
@@ -149,7 +201,19 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         noteTaskSubmissionRecord.setUpdateTime(date);
         noteTaskSubmissionRecord.setCreateTime(date);
         noteTaskSubmissionRecordService.getBaseMapper().insert(noteTaskSubmissionRecord);
-
+        rocketMQTemplate.asyncSendOrderly("note_task_topic", MessageBuilder
+                .withPayload("测试").build(), "id", new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                if (sendResult.getSendStatus() == SendStatus.SEND_OK) {
+                    log.info("发送异步顺序消息成功!消息ID为:{}", sendResult.getMsgId());
+                }
+            }
+            @Override
+            public void onException(Throwable throwable) {
+                log.info("发送异步顺序消息失败!失败原因为:{}", throwable.getMessage());
+            }
+        });
         Integer count = noteService.submitNote(submitParam.getId());
         if (1 != count) {
             throw new BusinessException("提交失败，请联系管理员", ResCode.BUSINESS_ERROR);
@@ -196,11 +260,14 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         List<NoteTask> noteTaskList = this.baseMapper.selectList(noteTaskLambdaQueryWrapper);
         PageInfo<NoteTask> pageInfo = new PageInfo<>(noteTaskList);
 
-        Long needSubmitCount = knowledgeBaseService.getKnowledgeBaseMemberCount(queryParam);
-        DecimalFormat df = new DecimalFormat("#.00");
+//        Long needSubmitCount = knowledgeBaseService.getKnowledgeBaseMemberCount(queryParam);
+//        DecimalFormat df = new DecimalFormat("#.00");
 
         List<AdminNoteTaskDTO> adminNoteTaskDTOList = noteTaskList.stream()
                 .map(noteTask -> {
+                    Long needSubmitCount = this.getNoteTaskNeedSubmitCount(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
+                            .noteTaskId(noteTask.getId())
+                            .build());
                     LambdaQueryWrapper<NoteTaskSubmissionRecord> submissionRecordLambdaQueryWrapper =
                             new LambdaQueryWrapper<>();
                     submissionRecordLambdaQueryWrapper
@@ -209,8 +276,14 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                             .getBaseMapper().selectCount(submissionRecordLambdaQueryWrapper));
                     AdminNoteTaskDTO adminNoteTaskDTO = new AdminNoteTaskDTO(noteTask);
                     adminNoteTaskDTO.setNeedSubmitCount(needSubmitCount);
-                    adminNoteTaskDTO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskDTO.getSubmittedCount() / needSubmitCount)
-                            .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    if (0L == needSubmitCount) {
+                        adminNoteTaskDTO.setSubmissionProgress(100.0);
+                    }
+                    else {
+                        adminNoteTaskDTO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskDTO.getSubmittedCount() / needSubmitCount)
+                                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                    }
+
                     return adminNoteTaskDTO;
                 })
                 .collect(Collectors.toList());

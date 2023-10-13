@@ -44,9 +44,33 @@
         <bundle.huawei.obs.vsersion>3.23.9</bundle.huawei.obs.vsersion>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
+        <elasticsearch.java.versions>8.9.0</elasticsearch.java.versions>
+        <rocketmq.client.version>5.1.4</rocketmq.client.version>
+        <rocketmq.starter.version>2.2.2</rocketmq.starter.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client -->
+<!--            <dependency>-->
+<!--                <groupId>org.apache.rocketmq</groupId>-->
+<!--                <artifactId>rocketmq-client</artifactId>-->
+<!--                <version>${rocketmq.client.version}</version>-->
+<!--            </dependency>-->
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.starter.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/co.elastic.clients/elasticsearch-java -->
+            <dependency>
+                <groupId>co.elastic.clients</groupId>
+                <artifactId>elasticsearch-java</artifactId>
+                <version>${elasticsearch.java.versions}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -118,6 +142,12 @@
             <dependency>
                 <groupId>com.anynote</groupId>
                 <artifactId>anynote-common-security</artifactId>
+                <version>${anynote.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.anynote</groupId>
+                <artifactId>anynote-common-rocketmq</artifactId>
                 <version>${anynote.version}</version>
             </dependency>
 

@@ -84,6 +84,11 @@
 
         <dependency>
             <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-rocketmq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
             <artifactId>anynote-common-security</artifactId>
             <exclusions>
                 <exclusion>

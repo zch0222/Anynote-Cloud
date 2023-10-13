@@ -64,6 +64,15 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Autowired
     private RemoteFileService remoteFileService;
 
+
+    @Override
+    public PageBean<Note> getNoteInfoList(NoteQueryParam queryParam) {
+//
+//        LambdaQueryWrapper
+
+        return null;
+    }
+
     @Override
     public PageBean<Note> getNotesByKnowledgeBaseId(NoteQueryParam queryParam) {
 
@@ -159,6 +168,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @RequiresNotePermissions(NotePermissions.EDIT)
     @Override
     public String editNote(NoteUpdateParam updateParam) {
+        updateParam.setUpdateTime(new Date());
         Integer count = this.baseMapper.updateNote(updateParam);
         if (count != 1) {
             throw new BusinessException("更新笔记失败", ResCode.USER_ERROR);

@@ -21,6 +21,25 @@
 <!--                     resultMap="NoteTextResult"/>-->
     </resultMap>
 
+    <resultMap id="NoteInfoVOResult" type="com.anynote.note.model.vo.NoteInfoVO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="noteTextId" column="note_text_id"/>
+        <result property="knowledgeBaseId" column="knowledge_base_id"/>
+        <result property="status" column="status"/>
+        <result property="data_scope" column="dataScope"/>
+        <result property="deleted" column="is_delete"/>
+        <result property="createBy"     column="create_by"    />
+        <result property="createTime"   column="create_time"  />
+        <result property="updateBy"     column="update_by"    />
+        <result property="updateTime"   column="update_time"  />
+        <result property="remark"       column="remark"       />
+        <result property="content" column="content"/>
+        <result property="knowledgeBaseName" column="knowledge_base_name"/>
+        <result property="creatorName" column="creator_name"/>
+    </resultMap>
+
+
     <resultMap id="NoteInfoResult" type="com.anynote.note.api.model.po.Note">
         <id property="id" column="id"/>
         <result property="title" column="title"/>

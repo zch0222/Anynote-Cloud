@@ -1,6 +1,7 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.datascope.annotation.DataScope;
+import com.anynote.core.constant.ErrorMessageConstants;
 import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.utils.StringUtils;
@@ -32,6 +33,18 @@ public class NoteController {
 
     @Autowired
     private NoteService noteService;
+
+    /**
+     * 获取最近更新的笔记 (未完成)
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("list")
+    public ResData<PageBean<Note>> getNoteInfoList(@NotNull(message = ErrorMessageConstants.PAGE_NULL) Integer page,
+                                         @NotNull(message = ErrorMessageConstants.PAGE_SIZE_NULL) Integer pageSize) {
+        return null;
+    }
 
     @DataScope
     @PostMapping("bases/{baseId}")
@@ -96,6 +109,8 @@ public class NoteController {
         imageUploadParam.setImage(image);
         return ResUtil.success(noteService.uploadNoteImage(imageUploadParam));
     }
+
+
 
 
 

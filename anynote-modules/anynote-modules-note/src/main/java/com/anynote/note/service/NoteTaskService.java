@@ -22,4 +22,7 @@ public interface NoteTaskService extends IService<NoteTask> {
     public PageBean<AdminNoteTaskDTO> getAdminNoteTasks(NoteTaskQueryParam queryParam);
 
     public PageBean<MemberNoteTaskDTO> getMemberNoteTasks(NoteTaskQueryParam queryParam);
+
+    public Long getNoteTaskNeedSubmitCount(NoteTaskQueryParam queryParam);
+
 }

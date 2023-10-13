@@ -17,5 +17,7 @@ public class NoteTaskSubmissionRecordDTO extends NoteTaskSubmissionRecord {
 
     private String submissionNickname;
 
+    private String noteTitle;
+
 
 }

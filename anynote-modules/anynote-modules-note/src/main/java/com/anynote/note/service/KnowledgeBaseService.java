@@ -2,10 +2,7 @@ package com.anynote.note.service;
 
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
-import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
-import com.anynote.note.model.bo.KnowledgeBaseImportUserParam;
-import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
-import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
 import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
@@ -33,6 +30,17 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
      */
     public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize);
 
+    /**
+     * 获取知识库中所有用户的id
+     * @param knowledgeBaseId
+     * @return
+     */
+    public List<Long> getAllKnowledgeBaseUserId(Long knowledgeBaseId);
+
+    public List<Long> getAllKnowledgeBaseManagerId(Long knowledgeBaseId);
+
+    public List<Long> getAllMemberKnowledgeBaseUserId(Long knowledgeBaseId);
+
     public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(KnowledgeBaseUsersQueryParam queryParam);
 
     public List<NoteKnowledgeBaseDTO> selectOrganizationKnowledgeBasesByUserIdByPage(Long userId);
@@ -45,5 +53,7 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
 
     public KnowledgeBaseImportUserVO importKnowledgeBaseUser(KnowledgeBaseImportUserParam importUserParam);
 
+
+    public String updateKnowledgeBase(KnowledgeBaseUpdateParam updateParam);
 
 }

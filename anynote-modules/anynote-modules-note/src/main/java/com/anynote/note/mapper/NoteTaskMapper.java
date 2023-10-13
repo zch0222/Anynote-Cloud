@@ -16,4 +16,5 @@ public interface NoteTaskMapper extends BaseMapper<NoteTask> {
 
 
     public List<MemberNoteTaskDTO> selectMemberNoteTaskList(NoteTaskQueryParam queryParam);
+
 }
