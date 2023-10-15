@@ -83,4 +83,12 @@ public class Note extends BaseEntity {
     @TableField(exist = false)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Integer notePermissions;
+
+    @TableField(exist = false)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String knowledgeBaseName;
+
+    @TableField(exist = false)
+//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String submitTaskName;
 }

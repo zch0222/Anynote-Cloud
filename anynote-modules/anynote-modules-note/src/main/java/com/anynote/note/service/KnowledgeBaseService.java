@@ -31,6 +31,13 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
     public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize);
 
     /**
+     * 获取用户所有知识库的id
+     * @param userId 用户id
+     * @return
+     */
+    public List<Long> getUsersKnowledgeBaseIds(Long userId);
+
+    /**
      * 获取知识库中所有用户的id
      * @param knowledgeBaseId
      * @return

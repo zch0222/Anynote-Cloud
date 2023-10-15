@@ -1,5 +1,19 @@
 package com.anynote.note.service.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.elasticsearch.core.search.TotalHits;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.anynote.common.elasticsearch.constant.ElasticsearchIndexConstants;
+import com.anynote.common.elasticsearch.model.EsNoteIndex;
+import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
+import com.anynote.common.elasticsearch.utils.ElasticsearchUtil;
+import com.anynote.common.rocketmq.callback.RocketmqSendCallbackBuilder;
+import com.anynote.common.rocketmq.properties.RocketMQProperties;
+import com.anynote.common.rocketmq.tags.NoteTagsEnum;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
@@ -23,6 +37,7 @@ import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.mapper.NoteTextMapper;
 import com.anynote.note.model.bo.*;
+import com.anynote.note.model.dto.NoteSearchDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.note.service.NoteImageService;
 import com.anynote.note.service.NoteService;
@@ -34,10 +49,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import jakarta.json.JsonObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +66,7 @@ import java.util.List;
  * @author 称霸幼儿园
  */
 @Service
+@Slf4j
 public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         implements NoteService {
 
@@ -63,6 +84,15 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
     @Autowired
     private RemoteFileService remoteFileService;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Autowired
+    private RocketMQProperties rocketMQProperties;
+
+    @Autowired
+    private ElasticsearchClient elasticsearchClient;
 
 
     @Override
@@ -88,13 +118,18 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Override
     @RequiresNotePermissions(NotePermissions.READ)
     public Note getNoteById(NoteQueryParam queryParam) {
-        Note note = this.baseMapper.selectNoteById(queryParam);
+        Note note = this.selectNoteById(queryParam);
         if (StringUtils.isNull(note)) {
             throw new UserParamException("访问笔记失败", ResCode.USER_REQUEST_PARAM_ERROR);
         }
         note.setNotePermissions(((NotePermissions) queryParam.getParams()
                 .get(RequiresNotePermissionsAspect.NOTE_PERMISSIONS)).getValue());
         return note;
+    }
+
+    @Override
+    public Note selectNoteById(NoteQueryParam queryParam) {
+        return this.baseMapper.selectNoteById(queryParam);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -128,6 +163,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         note.setCreateTime(date);
 
         this.baseMapper.insert(note);
+        String destination = rocketMQProperties.getNoteTopic() +  ":" + NoteTagsEnum.GENERATOR_NOTE_INDEX.name();
+        rocketMQTemplate.asyncSend(destination, note.getId(), RocketmqSendCallbackBuilder.commonCallback());
         return note.getId();
     }
 
@@ -164,6 +201,67 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         return Constants.SUCCESS_RES;
     }
 
+    /**
+     * 搜索笔记
+     * @param noteSearchDTO
+     * @return
+     */
+    @Override
+    public SearchPageBean<EsNoteIndex> searchNote(NoteSearchDTO noteSearchDTO) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        SearchResponse<EsNoteIndex> searchResponse = null;
+        List<Query> queries = new ArrayList<>();
+
+        Query selfNote = TermQuery.of(t -> t
+                .field("createBy")
+                .value(loginUser.getSysUser().getId()))
+                ._toQuery();
+        System.out.println(selfNote.toString());
+//
+//        Query knowledgeBaseIdQuery = TermQuery.of(t -> t
+//                .field("knowledgeBaseId")
+//                .value(JSON.toJSONString(knowledgeBaseService.getUsersKnowledgeBaseIds(loginUser.getSysUser().getId()))))
+//                ._toQuery();
+//        System.out.println(knowledgeBaseIdQuery.toString());
+//
+//        Query dataScopeQuery = TermQuery.of(t -> t.field("dataScope").value())
+//
+//        Query knowledgeBaseNote =
+//        BoolQuery knowledgeBaseNote = BoolQuery.of(b -> b
+//                .must(ScriptQuery)))
+//        Query boolQuery = BoolQuery.of(b -> b
+//                .should(selfNote)
+//                .should())
+        queries.add(selfNote);
+        Query keywordQuery = MatchQuery.of(q -> q
+                .field("all")
+                .query(noteSearchDTO.getKeyword()))
+                ._toQuery();
+        queries.add(keywordQuery);
+
+        Query query = BoolQuery.of(b -> b.must(queries))._toQuery();
+        log.info(query.toString());
+
+        try {
+            searchResponse = elasticsearchClient.search(s -> s
+                    .index(ElasticsearchIndexConstants.NOTE_INDEX)
+                    .query(query),
+//                    .query(q -> q
+//                            .match(t -> t
+//                                    .field("all")
+//                                    .query(noteSearchDTO.getKeyword()))),
+                    EsNoteIndex.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BusinessException("搜索笔记失败，请联系管理员");
+        }
+        SearchPageBean<EsNoteIndex> esNoteIndexSearchPageBean = ElasticsearchUtil.buildSearchPageBean(searchResponse, EsNoteIndex.class);
+        for (EsNoteIndex esNoteIndex : esNoteIndexSearchPageBean.getRows()) {
+            esNoteIndex.setPermissions(this.getNotePermissions(esNoteIndex.getId()).getValue());
+        }
+        return esNoteIndexSearchPageBean;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @RequiresNotePermissions(NotePermissions.EDIT)
     @Override
@@ -184,6 +282,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         if (contentCount != 1) {
             throw new BusinessException("更新笔记失败", ResCode.USER_ERROR);
         }
+        String destination = rocketMQProperties.getNoteTopic() +  ":" + NoteTagsEnum.GENERATOR_NOTE_INDEX.name();
+        rocketMQTemplate.asyncSend(destination, updateParam.getId(), RocketmqSendCallbackBuilder.commonCallback());
         return Constants.SUCCESS_RES;
     }
 

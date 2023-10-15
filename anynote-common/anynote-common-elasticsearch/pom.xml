@@ -17,6 +17,14 @@
             <groupId>com.anynote</groupId>
             <artifactId>anynote-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

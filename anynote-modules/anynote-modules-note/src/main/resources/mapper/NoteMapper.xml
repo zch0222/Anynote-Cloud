@@ -17,6 +17,8 @@
         <result property="updateTime"   column="update_time"  />
         <result property="remark"       column="remark"       />
         <result property="content" column="content"/>
+        <result property="knowledgeBaseName" column="knowledge_base_name"/>
+        <result property="submitTaskName" column="task_name"/>
 <!--        <association property="noteText" javaType="com.anynote.note.api.model.po.NoteText" -->
 <!--                     resultMap="NoteTextResult"/>-->
     </resultMap>
@@ -98,11 +100,18 @@
         SELECT
             n_note.id, n_note.title, n_note.note_text_id, n_note.knowledge_base_id, n_note.status,
             n_note.create_by, n_note.create_time, n_note.update_by, n_note.update_time, n_note.remark,
-            n_note_text.content
+            n_note_text.content, n_knowledge_base.name as knowledge_base_name, n_note_task.task_name, n_note.data_scope,
+            n_note.is_delete
         FROM
             n_note
         LEFT JOIN
             n_note_text ON n_note.note_text_id = n_note_text.id
+        LEFT JOIN
+            n_knowledge_base ON n_note.knowledge_base_id = n_knowledge_base.id
+        LEFT JOIN
+            n_note_task_submission_record ON n_note.id = n_note_task_submission_record.note_id
+        LEFT JOIN
+            n_note_task ON n_note_task_submission_record.note_task_id = n_note_task.id
         WHERE
             n_note.is_delete = 0
           AND

@@ -89,6 +89,11 @@
 
         <dependency>
             <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-elasticsearch</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
             <artifactId>anynote-common-security</artifactId>
             <exclusions>
                 <exclusion>

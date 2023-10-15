@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(topic = "${anynote.note.data.rocketmq.note-task-topic}",
-        consumerGroup = "${anynote.note.data.rocketmq.note-task-group}")
+@RocketMQMessageListener(topic = "${anynote.data.rocketmq.note-task-topic}",
+        consumerGroup = "${anynote.data.rocketmq.note-task-group}")
 public class NoteTaskMessageListener implements RocketMQListener<MessageExt> {
 
     @Override
     public void onMessage(MessageExt messageExt) {
-        if (NoteTaskTagsEnum.valueOf(messageExt.getTags()) == NoteTaskTagsEnum.SUBMIT) {
-            log.info("收到提交笔记任务");
-        }
+//        if (NoteTaskTagsEnum.valueOf(messageExt.getTags()) == NoteTaskTagsEnum.SUBMIT) {
+//            log.info("收到提交笔记任务");
+//        }
     }
 }

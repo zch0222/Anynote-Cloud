@@ -1,5 +1,7 @@
 package com.anynote.note.service;
 
+import com.anynote.common.elasticsearch.model.EsNoteIndex;
+import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
@@ -8,6 +10,7 @@ import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.NoteCreateDTO;
+import com.anynote.note.model.dto.NoteSearchDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -44,4 +47,9 @@ public interface NoteService extends IService<Note> {
     public MarkdownImage uploadNoteImage(NoteImageUploadParam uploadParam);
 
     public Integer submitNote(Long noteId);
+
+    public SearchPageBean<EsNoteIndex> searchNote(NoteSearchDTO noteSearchDTO);
+
+
+    public Note selectNoteById(NoteQueryParam queryParam);
 }

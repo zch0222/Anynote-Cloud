@@ -88,6 +88,20 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
         return noteKnowledgeBase.getId();
     }
 
+    @Override
+    public List<Long> getUsersKnowledgeBaseIds(Long userId) {
+        LambdaQueryWrapper<UserKnowledgeBase> userKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userKnowledgeBaseLambdaQueryWrapper
+                .eq(UserKnowledgeBase::getUserId, userId)
+                .le(UserKnowledgeBase::getPermissions, KnowledgeBasePermissions.READ.getValue())
+                .select(UserKnowledgeBase::getKnowledgeBaseId);
+        List<UserKnowledgeBase> userKnowledgeBaseList = userKnowledgeBaseMapper.selectList(userKnowledgeBaseLambdaQueryWrapper);
+        return userKnowledgeBaseList.stream()
+                .map(knowledgeBaseId ->
+                        knowledgeBaseId.getKnowledgeBaseId())
+                .collect(Collectors.toList());
+    }
+
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.READ, message = "没有获取该知识库权限")
     @Override
     public NoteKnowledgeBaseDTO getKnowledgeBaseById(KnowledgeBaseQueryParam queryParam) {

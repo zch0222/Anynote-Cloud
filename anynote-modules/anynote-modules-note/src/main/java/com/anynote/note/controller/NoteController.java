@@ -1,6 +1,8 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.datascope.annotation.DataScope;
+import com.anynote.common.elasticsearch.model.EsNoteIndex;
+import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.core.constant.ErrorMessageConstants;
 import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.ResUtil;
@@ -14,12 +16,14 @@ import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.NoteCreateDTO;
 import com.anynote.note.model.dto.NoteEditDTO;
+import com.anynote.note.model.dto.NoteSearchDTO;
 import com.anynote.note.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -108,6 +112,11 @@ public class NoteController {
         imageUploadParam.setId(noteId);
         imageUploadParam.setImage(image);
         return ResUtil.success(noteService.uploadNoteImage(imageUploadParam));
+    }
+
+    @GetMapping("search")
+    public ResData<SearchPageBean<EsNoteIndex>> searchNote(@Valid NoteSearchDTO noteSearchDTO) {
+        return ResUtil.success(noteService.searchNote(noteSearchDTO));
     }
 
 

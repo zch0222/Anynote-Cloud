@@ -1,5 +1,5 @@
 <archetype>
-  <id>anynote-common-elasticsearch</id>
+  <id>kindergarten-common-redis</id>
   <sources>
     <source>src/main/java/App.java</source>
   </sources>
