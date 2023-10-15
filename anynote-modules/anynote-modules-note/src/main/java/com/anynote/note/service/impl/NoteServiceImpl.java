@@ -3,6 +3,7 @@ package com.anynote.note.service.impl;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.TotalHits;
 import com.alibaba.fastjson.JSONObject;
@@ -10,6 +11,7 @@ import com.alibaba.fastjson2.JSON;
 import com.anynote.common.elasticsearch.constant.ElasticsearchIndexConstants;
 import com.anynote.common.elasticsearch.model.EsNoteIndex;
 import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
+import com.anynote.common.elasticsearch.model.vo.SearchVO;
 import com.anynote.common.elasticsearch.utils.ElasticsearchUtil;
 import com.anynote.common.rocketmq.callback.RocketmqSendCallbackBuilder;
 import com.anynote.common.rocketmq.properties.RocketMQProperties;
@@ -245,7 +247,15 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         try {
             searchResponse = elasticsearchClient.search(s -> s
                     .index(ElasticsearchIndexConstants.NOTE_INDEX)
-                    .query(query),
+                    .query(query)
+                    .highlight(h -> h
+                            .requireFieldMatch(false)
+                            .fields("title", hBuilder -> hBuilder)
+                            .fields("content", hBuilder -> hBuilder)
+                            .fragmentSize(20))
+                    .source(sourceConfigBuilder -> sourceConfigBuilder
+                            .filter(sourceFilterBuilder -> sourceFilterBuilder
+                                    .excludes("content"))),
 //                    .query(q -> q
 //                            .match(t -> t
 //                                    .field("all")
@@ -255,9 +265,10 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
             e.printStackTrace();
             throw new BusinessException("搜索笔记失败，请联系管理员");
         }
+
         SearchPageBean<EsNoteIndex> esNoteIndexSearchPageBean = ElasticsearchUtil.buildSearchPageBean(searchResponse, EsNoteIndex.class);
-        for (EsNoteIndex esNoteIndex : esNoteIndexSearchPageBean.getRows()) {
-            esNoteIndex.setPermissions(this.getNotePermissions(esNoteIndex.getId()).getValue());
+        for (SearchVO<EsNoteIndex> esNoteIndexSearchVO : esNoteIndexSearchPageBean.getRows()) {
+            esNoteIndexSearchVO.getSource().setPermissions(this.getNotePermissions(esNoteIndexSearchVO.getSource().getId()).getValue());
         }
         return esNoteIndexSearchPageBean;
     }

@@ -1,5 +1,6 @@
 package com.anynote.common.elasticsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,6 +42,7 @@ public class EsNoteIndex {
 
     private String knowledgeBaseName;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String content;
 
     private String submitTaskName;

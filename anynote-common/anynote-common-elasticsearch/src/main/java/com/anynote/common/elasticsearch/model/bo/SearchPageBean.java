@@ -1,5 +1,6 @@
 package com.anynote.common.elasticsearch.model.bo;
 
+import com.anynote.common.elasticsearch.model.vo.SearchVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchPageBean<T> {
-    private List<T> rows;
+    private List<SearchVO<T>> rows;
 
     /**
      * 条数
@@ -24,7 +25,7 @@ public class SearchPageBean<T> {
     private Long count;
 
     /**
-     * 0是所有结果，1还有更多结果
+     * 1是所有结果，0还有更多结果
      */
     private Integer exactResult;
 
