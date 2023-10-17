@@ -20,9 +20,9 @@ public class SearchPageBean<T> {
     private List<SearchVO<T>> rows;
 
     /**
-     * 条数
+     * 总条数
      */
-    private Long count;
+    private Long total;
 
     /**
      * 1是所有结果，0还有更多结果

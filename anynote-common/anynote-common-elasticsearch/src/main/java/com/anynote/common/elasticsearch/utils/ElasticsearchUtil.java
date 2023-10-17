@@ -29,7 +29,7 @@ public class ElasticsearchUtil {
         int exactResult = total.relation() == TotalHitsRelation.Eq ? 1 : 0;
         return SearchPageBean.<T>builder()
                 .rows(tList)
-                .count(tList.stream().count())
+                .total(total.value())
                 .exactResult(exactResult)
                 .build();
     }

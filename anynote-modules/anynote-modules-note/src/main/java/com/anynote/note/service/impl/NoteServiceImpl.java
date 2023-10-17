@@ -244,10 +244,14 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         Query query = BoolQuery.of(b -> b.must(queries))._toQuery();
         log.info(query.toString());
 
+        Integer from = (noteSearchDTO.getPage()-1) * noteSearchDTO.getPageSize();
+
         try {
             searchResponse = elasticsearchClient.search(s -> s
                     .index(ElasticsearchIndexConstants.NOTE_INDEX)
                     .query(query)
+                    .from(from)
+                    .size(noteSearchDTO.getPageSize())
                     .highlight(h -> h
                             .requireFieldMatch(false)
                             .fields("title", hBuilder -> hBuilder)

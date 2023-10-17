@@ -12,6 +12,7 @@ import com.anynote.core.web.enums.HttpStatusEnum;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.ResData;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -60,6 +61,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResData handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error(e.getMessage(), e);
+        return ResData.error(ResCode.USER_REQUEST_PARAM_ERROR, e.getFieldErrors().iterator().next().getDefaultMessage());
+    }
+
+    @ExceptionHandler(BindException.class)
+    public ResData handleBindException(BindException e) {
         log.error(e.getMessage(), e);
         return ResData.error(ResCode.USER_REQUEST_PARAM_ERROR, e.getFieldErrors().iterator().next().getDefaultMessage());
     }

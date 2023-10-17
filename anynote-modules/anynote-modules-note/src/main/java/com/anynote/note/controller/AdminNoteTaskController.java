@@ -51,6 +51,13 @@ public class AdminNoteTaskController {
         return ResUtil.success(noteTaskService.getAdminNoteTasks(noteTaskQueryParam));
     }
 
+    @GetMapping("{id}")
+    public ResData<AdminNoteTaskDTO> getAdminNoteTaskById(@PathVariable @NotNull(message = "任务id不能为空") Long id) {
+        return ResUtil.success(noteTaskService.getAdminNoteTaskById(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
+                .noteTaskId(id)
+                .build()));
+    }
+
 
     @GetMapping("submissions")
     public ResData<PageBean<NoteTaskSubmissionRecordDTO>> getAdminNoteTaskSubmissionRecords(@NotNull(message = "任务id不能为空") Long noteTaskId,

@@ -19,6 +19,11 @@ public interface NoteTaskService extends IService<NoteTask> {
 
     public String submitNoteTask(NoteTaskSubmitParam submitParam);
 
+    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam);
+
+    public Long getNoteTaskKnowledgeBaseId(Long noteTaskId);
+
+
     public PageBean<AdminNoteTaskDTO> getAdminNoteTasks(NoteTaskQueryParam queryParam);
 
     public PageBean<MemberNoteTaskDTO> getMemberNoteTasks(NoteTaskQueryParam queryParam);

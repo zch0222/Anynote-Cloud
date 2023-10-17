@@ -247,6 +247,58 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .build();
     }
 
+
+
+
+    @Override
+    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
+        queryParam.setId(this.getNoteTaskKnowledgeBaseId(queryParam.getNoteTaskId()));
+        return this.selectAdminNoteTaskById(queryParam);
+    }
+
+
+    @Override
+    public Long getNoteTaskKnowledgeBaseId(Long noteTaskId) {
+        LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteTaskLambdaQueryWrapper
+                .eq(NoteTask::getId, noteTaskId)
+                .select(NoteTask::getKnowledgeBaseId);
+        NoteTask noteTask = this.baseMapper.selectOne(noteTaskLambdaQueryWrapper);
+        return noteTask.getId();
+    }
+
+    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "权限不足")
+    private AdminNoteTaskDTO selectAdminNoteTaskById(NoteTaskQueryParam queryParam) {
+        LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteTaskLambdaQueryWrapper
+                .eq(NoteTask::getId, queryParam.getNoteTaskId());
+        NoteTask noteTask = this.baseMapper.selectOne(noteTaskLambdaQueryWrapper);
+        return this.getAdminNoteTaskInfo(noteTask);
+    }
+
+    private AdminNoteTaskDTO getAdminNoteTaskInfo(NoteTask noteTask) {
+        Long needSubmitCount = this.getNoteTaskNeedSubmitCount(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
+                .noteTaskId(noteTask.getId())
+                .build());
+        LambdaQueryWrapper<NoteTaskSubmissionRecord> submissionRecordLambdaQueryWrapper =
+                new LambdaQueryWrapper<>();
+        submissionRecordLambdaQueryWrapper
+                .eq(NoteTaskSubmissionRecord::getNoteTaskId, noteTask.getId());
+        noteTask.setSubmittedCount(noteTaskSubmissionRecordService
+                .getBaseMapper().selectCount(submissionRecordLambdaQueryWrapper));
+        AdminNoteTaskDTO adminNoteTaskDTO = new AdminNoteTaskDTO(noteTask);
+        adminNoteTaskDTO.setNeedSubmitCount(needSubmitCount);
+        if (0L == needSubmitCount) {
+            adminNoteTaskDTO.setSubmissionProgress(100.0);
+        }
+        else {
+            adminNoteTaskDTO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskDTO.getSubmittedCount() / needSubmitCount)
+                    .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        }
+
+        return adminNoteTaskDTO;
+    }
+
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限查看笔记任务信息")
     @PageValid
