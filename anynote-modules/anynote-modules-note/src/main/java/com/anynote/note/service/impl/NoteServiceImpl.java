@@ -195,6 +195,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         Note noteInfo = this.baseMapper.selectOne(noteLambdaQueryWrapper);
         this.baseMapper.deleteById(param.getId());
         noteTextMapper.deleteById(noteInfo.getNoteTextId());
+
+        String destination = rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.DELETE_NOTE_INDEX.name();
+        rocketMQTemplate.asyncSend(destination, param.getId(), RocketmqSendCallbackBuilder.commonCallback());
         return Constants.SUCCESS_RES;
     }
 
@@ -235,7 +238,6 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
                 .query(noteSearchDTO.getKeyword()))
                 ._toQuery();
         queries.add(keywordQuery);
-
         Query query = BoolQuery.of(b -> b.must(queries))._toQuery();
         log.info(query.toString());
 

@@ -13,10 +13,7 @@ import com.anynote.note.api.model.po.NoteOperationLog;
 import com.anynote.note.enums.NoteOperationType;
 import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.model.bo.NoteQueryParam;
-import com.anynote.note.service.NoteEditLogService;
-import com.anynote.note.service.NoteHistoryService;
-import com.anynote.note.service.NoteOperationLogService;
-import com.anynote.note.service.NoteService;
+import com.anynote.note.service.*;
 import difflib.Delta;
 import difflib.DiffUtils;
 import difflib.Patch;
@@ -43,6 +40,9 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
 
     @Autowired
     private NoteMapper noteMapper;
+
+    @Autowired
+    private NoteElasticsearchService noteElasticsearchService;
 
     @Autowired
     private NoteService noteService;
@@ -72,6 +72,10 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
             log.info(new String(messageExt.getBody()));
             GenerateNoteEditLogMessage generateNoteEditLogMessage = JSON.parseObject(new String(messageExt.getBody()), GenerateNoteEditLogMessage.class);
             generateNoteEditLog(generateNoteEditLogMessage);
+        }
+        else if (NoteTagsEnum.DELETE_NOTE_INDEX == NoteTagsEnum.valueOf(messageExt.getTags())) {
+            log.info("删除索引...");
+            noteElasticsearchService.deleteNoteIndex(Long.valueOf(new String(messageExt.getBody())));
 
         }
     }

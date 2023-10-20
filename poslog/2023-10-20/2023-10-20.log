@@ -1,0 +1,960 @@
+2023-10-20 18:44:04.158 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-10-20 18:44:04.878 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 4e3009fb-b7b3-4701-997c-025705e9a21f_config-0
+2023-10-20 18:44:04.939 [main] INFO  org.reflections.Reflections - Reflections took 48 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-10-20 18:44:04.980 [main] INFO  org.reflections.Reflections - Reflections took 14 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-10-20 18:44:05.006 [main] INFO  org.reflections.Reflections - Reflections took 22 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-10-20 18:44:05.148 [main] INFO  org.reflections.Reflections - Reflections took 138 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 18:44:05.166 [main] INFO  org.reflections.Reflections - Reflections took 15 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-10-20 18:44:05.178 [main] INFO  org.reflections.Reflections - Reflections took 9 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-10-20 18:44:05.190 [main] INFO  org.reflections.Reflections - Reflections took 9 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-10-20 18:44:05.291 [main] INFO  org.reflections.Reflections - Reflections took 99 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 18:44:05.294 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-10-20 18:44:05.295 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$333/1107579932
+2023-10-20 18:44:05.296 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1784834205
+2023-10-20 18:44:05.296 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-10-20 18:44:05.296 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-10-20 18:44:05.302 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 18:44:05.911 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1697798645653_127.0.0.1_58782
+2023-10-20 18:44:05.915 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Notify connected event to listeners.
+2023-10-20 18:44:05.915 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 18:44:05.922 [main] INFO  com.alibaba.nacos.common.remote.client - [4e3009fb-b7b3-4701-997c-025705e9a21f_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/106113013
+2023-10-20 18:44:06.013 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-10-20 18:44:06.024 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-10-20 18:44:06.038 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-10-20 18:44:06.074 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-10-20 18:44:07.314 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-20 18:44:07.317 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-20 18:44:07.346 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2023-10-20 18:44:07.745 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=f22e0677-64d1-32d2-8ed6-1d23b6023c0a
+2023-10-20 18:44:08.387 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-10-20 18:44:08.395 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-10-20 18:44:08.395 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-10-20 18:44:08.395 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-10-20 18:44:08.535 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-10-20 18:44:08.536 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2416 ms
+2023-10-20 18:44:09.428 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteTaskSubmissionRecord ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 18:44:09.595 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 18:44:11.195 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 18:44:11.466 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 18:44:11.543 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 18:44:14.703 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-10-20 18:44:15.897 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:17.840 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 18:44:17.844 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteTaskMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-10-20 18:44:17.841 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:20.874 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:21.025 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 18:44:21.026 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-10-20 18:44:21.029 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:21.503 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 202733c0-aabb-4b68-bcc0-8c085d747db3
+2023-10-20 18:44:21.506 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] RpcClient init label, labels = {module=naming, source=sdk}
+2023-10-20 18:44:21.511 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-10-20 18:44:21.511 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-10-20 18:44:21.516 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-10-20 18:44:21.524 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 18:44:21.701 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Success to connect to server [localhost:8848] on start up, connectionId = 1697798661575_127.0.0.1_58907
+2023-10-20 18:44:21.706 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 18:44:21.707 [main] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/106113013
+2023-10-20 18:44:21.708 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Notify connected event to listeners.
+2023-10-20 18:44:21.870 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18091"]
+2023-10-20 18:44:21.936 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18091 (http) with context path ''
+2023-10-20 18:44:22.016 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-note 172.22.21.111:18091 register finished
+2023-10-20 18:44:22.389 [nacos-grpc-client-executor-10] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Receive server push request, request = NotifySubscriberRequest, requestId = 32
+2023-10-20 18:44:22.421 [nacos-grpc-client-executor-10] INFO  com.alibaba.nacos.common.remote.client - [202733c0-aabb-4b68-bcc0-8c085d747db3] Ack server push request, request = NotifySubscriberRequest, requestId = 32
+2023-10-20 18:44:23.155 [main] INFO  com.anynote.note.AnyNoteNoteApplication - Started AnyNoteNoteApplication in 19.699 seconds (JVM running for 21.034)
+2023-10-20 18:44:23.167 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note-dev.yml, group=DEFAULT_GROUP
+2023-10-20 18:44:23.167 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note, group=DEFAULT_GROUP
+2023-10-20 18:44:23.168 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note.yml, group=DEFAULT_GROUP
+2023-10-20 18:44:24.116 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:27.142 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:43.907 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:45.871 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:48.796 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:50.156 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:50.191 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:53.161 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 18:44:54.522 [Thread-5] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-10-20 18:44:54.522 [Thread-10] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-10-20 18:44:54.524 [Thread-10] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-10-20 18:44:54.527 [Thread-5] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-10-20 18:46:01.359 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-10-20 18:46:02.220 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0
+2023-10-20 18:46:02.283 [main] INFO  org.reflections.Reflections - Reflections took 44 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-10-20 18:46:02.304 [main] INFO  org.reflections.Reflections - Reflections took 12 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-10-20 18:46:02.333 [main] INFO  org.reflections.Reflections - Reflections took 26 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-10-20 18:46:02.509 [main] INFO  org.reflections.Reflections - Reflections took 170 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 18:46:02.529 [main] INFO  org.reflections.Reflections - Reflections took 17 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-10-20 18:46:02.540 [main] INFO  org.reflections.Reflections - Reflections took 9 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-10-20 18:46:02.550 [main] INFO  org.reflections.Reflections - Reflections took 7 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-10-20 18:46:02.659 [main] INFO  org.reflections.Reflections - Reflections took 108 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 18:46:02.662 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-10-20 18:46:02.663 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$333/1174586025
+2023-10-20 18:46:02.663 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1627010197
+2023-10-20 18:46:02.663 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-10-20 18:46:02.663 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-10-20 18:46:02.671 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 18:46:03.302 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1697798763047_127.0.0.1_59624
+2023-10-20 18:46:03.306 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 18:46:03.305 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Notify connected event to listeners.
+2023-10-20 18:46:03.311 [main] INFO  com.alibaba.nacos.common.remote.client - [ddff99dd-2e35-4fd5-b0c9-f1208a5f2513_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/807239968
+2023-10-20 18:46:03.399 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-10-20 18:46:03.410 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-10-20 18:46:03.423 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-10-20 18:46:03.446 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-10-20 18:46:04.821 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-20 18:46:04.824 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-20 18:46:04.861 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 21 ms. Found 0 Redis repository interfaces.
+2023-10-20 18:46:05.213 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=f22e0677-64d1-32d2-8ed6-1d23b6023c0a
+2023-10-20 18:46:06.093 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-10-20 18:46:06.102 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-10-20 18:46:06.103 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-10-20 18:46:06.103 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-10-20 18:46:06.246 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-10-20 18:46:06.246 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2765 ms
+2023-10-20 18:46:07.300 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteTaskSubmissionRecord ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 18:46:07.456 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 18:46:08.456 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 18:46:08.726 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 18:46:08.826 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 18:46:11.708 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-10-20 18:46:11.982 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 18:46:11.985 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteTaskMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-10-20 18:46:12.067 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 18:46:12.073 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-10-20 18:46:12.330 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 22d723ea-8cab-4756-b670-946b81f657eb
+2023-10-20 18:46:12.331 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] RpcClient init label, labels = {module=naming, source=sdk}
+2023-10-20 18:46:12.332 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-10-20 18:46:12.333 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-10-20 18:46:12.333 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-10-20 18:46:12.333 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 18:46:12.458 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Success to connect to server [localhost:8848] on start up, connectionId = 1697798772346_127.0.0.1_59696
+2023-10-20 18:46:12.459 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 18:46:12.459 [main] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/807239968
+2023-10-20 18:46:12.459 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Notify connected event to listeners.
+2023-10-20 18:46:12.521 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18091"]
+2023-10-20 18:46:12.551 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18091 (http) with context path ''
+2023-10-20 18:46:12.607 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-note 172.22.21.111:18091 register finished
+2023-10-20 18:46:13.054 [nacos-grpc-client-executor-8] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Receive server push request, request = NotifySubscriberRequest, requestId = 35
+2023-10-20 18:46:13.067 [nacos-grpc-client-executor-8] INFO  com.alibaba.nacos.common.remote.client - [22d723ea-8cab-4756-b670-946b81f657eb] Ack server push request, request = NotifySubscriberRequest, requestId = 35
+2023-10-20 18:46:13.509 [main] INFO  com.anynote.note.AnyNoteNoteApplication - Started AnyNoteNoteApplication in 13.184 seconds (JVM running for 14.313)
+2023-10-20 18:46:13.519 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note-dev.yml, group=DEFAULT_GROUP
+2023-10-20 18:46:13.522 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note, group=DEFAULT_GROUP
+2023-10-20 18:46:13.522 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note.yml, group=DEFAULT_GROUP
+2023-10-20 18:46:47.566 [http-nio-18091-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-20 18:46:47.568 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-10-20 18:46:47.579 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 11 ms
+2023-10-20 18:46:49.569 [http-nio-18091-exec-1] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2023-10-20 18:46:55.429 [ConsumeMessageThread_note_group_1] INFO  com.anynote.note.listener.NoteMessageListener - {"currentNote":{"content":"# 无标题笔记\n12\n\n测试id23","dataScope":1,"deleted":0,"id":23,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":20,"status":0,"title":"无标题笔记"},"date":"2023-10-20 18:46:55.252","noteId":23,"oldNote":{"content":"# 无标题笔记\n12\n\n测试id23","createBy":2,"createTime":"2023-10-19 20:48:00","dataScope":1,"deleted":0,"id":23,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":20,"remark":"","status":0,"title":"无标题笔记","updateBy":2,"updateTime":"2023-10-20 17:58:41"},"userId":2}
+2023-10-20 18:46:55.429 [ConsumeMessageThread_note_group_2] INFO  com.anynote.note.listener.NoteMessageListener - 生成笔记索引...
+2023-10-20 18:46:55.430 [ConsumeMessageThread_note_group_2] INFO  com.anynote.note.listener.NoteMessageListener - 23
+2023-10-20 18:46:55.443 [NettyClientPublicExecutor_1] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E08E3C0000, offsetMsgId=AC16156F00002A9F00000000000057EB, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=3], queueOffset=2]
+2023-10-20 18:46:55.445 [NettyClientPublicExecutor_2] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E08E4B0001, offsetMsgId=AC16156F00002A9F000000000000544F, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=1], queueOffset=2]
+2023-10-20 18:46:55.460 [ConsumeMessageThread_note_group_1] INFO  com.anynote.note.listener.NoteMessageListener - # 无标题笔记
+2023-10-20 18:46:55.461 [ConsumeMessageThread_note_group_1] INFO  com.anynote.note.listener.NoteMessageListener - 12
+2023-10-20 18:46:55.461 [ConsumeMessageThread_note_group_1] INFO  com.anynote.note.listener.NoteMessageListener - 
+2023-10-20 18:46:55.461 [ConsumeMessageThread_note_group_1] INFO  com.anynote.note.listener.NoteMessageListener - 测试id23
+2023-10-20 18:46:55.504 [ConsumeMessageThread_note_group_1] INFO  com.anynote.note.listener.NoteMessageListener - {"deltas":[]}
+2023-10-20 18:46:55.942 [ConsumeMessageThread_note_group_2] INFO  com.anynote.note.listener.NoteMessageListener - 创建笔记索引成功，id: 23, version: 3
+2023-10-20 18:46:56.252 [NettyClientPublicExecutor_4] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E091CE0003, offsetMsgId=AC16156F00002A9F0000000000005A89, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=0], queueOffset=3]
+2023-10-20 18:46:56.252 [NettyClientPublicExecutor_3] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E091CD0002, offsetMsgId=AC16156F00002A9F000000000000593A, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=0], queueOffset=2]
+2023-10-20 18:46:56.255 [ConsumeMessageThread_note_group_3] INFO  com.anynote.note.listener.NoteMessageListener - 生成笔记索引...
+2023-10-20 18:46:56.255 [ConsumeMessageThread_note_group_3] INFO  com.anynote.note.listener.NoteMessageListener - 23
+2023-10-20 18:46:56.274 [ConsumeMessageThread_note_group_4] INFO  com.anynote.note.listener.NoteMessageListener - {"currentNote":{"content":"# 无标题笔记\n12\n\n测试id23","dataScope":1,"deleted":0,"id":23,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":20,"status":0,"title":"无标题笔记"},"date":"2023-10-20 18:46:56.204","noteId":23,"oldNote":{"content":"# 无标题笔记\n12\n\n测试id23","createBy":2,"createTime":"2023-10-19 20:48:00","dataScope":1,"deleted":0,"id":23,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":20,"remark":"","status":0,"title":"无标题笔记","updateBy":2,"updateTime":"2023-10-20 18:46:55"},"userId":2}
+2023-10-20 18:46:56.277 [ConsumeMessageThread_note_group_4] INFO  com.anynote.note.listener.NoteMessageListener - # 无标题笔记
+2023-10-20 18:46:56.277 [ConsumeMessageThread_note_group_4] INFO  com.anynote.note.listener.NoteMessageListener - 12
+2023-10-20 18:46:56.277 [ConsumeMessageThread_note_group_4] INFO  com.anynote.note.listener.NoteMessageListener - 
+2023-10-20 18:46:56.277 [ConsumeMessageThread_note_group_4] INFO  com.anynote.note.listener.NoteMessageListener - 测试id23
+2023-10-20 18:46:56.279 [ConsumeMessageThread_note_group_4] INFO  com.anynote.note.listener.NoteMessageListener - {"deltas":[]}
+2023-10-20 18:46:56.559 [ConsumeMessageThread_note_group_3] INFO  com.anynote.note.listener.NoteMessageListener - 创建笔记索引成功，id: 23, version: 4
+2023-10-20 18:50:09.677 [http-nio-18091-exec-1] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - 
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+### The error may exist in file [/Volumes/aigo/code/anynote/Anynote-Cloud/anynote-modules/anynote-modules-note/target/classes/mapper/NoteMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: UPDATE             n_note         SET             update_time = ?, update_by = ?                       , n_note.title = ?                                                                 WHERE             n_note.is_delete = 0           AND             n_note.status = 0           AND             n_note.id = ?
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+; Data truncation: Data too long for column 'title' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+### The error may exist in file [/Volumes/aigo/code/anynote/Anynote-Cloud/anynote-modules/anynote-modules-note/target/classes/mapper/NoteMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: UPDATE             n_note         SET             update_time = ?, update_by = ?                       , n_note.title = ?                                                                 WHERE             n_note.is_delete = 0           AND             n_note.status = 0           AND             n_note.id = ?
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+; Data truncation: Data too long for column 'title' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:104)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:70)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:79)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:79)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:91)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:441)
+	at com.sun.proxy.$Proxy116.update(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.update(SqlSessionTemplate.java:288)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:64)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:148)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at com.sun.proxy.$Proxy121.updateNote(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
+	at com.sun.proxy.$Proxy122.updateNote(Unknown Source)
+	at com.anynote.note.service.impl.NoteServiceImpl.editNote(NoteServiceImpl.java:286)
+	at com.anynote.note.service.impl.NoteServiceImpl$$FastClassBySpringCGLIB$$46fb9b0d.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:58)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$962e12d4.editNote(<generated>)
+	at com.anynote.note.controller.NoteController.editNote(NoteController.java:105)
+	at com.anynote.note.controller.NoteController$$FastClassBySpringCGLIB$$3e370c01.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:123)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.controller.NoteController$$EnhancerBySpringCGLIB$$db0803c7.editNote(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:880)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:104)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:483)
+	at sun.reflect.GeneratedMethodAccessor79.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy226.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:47)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:64)
+	at com.sun.proxy.$Proxy224.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:194)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
+	... 98 common frames omitted
+2023-10-20 18:50:09.677 [http-nio-18091-exec-5] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - 
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+### The error may exist in file [/Volumes/aigo/code/anynote/Anynote-Cloud/anynote-modules/anynote-modules-note/target/classes/mapper/NoteMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: UPDATE             n_note         SET             update_time = ?, update_by = ?                       , n_note.title = ?                                                                 WHERE             n_note.is_delete = 0           AND             n_note.status = 0           AND             n_note.id = ?
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+; Data truncation: Data too long for column 'title' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+### The error may exist in file [/Volumes/aigo/code/anynote/Anynote-Cloud/anynote-modules/anynote-modules-note/target/classes/mapper/NoteMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: UPDATE             n_note         SET             update_time = ?, update_by = ?                       , n_note.title = ?                                                                 WHERE             n_note.is_delete = 0           AND             n_note.status = 0           AND             n_note.id = ?
+### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+; Data truncation: Data too long for column 'title' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+	at org.springframework.jdbc.support.SQLStateSQLExceptionTranslator.doTranslate(SQLStateSQLExceptionTranslator.java:104)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:70)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:79)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:79)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:91)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:441)
+	at com.sun.proxy.$Proxy116.update(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.update(SqlSessionTemplate.java:288)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:64)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:148)
+	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
+	at com.sun.proxy.$Proxy121.updateNote(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:344)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:198)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
+	at com.sun.proxy.$Proxy122.updateNote(Unknown Source)
+	at com.anynote.note.service.impl.NoteServiceImpl.editNote(NoteServiceImpl.java:286)
+	at com.anynote.note.service.impl.NoteServiceImpl$$FastClassBySpringCGLIB$$46fb9b0d.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:58)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$962e12d4.editNote(<generated>)
+	at com.anynote.note.controller.NoteController.editNote(NoteController.java:105)
+	at com.anynote.note.controller.NoteController$$FastClassBySpringCGLIB$$3e370c01.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:123)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.controller.NoteController$$EnhancerBySpringCGLIB$$db0803c7.editNote(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:880)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'title' at row 1
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:104)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:483)
+	at sun.reflect.GeneratedMethodAccessor79.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy226.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:47)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:64)
+	at com.sun.proxy.$Proxy224.update(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:194)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
+	... 98 common frames omitted
+2023-10-20 18:50:29.137 [NettyClientPublicExecutor_5] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E3D1550005, offsetMsgId=AC16156F00002A9F0000000000005E25, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=3], queueOffset=3]
+2023-10-20 18:50:29.137 [NettyClientPublicExecutor_6] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E3D13A0004, offsetMsgId=AC16156F00002A9F00000000000064AD, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=2], queueOffset=4]
+2023-10-20 18:50:29.163 [ConsumeMessageThread_note_group_5] INFO  com.anynote.note.listener.NoteMessageListener - 生成笔记索引...
+2023-10-20 18:50:29.163 [ConsumeMessageThread_note_group_5] INFO  com.anynote.note.listener.NoteMessageListener - 17
+2023-10-20 18:50:29.164 [ConsumeMessageThread_note_group_6] INFO  com.anynote.note.listener.NoteMessageListener - {"currentNote":{"content":"# 标题\n在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa","dataScope":1,"deleted":0,"id":17,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":14,"status":0,"title":"标题"},"date":"2023-10-20 18:50:29.035","noteId":17,"oldNote":{"content":"在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ```bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data ``` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ```bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data ``` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affab.","createBy":2,"createTime":"2023-10-15 13:53:03","dataScope":1,"deleted":0,"id":17,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":14,"remark":"","status":0,"title":"导出es","updateBy":2,"updateTime":"2023-10-15 14:55:17"},"userId":2}
+2023-10-20 18:50:29.174 [ConsumeMessageThread_note_group_6] INFO  com.anynote.note.listener.NoteMessageListener - 在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ```bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data ``` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ```bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data ``` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affab.
+2023-10-20 18:50:29.176 [NettyClientPublicExecutor_7] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E3D1A60006, offsetMsgId=AC16156F00002A9F00000000000065FC, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=2], queueOffset=5]
+2023-10-20 18:50:29.179 [NettyClientPublicExecutor_8] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E3D1A60007, offsetMsgId=AC16156F00002A9F000000000000674B, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=0], queueOffset=4]
+2023-10-20 18:50:29.180 [ConsumeMessageThread_note_group_7] INFO  com.anynote.note.listener.NoteMessageListener - 生成笔记索引...
+2023-10-20 18:50:29.180 [ConsumeMessageThread_note_group_7] INFO  com.anynote.note.listener.NoteMessageListener - 17
+2023-10-20 18:50:29.182 [ConsumeMessageThread_note_group_8] INFO  com.anynote.note.listener.NoteMessageListener - {"currentNote":{"content":"# 标题\n在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa","dataScope":1,"deleted":0,"id":17,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":14,"status":0,"title":"标题"},"date":"2023-10-20 18:50:29.145","noteId":17,"oldNote":{"content":"在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ```bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data ``` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ```bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data ``` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affab.","createBy":2,"createTime":"2023-10-15 13:53:03","dataScope":1,"deleted":0,"id":17,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":14,"remark":"","status":0,"title":"导出es","updateBy":2,"updateTime":"2023-10-15 14:55:17"},"userId":2}
+2023-10-20 18:50:29.184 [ConsumeMessageThread_note_group_8] INFO  com.anynote.note.listener.NoteMessageListener - 在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ```bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data ``` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ```bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data ``` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affab.
+2023-10-20 18:50:29.310 [ConsumeMessageThread_note_group_6] INFO  com.anynote.note.listener.NoteMessageListener - {"deltas":[{"original":{"lines":["在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ```bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data ``` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ```bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data ``` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affab."],"position":0},"revised":{"lines":["# 标题","在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa"],"position":0},"type":0}]}
+2023-10-20 18:50:29.310 [ConsumeMessageThread_note_group_8] INFO  com.anynote.note.listener.NoteMessageListener - {"deltas":[{"original":{"lines":["在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ```bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data ``` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ```bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data ``` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affab."],"position":0},"revised":{"lines":["# 标题","在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa"],"position":0},"type":0}]}
+2023-10-20 18:50:29.420 [ConsumeMessageThread_note_group_5] INFO  com.anynote.note.listener.NoteMessageListener - 创建笔记索引成功，id: 17, version: 1
+2023-10-20 18:50:29.434 [ConsumeMessageThread_note_group_7] INFO  com.anynote.note.listener.NoteMessageListener - 创建笔记索引成功，id: 17, version: 2
+2023-10-20 18:50:40.972 [NettyClientPublicExecutor_1] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E3FFAD0009, offsetMsgId=AC16156F00002A9F0000000000006DD3, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=2], queueOffset=6]
+2023-10-20 18:50:40.972 [NettyClientPublicExecutor_2] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E3FFA70008, offsetMsgId=AC16156F00002A9F0000000000007445, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=0], queueOffset=5]
+2023-10-20 18:50:40.977 [ConsumeMessageThread_note_group_9] INFO  com.anynote.note.listener.NoteMessageListener - 生成笔记索引...
+2023-10-20 18:50:40.978 [ConsumeMessageThread_note_group_9] INFO  com.anynote.note.listener.NoteMessageListener - 17
+2023-10-20 18:50:40.977 [ConsumeMessageThread_note_group_10] INFO  com.anynote.note.listener.NoteMessageListener - {"currentNote":{"content":"# 标题\n在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa","dataScope":1,"deleted":0,"id":17,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":14,"status":0,"title":"标题"},"date":"2023-10-20 18:50:40.927","noteId":17,"oldNote":{"content":"# 标题\n在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa","createBy":2,"createTime":"2023-10-15 13:53:03","dataScope":1,"deleted":0,"id":17,"knowledgeBaseId":3,"knowledgeBaseName":"测试知识库3","noteTextId":14,"remark":"","status":0,"title":"标题","updateBy":2,"updateTime":"2023-10-20 18:50:29"},"userId":2}
+2023-10-20 18:50:40.981 [ConsumeMessageThread_note_group_10] INFO  com.anynote.note.listener.NoteMessageListener - # 标题
+2023-10-20 18:50:40.981 [ConsumeMessageThread_note_group_10] INFO  com.anynote.note.listener.NoteMessageListener - 在 Elasticsearch 中，你可以使用 `elasticdump` 工具来导出和导入数据¹³⁴。以下是一些可能的步骤： **导出数据**¹³： 1. 安装 `elasticdump`。这是一个 Node.js 的插件，可以通过 npm 来安装¹³。 2. 使用 `elasticdump` 的 `--input` 参数指定 Elasticsearch 索引的 URL，使用 `--output` 参数指定输出文件的路径¹³。例如： ``bash elasticdump --input=http://localhost:9200/my_index --output=my_index_mapping.json --type=mapping elasticdump --input=http://localhost:9200/my_index --output=my_index_data.json --type=data `` 这将会导出索引的映射和数据到两个 JSON 文件中¹³。 **导入数据**¹³： 1. 使用 `elasticdump` 的 `--input` 参数指定输入文件的路径，使用 `--output` 参数指定 Elasticsearch 索引的 URL¹³。例如： ``bash elasticdump --input=my_index_mapping.json --output=http://localhost:9200/my_new_index --type=mapping elasticdump --input=my_index_data.json --output=http://localhost:9200/my_new_index --type=data `` 这将会从两个 JSON 文件中导入映射和数据到新的索引中¹³。 请注意，这只是一个基本的示例，实际的导出和导入过程可能需要根据你的具体需求进行调整¹³。希望这个信息对你有所帮助！ 源: 与必应的对话， 2023/10/15 (1) 干货 | Elasticsearch、Kibana数据导出实战 - 知乎. https://zhuanlan.zhihu.com/p/78857118. (2) 使用elasticdump导出和导入elasticsearch的索引数据 - CSDN博客. https://bing.com/search?q=Elasticsearch+%e6%95%b0%e6%8d%ae%e5%ba%93%e5%a6%82%e4%bd%95%e5%af%bc%e5%87%ba%e5%92%8c%e5%af%bc%e5%85%a5. (3) elasticSearch数据的导入和导出 - CSDN博客. https://blog.csdn.net/zhiyikeji/article/details/129021499. (4) ElasticSearch入门篇（保姆级教程） - coderxz - 博客园. https://www.cnblogs.com/coderxz/p/13268417.html. (5) Elasticsearch导入导出全量数据 - 掘金. https://juejin.cn/post/7140136204498337822. (6) undefined. http://production.es.com:9200/my_index. (7) undefined. https://www.elastic.co/products/elasticsearch. (8) undefined. https://www.jianshu.com/p/bcd17c7affa
+2023-10-20 18:50:40.982 [ConsumeMessageThread_note_group_10] INFO  com.anynote.note.listener.NoteMessageListener - {"deltas":[]}
+2023-10-20 18:50:41.085 [ConsumeMessageThread_note_group_9] INFO  com.anynote.note.listener.NoteMessageListener - 创建笔记索引成功，id: 17, version: 3
+2023-10-20 18:51:52.469 [http-nio-18091-exec-7] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - 笔记不存在
+com.anynote.core.exception.user.UserParamException: null
+	at com.anynote.note.service.impl.NoteServiceImpl.getNotePermissions(NoteServiceImpl.java:370)
+	at com.anynote.note.service.impl.NoteServiceImpl$$FastClassBySpringCGLIB$$46fb9b0d.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$962e12d4.getNotePermissions(<generated>)
+	at com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect.authPermissions(RequiresNotePermissionsAspect.java:67)
+	at com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect.doBefore(RequiresNotePermissionsAspect.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:617)
+	at org.springframework.aop.aspectj.AspectJMethodBeforeAdvice.before(AspectJMethodBeforeAdvice.java:44)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$962e12d4.deleteNote(<generated>)
+	at com.anynote.note.controller.NoteController.deleteNote(NoteController.java:81)
+	at com.anynote.note.controller.NoteController$$FastClassBySpringCGLIB$$3e370c01.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:123)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.controller.NoteController$$EnhancerBySpringCGLIB$$db0803c7.deleteNote(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doDelete(FrameworkServlet.java:931)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:702)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+2023-10-20 18:54:39.771 [NettyClientPublicExecutor_4] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=C61200017AD218B4AAC265E7A483000A, offsetMsgId=AC16156F00002A9F0000000000007594, messageQueue=MessageQueue [topic=note_topic, brokerName=broker-a, queueId=1], queueOffset=3]
+2023-10-20 18:54:39.775 [ConsumeMessageThread_note_group_11] INFO  com.anynote.note.listener.NoteMessageListener - 删除索引...
+2023-10-20 18:54:39.885 [ConsumeMessageThread_note_group_11] INFO  com.anynote.note.service.impl.NoteElasticsearchServiceImpl - 删除索引笔记索引17成功
+2023-10-20 18:55:39.739 [http-nio-18091-exec-8] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - 笔记不存在
+com.anynote.core.exception.user.UserParamException: null
+	at com.anynote.note.service.impl.NoteServiceImpl.getNotePermissions(NoteServiceImpl.java:370)
+	at com.anynote.note.service.impl.NoteServiceImpl$$FastClassBySpringCGLIB$$46fb9b0d.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$962e12d4.getNotePermissions(<generated>)
+	at com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect.authPermissions(RequiresNotePermissionsAspect.java:67)
+	at com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect.doBefore(RequiresNotePermissionsAspect.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:617)
+	at org.springframework.aop.aspectj.AspectJMethodBeforeAdvice.before(AspectJMethodBeforeAdvice.java:44)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$962e12d4.editNote(<generated>)
+	at com.anynote.note.controller.NoteController.editNote(NoteController.java:105)
+	at com.anynote.note.controller.NoteController$$FastClassBySpringCGLIB$$3e370c01.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:123)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.controller.NoteController$$EnhancerBySpringCGLIB$$db0803c7.editNote(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:880)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+2023-10-20 19:00:45.856 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:00:46.030 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:00:46.837 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:46.867 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:47.048 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:47.075 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:47.112 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:47.141 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:47.158 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:47.884 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:48.065 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:48.123 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:48.127 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:48.140 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:48.172 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:48.893 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:49.100 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:49.134 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:49.144 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:49.152 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:49.192 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:49.926 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:50.122 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:50.140 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:50.155 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:50.171 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:50.198 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:50.945 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:51.130 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:51.147 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:51.160 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:51.181 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:51.212 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:54.890 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:00:58.061 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:00.940 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:04.144 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:06.818 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:10.150 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:12.837 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:12.851 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:13.133 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:16.062 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:17.999 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:21.118 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:24.034 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:24.088 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:30.062 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:30.109 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:01:36.097 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:36.134 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:41.039 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:42.029 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:43.138 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:45.825 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:46.035 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:46.042 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:49.041 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:51.823 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:55.098 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:01:57.849 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:01.123 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:03.872 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:03.891 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:07.048 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:09.895 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:12.051 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:13.131 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:15.077 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:15.089 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:15.828 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:21.112 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:21.829 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:02:27.010 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:27.039 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:33.021 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:33.047 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:38.079 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:39.054 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:41.093 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:43.141 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:45.092 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:45.106 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:46.043 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:50.117 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:52.068 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:56.162 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:02:58.094 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:01.812 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:04.099 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:04.177 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:07.153 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:07.829 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:13.142 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:13.163 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:13.185 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:13.205 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:13.216 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:19.209 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:19.231 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:25.246 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:25.246 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:03:30.173 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:31.276 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:33.609 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:36.634 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:39.638 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:41.821 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:43.137 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:45.651 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:45.664 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:45.820 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:51.667 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:51.807 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:56.187 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:57.836 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:57.846 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:03:59.201 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:03.855 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:05.216 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:09.189 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:04:09.881 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:11.267 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:12.106 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:04:12.110 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-10-20 19:04:13.253 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:15.817 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:04:16.005 [Thread-11] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-10-20 19:04:16.005 [Thread-6] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-10-20 19:04:16.007 [Thread-11] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-10-20 19:04:16.076 [Thread-6] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-10-20 19:04:16.077 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[172.22.21.111:10911] result: true
+2023-10-20 19:06:01.786 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-10-20 19:06:02.568 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0
+2023-10-20 19:06:02.611 [main] INFO  org.reflections.Reflections - Reflections took 30 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-10-20 19:06:02.634 [main] INFO  org.reflections.Reflections - Reflections took 15 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-10-20 19:06:02.660 [main] INFO  org.reflections.Reflections - Reflections took 21 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-10-20 19:06:02.852 [main] INFO  org.reflections.Reflections - Reflections took 189 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 19:06:02.866 [main] INFO  org.reflections.Reflections - Reflections took 10 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-10-20 19:06:02.879 [main] INFO  org.reflections.Reflections - Reflections took 10 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-10-20 19:06:02.895 [main] INFO  org.reflections.Reflections - Reflections took 12 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-10-20 19:06:03.037 [main] INFO  org.reflections.Reflections - Reflections took 139 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 19:06:03.041 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-10-20 19:06:03.042 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$333/1107579932
+2023-10-20 19:06:03.042 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1784834205
+2023-10-20 19:06:03.042 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-10-20 19:06:03.043 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-10-20 19:06:03.048 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 19:06:03.670 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1697799963421_127.0.0.1_53706
+2023-10-20 19:06:03.674 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 19:06:03.674 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Notify connected event to listeners.
+2023-10-20 19:06:03.680 [main] INFO  com.alibaba.nacos.common.remote.client - [8ea65fda-0cb4-4885-a9d9-c8d6e0224140_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/106113013
+2023-10-20 19:06:03.780 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-10-20 19:06:03.790 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-10-20 19:06:03.800 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-10-20 19:06:03.815 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-10-20 19:06:05.439 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-20 19:06:05.446 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-20 19:06:05.508 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
+2023-10-20 19:06:06.150 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=f22e0677-64d1-32d2-8ed6-1d23b6023c0a
+2023-10-20 19:06:06.917 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-10-20 19:06:06.924 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-10-20 19:06:06.925 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-10-20 19:06:06.925 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-10-20 19:06:07.088 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-10-20 19:06:07.088 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3218 ms
+2023-10-20 19:06:08.185 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteTaskSubmissionRecord ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 19:06:08.363 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 19:06:09.655 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 19:06:10.068 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 19:06:10.249 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 19:06:15.371 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-10-20 19:06:15.803 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 19:06:15.807 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteTaskMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-10-20 19:06:15.959 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 19:06:15.976 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-10-20 19:06:16.274 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 7e49c5fd-de67-418d-b3ea-c13dcfb8e21b
+2023-10-20 19:06:16.276 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] RpcClient init label, labels = {module=naming, source=sdk}
+2023-10-20 19:06:16.278 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-10-20 19:06:16.278 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-10-20 19:06:16.278 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-10-20 19:06:16.279 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 19:06:16.403 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Success to connect to server [localhost:8848] on start up, connectionId = 1697799976292_127.0.0.1_53801
+2023-10-20 19:06:16.403 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 19:06:16.403 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Notify connected event to listeners.
+2023-10-20 19:06:16.403 [main] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/106113013
+2023-10-20 19:06:16.482 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18091"]
+2023-10-20 19:06:16.547 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18091 (http) with context path ''
+2023-10-20 19:06:16.674 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-note 192.168.1.114:18091 register finished
+2023-10-20 19:06:17.037 [nacos-grpc-client-executor-11] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Receive server push request, request = NotifySubscriberRequest, requestId = 39
+2023-10-20 19:06:17.054 [nacos-grpc-client-executor-11] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Ack server push request, request = NotifySubscriberRequest, requestId = 39
+2023-10-20 19:06:17.604 [main] INFO  com.anynote.note.AnyNoteNoteApplication - Started AnyNoteNoteApplication in 16.579 seconds (JVM running for 18.054)
+2023-10-20 19:06:17.615 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note-dev.yml, group=DEFAULT_GROUP
+2023-10-20 19:06:17.616 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note, group=DEFAULT_GROUP
+2023-10-20 19:06:17.617 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note.yml, group=DEFAULT_GROUP
+2023-10-20 19:06:28.247 [http-nio-18091-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-10-20 19:06:28.250 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-10-20 19:06:28.265 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 15 ms
+2023-10-20 19:06:30.476 [http-nio-18091-exec-1] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2023-10-20 19:06:31.519 [http-nio-18091-exec-1] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - 没有权限执行此操作
+com.anynote.core.exception.auth.AuthException: null
+	at com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect.authPermissions(RequiresNotePermissionsAspect.java:77)
+	at com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect.doBefore(RequiresNotePermissionsAspect.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:617)
+	at org.springframework.aop.aspectj.AspectJMethodBeforeAdvice.before(AspectJMethodBeforeAdvice.java:44)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.service.impl.NoteServiceImpl$$EnhancerBySpringCGLIB$$e1c1ccc2.deleteNote(<generated>)
+	at com.anynote.note.controller.NoteController.deleteNote(NoteController.java:81)
+	at com.anynote.note.controller.NoteController$$FastClassBySpringCGLIB$$3e370c01.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:123)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.controller.NoteController$$EnhancerBySpringCGLIB$$df88d775.deleteNote(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doDelete(FrameworkServlet.java:931)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:702)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)

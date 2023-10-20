@@ -6,6 +6,7 @@ package com.anynote.common.rocketmq.tags;
 public enum NoteTagsEnum {
 
     SUBMIT("提交任务"),
+    DELETE_NOTE_INDEX("删除笔记索引"),
     GENERATOR_NOTE_INDEX("生成笔记索引"),
     GENERATE_NOTE_EDIT_LOG("生成笔记编辑记录")
     ;
