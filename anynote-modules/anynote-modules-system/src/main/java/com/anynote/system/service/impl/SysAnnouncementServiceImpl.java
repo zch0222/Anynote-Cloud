@@ -41,7 +41,7 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
         SysAnnouncement sysAnnouncement = sysAnnouncements.size() > 0 ? sysAnnouncements.get(0) : null;
         LambdaQueryWrapper<SysUserAnnouncement> sysUserAnnouncementLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserAnnouncementLambdaQueryWrapper
-                .eq(SysUserAnnouncement::getAnnouncementId, sysAnnouncement)
+                .eq(SysUserAnnouncement::getAnnouncementId, StringUtils.isNotNull(sysAnnouncement) ? sysAnnouncement.getId() : -1)
                 .eq(SysUserAnnouncement::getUserId, loginUser.getSysUser().getId());
         SysUserAnnouncement sysUserAnnouncement = this.sysUserAnnouncementMapper.selectOne(sysUserAnnouncementLambdaQueryWrapper);
         AnnouncementVO announcementVO = null;
