@@ -958,3 +958,97 @@ com.anynote.core.exception.auth.AuthException: null
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
+2023-10-20 20:59:51.860 [nacos-grpc-client-executor-1777] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Receive server push request, request = NotifySubscriberRequest, requestId = 40
+2023-10-20 20:59:51.872 [nacos-grpc-client-executor-1777] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Ack server push request, request = NotifySubscriberRequest, requestId = 40
+2023-10-20 21:08:46.845 [nacos-grpc-client-executor-1911] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Receive server push request, request = NotifySubscriberRequest, requestId = 47
+2023-10-20 21:08:46.852 [nacos-grpc-client-executor-1911] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Ack server push request, request = NotifySubscriberRequest, requestId = 47
+2023-10-20 21:10:49.667 [Thread-11] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-10-20 21:10:49.670 [Thread-5] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-10-20 21:10:49.682 [Thread-11] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-10-20 21:10:49.785 [Thread-5] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-10-20 21:10:50.842 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 21:10:50.865 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-20 21:10:51.067 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-20 21:10:51.075 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 21:10:52.937 [nacos-grpc-client-executor-1939] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Receive server push request, request = NotifySubscriberRequest, requestId = 51
+2023-10-20 21:10:52.998 [nacos-grpc-client-executor-1939] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Ack server push request, request = NotifySubscriberRequest, requestId = 51
+2023-10-20 21:10:53.217 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 21:10:53.221 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 21:10:53.246 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2023-10-20 21:10:53.519 [nacos-grpc-client-executor-1944] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Receive server push request, request = NotifySubscriberRequest, requestId = 55
+2023-10-20 21:10:53.537 [nacos-grpc-client-executor-1944] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Ack server push request, request = NotifySubscriberRequest, requestId = 55
+2023-10-20 21:10:53.546 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2023-10-20 21:10:54.106 [nacos-grpc-client-executor-1946] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Receive server push request, request = NotifySubscriberRequest, requestId = 56
+2023-10-20 21:10:54.744 [nacos-grpc-client-executor-1946] INFO  com.alibaba.nacos.common.remote.client - [7e49c5fd-de67-418d-b3ea-c13dcfb8e21b] Ack server push request, request = NotifySubscriberRequest, requestId = 56
+2023-10-20 21:10:54.760 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2023-10-20 21:10:54.762 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@7cfe3967[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2023-10-20 21:10:54.762 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1697799976292_127.0.0.1_53801
+2023-10-20 21:10:54.771 [nacos-grpc-client-executor-1947] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - [1697799976292_127.0.0.1_53801]Ignore complete event,isRunning:false,isAbandon=false
+2023-10-20 21:10:54.782 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@425d840f[Running, pool size = 11, active threads = 0, queued tasks = 0, completed tasks = 1948]
+2023-10-20 21:10:54.883 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-20 21:10:54.885 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-20 21:10:55.315 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2023-10-20 21:10:55.352 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2023-10-20 21:11:20.640 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-10-20 21:11:24.077 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0
+2023-10-20 21:11:24.592 [main] INFO  org.reflections.Reflections - Reflections took 205 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-10-20 21:11:24.657 [main] INFO  org.reflections.Reflections - Reflections took 32 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-10-20 21:11:24.787 [main] INFO  org.reflections.Reflections - Reflections took 104 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-10-20 21:11:25.273 [main] INFO  org.reflections.Reflections - Reflections took 463 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 21:11:25.311 [main] INFO  org.reflections.Reflections - Reflections took 33 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-10-20 21:11:25.356 [main] INFO  org.reflections.Reflections - Reflections took 40 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-10-20 21:11:25.386 [main] INFO  org.reflections.Reflections - Reflections took 21 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-10-20 21:11:25.680 [main] INFO  org.reflections.Reflections - Reflections took 284 ms to scan 231 urls, producing 0 keys and 0 values 
+2023-10-20 21:11:25.690 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-10-20 21:11:25.697 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$333/1107579932
+2023-10-20 21:11:25.698 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1784834205
+2023-10-20 21:11:25.699 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-10-20 21:11:25.699 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-10-20 21:11:25.712 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 21:11:26.291 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1697807486051_127.0.0.1_51132
+2023-10-20 21:11:26.296 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 21:11:26.296 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Notify connected event to listeners.
+2023-10-20 21:11:26.301 [main] INFO  com.alibaba.nacos.common.remote.client - [e4a2a243-3d18-4aa9-b0e0-38c8ec1fb4e4_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/106113013
+2023-10-20 21:11:26.664 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-10-20 21:11:26.692 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-10-20 21:11:27.216 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-10-20 21:11:27.233 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-10-20 21:11:29.320 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-20 21:11:29.326 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-20 21:11:29.372 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 0 Redis repository interfaces.
+2023-10-20 21:11:29.821 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=f22e0677-64d1-32d2-8ed6-1d23b6023c0a
+2023-10-20 21:11:30.646 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-10-20 21:11:30.658 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-10-20 21:11:30.658 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-10-20 21:11:30.658 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-10-20 21:11:31.017 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-10-20 21:11:31.017 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3716 ms
+2023-10-20 21:11:32.218 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteTaskSubmissionRecord ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 21:11:32.402 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 21:11:34.979 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-10-20 21:11:35.209 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 21:11:35.277 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-10-20 21:11:37.467 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-10-20 21:11:37.874 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 21:11:37.877 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteTaskMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-10-20 21:11:38.070 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-20 21:11:38.072 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-10-20 21:11:38.318 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of e03e5727-04e8-4ec4-81c0-e81731f16929
+2023-10-20 21:11:38.319 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] RpcClient init label, labels = {module=naming, source=sdk}
+2023-10-20 21:11:38.320 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-10-20 21:11:38.320 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-10-20 21:11:38.320 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-10-20 21:11:38.321 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-10-20 21:11:38.514 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Success to connect to server [localhost:8848] on start up, connectionId = 1697807498386_127.0.0.1_51274
+2023-10-20 21:11:38.525 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-10-20 21:11:38.525 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Notify connected event to listeners.
+2023-10-20 21:11:38.542 [main] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/106113013
+2023-10-20 21:11:38.725 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18091"]
+2023-10-20 21:11:38.738 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18091 (http) with context path ''
+2023-10-20 21:11:38.775 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-note 192.168.1.114:18091 register finished
+2023-10-20 21:11:39.244 [nacos-grpc-client-executor-9] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Receive server push request, request = NotifySubscriberRequest, requestId = 65
+2023-10-20 21:11:39.262 [nacos-grpc-client-executor-9] INFO  com.alibaba.nacos.common.remote.client - [e03e5727-04e8-4ec4-81c0-e81731f16929] Ack server push request, request = NotifySubscriberRequest, requestId = 65
+2023-10-20 21:11:39.505 [main] INFO  com.anynote.note.AnyNoteNoteApplication - Started AnyNoteNoteApplication in 20.978 seconds (JVM running for 23.078)
+2023-10-20 21:11:39.760 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note-dev.yml, group=DEFAULT_GROUP
+2023-10-20 21:11:39.762 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note, group=DEFAULT_GROUP
+2023-10-20 21:11:39.762 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note.yml, group=DEFAULT_GROUP

@@ -132,4 +132,8 @@ public class LoginServiceImpl implements LoginService {
         });
         return this.login(sysUser.getUsername(), resetPasswordDTO.getNewPassword());
     }
+
+    public static void main(String[] args) {
+        System.out.println(SecurityUtils.encryptPassword("123456"));
+    }
 }
