@@ -90,7 +90,7 @@ public class KnowledgeBasePermissionsAspect {
         }
         else if (KnowledgeBasePermissions.MANAGE.equals(requiresPermissions)) {
             if (StringUtils.isNull(permission) || permission > KnowledgeBasePermissions.MANAGE.getValue()) {
-                throw new AuthException(StringUtils.isNull(message) ? "没有权限管理知识库" : message,
+                throw  new AuthException(StringUtils.isNull(message) ? "没有权限管理知识库" : message,
                         ResCode.UNAUTHORIZED_ERROR);
             }
         }

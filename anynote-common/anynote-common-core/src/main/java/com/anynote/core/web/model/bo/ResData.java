@@ -1,6 +1,8 @@
 package com.anynote.core.web.model.bo;
 
+import com.anynote.core.serialization.NullObjectJsonSerializer;
 import com.anynote.core.web.enums.ResCode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +23,7 @@ public class ResData<T> implements Serializable {
 
     private String msg;
 
+    @JsonSerialize(nullsUsing = NullObjectJsonSerializer.class)
     private T data;
 
     public ResData(String code, String msg, T data) {

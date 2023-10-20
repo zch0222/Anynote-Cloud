@@ -89,6 +89,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public KnowledgeBaseUserImportDTO importKnowledgeBaseUser(KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO) {
         Integer[] failCount = {0};
         List<String> failUserNameList = new ArrayList<>();
+        String password = RandomStringUtils.randomNumeric(10);
         List<KnowledgeBaseImportUser> knowledgeBaseImportUserList = knowledgeBaseUserImportDTO.getKnowledgeBaseImportUserList().stream()
                 .map(knowledgeBaseImportUser -> {
                     SysUser sysUser = new SysUser();
@@ -101,7 +102,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     sysUser.setStatus(0);
                     sysUser.setSex(2);
                     sysUser.setDeleted(0);
-                    String password = RandomStringUtils.randomNumeric(10);
                     sysUser.setPassword(SecurityUtils.encryptPassword(password));
                     if (false == checkUsername(sysUser.getUsername())) {
                         knowledgeBaseImportUser.setPassword("用户名已经存在");

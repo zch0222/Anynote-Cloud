@@ -112,6 +112,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .userId(userId)
                         .noteTaskId(noteTask.getId())
                         .permissions(NoteTaskPermissions.SUBMIT.getValue())
+                        // 管理员不用提交任务
+                        .status(2)
                         .build());
             }
 
@@ -122,6 +124,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .userId(userId)
                         .noteTaskId(noteTask.getId())
                         .permissions(NoteTaskPermissions.MANAGE.getValue())
+                        .status(0)
                         .build());
             }
         });
@@ -201,19 +204,19 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         noteTaskSubmissionRecord.setUpdateTime(date);
         noteTaskSubmissionRecord.setCreateTime(date);
         noteTaskSubmissionRecordService.getBaseMapper().insert(noteTaskSubmissionRecord);
-        rocketMQTemplate.asyncSendOrderly("note_task_topic", MessageBuilder
-                .withPayload("测试").build(), "id", new SendCallback() {
-            @Override
-            public void onSuccess(SendResult sendResult) {
-                if (sendResult.getSendStatus() == SendStatus.SEND_OK) {
-                    log.info("发送异步顺序消息成功!消息ID为:{}", sendResult.getMsgId());
-                }
-            }
-            @Override
-            public void onException(Throwable throwable) {
-                log.info("发送异步顺序消息失败!失败原因为:{}", throwable.getMessage());
-            }
-        });
+//        rocketMQTemplate.asyncSendOrderly("note_task_topic", MessageBuilder
+//                .withPayload("测试").build(), "id", new SendCallback() {
+//            @Override
+//            public void onSuccess(SendResult sendResult) {
+//                if (sendResult.getSendStatus() == SendStatus.SEND_OK) {
+//                    log.info("发送异步顺序消息成功!消息ID为:{}", sendResult.getMsgId());
+//                }
+//            }
+//            @Override
+//            public void onException(Throwable throwable) {
+//                log.info("发送异步顺序消息失败!失败原因为:{}", throwable.getMessage());
+//            }
+//        });
         Integer count = noteService.submitNote(submitParam.getId());
         if (1 != count) {
             throw new BusinessException("提交失败，请联系管理员", ResCode.BUSINESS_ERROR);
@@ -249,12 +252,13 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
 
 
 
-
-    @Override
-    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
-        queryParam.setId(this.getNoteTaskKnowledgeBaseId(queryParam.getNoteTaskId()));
-        return this.selectAdminNoteTaskById(queryParam);
-    }
+//    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "权限不足")
+//    @Override
+//    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
+//        queryParam.setId(this.getNoteTaskKnowledgeBaseId(queryParam.getNoteTaskId()));
+//        AdminNoteTaskDTO adminNoteTaskDTO =  selectAdminNoteTaskById(queryParam);
+//        return adminNoteTaskDTO;
+//    }
 
 
     @Override
@@ -264,11 +268,12 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .eq(NoteTask::getId, noteTaskId)
                 .select(NoteTask::getKnowledgeBaseId);
         NoteTask noteTask = this.baseMapper.selectOne(noteTaskLambdaQueryWrapper);
-        return noteTask.getId();
+        return noteTask.getKnowledgeBaseId();
     }
 
+    @Override
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "权限不足")
-    private AdminNoteTaskDTO selectAdminNoteTaskById(NoteTaskQueryParam queryParam) {
+    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
         LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
         noteTaskLambdaQueryWrapper
                 .eq(NoteTask::getId, queryParam.getNoteTaskId());

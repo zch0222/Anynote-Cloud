@@ -3,10 +3,6 @@ package com.anynote.note.service.impl;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.elasticsearch.core.search.HighlightField;
-import co.elastic.clients.elasticsearch.core.search.Hit;
-import co.elastic.clients.elasticsearch.core.search.TotalHits;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSON;
 import com.anynote.common.elasticsearch.constant.ElasticsearchIndexConstants;
 import com.anynote.common.elasticsearch.model.EsNoteIndex;
@@ -19,7 +15,6 @@ import com.anynote.common.rocketmq.tags.NoteTagsEnum;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
-import com.anynote.core.exception.auth.AuthException;
 import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
@@ -27,7 +22,7 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.bo.FileDTO;
-import com.anynote.file.api.model.bo.FileUploadParam;
+import com.anynote.note.api.model.bo.GenerateNoteEditLogMessage;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteImage;
 import com.anynote.note.api.model.po.NoteText;
@@ -47,11 +42,8 @@ import com.anynote.note.utils.MarkdownUtil;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.po.SysUser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import jakarta.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +101,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     public PageBean<Note> getNotesByKnowledgeBaseId(NoteQueryParam queryParam) {
 
         List<Note> noteList = this.baseMapper.selectNoteInfoList(queryParam);
+        noteList.stream().forEach(note -> {
+            note.setNotePermissions(this.getNotePermissions(note.getId()).getValue());
+        });
         PageInfo<Note> pageInfo = new PageInfo<>(noteList);
         PageBean<Note> pageBean = new PageBean<>();
         pageBean.setRows(noteList);
@@ -281,24 +276,52 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @RequiresNotePermissions(NotePermissions.EDIT)
     @Override
     public String editNote(NoteUpdateParam updateParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
         updateParam.setUpdateTime(new Date());
+        Note oldNote = this.baseMapper.selectNoteById(NoteQueryParam.builder()
+                .id(updateParam.getId())
+                .build());
         Integer count = this.baseMapper.updateNote(updateParam);
         if (count != 1) {
             throw new BusinessException("更新笔记失败", ResCode.USER_ERROR);
         }
 
-        LambdaQueryWrapper<Note> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        noteLambdaQueryWrapper
-                .eq(Note::getId, updateParam.getId())
-                .select(Note::getNoteTextId);
-        Note noteInfo = this.baseMapper.selectOne(noteLambdaQueryWrapper);
-        updateParam.setContentId(noteInfo.getNoteTextId());
+//        LambdaQueryWrapper<Note> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        noteLambdaQueryWrapper
+//                .eq(Note::getId, updateParam.getId())
+//                .select(Note::getNoteTextId);
+//        Note oldNote = this.baseMapper.selectOne(noteLambdaQueryWrapper);
+        updateParam.setContentId(oldNote.getNoteTextId());
         Integer contentCount = this.baseMapper.updateContent(updateParam);
         if (contentCount != 1) {
             throw new BusinessException("更新笔记失败", ResCode.USER_ERROR);
         }
+        Note currentNote = Note.builder()
+                .id(updateParam.getId())
+                .title(StringUtils.isNotNull(updateParam.getTitle()) ? updateParam.getTitle() : oldNote.getTitle())
+                .noteTextId(oldNote.getNoteTextId())
+                .knowledgeBaseId(oldNote.getKnowledgeBaseId())
+                .status(oldNote.getStatus())
+                .dataScope(oldNote.getDataScope())
+                .permissions(oldNote.getPermissions())
+                .deleted(oldNote.getDeleted())
+                .noteText(oldNote.getNoteText())
+                .content(StringUtils.isNotNull(updateParam.getContent()) ? updateParam.getContent() : oldNote.getContent())
+                .notePermissions(oldNote.getNotePermissions())
+                .knowledgeBaseName(oldNote.getKnowledgeBaseName())
+                .submitTaskName(oldNote.getSubmitTaskName())
+                .build();
         String destination = rocketMQProperties.getNoteTopic() +  ":" + NoteTagsEnum.GENERATOR_NOTE_INDEX.name();
         rocketMQTemplate.asyncSend(destination, updateParam.getId(), RocketmqSendCallbackBuilder.commonCallback());
+
+        String generateNoteLogDestination = rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.GENERATE_NOTE_EDIT_LOG.name();
+        rocketMQTemplate.asyncSend(generateNoteLogDestination, JSON.toJSONString(GenerateNoteEditLogMessage.builder()
+                .noteId(updateParam.getId())
+                .oldNote(oldNote)
+                .currentNote(currentNote)
+                .date(new Date())
+                .userId(loginUser.getSysUser().getId())
+                .build()), RocketmqSendCallbackBuilder.commonCallback());
         return Constants.SUCCESS_RES;
     }
 

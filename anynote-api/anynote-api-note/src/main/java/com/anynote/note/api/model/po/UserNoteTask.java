@@ -25,4 +25,9 @@ public class UserNoteTask {
      * 任务权限 1.管理 2.提交 3.无权限
      */
     private Integer permissions;
+
+    /**
+     * 0.未提交 1.已提交 2.无需提交
+     */
+    private Integer status;
 }

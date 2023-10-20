@@ -55,6 +55,7 @@ public class AdminNoteTaskController {
     public ResData<AdminNoteTaskDTO> getAdminNoteTaskById(@PathVariable @NotNull(message = "任务id不能为空") Long id) {
         return ResUtil.success(noteTaskService.getAdminNoteTaskById(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
                 .noteTaskId(id)
+                .knowledgeBaseId(noteTaskService.getNoteTaskKnowledgeBaseId(id))
                 .build()));
     }
 

@@ -6,9 +6,20 @@ import com.alibaba.fastjson2.JSON;
 import com.anynote.common.elasticsearch.constant.ElasticsearchIndexConstants;
 import com.anynote.common.elasticsearch.model.EsNoteIndex;
 import com.anynote.common.rocketmq.tags.NoteTagsEnum;
+import com.anynote.note.api.model.bo.GenerateNoteEditLogMessage;
 import com.anynote.note.api.model.po.Note;
+import com.anynote.note.api.model.po.NoteEditLog;
+import com.anynote.note.api.model.po.NoteOperationLog;
+import com.anynote.note.enums.NoteOperationType;
+import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.model.bo.NoteQueryParam;
+import com.anynote.note.service.NoteEditLogService;
+import com.anynote.note.service.NoteHistoryService;
+import com.anynote.note.service.NoteOperationLogService;
 import com.anynote.note.service.NoteService;
+import difflib.Delta;
+import difflib.DiffUtils;
+import difflib.Patch;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -17,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author 称霸幼儿园
@@ -27,9 +41,20 @@ import java.io.IOException;
         consumerGroup = "${anynote.data.rocketmq.note-group}")
 public class NoteMessageListener implements RocketMQListener<MessageExt> {
 
+    @Autowired
+    private NoteMapper noteMapper;
 
     @Autowired
     private NoteService noteService;
+
+    @Autowired
+    private NoteOperationLogService noteOperationLogService;
+
+    @Autowired
+    private NoteHistoryService noteHistoryService;
+
+    @Autowired
+    private NoteEditLogService noteEditLogService;
 
     @Autowired
     private ElasticsearchClient elasticsearchClient;
@@ -42,6 +67,40 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
             log.info("生成笔记索引...");
             log.info(new String(messageExt.getBody()));
             generateNoteIndex(Long.valueOf(new String(messageExt.getBody())));
+        }
+        else if (NoteTagsEnum.GENERATE_NOTE_EDIT_LOG == NoteTagsEnum.valueOf(messageExt.getTags())) {
+            log.info(new String(messageExt.getBody()));
+            GenerateNoteEditLogMessage generateNoteEditLogMessage = JSON.parseObject(new String(messageExt.getBody()), GenerateNoteEditLogMessage.class);
+            generateNoteEditLog(generateNoteEditLogMessage);
+
+        }
+    }
+
+    private void generateNoteEditLog(GenerateNoteEditLogMessage generateNoteEditLogMessage) {
+        List<String> oldContent = Arrays.asList(generateNoteEditLogMessage.getOldNote().getContent().split("\\r?\\n"));
+        List<String> newContent = Arrays.asList(generateNoteEditLogMessage.getCurrentNote().getContent().split("\\r?\\n"));
+        for (String text : oldContent) {
+            log.info(text);
+        }
+        Patch<String> patch = DiffUtils.diff(oldContent, newContent);
+        log.info(JSON.toJSONString(patch));
+        if (!patch.getDeltas().isEmpty()) {
+            NoteOperationLog noteOperationLog = NoteOperationLog.builder()
+                    .noteId(generateNoteEditLogMessage.getNoteId())
+                    .operatorId(generateNoteEditLogMessage.getUserId())
+                    .operationType(NoteOperationType.EDIT.getValue())
+                    .operationTime(generateNoteEditLogMessage.getDate())
+                    .build();
+            Date date = new Date();
+            noteOperationLog.setCreateBy(generateNoteEditLogMessage.getUserId());
+            noteOperationLog.setCreateTime(date);
+            noteOperationLog.setUpdateBy(generateNoteEditLogMessage.getUserId());
+            noteOperationLog.setUpdateTime(date);
+            log.debug(JSON.toJSONString(noteOperationLog));
+            noteOperationLogService.getBaseMapper().insert(noteOperationLog);
+            this.saveNoteEditLogs(patch, noteOperationLog.getId(), generateNoteEditLogMessage);
+            noteHistoryService.saveNoteHistory(generateNoteEditLogMessage.getCurrentNote(),
+                    noteOperationLog.getOperatorId(), generateNoteEditLogMessage.getDate(), generateNoteEditLogMessage.getUserId());
         }
     }
 
@@ -79,4 +138,26 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
         }
         log.info("创建笔记索引成功，id: " + esNoteIndex.getId() + ", version: " + response.version());
     }
+
+    private void saveNoteEditLogs(Patch<String> patch, Long operationId,
+                                  GenerateNoteEditLogMessage generateNoteEditLogMessage) {
+        for (Delta<String> delta : patch.getDeltas()) {
+            NoteEditLog noteEditLog = NoteEditLog.builder()
+                    .operationId(operationId)
+                    .originalText(delta.getOriginal().getLines().isEmpty() ? "" : delta.getOriginal().getLines().get(0))
+                    .revisedText(delta.getRevised().getLines().isEmpty() ? "" : delta.getRevised().getLines().get(0))
+                    .originalPosition(delta.getOriginal().getPosition())
+                    .revisedPosition(delta.getRevised().getPosition())
+                    .changeType(delta.getType().ordinal())
+                    .build();
+            Date date = new Date();
+            noteEditLog.setCreateBy(generateNoteEditLogMessage.getUserId());
+            noteEditLog.setCreateTime(date);
+            noteEditLog.setUpdateBy(generateNoteEditLogMessage.getUserId());
+            noteEditLog.setUpdateTime(date);
+            noteEditLogService.getBaseMapper().insert(noteEditLog);
+        }
+    }
+
+
 }

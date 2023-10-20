@@ -69,6 +69,7 @@ public class Note extends BaseEntity {
     private Integer deleted;
 
 
+    @Deprecated
     @TableField(exist = false)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private NoteText noteText;
