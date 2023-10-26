@@ -6,9 +6,11 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.model.bo.NoteTaskCreateParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
+import com.anynote.note.model.bo.NoteTaskUpdateParam;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.NoteTaskCreateDTO;
 import com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO;
+import com.anynote.note.model.dto.NoteTaskUpdateDTO;
 import com.anynote.note.service.NoteTaskService;
 import com.anynote.note.service.NoteTaskSubmissionRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,18 @@ public class AdminNoteTaskController {
                 .build()));
     }
 
+    @PatchMapping("{id}")
+    public ResData<String> updateNoteTask(@RequestBody NoteTaskUpdateDTO noteTaskUpdateDTO,
+                                          @PathVariable("id") Long id) {
+        noteTaskUpdateDTO.setId(id);
+        return ResUtil.success(noteTaskService.updateNoteTask(NoteTaskUpdateParam.NoteTaskUpdateParamBuilder()
+                        .taskName(noteTaskUpdateDTO.getTaskName())
+                        .endTime(noteTaskUpdateDTO.getEndTime())
+                        .startTime(noteTaskUpdateDTO.getStartTime())
+                        .noteTaskId(noteTaskUpdateDTO.getId())
+                .build()));
+
+    }
 
     @GetMapping("submissions")
     public ResData<PageBean<NoteTaskSubmissionRecordDTO>> getAdminNoteTaskSubmissionRecords(@NotNull(message = "任务id不能为空") Long noteTaskId,

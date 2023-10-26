@@ -14,7 +14,13 @@ public enum NoteTaskPermissions {
     /**
      * 提交任务
      */
-    SUBMIT(2);
+    SUBMIT(2),
+
+    /**
+     * 无权限
+     */
+    NO(3)
+    ;
 
     private final int value;
 

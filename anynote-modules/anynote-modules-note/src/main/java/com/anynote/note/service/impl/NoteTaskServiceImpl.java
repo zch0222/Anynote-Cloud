@@ -7,12 +7,14 @@ import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
+import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
 import com.anynote.note.api.model.po.UserNoteTask;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
+import com.anynote.note.datascope.annotation.RequiresNoteTaskPermissions;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.enums.NoteTaskPermissions;
@@ -81,6 +83,45 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
+
+    @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
+    @Override
+    public String updateNoteTask(NoteTaskUpdateParam updateParam) {
+        NoteTask noteTask = NoteTask.builder()
+                .id(updateParam.getNoteTaskId())
+                .taskName(updateParam.getTaskName())
+                .startTime(updateParam.getStartTime())
+                .endTime(updateParam.getEndTime())
+                .build();
+        int count = this.baseMapper.updateById(noteTask);
+        if (1 != count) {
+            throw new BusinessException("未知错误，请联系管理员");
+        }
+        return Constants.SUCCESS_RES;
+    }
+
+
+    @Override
+    public NoteTaskPermissions getNoteTaskPermissions(Long userId, Long taskId) {
+        LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userNoteTaskLambdaQueryWrapper
+                .eq(UserNoteTask::getUserId, userId)
+                .eq(UserNoteTask::getNoteTaskId, taskId);
+        UserNoteTask userNoteTask = userNoteTaskMapper.selectOne(userNoteTaskLambdaQueryWrapper);
+        if (StringUtils.isNull(userNoteTask)) {
+            return NoteTaskPermissions.NO;
+        }
+        if (1 == userNoteTask.getPermissions()) {
+            return NoteTaskPermissions.MANAGE;
+        }
+        else if (2 == userNoteTask.getPermissions()) {
+            return NoteTaskPermissions.SUBMIT;
+        }
+        else if (3 == userNoteTask.getPermissions()) {
+            return NoteTaskPermissions.NO;
+        }
+        return NoteTaskPermissions.NO;
+    }
 
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限创建任务")
