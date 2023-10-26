@@ -353,6 +353,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .rows(adminNoteTaskDTOList)
                 .pages(pageInfo.getPages())
                 .total(pageInfo.getTotal())
+                .current(queryParam.getPage())
                 .build();
     }
 }

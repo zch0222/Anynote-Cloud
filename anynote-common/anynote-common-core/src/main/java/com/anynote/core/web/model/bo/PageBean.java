@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageBean<T> {
+public class PageBean<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private List<T> rows;
@@ -24,6 +26,11 @@ public class PageBean<T> {
      * 总条数
      */
     private Long total;
+
+    /**
+     * 当前页码
+     */
+    private Integer current;
 
     /**
      * 总页数
