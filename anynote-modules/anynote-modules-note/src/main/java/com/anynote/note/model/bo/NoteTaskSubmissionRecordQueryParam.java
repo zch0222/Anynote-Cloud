@@ -2,6 +2,7 @@ package com.anynote.note.model.bo;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -10,17 +11,13 @@ import java.util.Date;
  * @author 称霸幼儿园
  */
 @Data
-public class NoteTaskSubmissionRecordQueryParam extends KnowledgeBaseQueryParam {
+@NoArgsConstructor
+public class NoteTaskSubmissionRecordQueryParam extends NoteTaskQueryParam {
 
     /**
      * 用户id
      */
     private Long userId;
-
-    /**
-     * 笔记任务id
-     */
-    private Long noteTaskId;
 
     /**
      * 笔记id

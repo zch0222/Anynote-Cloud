@@ -8829,3 +8829,35 @@ com.anynote.core.exception.auth.AuthException: null
 2023-10-26 22:30:26.628 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
 2023-10-26 22:30:26.640 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
 2023-10-26 22:30:29.634 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:30:46.544 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:30:51.410 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:30:52.640 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:30:53.520 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:30:55.647 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:30:55.648 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:03.223 [Thread-8] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-10-26 22:31:03.222 [Thread-3] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-10-26 22:31:03.231 [Thread-8] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-10-26 22:31:03.238 [Thread-3] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-10-26 22:31:06.259 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:09.265 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:09.276 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-26 22:31:12.293 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:15.311 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:15.318 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-26 22:31:15.319 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-26 22:31:16.425 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-26 22:31:16.427 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-10-26 22:31:16.437 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2023-10-26 22:31:16.445 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2023-10-26 22:31:16.768 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2023-10-26 22:31:16.769 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@328c0591[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2023-10-26 22:31:16.769 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1698330235875_127.0.0.1_59552
+2023-10-26 22:31:16.783 [nacos-grpc-client-executor-165] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - [1698330235875_127.0.0.1_59552]Ignore complete event,isRunning:false,isAbandon=false
+2023-10-26 22:31:16.792 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@47726bac[Running, pool size = 9, active threads = 0, queued tasks = 0, completed tasks = 166]
+2023-10-26 22:31:19.821 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:19.832 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:22.817 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[192.168.1.114:10911] result: true
+2023-10-26 22:31:22.829 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-10-26 22:31:23.043 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2023-10-26 22:31:23.056 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

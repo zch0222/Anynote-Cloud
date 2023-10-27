@@ -1,10 +1,13 @@
 package com.anynote.note.service.impl;
 
+import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
+import com.anynote.note.datascope.annotation.RequiresNoteTaskPermissions;
 import com.anynote.note.enums.KnowledgeBasePermissions;
+import com.anynote.note.enums.NoteTaskPermissions;
 import com.anynote.note.mapper.NoteTaskMapper;
 import com.anynote.note.mapper.NoteTaskSubmissionRecordMapper;
 import com.anynote.note.model.bo.NoteTaskSubmissionRecordQueryParam;
@@ -31,26 +34,27 @@ public class NoteTaskSubmissionRecordServiceImpl
     @Autowired
     private NoteTaskMapper noteTaskMapper;
 
-    @Override
-    public PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(Long noteTaskId, Integer page, Integer pageSize) {
-        LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        noteTaskLambdaQueryWrapper
-                .eq(NoteTask::getId, noteTaskId)
-                .select(NoteTask::getKnowledgeBaseId);
-        NoteTask noteTaskInfo = noteTaskMapper.selectOne(noteTaskLambdaQueryWrapper);
-        NoteTaskSubmissionRecordQueryParam noteTaskSubmissionRecordQueryParam =
-                new NoteTaskSubmissionRecordQueryParam();
-        noteTaskSubmissionRecordQueryParam.setNoteTaskId(noteTaskId);
-        noteTaskSubmissionRecordQueryParam.setId(noteTaskInfo.getKnowledgeBaseId());
-        noteTaskSubmissionRecordQueryParam.setPage(page);
-        noteTaskSubmissionRecordQueryParam.setPageSize(pageSize);
-        return this.getNoteTaskSubmitRecords(noteTaskSubmissionRecordQueryParam);
-    }
 
-    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
-            message = "没有权限查看任务提交记录")
+//    @Override
+//    public PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(Long noteTaskId, Integer page, Integer pageSize) {
+//        LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        noteTaskLambdaQueryWrapper
+//                .eq(NoteTask::getId, noteTaskId)
+//                .select(NoteTask::getKnowledgeBaseId);
+//        NoteTask noteTaskInfo = noteTaskMapper.selectOne(noteTaskLambdaQueryWrapper);
+//        NoteTaskSubmissionRecordQueryParam noteTaskSubmissionRecordQueryParam =
+//                new NoteTaskSubmissionRecordQueryParam();
+//        noteTaskSubmissionRecordQueryParam.setNoteTaskId(noteTaskId);
+//        noteTaskSubmissionRecordQueryParam.setId(noteTaskInfo.getKnowledgeBaseId());
+//        noteTaskSubmissionRecordQueryParam.setPage(page);
+//        noteTaskSubmissionRecordQueryParam.setPageSize(pageSize);
+//        return noteTaskSubmissionRecordService.getNoteTaskSubmitRecords(noteTaskSubmissionRecordQueryParam);
+//    }
+
+
+    @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
     @PageValid
-    private PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(NoteTaskSubmissionRecordQueryParam
+    public PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(NoteTaskSubmissionRecordQueryParam
                                                                                   queryParam) {
         PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize(), "update_time desc");
         List<NoteTaskSubmissionRecordDTO> noteTaskSubmissionRecordDTOList = this.baseMapper
@@ -60,6 +64,7 @@ public class NoteTaskSubmissionRecordServiceImpl
                 .pages(pageInfo.getPages())
                 .total(pageInfo.getTotal())
                 .rows(noteTaskSubmissionRecordDTOList)
+                .current(queryParam.getPage())
                 .build();
     }
 

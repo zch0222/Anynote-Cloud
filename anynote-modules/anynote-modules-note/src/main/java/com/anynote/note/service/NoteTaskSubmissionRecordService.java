@@ -15,8 +15,11 @@ import java.util.List;
 public interface NoteTaskSubmissionRecordService
         extends IService<NoteTaskSubmissionRecord> {
 
-    public PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(Long noteTaskId, Integer page, Integer pageSize);
+//    public PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(Long noteTaskId, Integer page, Integer pageSize);
 
+
+    public PageBean<NoteTaskSubmissionRecordDTO> getNoteTaskSubmitRecords(NoteTaskSubmissionRecordQueryParam
+                                                                                  queryParam);
 
 
 }

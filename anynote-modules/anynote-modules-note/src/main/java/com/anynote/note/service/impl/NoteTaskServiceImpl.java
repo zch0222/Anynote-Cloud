@@ -153,8 +153,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .userId(userId)
                         .noteTaskId(noteTask.getId())
                         .permissions(NoteTaskPermissions.SUBMIT.getValue())
-                        // 管理员不用提交任务
-                        .status(2)
+
+                        .status(0)
                         .build());
             }
 
@@ -165,7 +165,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .userId(userId)
                         .noteTaskId(noteTask.getId())
                         .permissions(NoteTaskPermissions.MANAGE.getValue())
-                        .status(0)
+                        // 管理员不用提交任务
+                        .status(2)
                         .build());
             }
         });

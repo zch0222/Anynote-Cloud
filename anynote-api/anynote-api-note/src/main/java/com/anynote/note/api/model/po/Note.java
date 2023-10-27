@@ -1,10 +1,12 @@
 package com.anynote.note.api.model.po;
 
+import com.anynote.core.serialization.NullStringJsonSerializer;
 import com.anynote.core.web.model.bo.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -91,5 +93,6 @@ public class Note extends BaseEntity {
 
     @TableField(exist = false)
 //    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonSerialize(nullsUsing = NullStringJsonSerializer.class)
     private String submitTaskName;
 }

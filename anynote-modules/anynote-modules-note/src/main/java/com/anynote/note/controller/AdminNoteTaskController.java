@@ -6,6 +6,7 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.model.bo.NoteTaskCreateParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
+import com.anynote.note.model.bo.NoteTaskSubmissionRecordQueryParam;
 import com.anynote.note.model.bo.NoteTaskUpdateParam;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.NoteTaskCreateDTO;
@@ -78,7 +79,11 @@ public class AdminNoteTaskController {
     public ResData<PageBean<NoteTaskSubmissionRecordDTO>> getAdminNoteTaskSubmissionRecords(@NotNull(message = "任务id不能为空") Long noteTaskId,
                                                                                             @NotNull(message = "页码不能未空") Integer page,
                                                                                             @NotNull(message = "页码容量不能为空") Integer pageSize) {
-        return ResUtil.success(noteTaskSubmissionRecordService.getNoteTaskSubmitRecords(noteTaskId, page, pageSize));
+        NoteTaskSubmissionRecordQueryParam noteTaskSubmissionRecordQueryParam = new NoteTaskSubmissionRecordQueryParam();
+        noteTaskSubmissionRecordQueryParam.setNoteTaskId(noteTaskId);
+        noteTaskSubmissionRecordQueryParam.setPageSize(pageSize);
+        noteTaskSubmissionRecordQueryParam.setPage(page);
+        return ResUtil.success(noteTaskSubmissionRecordService.getNoteTaskSubmitRecords(noteTaskSubmissionRecordQueryParam));
     }
 
 
