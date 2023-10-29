@@ -8,6 +8,7 @@ import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
+import com.anynote.note.api.model.bo.NoteOperationCount;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
@@ -18,6 +19,7 @@ import com.anynote.note.datascope.annotation.RequiresNoteTaskPermissions;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.enums.NoteTaskPermissions;
+import com.anynote.note.enums.UserNoteTaskStatus;
 import com.anynote.note.mapper.NoteTaskMapper;
 import com.anynote.note.mapper.NoteTaskSubmissionRecordMapper;
 import com.anynote.note.mapper.UserNoteTaskMapper;
@@ -153,8 +155,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .userId(userId)
                         .noteTaskId(noteTask.getId())
                         .permissions(NoteTaskPermissions.SUBMIT.getValue())
-
-                        .status(0)
+                        // 状态设置为未提交
+                        .status(UserNoteTaskStatus.NOT_SUBMITTED.getValue())
                         .build());
             }
 
@@ -166,7 +168,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .noteTaskId(noteTask.getId())
                         .permissions(NoteTaskPermissions.MANAGE.getValue())
                         // 管理员不用提交任务
-                        .status(2)
+                        .status(UserNoteTaskStatus.NO_SUBMISSION_REQUIRED.getValue())
                         .build());
             }
         });
@@ -189,6 +191,17 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     @Override
     public String submitNoteTask(NoteTaskSubmitParam submitParam) {
         LoginUser loginUser = tokenUtil.getLoginUser();
+
+        LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userNoteTaskLambdaQueryWrapper
+                .eq(UserNoteTask::getUserId, loginUser.getSysUser().getId())
+                .eq(UserNoteTask::getNoteTaskId, submitParam.getTaskId());
+        UserNoteTask userNoteTask = userNoteTaskMapper.selectOne(userNoteTaskLambdaQueryWrapper);
+        if (UserNoteTaskStatus.NO_SUBMISSION_REQUIRED.getValue() == userNoteTask.getStatus()) {
+            throw new UserParamException("提交失败，您不用提交这个任务", ResCode.USER_REQUEST_PARAM_ERROR);
+        }
+
+
         Date date = new Date();
 
         LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -263,6 +276,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         if (1 != count) {
             throw new BusinessException("提交失败，请联系管理员", ResCode.BUSINESS_ERROR);
         }
+        userNoteTask.setStatus(UserNoteTaskStatus.SUBMITTED.getValue());
+        userNoteTaskMapper.update(userNoteTask, userNoteTaskLambdaQueryWrapper);
         return Constants.SUCCESS_RES;
     }
 
@@ -342,7 +357,6 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
             adminNoteTaskDTO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskDTO.getSubmittedCount() / needSubmitCount)
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         }
-
         return adminNoteTaskDTO;
     }
 
@@ -397,5 +411,11 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .total(pageInfo.getTotal())
                 .current(queryParam.getPage())
                 .build();
+    }
+
+    @Override
+    @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
+    public List<NoteOperationCount> getNoteOperationCounts(NoteTaskQueryParam queryParam) {
+        return this.baseMapper.selectNoteOperationCount(queryParam.getNoteTaskId());
     }
 }

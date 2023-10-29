@@ -4,6 +4,7 @@ import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
+import com.anynote.note.api.model.bo.NoteOperationCount;
 import com.anynote.note.model.bo.NoteTaskCreateParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
 import com.anynote.note.model.bo.NoteTaskSubmissionRecordQueryParam;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 知识库管理员任务接口
@@ -84,6 +86,14 @@ public class AdminNoteTaskController {
         noteTaskSubmissionRecordQueryParam.setPageSize(pageSize);
         noteTaskSubmissionRecordQueryParam.setPage(page);
         return ResUtil.success(noteTaskSubmissionRecordService.getNoteTaskSubmitRecords(noteTaskSubmissionRecordQueryParam));
+    }
+
+
+    @GetMapping("/{id}/operationCounts")
+    public ResData<List<NoteOperationCount>> getNoteOperationCounts(@NotNull(message = "任务id不能为空") @PathVariable("id") Long id) {
+        return ResUtil.success(noteTaskService.getNoteOperationCounts(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
+                        .noteTaskId(id)
+                .build()));
     }
 
 

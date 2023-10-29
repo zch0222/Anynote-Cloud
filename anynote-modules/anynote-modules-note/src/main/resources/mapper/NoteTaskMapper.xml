@@ -18,6 +18,13 @@
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
+    <resultMap id="NoteOperationCountResult" type="com.anynote.note.api.model.bo.NoteOperationCount">
+        <result property="userId" column="user_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="noteId" column="note_id"/>
+        <result property="count" column="count"/>
+    </resultMap>
+
     <select id="selectMemberNoteTaskList" resultMap="MemberNoteTaskDTOResult">
 <!--        SELECT DISTINCT-->
 <!--            n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time,-->
@@ -71,6 +78,22 @@
         <if test="id != null">
             AND n_note_task.knowledge_base_id = #{id}
         </if>
+    </select>
+
+    <select id="selectNoteOperationCount" resultMap="NoteOperationCountResult">
+        SELECT
+            COUNT(*) as count, n_note_task_submission_record.note_id, sys_user.nickname, sys_user.id as user_id
+        FROM
+            n_note_task_submission_record
+            LEFT JOIN
+            sys_user ON n_note_task_submission_record.user_id = sys_user.id
+            LEFT JOIN
+            n_note_operation_log ON n_note_task_submission_record.note_id = n_note_operation_log.note_id
+        WHERE
+            n_note_operation_log.operation_type = 1
+          AND
+            n_note_task_submission_record.note_task_id = #{noteTaskId}
+        GROUP BY n_note_task_submission_record.note_id, sys_user.nickname, sys_user.id;
     </select>
 
 

@@ -1,5 +1,6 @@
 package com.anynote.note.mapper;
 
+import com.anynote.note.api.model.bo.NoteOperationCount;
 import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
@@ -16,5 +17,7 @@ public interface NoteTaskMapper extends BaseMapper<NoteTask> {
 
 
     public List<MemberNoteTaskDTO> selectMemberNoteTaskList(NoteTaskQueryParam queryParam);
+
+    public List<NoteOperationCount> selectNoteOperationCount(Long noteTaskId);
 
 }
