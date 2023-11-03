@@ -32,6 +32,11 @@ public class NoteHistory extends BaseEntity {
     private Long operationId;
 
     /**
+     * 笔记id
+     */
+    private Long noteId;
+
+    /**
      * 笔记标题
      */
     private String title;

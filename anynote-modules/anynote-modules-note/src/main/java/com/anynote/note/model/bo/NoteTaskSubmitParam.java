@@ -19,4 +19,8 @@ public class NoteTaskSubmitParam extends NoteQueryParam{
         this.taskId = noteTaskSubmissionRecordCreateDTO.getNoteTaskId();
         this.setId(noteTaskSubmissionRecordCreateDTO.getNoteId());
     }
+
+    public Long getNoteId() {
+        return this.getId();
+    }
 }

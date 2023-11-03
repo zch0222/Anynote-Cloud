@@ -4,6 +4,7 @@ import com.anynote.common.elasticsearch.model.EsNoteIndex;
 import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.Note;
+import com.anynote.note.api.model.po.NoteHistory;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.enums.KnowledgeBasePermissions;
@@ -52,4 +53,5 @@ public interface NoteService extends IService<Note> {
 
 
     public Note selectNoteById(NoteQueryParam queryParam);
+
 }

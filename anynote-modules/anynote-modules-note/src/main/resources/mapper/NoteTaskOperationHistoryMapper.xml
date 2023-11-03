@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.note.mapper.NoteTaskOperationHistoryMapper">
+
+    <resultMap id="NoteTaskHistoryVOResultMap" type="com.anynote.note.model.vo.NoteTaskHistoryVO">
+        <id property="id" column="id" />
+        <result property="noteTaskId" column="note_task_id" />
+        <result property="type" column="type" />
+        <result property="operatorId" column="operator_id" />
+        <result property="operatorNickName" column="operator_nick_name" />
+        <result property="operationTime" column="operation_time" />
+        <result property="noteTaskUserId" column="note_task_user_id" />
+        <result property="noteTaskSubmissionRecordId" column="note_task_submission_record_id" />
+        <result property="noteId" column="note_id" />
+        <result property="noteHistoryId" column="note_history_id" />
+        <result property="noteHistoryTitle" column="note_history_title" />
+        <result property="createBy" column="create_by" />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy" column="update_by" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+
+    <select id="selectNoteTaskHistoryList" resultMap="NoteTaskHistoryVOResultMap">
+        SELECT
+            n_note_task_operation_history.id, n_note_task_operation_history.note_task_id, n_note_task_operation_history.type, n_note_task_operation_history.operator_id,
+            n_note_task_operation_history.operation_time, n_note_task_operation_history.note_task_user_id,
+            n_note_task_operation_history.note_task_submission_record_id, n_note_task_operation_history.is_delete,
+            n_note_task_operation_history.create_by, n_note_task_operation_history.create_time, n_note_task_operation_history.update_by, n_note_task_operation_history.update_time,
+            sys_user.nickname as operator_nick_name, n_note_task_submission_record.note_id, n_note_history.id as note_history_id, n_note_history.title as note_history_title
+        FROM
+            n_note_task_operation_history
+                LEFT JOIN
+            sys_user ON n_note_task_operation_history.operator_id = sys_user.id
+                LEFT JOIN
+            n_note_task_submission_record ON
+                    n_note_task_operation_history.note_task_submission_record_id =
+                    n_note_task_submission_record.id
+                LEFT JOIN
+            n_note_history ON n_note_task_submission_record.note_history_id = n_note_history.id
+        WHERE
+            n_note_task_operation_history.note_task_id = #{noteTaskId}
+          AND
+            n_note_task_operation_history.note_task_user_id = #{userId}
+          AND
+            n_note_task_operation_history.is_delete = 0
+        ORDER BY n_note_task_operation_history.create_time;
+    </select>
+
+
+
+
+
+
+</mapper>

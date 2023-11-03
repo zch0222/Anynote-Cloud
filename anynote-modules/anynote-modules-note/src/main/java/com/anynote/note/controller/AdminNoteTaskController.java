@@ -5,10 +5,8 @@ import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.bo.NoteOperationCount;
-import com.anynote.note.model.bo.NoteTaskCreateParam;
-import com.anynote.note.model.bo.NoteTaskQueryParam;
-import com.anynote.note.model.bo.NoteTaskSubmissionRecordQueryParam;
-import com.anynote.note.model.bo.NoteTaskUpdateParam;
+import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.NoteTaskCreateDTO;
 import com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO;
@@ -94,6 +92,17 @@ public class AdminNoteTaskController {
         return ResUtil.success(noteTaskService.getNoteOperationCounts(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
                         .noteTaskId(id)
                 .build()));
+    }
+
+    /**
+     * 退回提交记录
+     * @param id
+     * @return
+     */
+    @PostMapping("submissions/return/{id}")
+    public ResData<String> returnSubmissions(@NotNull(message = "提交记录id不能为空") @PathVariable("id") Long id) {
+        NoteTaskSubmissionRecord noteTaskSubmissionRecord = noteTaskSubmissionRecordService.getBaseMapper().selectById(id);
+        return ResUtil.success(noteTaskService.returnSubmission(new SubmissionReturnParam(noteTaskSubmissionRecord, noteTaskSubmissionRecord.getNoteTaskId())));
     }
 
 

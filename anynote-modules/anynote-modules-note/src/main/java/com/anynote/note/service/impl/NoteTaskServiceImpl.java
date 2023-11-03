@@ -1,5 +1,9 @@
 package com.anynote.note.service.impl;
 
+import com.alibaba.fastjson2.JSON;
+import com.anynote.common.rocketmq.callback.RocketmqSendCallbackBuilder;
+import com.anynote.common.rocketmq.properties.RocketMQProperties;
+import com.anynote.common.rocketmq.tags.NoteTaskTagsEnum;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
@@ -7,30 +11,20 @@ import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
-import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.bo.NoteOperationCount;
-import com.anynote.note.api.model.po.Note;
-import com.anynote.note.api.model.po.NoteTask;
-import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
-import com.anynote.note.api.model.po.UserNoteTask;
+import com.anynote.note.api.model.po.*;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.datascope.annotation.RequiresNoteTaskPermissions;
-import com.anynote.note.enums.KnowledgeBasePermissions;
-import com.anynote.note.enums.NotePermissions;
-import com.anynote.note.enums.NoteTaskPermissions;
-import com.anynote.note.enums.UserNoteTaskStatus;
+import com.anynote.note.enums.*;
+import com.anynote.note.mapper.NoteTaskOperationHistoryMapper;
 import com.anynote.note.mapper.NoteTaskMapper;
-import com.anynote.note.mapper.NoteTaskSubmissionRecordMapper;
 import com.anynote.note.mapper.UserNoteTaskMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
-import com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO;
-import com.anynote.note.service.KnowledgeBaseService;
-import com.anynote.note.service.NoteService;
-import com.anynote.note.service.NoteTaskService;
-import com.anynote.note.service.NoteTaskSubmissionRecordService;
+import com.anynote.note.model.vo.NoteTaskHistoryVO;
+import com.anynote.note.service.*;
 import com.anynote.note.validate.annotation.PageValid;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -38,9 +32,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.client.producer.SendCallback;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.support.MessageBuilder;
@@ -48,6 +39,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -61,11 +53,15 @@ import java.util.stream.Collectors;
 public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         implements NoteTaskService {
 
+
     @Autowired
     private NoteTaskSubmissionRecordService noteTaskSubmissionRecordService;
 
     @Autowired
     private UserNoteTaskMapper userNoteTaskMapper;
+
+    @Autowired
+    private NoteTaskOperationHistoryMapper noteTaskOperationHistoryMapper;
 
     @Autowired
     private NoteService noteService;
@@ -79,30 +75,69 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     @Autowired
     private ThreadPoolTaskExecutor asyncExecutor;
 
+    @Resource
+    private NoteHistoryService noteHistoryService;
+
     @Autowired
     private NoteTaskMapper noteTaskMapper;
 
     @Autowired
+    private RocketMQProperties rocketMQProperties;
+
+    @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
+    @Resource
+    private NoteTaskOperationHistoryService noteTaskOperationHistoryService;
 
+
+    /**
+     * 更新笔记任务
+     * @param updateParam
+     * @return
+     */
     @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
     @Override
     public String updateNoteTask(NoteTaskUpdateParam updateParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        Date date = new Date();
         NoteTask noteTask = NoteTask.builder()
                 .id(updateParam.getNoteTaskId())
                 .taskName(updateParam.getTaskName())
                 .startTime(updateParam.getStartTime())
                 .endTime(updateParam.getEndTime())
                 .build();
+        noteTask.setUpdateBy(loginUser.getSysUser().getId());
+        noteTask.setUpdateTime(date);
         int count = this.baseMapper.updateById(noteTask);
         if (1 != count) {
             throw new BusinessException("未知错误，请联系管理员");
         }
+
+        NoteTaskOperationHistory noteTaskOperationHistory = NoteTaskOperationHistory.builder()
+                .noteTaskId(noteTask.getId())
+                .type(NoteTaskOperationType.EDIT.getValue())
+                .operatorId(loginUser.getSysUser().getId())
+                .operationTime(date)
+                .noteTaskUserId(loginUser.getSysUser().getId())
+                .createBy(loginUser.getSysUser().getId())
+                .createTime(date)
+                .updateBy(loginUser.getSysUser().getId())
+                .updateTime(date)
+                .build();
+        String destination = rocketMQProperties.getNoteTaskTopic() + ":" + NoteTaskTagsEnum.INSERT_HISTORY.name();
+        rocketMQTemplate.asyncSend(destination, JSON.toJSON(noteTaskOperationHistory), RocketmqSendCallbackBuilder.commonCallback());
+
         return Constants.SUCCESS_RES;
     }
 
 
+    /**
+     * 获取用户对笔记任务的权限
+     * @param userId 用户ID
+     * @param taskId 笔记ID
+     * @return
+     */
     @Override
     public NoteTaskPermissions getNoteTaskPermissions(Long userId, Long taskId) {
         LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -125,6 +160,11 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         return NoteTaskPermissions.NO;
     }
 
+    /**
+     * 为知识库创建笔记任务
+     * @param taskCreateParam
+     * @return
+     */
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限创建任务")
     @Transactional(rollbackFor = Exception.class)
@@ -145,6 +185,24 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         noteTask.setCreateTime(date);
         noteTask.setUpdateTime(date);
         this.baseMapper.insert(noteTask);
+
+        NoteTaskOperationHistory noteTaskOperationHistory = NoteTaskOperationHistory.builder()
+                .noteTaskId(noteTask.getId())
+                .type(NoteTaskOperationType.CREATE.getValue())
+                .operatorId(loginUser.getSysUser().getId())
+                .operationTime(date)
+                .noteTaskUserId(loginUser.getSysUser().getId())
+                .deleted(0)
+                .createBy(loginUser.getSysUser().getId())
+                .createTime(date)
+                .updateBy(loginUser.getSysUser().getId())
+                .updateTime(date)
+                .build();
+        // 插入创建笔记操作记录
+        String destination = rocketMQProperties.getNoteTaskTopic() + ":" + NoteTaskTagsEnum.INSERT_HISTORY.name();
+        rocketMQTemplate.asyncSend(destination, JSON.toJSON(noteTaskOperationHistory), RocketmqSendCallbackBuilder.commonCallback());
+
+
         // 异步执行
         asyncExecutor.submit(() -> {
             // 获取知识库内所有非管理员用户的id
@@ -158,6 +216,22 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         // 状态设置为未提交
                         .status(UserNoteTaskStatus.NOT_SUBMITTED.getValue())
                         .build());
+
+                // 添加用户到任务操作日志
+                NoteTaskOperationHistory addUserNoteTaskOperationHistory = NoteTaskOperationHistory.builder()
+                        .noteTaskId(noteTask.getId())
+                        .type(NoteTaskOperationType.ADD_USER.getValue())
+                        .operatorId(loginUser.getSysUser().getId())
+                        .operationTime(date)
+                        .noteTaskUserId(userId)
+                        .deleted(0)
+                        .createBy(loginUser.getSysUser().getId())
+                        .createTime(date)
+                        .updateBy(loginUser.getSysUser().getId())
+                        .updateTime(date)
+                        .build();
+                noteTaskOperationHistoryService.asyncSaveNoteTaskOperationHistory(addUserNoteTaskOperationHistory);
+
             }
 
             List<Long> knowledgeBaseManagerIds = knowledgeBaseService.getAllKnowledgeBaseManagerId(taskCreateParam.getId());
@@ -170,11 +244,31 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         // 管理员不用提交任务
                         .status(UserNoteTaskStatus.NO_SUBMISSION_REQUIRED.getValue())
                         .build());
+
+                // 添加用户到任务操作日志
+                NoteTaskOperationHistory addUserNoteTaskOperationHistory = NoteTaskOperationHistory.builder()
+                        .noteTaskId(noteTask.getId())
+                        .type(NoteTaskOperationType.ADD_USER.getValue())
+                        .operatorId(loginUser.getSysUser().getId())
+                        .operationTime(date)
+                        .noteTaskUserId(userId)
+                        .deleted(0)
+                        .createBy(loginUser.getSysUser().getId())
+                        .createTime(date)
+                        .updateBy(loginUser.getSysUser().getId())
+                        .updateTime(date)
+                        .build();
+                noteTaskOperationHistoryService.asyncSaveNoteTaskOperationHistory(addUserNoteTaskOperationHistory);
             }
         });
         return noteTask.getId();
     }
 
+    /**
+     * 需要提交的人数
+     * @param queryParam
+     * @return
+     */
     @Override
     public Long getNoteTaskNeedSubmitCount(NoteTaskQueryParam queryParam) {
         LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -184,6 +278,11 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         return userNoteTaskMapper.selectCount(userNoteTaskLambdaQueryWrapper);
     }
 
+    /**
+     * 提交任务
+     * @param submitParam
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.EDIT,
             message = "没有权限提交任务")
@@ -238,7 +337,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 new LambdaQueryWrapper<>();
         noteTaskSubmissionRecordLambdaQueryWrapper
                 .eq(NoteTaskSubmissionRecord::getUserId, loginUser.getSysUser().getId())
-                .eq(NoteTaskSubmissionRecord::getNoteTaskId, submitParam.getTaskId());
+                .eq(NoteTaskSubmissionRecord::getNoteTaskId, submitParam.getTaskId())
+                .eq(NoteTaskSubmissionRecord::getStatus, NoteTaskSubmissionRecordStatus.NORMAL.getValue());
 
         Long recordCount = noteTaskSubmissionRecordService.getBaseMapper()
                 .selectCount(noteTaskSubmissionRecordLambdaQueryWrapper);
@@ -247,11 +347,14 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         }
 
 
+        // 添加任务提交记录
         NoteTaskSubmissionRecord noteTaskSubmissionRecord = NoteTaskSubmissionRecord.builder()
                 .noteTaskId(submitParam.getTaskId())
                 .userId(loginUser.getSysUser().getId())
                 .noteId(submitParam.getId())
+                .noteHistoryId(noteHistoryService.getLatestNoteHistory(submitParam.getNoteId()).getId())
                 .submitTime(new Date())
+                .status(NoteTaskSubmissionRecordStatus.NORMAL.getValue())
                 .deleted(0)
                 .build();
         noteTaskSubmissionRecord.setUpdateBy(loginUser.getSysUser().getId());
@@ -259,28 +362,39 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         noteTaskSubmissionRecord.setUpdateTime(date);
         noteTaskSubmissionRecord.setCreateTime(date);
         noteTaskSubmissionRecordService.getBaseMapper().insert(noteTaskSubmissionRecord);
-//        rocketMQTemplate.asyncSendOrderly("note_task_topic", MessageBuilder
-//                .withPayload("测试").build(), "id", new SendCallback() {
-//            @Override
-//            public void onSuccess(SendResult sendResult) {
-//                if (sendResult.getSendStatus() == SendStatus.SEND_OK) {
-//                    log.info("发送异步顺序消息成功!消息ID为:{}", sendResult.getMsgId());
-//                }
-//            }
-//            @Override
-//            public void onException(Throwable throwable) {
-//                log.info("发送异步顺序消息失败!失败原因为:{}", throwable.getMessage());
-//            }
-//        });
+
+        // 提交笔记，修改笔记权限
         Integer count = noteService.submitNote(submitParam.getId());
         if (1 != count) {
             throw new BusinessException("提交失败，请联系管理员", ResCode.BUSINESS_ERROR);
         }
+        // 修改用户任务提交状态
         userNoteTask.setStatus(UserNoteTaskStatus.SUBMITTED.getValue());
         userNoteTaskMapper.update(userNoteTask, userNoteTaskLambdaQueryWrapper);
+
+        // 添加任务操作记录
+        String destination = rocketMQProperties.getNoteTaskTopic() + ":" + NoteTaskTagsEnum.INSERT_HISTORY.name();
+        rocketMQTemplate.asyncSend(destination, NoteTaskOperationHistory.builder()
+                        .noteTaskId(submitParam.getTaskId())
+                        .type(NoteTaskOperationType.SUBMIT.getValue())
+                        .operatorId(loginUser.getSysUser().getId())
+                        .operationTime(date)
+                        .noteTaskUserId(loginUser.getSysUser().getId())
+                        .noteTaskSubmissionRecordId(noteTaskSubmissionRecord.getId())
+                        .deleted(0)
+                        .updateTime(date)
+                        .updateBy(loginUser.getSysUser().getId())
+                        .createTime(date)
+                        .createBy(loginUser.getSysUser().getId())
+                .build(), RocketmqSendCallbackBuilder.commonCallback());
         return Constants.SUCCESS_RES;
     }
 
+    /**
+     * 非管理员获取笔记任务信息
+     * @param queryParam
+     * @return
+     */
     @PageValid
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.READ, message = "无法获取笔记任务信息")
     @Override
@@ -318,6 +432,11 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
 //    }
 
 
+    /**
+     * 获取笔记所属的知识库id
+     * @param noteTaskId
+     * @return
+     */
     @Override
     public Long getNoteTaskKnowledgeBaseId(Long noteTaskId) {
         LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -328,6 +447,11 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         return noteTask.getKnowledgeBaseId();
     }
 
+    /**
+     * 管理员根据id获取笔记任务信息
+     * @param queryParam
+     * @return
+     */
     @Override
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "权限不足")
     public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
@@ -360,6 +484,11 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         return adminNoteTaskDTO;
     }
 
+    /**
+     * 管理员获取任务列表
+     * @param queryParam
+     * @return
+     */
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限查看笔记任务信息")
     @PageValid
@@ -413,9 +542,78 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .build();
     }
 
+    /**
+     * 获取任务提交的笔记操作次数列表
+     * @param queryParam
+     * @return
+     */
     @Override
     @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
     public List<NoteOperationCount> getNoteOperationCounts(NoteTaskQueryParam queryParam) {
         return this.baseMapper.selectNoteOperationCount(queryParam.getNoteTaskId());
+    }
+
+    /**
+     * 退回消息
+     * @param submissionReturnParam
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
+    public String returnSubmission(SubmissionReturnParam submissionReturnParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        Date date = new Date();
+        NoteTaskSubmissionRecord noteTaskSubmissionRecord = submissionReturnParam.getNoteTaskSubmissionRecord();
+        if (NoteTaskSubmissionRecordStatus.RETURNED.getValue() == noteTaskSubmissionRecord.getStatus()) {
+            throw new UserParamException("提交已经退回了，不能重复操作", ResCode.USER_REQUEST_PARAM_ERROR);
+        }
+        noteTaskSubmissionRecord.setStatus(NoteTaskSubmissionRecordStatus.RETURNED.getValue());
+        // 更新记录状态为已退回
+        noteTaskSubmissionRecord.setUpdateTime(date);
+        noteTaskSubmissionRecord.setUpdateBy(loginUser.getSysUser().getId());
+        noteTaskSubmissionRecordService.getBaseMapper().updateById(noteTaskSubmissionRecord);
+
+        LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userNoteTaskLambdaQueryWrapper
+                .eq(UserNoteTask::getUserId, noteTaskSubmissionRecord.getUserId())
+                .eq(UserNoteTask::getNoteTaskId, submissionReturnParam.getNoteTaskId());
+        UserNoteTask userNoteTask = userNoteTaskMapper.selectOne(userNoteTaskLambdaQueryWrapper);
+        userNoteTask.setStatus(UserNoteTaskStatus.RETURNED.getValue());
+
+        // 更新笔记状态为作者可管理
+        LambdaQueryWrapper<Note> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteLambdaQueryWrapper
+                .eq(Note::getId, noteTaskSubmissionRecord.getNoteId())
+                .select(Note::getPermissions, Note::getId);
+        Note note = noteService.getBaseMapper().selectOne(noteLambdaQueryWrapper);
+        note.setPermissions("70000");
+        noteService.getBaseMapper().updateById(note);
+
+        // 更新状态为已退回
+        userNoteTaskMapper.update(userNoteTask, userNoteTaskLambdaQueryWrapper);
+
+        // 插入历史日志
+        String destination = rocketMQProperties.getNoteTaskTopic() + ":" + NoteTaskTagsEnum.INSERT_HISTORY.name();
+        rocketMQTemplate.send(destination, MessageBuilder.withPayload(NoteTaskOperationHistory.builder()
+                        .noteTaskId(submissionReturnParam.getNoteTaskId())
+                        .type(NoteTaskOperationType.RETURN_SUBMISSION.getValue())
+                        .operatorId(loginUser.getSysUser().getId())
+                        .operationTime(date)
+                        .noteTaskUserId(noteTaskSubmissionRecord.getUserId())
+                        .noteTaskSubmissionRecordId(noteTaskSubmissionRecord.getId())
+                        .deleted(0)
+                        .createBy(loginUser.getSysUser().getId())
+                        .createTime(date)
+                        .updateBy(loginUser.getSysUser().getId())
+                        .updateTime(date)
+                .build()).build());
+        return Constants.SUCCESS_RES;
+    }
+
+    @Override
+    public List<NoteTaskHistoryVO> getNoteTaskHistoryList(Long noteTaskId) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        return noteTaskOperationHistoryService.getNoteTaskHistoryList(loginUser.getSysUser().getId(), noteTaskId);
     }
 }

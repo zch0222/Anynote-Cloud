@@ -20,15 +20,30 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NoteTaskSubmissionRecord extends BaseEntity {
+    private Long id;
+
     private Long noteTaskId;
 
     private Long userId;
 
     private Long noteId;
 
+    /**
+     * 笔记历史id
+     */
+    private Long noteHistoryId;
+
     private Date submitTime;
+
+    /**
+     * 记录状态 0.正常 1.被退回
+     */
+    private Integer status;
 
     @TableLogic
     @TableField("is_delete")
     private Integer deleted;
+
+
+
 }

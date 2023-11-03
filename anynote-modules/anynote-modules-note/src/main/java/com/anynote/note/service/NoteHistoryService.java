@@ -12,4 +12,6 @@ import java.util.Date;
 public interface NoteHistoryService extends IService<NoteHistory> {
 
     public Long saveNoteHistory(Note note, Long operationId, Date date, Long createBy);
+
+    public NoteHistory getLatestNoteHistory(Long noteId);
 }

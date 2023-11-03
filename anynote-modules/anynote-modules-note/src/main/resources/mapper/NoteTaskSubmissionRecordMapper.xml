@@ -5,9 +5,12 @@
 <mapper namespace="com.anynote.note.mapper.NoteTaskSubmissionRecordMapper">
 
     <resultMap id="NoteTaskSubmissionRecordDTOResult" type="com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO">
-        <id property="noteTaskId" column="note_task_id"/>
-        <id property="userId" column="user_id"/>
+        <id property="id" column="id"/>
+        <result property="noteTaskId" column="note_task_id"/>
+        <result property="userId" column="user_id"/>
         <result property="noteId" column="note_id"/>
+        <result property="status" column="status"/>
+        <result property="noteHistoryId" column="note_history_id"/>
         <result property="submitTime" column="submit_time"/>
         <result property="submissionUsername" column="username"/>
         <result property="submissionNickname" column="nickname"/>
@@ -22,10 +25,10 @@
 
     <select id="selectNoteTaskSubmissionRecordList" resultMap="NoteTaskSubmissionRecordDTOResult">
         SELECT
-            n_note_task_submission_record.note_task_id, n_note_task_submission_record.user_id, n_note_task_submission_record.note_id,
+            n_note_task_submission_record.id, n_note_task_submission_record.note_task_id, n_note_task_submission_record.user_id, n_note_task_submission_record.note_id,
             n_note_task_submission_record.submit_time, n_note_task_submission_record.is_delete, n_note_task_submission_record.create_by,
             n_note_task_submission_record.create_time, n_note_task_submission_record.update_by, n_note_task_submission_record.update_time,
-            n_note_task_submission_record.remark, sys_user.username, sys_user.nickname, n_note.title as note_title
+            n_note_task_submission_record.remark, sys_user.username, sys_user.nickname, n_note.title as note_title, n_note_task_submission_record.note_history_id
         FROM
             n_note_task_submission_record
         LEFT JOIN
@@ -34,6 +37,8 @@
             sys_user ON n_note_task_submission_record.user_id = sys_user.id
         WHERE
             n_note_task_submission_record.is_delete = 0
+          AND
+            n_note_task_submission_record.status = 0
         <if test="userId != null">
             AND n_note_task_submission_record.user_id = #{userId}
         </if>

@@ -2,14 +2,12 @@ package com.anynote.note.service;
 
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.bo.NoteOperationCount;
-import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteTask;
-import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
 import com.anynote.note.enums.NoteTaskPermissions;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
-import com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO;
+import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -50,5 +48,18 @@ public interface NoteTaskService extends IService<NoteTask> {
      * @return
      */
     public List<NoteOperationCount> getNoteOperationCounts(NoteTaskQueryParam queryParam);
+
+    /**
+     * 退回提交记录
+     * @return
+     */
+    public String returnSubmission(SubmissionReturnParam submissionReturnParam);
+
+    /**
+     * 获取用户笔记任务操作历史
+     * @param noteTaskId 笔记任务id
+     * @return 用户笔记任务操作历史列表
+     */
+    public List<NoteTaskHistoryVO> getNoteTaskHistoryList(Long noteTaskId);
 
 }

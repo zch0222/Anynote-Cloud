@@ -24,6 +24,7 @@ import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.note.api.model.bo.GenerateNoteEditLogMessage;
 import com.anynote.note.api.model.po.Note;
+import com.anynote.note.api.model.po.NoteHistory;
 import com.anynote.note.api.model.po.NoteImage;
 import com.anynote.note.api.model.po.NoteText;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
@@ -36,6 +37,7 @@ import com.anynote.note.mapper.NoteTextMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.NoteSearchDTO;
 import com.anynote.note.service.KnowledgeBaseService;
+import com.anynote.note.service.NoteHistoryService;
 import com.anynote.note.service.NoteImageService;
 import com.anynote.note.service.NoteService;
 import com.anynote.note.utils.MarkdownUtil;
@@ -50,6 +52,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +66,7 @@ import java.util.List;
 @Slf4j
 public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         implements NoteService {
+
 
     @Autowired
     private TokenUtil tokenUtil;
@@ -426,4 +430,5 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         Note noteInfo = this.baseMapper.selectOne(noteLambdaQueryWrapper);
         return noteInfo.getDataScope();
     }
+
 }

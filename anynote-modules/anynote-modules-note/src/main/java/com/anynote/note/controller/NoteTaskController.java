@@ -11,6 +11,7 @@ import com.anynote.note.model.bo.NoteTaskSubmitParam;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.dto.NoteTaskSubmissionRecordCreateDTO;
 import com.anynote.note.model.dto.NoteTaskCreateDTO;
+import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.anynote.note.service.NoteTaskService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 笔记任务 Controller
@@ -55,6 +57,17 @@ public class NoteTaskController {
         noteTaskQueryParam.setPage(page);
         noteTaskQueryParam.setPageSize(pageSize);
         return ResUtil.success(noteTaskService.getMemberNoteTasks(noteTaskQueryParam));
+    }
+
+
+    /**
+     * 获取用户笔记任务操作历史
+     * @param id 笔记任务id
+     * @return 用户笔记任务操作历史列表
+     */
+    @GetMapping("{id}/history")
+    public ResData<List<NoteTaskHistoryVO>> getNoteTaskHistories(@NotNull(message = "任务id不能为空") @PathVariable("id") Long id) {
+        return ResUtil.success(noteTaskService.getNoteTaskHistoryList(id));
     }
 
 

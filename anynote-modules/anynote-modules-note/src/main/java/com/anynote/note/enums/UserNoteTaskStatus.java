@@ -15,7 +15,12 @@ public enum UserNoteTaskStatus {
     /**
      * 无需提交
      */
-    NO_SUBMISSION_REQUIRED(2);
+    NO_SUBMISSION_REQUIRED(2),
+
+    /**
+     * 被退回
+     */
+    RETURNED(3);
 
     private final int value;
 

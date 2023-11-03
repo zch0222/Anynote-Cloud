@@ -4,7 +4,9 @@ package com.anynote.core.web.model.bo;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +18,8 @@ import java.util.Map;
  * @author 称霸幼儿园
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +29,7 @@ public class BaseEntity implements Serializable {
     private Long createBy;
 
     /** 创建时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Date createTime;
 
@@ -34,7 +38,7 @@ public class BaseEntity implements Serializable {
     private Long updateBy;
 
     /** 更新时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /** 备注 */
