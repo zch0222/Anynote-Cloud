@@ -32,6 +32,8 @@ public class NoteTaskQueryParam extends KnowledgeBaseQueryParam {
      */
     private Integer submissionStatus;
 
+
+
     @Builder(builderMethodName = "NoteTaskQueryParamBuilder")
     public NoteTaskQueryParam(Long knowledgeBaseId, String knowledgeBaseName,
                               Long organizationId, Integer page, Integer pageSize,

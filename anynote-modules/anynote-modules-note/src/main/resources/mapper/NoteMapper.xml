@@ -109,7 +109,7 @@
         LEFT JOIN
             n_knowledge_base ON n_note.knowledge_base_id = n_knowledge_base.id
         LEFT JOIN
-            n_note_task_submission_record ON n_note.id = n_note_task_submission_record.note_id
+            n_note_task_submission_record ON (n_note.id = n_note_task_submission_record.note_id AND n_note_task_submission_record.status = 0)
         LEFT JOIN
             n_note_task ON n_note_task_submission_record.note_task_id = n_note_task.id
         WHERE

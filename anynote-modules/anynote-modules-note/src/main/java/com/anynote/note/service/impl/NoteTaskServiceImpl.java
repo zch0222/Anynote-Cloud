@@ -406,14 +406,20 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         PageInfo<MemberNoteTaskDTO> pageInfo = new PageInfo<>(memberNoteTaskDTOList);
 
 
-        memberNoteTaskDTOList.stream().forEach(memberNoteTaskDTO -> {
-            if (StringUtils.isNotNull(memberNoteTaskDTO.getSubmissionNoteId())) {
-                memberNoteTaskDTO.setSubmissionStatus(0);
-            }
-            else {
-                memberNoteTaskDTO.setSubmissionStatus(1);
-            }
-        });
+//        memberNoteTaskDTOList.stream().forEach(memberNoteTaskDTO -> {
+////            if (StringUtils.isNotNull(memberNoteTaskDTO.getSubmissionNoteId())) {
+////                memberNoteTaskDTO.setSubmissionStatus(0);
+////            }
+////            else {
+////                memberNoteTaskDTO.setSubmissionStatus(1);
+////            }
+//            LambdaQueryWrapper<UserNoteTask> userNoteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+//            userNoteTaskLambdaQueryWrapper
+//                    .eq(UserNoteTask::getUserId, loginUser.getSysUser().getId())
+//                    .eq(UserNoteTask::getNoteTaskId, memberNoteTaskDTO.getId());
+//            UserNoteTask userNoteTask = userNoteTaskMapper.selectOne(userNoteTaskLambdaQueryWrapper);
+//
+//        });
         return PageBean.<MemberNoteTaskDTO>builder()
                 .rows(memberNoteTaskDTOList)
                 .pages(pageInfo.getPages())

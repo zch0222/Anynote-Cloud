@@ -15,6 +15,7 @@
         <result property="submitTime" column="submit_time"/>
         <result property="taskCreatorUsername" column="creator_username"/>
         <result property="taskCreatorNickname" column="creator_nickname"/>
+        <result property="submissionStatus" column="submission_status"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
@@ -60,7 +61,7 @@
             n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time,
             n_note_task.knowledge_base_id, n_note_task.status, n_note_task_submission_record.note_id,
             n_note_task_submission_record.submit_time, sys_user.username as creator_username,
-            sys_user.nickname as creator_nickname, n_note_task.update_time
+            sys_user.nickname as creator_nickname, n_note_task.update_time, n_user_note_task.status as submission_status
         FROM
             n_note_task
         LEFT JOIN
@@ -68,6 +69,8 @@
                 (n_note_task.id = n_note_task_submission_record.note_task_id
                     AND
                 n_note_task_submission_record.user_id = #{submitUserId})
+        LEFT JOIN
+                n_user_note_task ON (n_note_task.id = n_user_note_task.note_task_id AND n_user_note_task.user_id = #{submitUserId})
         LEFT JOIN
             sys_user ON n_note_task.create_by = sys_user.id
         WHERE
