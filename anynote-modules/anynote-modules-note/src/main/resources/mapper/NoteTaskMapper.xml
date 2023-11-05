@@ -68,7 +68,7 @@
             n_note_task_submission_record ON
                 (n_note_task.id = n_note_task_submission_record.note_task_id
                     AND
-                n_note_task_submission_record.user_id = #{submitUserId})
+                n_note_task_submission_record.user_id = #{submitUserId} AND n_note_task_submission_record.status = 0)
         LEFT JOIN
                 n_user_note_task ON (n_note_task.id = n_user_note_task.note_task_id AND n_user_note_task.user_id = #{submitUserId})
         LEFT JOIN
