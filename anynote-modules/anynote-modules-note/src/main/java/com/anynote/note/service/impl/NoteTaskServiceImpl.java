@@ -475,7 +475,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         LambdaQueryWrapper<NoteTaskSubmissionRecord> submissionRecordLambdaQueryWrapper =
                 new LambdaQueryWrapper<>();
         submissionRecordLambdaQueryWrapper
-                .eq(NoteTaskSubmissionRecord::getNoteTaskId, noteTask.getId());
+                .eq(NoteTaskSubmissionRecord::getNoteTaskId, noteTask.getId())
+                .eq(NoteTaskSubmissionRecord::getStatus, NoteTaskSubmissionRecordStatus.NORMAL.getValue());
         noteTask.setSubmittedCount(noteTaskSubmissionRecordService
                 .getBaseMapper().selectCount(submissionRecordLambdaQueryWrapper));
         AdminNoteTaskDTO adminNoteTaskDTO = new AdminNoteTaskDTO(noteTask);
