@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.note.mapper.NoteHistoryMapper">
+
+    <resultMap id="NoteHistoryListItemVOResultMap" type="com.anynote.note.model.vo.NoteHistoryListItemVO">
+        <result property="operationLogId" column="operation_log_id" />
+        <result property="operationTime" column="operation_time" />
+        <result property="updaterId" column="updater_id" />
+        <result property="updaterNickname" column="updater_nickname" />
+        <result property="updaterUsername" column="updater_username" />
+    </resultMap>
+
+
+    <resultMap id="NoteHistoryVOResultMap" type="com.anynote.note.model.vo.NoteHistoryVO">
+        <id property="noteHistoryId" column="note_history_id" />
+        <result property="noteId" column="note_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="historyTime" column="history_time" />
+        <result property="createBy" column="create_by" />
+        <collection property="noteEditList" ofType="NoteEditVO" resultMap="NoteEditVOResultMap"/>
+    </resultMap>
+
+    <resultMap id="NoteEditVOResultMap" type="com.anynote.note.model.vo.NoteEditVO">
+        <id property="editLogId" column="edit_log_id" />
+        <result property="originalText" column="original_text" />
+        <result property="revisedText" column="revised_text" />
+        <result property="changeType" column="change_type" />
+        <result property="originalPosition" column="original_position" />
+        <result property="revisedPosition" column="revised_position" />
+        <result property="editTime" column="edit_time" />
+        <result property="editorId" column="editor_id" />
+        <result property="editorUsername" column="editor_username" />
+        <result property="editorNickname" column="editor_nickname" />
+    </resultMap>
+
+
+    <select id="selectNoteHistoryListItemVOList" resultMap="NoteHistoryListItemVOResultMap">
+        SELECT
+            n_note_operation_log.operation_time, n_note_operation_log.id as operation_log_id,
+            sys_user.id as updater_id, sys_user.nickname as updater_nickname, sys_user.username as updater_username
+        FROM
+            n_note_operation_log
+                LEFT JOIN
+            sys_user ON n_note_operation_log.operator_id = sys_user.id
+        WHERE
+            n_note_operation_log.is_delete = 0
+          AND
+            n_note_operation_log.operation_type = 1
+          AND
+            note_id = #{noteId}
+    </select>
+    
+    <select id="selectNoteHistory" resultMap="NoteHistoryVOResultMap">
+        SELECT
+            n_note_history.id as note_history_id, n_note_history.note_id, n_note_history.title,
+            n_note_history.content, n_note_history.history_time, n_note_history.create_by,
+            n_note_edit_log.id as edit_log_id, n_note_edit_log.original_text, n_note_edit_log.revised_text,
+            n_note_edit_log.change_type, n_note_edit_log.original_position, n_note_edit_log.revised_position,
+            n_note_edit_log.create_time as edit_time,
+            sys_user.id as editor_id, sys_user.username as editor_username, sys_user.nickname as editor_nickname
+        FROM
+            n_note_history
+                LEFT JOIN
+            n_note_edit_log ON n_note_history.operation_id = n_note_edit_log.operation_id AND n_note_edit_log.is_delete = 0
+                LEFT JOIN
+            sys_user ON n_note_edit_log.create_by = sys_user.id
+        WHERE
+            n_note_history.operation_id = #{operationId}
+          AND
+            n_note_history.is_delete = 0;
+    </select>
+
+</mapper>

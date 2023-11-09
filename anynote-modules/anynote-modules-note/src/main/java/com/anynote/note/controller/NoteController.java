@@ -11,18 +11,26 @@ import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.po.Note;
+import com.anynote.note.api.model.po.NoteOperationLog;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.enums.NotePermissions;
+import com.anynote.note.mapper.NoteHistoryMapper;
+import com.anynote.note.mapper.NoteOperationLogMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.NoteCreateDTO;
 import com.anynote.note.model.dto.NoteEditDTO;
 import com.anynote.note.model.dto.NoteSearchDTO;
+import com.anynote.note.model.vo.NoteHistoryListItemVO;
+import com.anynote.note.model.vo.NoteHistoryVO;
+import com.anynote.note.service.NoteHistoryService;
+import com.anynote.note.service.NoteOperationLogService;
 import com.anynote.note.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -37,6 +45,15 @@ public class NoteController {
 
     @Autowired
     private NoteService noteService;
+
+    @Resource
+    private NoteHistoryService noteHistoryService;
+
+//    @Resource
+//    private NoteOperationLogMapper noteOperationLogMapper;
+    @Resource
+    private NoteOperationLogService noteOperationLogService;
+
 
     /**
      * 获取最近更新的笔记 (未完成)
@@ -117,6 +134,31 @@ public class NoteController {
     @GetMapping("search")
     public ResData<SearchPageBean<EsNoteIndex>> searchNote(@Valid NoteSearchDTO noteSearchDTO) {
         return ResUtil.success(noteService.searchNote(noteSearchDTO));
+    }
+
+    /**
+     * 笔记历史列表
+     * @param noteId 笔记id
+     * @param page 笔记页码
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("historyList")
+    public ResData<PageBean<NoteHistoryListItemVO>> getHistoryList(Long noteId, Integer page, Integer pageSize) {
+        return ResUtil.success(noteHistoryService.getNoteHistoryListItemVOList(NoteHistoryListItemQueryParam.NoteHistoryListItemQueryParamBuilder()
+                .noteId(noteId)
+                .page(page)
+                .pageSize(pageSize)
+                .build()));
+    }
+
+    @GetMapping("history")
+    public ResData<NoteHistoryVO> getNoteHistory(Long operationId) {
+        NoteOperationLog noteOperationLog = noteOperationLogService.getBaseMapper().selectById(operationId);
+        return ResUtil.success(noteHistoryService.getNoteHistory(NoteHistoryQueryParam.NoteHistoryQueryParamBuilder()
+                        .noteId(noteOperationLog.getNoteId())
+                        .operationId(operationId)
+                .build()));
     }
 
 

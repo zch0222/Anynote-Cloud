@@ -83,9 +83,8 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
     private void generateNoteEditLog(GenerateNoteEditLogMessage generateNoteEditLogMessage) {
         List<String> oldContent = Arrays.asList(generateNoteEditLogMessage.getOldNote().getContent().split("\\r?\\n"));
         List<String> newContent = Arrays.asList(generateNoteEditLogMessage.getCurrentNote().getContent().split("\\r?\\n"));
-        for (String text : oldContent) {
-            log.info(text);
-        }
+        log.info("old---" + JSON.toJSONString(oldContent));
+        log.info("new---" + JSON.toJSONString(newContent));
         Patch<String> patch = DiffUtils.diff(oldContent, newContent);
         log.info(JSON.toJSONString(patch));
         if (!patch.getDeltas().isEmpty()) {
@@ -104,7 +103,7 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
             noteOperationLogService.getBaseMapper().insert(noteOperationLog);
             this.saveNoteEditLogs(patch, noteOperationLog.getId(), generateNoteEditLogMessage);
             noteHistoryService.saveNoteHistory(generateNoteEditLogMessage.getCurrentNote(),
-                    noteOperationLog.getOperatorId(), generateNoteEditLogMessage.getDate(), generateNoteEditLogMessage.getUserId());
+                    noteOperationLog.getId(), generateNoteEditLogMessage.getDate(), generateNoteEditLogMessage.getUserId());
         }
     }
 
@@ -145,21 +144,27 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
 
     private void saveNoteEditLogs(Patch<String> patch, Long operationId,
                                   GenerateNoteEditLogMessage generateNoteEditLogMessage) {
+
         for (Delta<String> delta : patch.getDeltas()) {
-            NoteEditLog noteEditLog = NoteEditLog.builder()
-                    .operationId(operationId)
-                    .originalText(delta.getOriginal().getLines().isEmpty() ? "" : delta.getOriginal().getLines().get(0))
-                    .revisedText(delta.getRevised().getLines().isEmpty() ? "" : delta.getRevised().getLines().get(0))
-                    .originalPosition(delta.getOriginal().getPosition())
-                    .revisedPosition(delta.getRevised().getPosition())
-                    .changeType(delta.getType().ordinal())
-                    .build();
-            Date date = new Date();
-            noteEditLog.setCreateBy(generateNoteEditLogMessage.getUserId());
-            noteEditLog.setCreateTime(date);
-            noteEditLog.setUpdateBy(generateNoteEditLogMessage.getUserId());
-            noteEditLog.setUpdateTime(date);
-            noteEditLogService.getBaseMapper().insert(noteEditLog);
+            log.info("Original:---" + (delta.getOriginal().getLines().isEmpty() ? "" : delta.getOriginal().getLines().get(0)));
+            log.info("Revised:---" + (delta.getRevised().getLines().isEmpty() ? "" : delta.getRevised().getLines().get(0)));
+            int j = delta.getRevised().getLines().size() > delta.getOriginal().getLines().size() ? delta.getRevised().getLines().size() : delta.getOriginal().getLines().size();
+            for (int i = 0; i < j; ++i) {
+                NoteEditLog noteEditLog = NoteEditLog.builder()
+                        .operationId(operationId)
+                        .originalText(delta.getOriginal().getLines().isEmpty() || delta.getOriginal().getLines().size() < i + 1 ? "" : delta.getOriginal().getLines().get(i))
+                        .revisedText(delta.getRevised().getLines().isEmpty() || delta.getRevised().getLines().size() < i + 1 ? "" :  delta.getRevised().getLines().get(i))
+                        .originalPosition(delta.getOriginal().getPosition())
+                        .revisedPosition(delta.getRevised().getPosition() + i)
+                        .changeType(delta.getType().ordinal())
+                        .build();
+                Date date = new Date();
+                noteEditLog.setCreateBy(generateNoteEditLogMessage.getUserId());
+                noteEditLog.setCreateTime(date);
+                noteEditLog.setUpdateBy(generateNoteEditLogMessage.getUserId());
+                noteEditLog.setUpdateTime(date);
+                noteEditLogService.getBaseMapper().insert(noteEditLog);
+            }
         }
     }
 
