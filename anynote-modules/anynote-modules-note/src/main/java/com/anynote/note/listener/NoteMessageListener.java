@@ -154,7 +154,7 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
                         .operationId(operationId)
                         .originalText(delta.getOriginal().getLines().isEmpty() || delta.getOriginal().getLines().size() < i + 1 ? "" : delta.getOriginal().getLines().get(i))
                         .revisedText(delta.getRevised().getLines().isEmpty() || delta.getRevised().getLines().size() < i + 1 ? "" :  delta.getRevised().getLines().get(i))
-                        .originalPosition(delta.getOriginal().getPosition())
+                        .originalPosition(delta.getOriginal().getPosition() + i)
                         .revisedPosition(delta.getRevised().getPosition() + i)
                         .changeType(delta.getType().ordinal())
                         .build();
