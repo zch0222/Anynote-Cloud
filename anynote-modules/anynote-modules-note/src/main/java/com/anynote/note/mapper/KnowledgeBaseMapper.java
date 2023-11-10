@@ -3,8 +3,9 @@ package com.anynote.note.mapper;
 import com.anynote.common.datascope.annotation.DataScopeInterceptor;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
-import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -38,4 +39,6 @@ public interface KnowledgeBaseMapper extends BaseMapper<NoteKnowledgeBase> {
                                            @Param("permission") Integer permission);
 
     public Long selectKnowledgeBaseMembersCount(@Param("knowledgeBaseId") Long knowledgeBaseId);
+
+    public List<NoteKnowledgeBaseDTO> getKnowledgeBaseList(@Param("page") Integer page, Integer pageSize);
 }

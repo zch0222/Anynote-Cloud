@@ -4,7 +4,7 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
-import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -62,5 +62,13 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
 
 
     public String updateKnowledgeBase(KnowledgeBaseUpdateParam updateParam);
+
+    /**
+     * 超级管理员获取知识库列表
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public PageBean<NoteKnowledgeBaseDTO> getManagerKnowledgeBaseList(Integer page, Integer pageSize);
 
 }

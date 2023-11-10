@@ -18,7 +18,7 @@
         <result property="remark"       column="remark"       />
     </resultMap>
 
-    <resultMap id="NoteKnowledgeBaseDTOResult" type="com.anynote.note.model.dto.NoteKnowledgeBaseDTO">
+    <resultMap id="NoteKnowledgeBaseDTOResult" type="com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO">
         <id property="id" column="id" />
         <result property="knowledgeBaseName" column="knowledge_base_name" />
         <result property="cover" column="cover" />
@@ -189,5 +189,35 @@
             n_note.id = #{noteId}
           AND
             n_user_knowledge_base.user_id = #{userId}
+    </select>
+
+    <select id="getKnowledgeBaseList" resultMap="NoteKnowledgeBaseDTOResult">
+        SELECT DISTINCT
+        n_knowledge_base.id, n_knowledge_base.name as knowledge_base_name, n_knowledge_base.cover,
+        n_knowledge_base.detail, n_knowledge_base.type, n_knowledge_base.status,
+        n_knowledge_base.create_by, n_knowledge_base.create_time,
+        n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark, n_user_knowledge_base.permissions
+        FROM
+        n_knowledge_base
+        LEFT JOIN
+        n_user_knowledge_base ON n_knowledge_base.id = n_user_knowledge_base.knowledge_base_id
+        LEFT JOIN
+        sys_user ON n_user_knowledge_base.user_id = sys_user.id
+        WHERE
+        n_knowledge_base.is_delete = 0
+        AND
+        n_knowledge_base.type = 0
+        <if test="name != null and name != ''">
+            AND n_knowledge_base.name like concat('%', #{name}, '%')
+        </if>
+        <if test="type != null">
+            AND n_knowledge_base.type = #{type}
+        </if>
+        <if test="status != null">
+            AND n_knowledge_base.status = #{status}
+        </if>
+        <if test="organizationId != null">
+            AND n_organization_knowledge_base.organization_id = {organizationId}
+        </if>
     </select>
 </mapper>

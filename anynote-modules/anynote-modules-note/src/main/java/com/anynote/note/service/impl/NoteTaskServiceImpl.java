@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -558,7 +559,9 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     @Override
     @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
     public List<NoteOperationCount> getNoteOperationCounts(NoteTaskQueryParam queryParam) {
-        return this.baseMapper.selectNoteOperationCount(queryParam.getNoteTaskId());
+        return this.baseMapper.selectNoteOperationCount(queryParam.getNoteTaskId()).stream()
+                .sorted(Comparator.comparing(NoteOperationCount::getCount))
+                .collect(Collectors.toList());
     }
 
     /**

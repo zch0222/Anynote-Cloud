@@ -1,6 +1,7 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.datascope.annotation.DataScope;
+import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
@@ -10,7 +11,7 @@ import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
 import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
 import com.anynote.note.model.dto.KnowledgeBaseCreateDTO;
 import com.anynote.note.model.dto.KnowledgeBaseUpdateDTO;
-import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,19 @@ public class KnowledgeBaseController {
                                                                                       @NotNull(message = "页面容量不能为空") Integer pageSize) {
         return ResData.success(knowledgeBaseService
                 .getUsersOrganizationKnowledgeBase(page, pageSize));
+    }
+
+    /**
+     * 超级管理员获取知识库列表
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @InnerAuth
+    @GetMapping("managerList")
+    public ResData<PageBean<NoteKnowledgeBaseDTO>> getManagerKnowledgeBases(@NotNull(message = "页码不能为空") Integer page,
+                                                                            @NotNull(message = "页面容量不能为空") Integer pageSize) {
+
     }
 
     @GetMapping

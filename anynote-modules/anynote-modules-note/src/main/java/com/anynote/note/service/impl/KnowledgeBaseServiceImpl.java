@@ -25,7 +25,7 @@ import com.anynote.note.datascope.aspect.KnowledgeBasePermissionsAspect;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.mapper.KnowledgeBaseMapper;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
-import com.anynote.note.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
@@ -126,6 +126,7 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
                 .build());
         PageInfo<NoteKnowledgeBaseDTO> pageInfo = new PageInfo<>(noteKnowledgeBaseDTOList);
         return PageBean.<NoteKnowledgeBaseDTO>builder()
+                .current(page)
                 .rows(noteKnowledgeBaseDTOList)
                 .total(pageInfo.getTotal())
                 .pages(pageInfo.getPages())
@@ -373,5 +374,12 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
             throw new BusinessException("更新知识库失败，请联系管理员");
         }
         return Constants.SUCCESS_RES;
+    }
+
+
+    @Override
+    public PageBean<NoteKnowledgeBaseDTO> getManagerKnowledgeBaseList(Integer page, Integer pageSize) {
+
+        return null;
     }
 }

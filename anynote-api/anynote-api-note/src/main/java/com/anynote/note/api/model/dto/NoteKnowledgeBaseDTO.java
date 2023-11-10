@@ -1,4 +1,4 @@
-package com.anynote.note.model.dto;
+package com.anynote.note.api.model.dto;
 
 import com.anynote.core.web.model.bo.BaseEntity;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
