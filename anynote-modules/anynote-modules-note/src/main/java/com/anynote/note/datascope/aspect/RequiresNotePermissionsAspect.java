@@ -60,9 +60,9 @@ public class RequiresNotePermissionsAspect {
 
     private void authPermissions(NoteQueryParam param, RequiresNotePermissions requiresNotePermissions) {
         LoginUser loginUser = tokenUtil.getLoginUser();
-        if (SysUser.isAdminX(loginUser.getSysUser().getRole())) {
-            return;
-        }
+//        if (SysUser.isAdminX(loginUser.getSysUser().getRole())) {
+//            return;
+//        }
 
         NotePermissions permissions = noteService.getNotePermissions(param.getId());
         addNotePermissions(param, permissions);

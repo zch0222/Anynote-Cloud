@@ -376,6 +376,10 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         LoginUser loginUser = tokenUtil.getLoginUser();
         SysUser sysUser = loginUser.getSysUser();
 
+        if (SysUser.isAdminX(loginUser.getSysUser().getRole())) {
+            return NotePermissions.MANAGE;
+        }
+
         Integer knowledgeBasePermissions = knowledgeBaseService.getUserKnowledgeBasePermissionsByNoteId(sysUser.getId(), noteId);
         // 笔记所有者
         if (noteInfo.getCreateBy().equals(sysUser.getId())) {

@@ -99,7 +99,7 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
             noteOperationLog.setCreateTime(date);
             noteOperationLog.setUpdateBy(generateNoteEditLogMessage.getUserId());
             noteOperationLog.setUpdateTime(date);
-            log.debug(JSON.toJSONString(noteOperationLog));
+//            log.debug(JSON.toJSONString(noteOperationLog));
             noteOperationLogService.getBaseMapper().insert(noteOperationLog);
             this.saveNoteEditLogs(patch, noteOperationLog.getId(), generateNoteEditLogMessage);
             noteHistoryService.saveNoteHistory(generateNoteEditLogMessage.getCurrentNote(),
