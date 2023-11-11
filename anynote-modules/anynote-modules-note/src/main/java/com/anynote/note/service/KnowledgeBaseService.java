@@ -69,6 +69,6 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
      * @param pageSize
      * @return
      */
-    public PageBean<NoteKnowledgeBaseDTO> getManagerKnowledgeBaseList(Integer page, Integer pageSize);
+    public PageBean<NoteKnowledgeBaseDTO> getManagerKnowledgeBaseList(KnowledgeBaseQueryParam queryParam);
 
 }

@@ -40,5 +40,5 @@ public interface KnowledgeBaseMapper extends BaseMapper<NoteKnowledgeBase> {
 
     public Long selectKnowledgeBaseMembersCount(@Param("knowledgeBaseId") Long knowledgeBaseId);
 
-    public List<NoteKnowledgeBaseDTO> getKnowledgeBaseList(@Param("page") Integer page, Integer pageSize);
+    public List<NoteKnowledgeBaseDTO> selectKnowledgeBaseList(KnowledgeBaseQueryParam queryParam);
 }

@@ -48,8 +48,16 @@ public class KnowledgeBaseController {
     @InnerAuth
     @GetMapping("managerList")
     public ResData<PageBean<NoteKnowledgeBaseDTO>> getManagerKnowledgeBases(@NotNull(message = "页码不能为空") Integer page,
-                                                                            @NotNull(message = "页面容量不能为空") Integer pageSize) {
-
+                                                                            @NotNull(message = "页面容量不能为空") Integer pageSize,
+                                                                            Integer type,
+                                                                            Integer status, Long organizationId) {
+        return ResUtil.success(knowledgeBaseService.getManagerKnowledgeBaseList(KnowledgeBaseQueryParam.builder()
+                        .page(page)
+                        .pageSize(pageSize)
+                        .type(type)
+                        .status(status)
+                        .organizationId(organizationId)
+                .build()));
     }
 
     @GetMapping
@@ -95,9 +103,5 @@ public class KnowledgeBaseController {
                 new KnowledgeBaseUpdateParam(knowledgeBaseUpdateDTO);
         return ResData.success(knowledgeBaseService.updateKnowledgeBase(updateParam));
     }
-
-
-
-
 
 }

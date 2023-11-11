@@ -14,6 +14,7 @@ import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.anynote.system.mapper.SysUserMapper;
+import com.anynote.system.model.bo.SysUserQueryParam;
 import com.anynote.system.service.SysOrganizationService;
 import com.anynote.system.service.SysPermissionService;
 import com.anynote.system.service.SysRoleService;
@@ -165,5 +166,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public Integer updateSysUser(SysUser sysUser) {
         return this.baseMapper.updateById(sysUser);
+    }
+
+    @Override
+    public PageBean<SysUser> getManageUserList(SysUserQueryParam queryParam) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper
+                        .eq(StringUtils.isNotNull(queryParam.getUserId()), SysUser::getId, queryParam.getUserId());
+        PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize(), "id DESC");
+        List<SysUser> rows = this.baseMapper.selectList(sysUserLambdaQueryWrapper);
+        PageInfo<SysUser> pageInfo = new PageInfo<>(rows);
+        return PageBean.<SysUser>builder()
+                .rows(rows)
+                .current(queryParam.getPage())
+                .pages(pageInfo.getPages())
+                .total(pageInfo.getTotal())
+                .build();
     }
 }

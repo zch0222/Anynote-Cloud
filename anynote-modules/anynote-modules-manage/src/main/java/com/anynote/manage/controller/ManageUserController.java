@@ -1,0 +1,42 @@
+package com.anynote.manage.controller;
+
+import com.anynote.core.utils.ResUtil;
+import com.anynote.core.web.model.bo.PageBean;
+import com.anynote.core.web.model.bo.ResData;
+import com.anynote.manage.service.ManageUserService;
+import com.anynote.system.api.model.po.SysUser;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+
+/**
+ * 管理用户
+ * @author 称霸幼儿园
+ */
+@RestController
+@RequestMapping("users")
+@Validated
+public class ManageUserController {
+
+    @Resource
+    private ManageUserService manageUserService;
+
+    /**
+     * 获取用户列表
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @GetMapping
+    public ResData<PageBean<SysUser>> getUserList(@NotNull(message = "页码不能为空") Integer page,
+                                                  @NotNull(message = "页面大小不能为空") Integer pageSize) {
+        return ResUtil.success(manageUserService.getUserList(page, pageSize));
+    }
+
+
+
+}

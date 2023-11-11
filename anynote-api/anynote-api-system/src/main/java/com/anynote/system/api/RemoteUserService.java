@@ -45,4 +45,14 @@ public interface RemoteUserService {
     @PutMapping("user/{userId}")
     public ResData<Integer> updateSysUser(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId,
                                           @RequestBody SysUser sysUser);
+
+    /**
+     * 超级管理员获取用户列表
+     * @param page 页码
+     * @param pageSize 页面容量
+     * @return
+     */
+    @GetMapping("user/manageList")
+    public ResData<PageBean<SysUser>> getManageUserList(@RequestParam("page") Integer page,
+                                                        @RequestParam("pageSize") Integer pageSize);
 }

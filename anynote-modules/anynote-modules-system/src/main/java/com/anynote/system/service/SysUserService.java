@@ -6,6 +6,7 @@ import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
+import com.anynote.system.model.bo.SysUserQueryParam;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -42,4 +43,11 @@ public interface SysUserService extends IService<SysUser> {
 
 
     public Integer updateSysUser(SysUser sysUser);
+
+    /**
+     * 超级管理员获取用户列表
+     * @param queryParam
+     * @return
+     */
+    public PageBean<SysUser> getManageUserList(SysUserQueryParam queryParam);
 }

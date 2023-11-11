@@ -5,5 +5,6 @@ import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 
 public interface ManageKnowledgeBaseService {
 
-    public PageBean<NoteKnowledgeBaseDTO> getKnowledgeBaseList(Integer page, Integer pageSize);
+    public PageBean<NoteKnowledgeBaseDTO> getKnowledgeBaseList(Integer page, Integer pageSize, Integer type,
+                                                               Integer status, Long organizationId);
 }

@@ -191,22 +191,19 @@
             n_user_knowledge_base.user_id = #{userId}
     </select>
 
-    <select id="getKnowledgeBaseList" resultMap="NoteKnowledgeBaseDTOResult">
+    <select id="selectKnowledgeBaseList" resultMap="NoteKnowledgeBaseDTOResult">
         SELECT DISTINCT
-        n_knowledge_base.id, n_knowledge_base.name as knowledge_base_name, n_knowledge_base.cover,
-        n_knowledge_base.detail, n_knowledge_base.type, n_knowledge_base.status,
-        n_knowledge_base.create_by, n_knowledge_base.create_time,
-        n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark, n_user_knowledge_base.permissions
+            n_knowledge_base.id, n_knowledge_base.name as knowledge_base_name, n_knowledge_base.cover,
+            n_knowledge_base.detail, n_knowledge_base.type, n_knowledge_base.status,
+            n_knowledge_base.create_by, n_knowledge_base.create_time,
+            n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark
         FROM
-        n_knowledge_base
-        LEFT JOIN
-        n_user_knowledge_base ON n_knowledge_base.id = n_user_knowledge_base.knowledge_base_id
-        LEFT JOIN
-        sys_user ON n_user_knowledge_base.user_id = sys_user.id
+            n_knowledge_base
         WHERE
-        n_knowledge_base.is_delete = 0
-        AND
-        n_knowledge_base.type = 0
+            n_knowledge_base.is_delete = 0
+        <if test="type != null">
+            AND n_knowledge_base.type = 0
+        </if>
         <if test="name != null and name != ''">
             AND n_knowledge_base.name like concat('%', #{name}, '%')
         </if>

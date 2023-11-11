@@ -376,10 +376,16 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
         return Constants.SUCCESS_RES;
     }
 
-
     @Override
-    public PageBean<NoteKnowledgeBaseDTO> getManagerKnowledgeBaseList(Integer page, Integer pageSize) {
-
-        return null;
+    public PageBean<NoteKnowledgeBaseDTO> getManagerKnowledgeBaseList(KnowledgeBaseQueryParam queryParam) {
+        PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize(), "create_time DESC");
+        List<NoteKnowledgeBaseDTO> noteKnowledgeBaseDTOList = this.baseMapper.selectKnowledgeBaseList(queryParam);
+        PageInfo<NoteKnowledgeBaseDTO> pageInfo = new PageInfo<>(noteKnowledgeBaseDTOList);
+        return PageBean.<NoteKnowledgeBaseDTO>builder()
+                .current(queryParam.getPage())
+                .pages(pageInfo.getPages())
+                .total(pageInfo.getTotal())
+                .rows(noteKnowledgeBaseDTOList)
+                .build();
     }
 }
