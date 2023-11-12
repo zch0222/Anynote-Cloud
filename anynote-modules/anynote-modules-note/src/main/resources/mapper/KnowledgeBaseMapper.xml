@@ -199,6 +199,8 @@
             n_knowledge_base.update_by, n_knowledge_base.update_time, n_knowledge_base.remark
         FROM
             n_knowledge_base
+        LEFT JOIN
+            n_organization_knowledge_base ON n_knowledge_base.id = n_organization_knowledge_base.knowledge_base_id
         WHERE
             n_knowledge_base.is_delete = 0
         <if test="type != null">
@@ -214,7 +216,7 @@
             AND n_knowledge_base.status = #{status}
         </if>
         <if test="organizationId != null">
-            AND n_organization_knowledge_base.organization_id = {organizationId}
+            AND n_organization_knowledge_base.organization_id = #{organizationId}
         </if>
     </select>
 </mapper>

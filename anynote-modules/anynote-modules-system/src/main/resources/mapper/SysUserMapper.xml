@@ -82,6 +82,43 @@
         WHERE
             sys_user.username = #{username};
     </select>
+
+    <select id="selectSysUser" parameterType="java.lang.String" resultMap="SysUserResult">
+        SELECT
+            sys_user.id, sys_user.username, sys_user.nickname, sys_user.email, sys_user.phone_number,
+            sys_user.sex, sys_user.avatar, sys_user.password, sys_user.status, sys_user.is_delete,
+            sys_user.login_ip, sys_user.login_date, sys_user.create_by, sys_user.create_time, sys_user.update_by,
+            sys_user.update_time, sys_user.remark, sys_role.id as role_id, sys_role.role_name, sys_role.role_key,
+            sys_role.role_sort, sys_role.data_scope, sys_role.status as role_status, sys_organization.id as organization_id,
+            sys_organization.parent_id, sys_organization.ancestors, sys_organization.organization_name,
+            sys_organization.order_num, sys_organization.status as organization_status
+        FROM
+            sys_user
+                LEFT JOIN
+            sys_user_organization
+            ON
+                sys_user.id = sys_user_organization.user_id
+                LEFT JOIN
+            sys_organization
+            ON
+                sys_user_organization.organization_id = sys_organization.id
+                LEFT JOIN
+            sys_user_role
+            ON
+                sys_user.id = sys_user_role.user_id
+                LEFT JOIN
+            sys_role
+            ON
+                sys_user_role.role_id = sys_role.id
+        WHERE
+            1 = 1
+          <if test="username != null and username != ''">
+              AND sys_user.username = #{username};
+          </if>
+          <if test="userId != null">
+              AND sys_user.id = #{userId}
+          </if>
+    </select>
     
     <select id="selectKnowledgeBaseUsers" resultMap="KnowledgeBaseUserVOResult">
         SELECT

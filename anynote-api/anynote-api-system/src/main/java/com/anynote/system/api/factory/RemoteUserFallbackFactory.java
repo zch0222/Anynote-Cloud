@@ -53,6 +53,11 @@ public class RemoteUserFallbackFactory implements FallbackFactory<RemoteUserServ
             }
 
             @Override
+            public ResData<SysUser> getSysUserInfoById(Long userId) {
+                return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
+            }
+
+            @Override
             public ResData<PageBean<SysUser>> getManageUserList(Integer page, Integer pageSize) {
                 return ResData.error(ResCode.INNER_SYSTEM_SERVICE_ERROR);
             }

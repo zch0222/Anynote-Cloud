@@ -1,20 +1,17 @@
 package com.anynote.system.service.impl;
 
-import com.anynote.common.security.token.TokenUtil;
 import com.anynote.common.security.utils.SecurityUtils;
-import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
-import com.anynote.system.api.model.bo.Token;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.anynote.system.mapper.SysUserMapper;
-import com.anynote.system.model.bo.SysUserQueryParam;
+import com.anynote.system.api.model.bo.SysUserQueryParam;
 import com.anynote.system.service.SysOrganizationService;
 import com.anynote.system.service.SysPermissionService;
 import com.anynote.system.service.SysRoleService;
@@ -182,5 +179,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .pages(pageInfo.getPages())
                 .total(pageInfo.getTotal())
                 .build();
+    }
+
+
+    @Override
+    public SysUser getSysUserInfoById(Long userId) {
+        List<SysUser> sysUserList = this.baseMapper.selectSysUser(SysUserQueryParam.builder()
+                        .userId(userId)
+                .build());
+        if (sysUserList.isEmpty()) {
+            throw new BusinessException("用户不存在", ResCode.INVALID_USER_INPUT_NOT_FOUND);
+        }
+        if (sysUserList.size() > 1) {
+            throw new BusinessException("获取用户信息失败");
+        }
+        SysUser sysUser = sysUserList.get(0);
+        sysUser.setPassword("");
+        return sysUser;
     }
 }

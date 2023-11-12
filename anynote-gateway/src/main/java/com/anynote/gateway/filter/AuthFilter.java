@@ -12,7 +12,9 @@ import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.gateway.properties.SecurityIgnoreProperties;
+import com.anynote.gateway.properties.SecurityManageProperties;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.po.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -30,6 +32,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -46,6 +49,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     @Autowired
     private SecurityIgnoreProperties securityIgnoreProperties;
+
+    @Resource
+    private SecurityManageProperties securityManageProperties;
 
 
     @Autowired
@@ -65,7 +71,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String accessToken = getAccessToken(exchange.getRequest());
 
         try {
-            authAccessToken(exchange, accessToken);
+            authAccessToken(exchange, accessToken, url);
         } catch (TokenException e) {
             log.error(e.getErrorMessage(), e);
             return unauthorizedResponse(exchange, e.getErrorCode());
@@ -114,7 +120,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         mutate.header(name, valueEncode);
     }
 
-    private void authAccessToken(ServerWebExchange exchange, String accessToken) {
+    private void authAccessToken(ServerWebExchange exchange, String accessToken, String url) {
         if (StringUtils.isNull(accessToken)) {
             throw new TokenException(ResCode.ACCESS_TOKEN_NOT_FOUND);
         }
@@ -123,6 +129,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         if (StringUtils.isNull(loginUser)) {
             throw new TokenException(ResCode.ACCESS_TOKEN_NOT_FOUND);
+        }
+
+        if (StringUtils.matches(url, securityManageProperties.getUrls()) && !SysUser.isAdminX(loginUser.getSysUser().getRole())) {
+            throw new TokenException(ResCode.UNAUTHORIZED_ERROR);
         }
     }
 

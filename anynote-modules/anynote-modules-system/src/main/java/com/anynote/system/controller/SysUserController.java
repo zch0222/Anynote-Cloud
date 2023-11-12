@@ -4,21 +4,18 @@ import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
-import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
-import com.anynote.system.model.bo.SysUserQueryParam;
+import com.anynote.system.api.model.bo.SysUserQueryParam;
 import com.anynote.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * 用户信息 Controller
@@ -79,6 +76,17 @@ public class SysUserController {
     @GetMapping("{userId}")
     public ResData<SysUser> getSysUserById(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId) {
         return ResData.success(sysUserService.getSysUserById(userId));
+    }
+
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    @InnerAuth
+    @GetMapping("{userId}/info")
+    public ResData<SysUser> getSysUserInfoById(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId) {
+        return ResData.success(sysUserService.getSysUserInfoById(userId));
     }
 
     @InnerAuth

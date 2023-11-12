@@ -1,4 +1,4 @@
-package com.anynote.system.model.bo;
+package com.anynote.system.api.model.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +14,11 @@ public class SysUserQueryParam {
      * 用户id
      */
     private Long userId;
+
+    /**
+     * 用户名
+     */
+    private String username;
 
     /**
      * 页码

@@ -5,6 +5,8 @@ import com.anynote.core.web.model.bo.BaseEntity;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
 
@@ -58,6 +60,7 @@ public class SysUser extends BaseEntity {
     /**
      * 密码
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String password;
 
     /**

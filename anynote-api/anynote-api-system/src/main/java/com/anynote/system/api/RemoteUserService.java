@@ -46,6 +46,9 @@ public interface RemoteUserService {
     public ResData<Integer> updateSysUser(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId,
                                           @RequestBody SysUser sysUser);
 
+    @GetMapping("user/{userId}/info")
+    public ResData<SysUser> getSysUserInfoById(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId);
+
     /**
      * 超级管理员获取用户列表
      * @param page 页码
