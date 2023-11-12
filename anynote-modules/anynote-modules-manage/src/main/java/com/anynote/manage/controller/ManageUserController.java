@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -44,7 +45,8 @@ public class ManageUserController {
 
     @PatchMapping("{userId}")
     public ResData<Integer> updateSysUser(@NotNull(message = "用户id不能为空") @PathVariable("userId") Long userId,
-                                         @NotNull(message = "用户信息不能为空") @RequestBody SysUserUpdateParam updateParam) {
+                                         @NotNull(message = "用户信息不能为空") @RequestBody @Valid SysUserUpdateParam updateParam) {
+        updateParam.setUserId(userId);
         return ResUtil.success(manageUserService.updateSysUser(updateParam));
     }
 
