@@ -32,10 +32,12 @@ public class SysUserController {
     @InnerAuth
     @GetMapping("manageList")
     public ResData<PageBean<SysUser>> getManageUserList(@NotNull(message = "页码不能为空") Integer page,
-                                                        @NotNull(message = "页面大小不能为空") Integer pageSize) {
+                                                        @NotNull(message = "页面大小不能为空") Integer pageSize,
+                                                        String username) {
         return ResUtil.success(sysUserService.getManageUserList(SysUserQueryParam.builder()
                         .page(page)
                         .pageSize(pageSize)
+                        .username(username)
                 .build()));
     }
 

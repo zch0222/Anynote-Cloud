@@ -169,7 +169,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public PageBean<SysUser> getManageUserList(SysUserQueryParam queryParam) {
         LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         sysUserLambdaQueryWrapper
-                        .eq(StringUtils.isNotNull(queryParam.getUserId()), SysUser::getId, queryParam.getUserId());
+                        .eq(StringUtils.isNotNull(queryParam.getUserId()), SysUser::getId, queryParam.getUserId())
+                        .eq(StringUtils.isNotEmpty(queryParam.getUsername()), SysUser::getUsername, queryParam.getUsername());
         PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize(), "id DESC");
         List<SysUser> rows = this.baseMapper.selectList(sysUserLambdaQueryWrapper);
         PageInfo<SysUser> pageInfo = new PageInfo<>(rows);

@@ -24,8 +24,8 @@ public class ManageUserServiceImpl implements ManageUserService {
     private RemoteUserService remoteUserService;
 
     @Override
-    public PageBean<SysUser> getUserList(Integer page, Integer pageSize) {
-        ResData<PageBean<SysUser>> resData = remoteUserService.getManageUserList(page, pageSize);
+    public PageBean<SysUser> getUserList(Integer page, Integer pageSize, String username) {
+        ResData<PageBean<SysUser>> resData = remoteUserService.getManageUserList(page, pageSize, username);
         return RemoteResDataUtil.getResData(resData, "获取用户列表失败");
     }
 

@@ -57,5 +57,6 @@ public interface RemoteUserService {
      */
     @GetMapping("user/manageList")
     public ResData<PageBean<SysUser>> getManageUserList(@RequestParam("page") Integer page,
-                                                        @RequestParam("pageSize") Integer pageSize);
+                                                        @RequestParam("pageSize") Integer pageSize,
+                                                        @RequestParam("username") String username);
 }

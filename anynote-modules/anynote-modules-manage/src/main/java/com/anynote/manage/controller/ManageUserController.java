@@ -33,8 +33,9 @@ public class ManageUserController {
      */
     @GetMapping
     public ResData<PageBean<SysUser>> getUserList(@NotNull(message = "页码不能为空") Integer page,
-                                                  @NotNull(message = "页面大小不能为空") Integer pageSize) {
-        return ResUtil.success(manageUserService.getUserList(page, pageSize));
+                                                  @NotNull(message = "页面大小不能为空") Integer pageSize,
+                                                  String username) {
+        return ResUtil.success(manageUserService.getUserList(page, pageSize, username));
     }
 
 

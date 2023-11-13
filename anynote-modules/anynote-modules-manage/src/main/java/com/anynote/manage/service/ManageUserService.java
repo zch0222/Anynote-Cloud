@@ -15,7 +15,7 @@ public interface ManageUserService {
      * @param pageSize
      * @return
      */
-    public PageBean<SysUser> getUserList(Integer page, Integer pageSize);
+    public PageBean<SysUser> getUserList(Integer page, Integer pageSize, String username);
 
     /**
      * 根据用户id获取用户信息
