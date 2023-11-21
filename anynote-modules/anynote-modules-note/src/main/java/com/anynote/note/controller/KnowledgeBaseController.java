@@ -9,9 +9,12 @@ import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
 import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
+import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
 import com.anynote.note.model.dto.KnowledgeBaseCreateDTO;
 import com.anynote.note.model.dto.KnowledgeBaseUpdateDTO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
+import com.anynote.note.model.vo.UploadKnowledgeBaeCoverVO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +61,14 @@ public class KnowledgeBaseController {
                         .status(status)
                         .organizationId(organizationId)
                 .build()));
+    }
+
+    @PostMapping("images")
+    public ResData<UploadKnowledgeBaeCoverVO> uploadKnowledgeBaseCover()
+
+    @PostMapping
+    public ResData<CreateKnowledgeBaseVO> createKnowledgeBase(@Validated @RequestBody CreateKnowledgeBaeDTO createKnowledgeBaeDTO) {
+        return ResUtil.success(knowledgeBaseService.createKnowledgeBase(createKnowledgeBaeDTO));
     }
 
     @GetMapping

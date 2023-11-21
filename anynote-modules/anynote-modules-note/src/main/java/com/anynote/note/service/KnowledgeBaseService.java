@@ -3,8 +3,10 @@ package com.anynote.note.service;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
 import com.anynote.note.model.bo.*;
+import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
+import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,6 +23,13 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
     public NoteKnowledgeBaseDTO getKnowledgeBaseById(KnowledgeBaseQueryParam queryParam);
 
     public PageBean<NoteKnowledgeBaseDTO> getUsersOrganizationKnowledgeBase(Integer page, Integer pageSize);
+
+    /**
+     * 创建知识库
+     * @param createKnowledgeBaeDTO 创建知识库传输类
+     * @return
+     */
+    public CreateKnowledgeBaseVO createKnowledgeBase(CreateKnowledgeBaeDTO createKnowledgeBaeDTO);
 
     /**
      * 获取用户知识库

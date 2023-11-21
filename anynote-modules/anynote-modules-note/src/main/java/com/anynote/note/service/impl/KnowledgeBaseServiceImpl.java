@@ -16,6 +16,8 @@ import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.note.api.model.po.UserKnowledgeBase;
 import com.anynote.note.mapper.UserKnowledgeBaseMapper;
 import com.anynote.note.model.bo.*;
+import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
+import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
 import com.anynote.note.validate.annotation.PageValid;
 import com.anynote.system.api.RemoteUserService;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
@@ -35,9 +37,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.models.auth.In;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -130,6 +134,37 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
                 .rows(noteKnowledgeBaseDTOList)
                 .total(pageInfo.getTotal())
                 .pages(pageInfo.getPages())
+                .build();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public CreateKnowledgeBaseVO createKnowledgeBase(CreateKnowledgeBaeDTO createKnowledgeBaeDTO) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        Date date = new Date();
+        NoteKnowledgeBase noteKnowledgeBase = NoteKnowledgeBase.builder()
+                .name(createKnowledgeBaeDTO.getName())
+                .cover(createKnowledgeBaeDTO.getCover())
+                .type(createKnowledgeBaeDTO.getType())
+                .detail(createKnowledgeBaeDTO.getDetail())
+                .status(0)
+                .deleted(0)
+                .build();
+        noteKnowledgeBase.setCreateBy(loginUser.getSysUser().getId());
+        noteKnowledgeBase.setCreateTime(date);
+        noteKnowledgeBase.setUpdateBy(loginUser.getSysUser().getId());
+        noteKnowledgeBase.setUpdateTime(date);
+        int count = this.baseMapper.insert(noteKnowledgeBase);
+        if (count != 1) {
+            throw new BusinessException("创建失败");
+        }
+        userKnowledgeBaseMapper.insert(UserKnowledgeBase.builder()
+                        .knowledgeBaseId(noteKnowledgeBase.getId())
+                        .userId(loginUser.getSysUser().getId())
+                        .permissions(1)
+                .build());
+        return CreateKnowledgeBaseVO.builder()
+                .id(noteKnowledgeBase.getId())
                 .build();
     }
 
