@@ -1,2 +1,4 @@
 com.anynote.core.config.AsyncThreadPoolConfig
 com.anynote.core.validation.aspect.UploadAspect
+com.anynote.core.validation.aspect.UrlAspect
+com.anynote.core.properties.ExternalResourcesProperties

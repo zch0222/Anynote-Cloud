@@ -13,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,17 +51,19 @@ public class UploadAspect {
     private void validate(MultipartFile file, Upload upload, List<String> allowExtensions) {
         int filenameLength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (filenameLength > UploadAspect.DEFAULT_FILE_NAME_LENGTH) {
-            throw new BusinessException(StringUtils.format("文件名称长度不能超过%d个字符", UploadAspect.DEFAULT_FILE_NAME_LENGTH), ResCode.USER_UPLOAD_FILE_NAME_LENGTH_LIMIT_EXCEEDED);
+            throw new BusinessException(String.format("文件名称长度不能超过%d个字符", UploadAspect.DEFAULT_FILE_NAME_LENGTH), ResCode.USER_UPLOAD_FILE_NAME_LENGTH_LIMIT_EXCEEDED);
         }
         long size = file.getSize();
-        if (size > upload.max() * 1024 * 1024) {
-            throw new BusinessException(StringUtils.format("文件大小不能超过%dMB", upload.max()), ResCode.USER_UPLOAD_SIZE_LIMIT_EXCEEDED);
+        if (size > (long) upload.max() * 1024 * 1024) {
+            throw new BusinessException(String.format("文件大小不能超过%dMB", upload.max()), ResCode.USER_UPLOAD_SIZE_LIMIT_EXCEEDED);
         }
         String extension = FileTypeUtils.getExtension(file);
         if (!allowExtensions.contains(extension)) {
-            throw new BusinessException(StringUtils.format("文件类型不支持，支持的文件类型为: %s", String.join(",", allowExtensions)),
+            System.out.println(String.join(",", allowExtensions));
+            throw new BusinessException(String.format("文件类型不支持，支持的文件类型为: %s", String.join(",", allowExtensions)),
                     ResCode.USER_UPLOAD_TYPE_NOT_MATCH);
         }
     }
+
 
 }

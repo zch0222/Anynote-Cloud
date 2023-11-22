@@ -74,25 +74,25 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     @Autowired
     private RemoteFileService remoteFileService;
 
-    @Override
-    public Long createKnowledgeBase(KnowledgeBaseCreateParam createParam) {
-        LoginUser loginUser = tokenUtil.getLoginUser();
-        Date date = new Date();
-        NoteKnowledgeBase noteKnowledgeBase = NoteKnowledgeBase.builder()
-                .id(createParam.getId())
-                .name(createParam.getName())
-                .cover(createParam.getCover())
-                .type(createParam.getType())
-                .status(0)
-                .deleted(0)
-                .build();
-        noteKnowledgeBase.setCreateBy(loginUser.getSysUser().getId());
-        noteKnowledgeBase.setCreateTime(date);
-        noteKnowledgeBase.setUpdateBy(loginUser.getSysUser().getId());
-        noteKnowledgeBase.setCreateTime(date);
-        this.baseMapper.insert(noteKnowledgeBase);
-        return noteKnowledgeBase.getId();
-    }
+//    @Override
+//    public Long createKnowledgeBase(KnowledgeBaseCreateParam createParam) {
+//        LoginUser loginUser = tokenUtil.getLoginUser();
+//        Date date = new Date();
+//        NoteKnowledgeBase noteKnowledgeBase = NoteKnowledgeBase.builder()
+//                .id(createParam.getId())
+//                .name(createParam.getName())
+//                .cover(createParam.getCover())
+//                .type(createParam.getType())
+//                .status(0)
+//                .deleted(0)
+//                .build();
+//        noteKnowledgeBase.setCreateBy(loginUser.getSysUser().getId());
+//        noteKnowledgeBase.setCreateTime(date);
+//        noteKnowledgeBase.setUpdateBy(loginUser.getSysUser().getId());
+//        noteKnowledgeBase.setCreateTime(date);
+//        this.baseMapper.insert(noteKnowledgeBase);
+//        return noteKnowledgeBase.getId();
+//    }
 
     @Override
     public List<Long> getUsersKnowledgeBaseIds(Long userId) {

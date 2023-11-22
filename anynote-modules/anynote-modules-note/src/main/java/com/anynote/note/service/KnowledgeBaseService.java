@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
 
-    public Long createKnowledgeBase(KnowledgeBaseCreateParam createParam);
+ //   public Long createKnowledgeBase(KnowledgeBaseCreateParam createParam);
 
     public NoteKnowledgeBaseDTO getKnowledgeBaseById(KnowledgeBaseQueryParam queryParam);
 

@@ -4,20 +4,18 @@ import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.validation.annotation.Upload;
+import com.anynote.core.validation.annotation.Url;
 import com.anynote.core.validation.enums.FileType;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.bo.FileDTO;
-import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
 import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
-import com.anynote.note.model.dto.KnowledgeBaseCreateDTO;
 import com.anynote.note.model.dto.KnowledgeBaseUpdateDTO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
-import com.anynote.note.model.vo.UploadKnowledgeBaeCoverVO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +66,12 @@ public class KnowledgeBaseController {
     }
 
     @Upload(value = FileType.IMAGE, max = 10)
-    @PostMapping("images")
+    @PostMapping("covers")
     public ResData<FileDTO> uploadKnowledgeBaseCover(@NotNull(message = "图片不能为空") @RequestParam("image") MultipartFile image) {
         return ResUtil.success(knowledgeBaseService.uploadKnowledgeBaseCover(image));
     }
 
+    @Url(value = "cover", param = "createKnowledgeBaeDTO")
     @PostMapping
     public ResData<CreateKnowledgeBaseVO> createKnowledgeBase(@Validated @RequestBody CreateKnowledgeBaeDTO createKnowledgeBaeDTO) {
         return ResUtil.success(knowledgeBaseService.createKnowledgeBase(createKnowledgeBaeDTO));
@@ -95,12 +94,12 @@ public class KnowledgeBaseController {
         return ResUtil.success(knowledgeBaseService.getKnowledgeBaseUsers(queryParam));
     }
 
-    @PostMapping
-    public ResData<Long> createDataBase(@Validated @RequestBody KnowledgeBaseCreateDTO knowledgeBaseCreateDTO) {
-        KnowledgeBaseCreateParam knowledgeBaseCreateParam =
-                new KnowledgeBaseCreateParam(knowledgeBaseCreateDTO);
-        return ResUtil.success(knowledgeBaseService.createKnowledgeBase(knowledgeBaseCreateParam));
-    }
+//    @PostMapping
+//    public ResData<Long> createDataBase(@Validated @RequestBody KnowledgeBaseCreateDTO knowledgeBaseCreateDTO) {
+//        KnowledgeBaseCreateParam knowledgeBaseCreateParam =
+//                new KnowledgeBaseCreateParam(knowledgeBaseCreateDTO);
+//        return ResUtil.success(knowledgeBaseService.createKnowledgeBase(knowledgeBaseCreateParam));
+//    }
 
     @DataScope(userAlias = "sys_user",
             organizationAlias = "sys_organization")
@@ -112,6 +111,7 @@ public class KnowledgeBaseController {
         return ResData.success(knowledgeBaseService.getKnowledgeBaseById(queryParam));
     }
 
+    @Url(value = "cover", param = "knowledgeBaseUpdateDTO")
     @PutMapping("{id}")
     public ResData<String> updateKnowledgeBase(
             @PathVariable("id") Long id,

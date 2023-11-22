@@ -24,6 +24,10 @@ public enum ResCode {
     INVALID_USER_INPUT("A0402", "无效的用户输入", "无效的用户输入"),
     INVALID_USER_INPUT_NOT_FOUND("A0404", "用户请求资源未找到", "用户请求资源未找到"),
     REQUIRED_PARAMETERS_NULL("A0410", "请求必填参数为空", "请求必填参数为空"),
+
+    USER_RESOURCE_EXCEPTION("A0600", "用户资源异常", "用户资源异常"),
+    RESOURCE_DOMAINS_NOT_ALLOWED("A0606", "资源域名非法", "资源域名非法"),
+
     USER_UPLOAD_ERROR("A0700", "用户上传文件异常", "用户上传文件异常"),
     USER_UPLOAD_TYPE_NOT_MATCH("A0701", "用户上传文件类型不匹配", "上传文件类型不匹配"),
     USER_UPLOAD_SIZE_LIMIT_EXCEEDED("A0702", "用户上传文件太大", "上传文件太大"),
@@ -31,7 +35,7 @@ public enum ResCode {
 
 
 
-    BUSINESS_ERROR("B0001", "系统执行出错 ", "系统执行出错"),
+    BUSINESS_ERROR("B0001", "系统执行出错 ", "系统执行出错, 请联系管理员"),
     INNER_SERVICE_ERROR("B0400", "系统内部调用失败", "系统内部调用失败"),
     INNER_SYSTEM_SERVICE_ERROR("B0401", "系统模块内部调用失败", "系统模块内部调用失败"),
     INNER_FILE_SERVICE_ERROR("B0402", "文件模块内部调用失败", "文件模块内部调用失败"),
