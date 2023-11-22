@@ -1,1 +1,2 @@
 com.anynote.core.config.AsyncThreadPoolConfig
+com.anynote.core.validation.aspect.UploadAspect

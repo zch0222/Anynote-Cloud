@@ -1,14 +1,17 @@
 package com.anynote.note.service;
 
 import com.anynote.core.web.model.bo.PageBean;
+import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
+import com.anynote.note.model.vo.UploadKnowledgeBaeCoverVO;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,6 +26,13 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
     public NoteKnowledgeBaseDTO getKnowledgeBaseById(KnowledgeBaseQueryParam queryParam);
 
     public PageBean<NoteKnowledgeBaseDTO> getUsersOrganizationKnowledgeBase(Integer page, Integer pageSize);
+
+    /**
+     * 上传知识库封面
+     * @param image 封面
+     * @return
+     */
+    public FileDTO uploadKnowledgeBaseCover(MultipartFile image);
 
     /**
      * 创建知识库

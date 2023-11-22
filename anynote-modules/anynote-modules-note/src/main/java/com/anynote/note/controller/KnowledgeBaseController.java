@@ -3,8 +3,11 @@ package com.anynote.note.controller;
 import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
+import com.anynote.core.validation.annotation.Upload;
+import com.anynote.core.validation.enums.FileType;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
+import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.note.model.bo.KnowledgeBaseCreateParam;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
@@ -20,6 +23,7 @@ import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
@@ -63,8 +67,11 @@ public class KnowledgeBaseController {
                 .build()));
     }
 
+    @Upload(value = FileType.IMAGE, max = 10)
     @PostMapping("images")
-    public ResData<UploadKnowledgeBaeCoverVO> uploadKnowledgeBaseCover()
+    public ResData<FileDTO> uploadKnowledgeBaseCover(@NotNull(message = "图片不能为空") @RequestParam("image") MultipartFile image) {
+        return ResUtil.success(knowledgeBaseService.uploadKnowledgeBaseCover(image));
+    }
 
     @PostMapping
     public ResData<CreateKnowledgeBaseVO> createKnowledgeBase(@Validated @RequestBody CreateKnowledgeBaeDTO createKnowledgeBaeDTO) {

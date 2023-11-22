@@ -7,6 +7,7 @@ import com.anynote.core.constant.FileConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.MultipartFileUtil;
+import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
@@ -18,6 +19,7 @@ import com.anynote.note.mapper.UserKnowledgeBaseMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
+import com.anynote.note.model.vo.UploadKnowledgeBaeCoverVO;
 import com.anynote.note.validate.annotation.PageValid;
 import com.anynote.system.api.RemoteUserService;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
@@ -135,6 +137,12 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
                 .total(pageInfo.getTotal())
                 .pages(pageInfo.getPages())
                 .build();
+    }
+
+    @Override
+    public FileDTO uploadKnowledgeBaseCover(MultipartFile image) {
+        ResData<FileDTO> fileDTOResData = remoteFileService.uploadFile(image, FileConstants.KNOWLEDGE_BASE_COVER);
+        return RemoteResDataUtil.getResData(fileDTOResData, "封面上传失败");
     }
 
     @Transactional(rollbackFor = Exception.class)

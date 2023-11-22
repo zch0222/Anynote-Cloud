@@ -25,7 +25,9 @@ public enum ResCode {
     INVALID_USER_INPUT_NOT_FOUND("A0404", "用户请求资源未找到", "用户请求资源未找到"),
     REQUIRED_PARAMETERS_NULL("A0410", "请求必填参数为空", "请求必填参数为空"),
     USER_UPLOAD_ERROR("A0700", "用户上传文件异常", "用户上传文件异常"),
-
+    USER_UPLOAD_TYPE_NOT_MATCH("A0701", "用户上传文件类型不匹配", "上传文件类型不匹配"),
+    USER_UPLOAD_SIZE_LIMIT_EXCEEDED("A0702", "用户上传文件太大", "上传文件太大"),
+    USER_UPLOAD_FILE_NAME_LENGTH_LIMIT_EXCEEDED("A0703", "文件名长度超过限制", "文件名长度超过限制"),
 
 
 

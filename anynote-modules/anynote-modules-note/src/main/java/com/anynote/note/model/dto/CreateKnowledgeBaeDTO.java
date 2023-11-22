@@ -22,8 +22,8 @@ public class CreateKnowledgeBaeDTO {
     /**
      * 知识库封面id
      */
-    @NotNull(message = "知识库封面id不能为空")
-    private Long coverId;
+    @NotNull(message = "知识库封面不能为空")
+    private String cover;
 
     /**
      * 类型 (0.普通知识库 1.课程知识库)
