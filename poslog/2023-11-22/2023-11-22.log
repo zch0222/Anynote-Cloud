@@ -1715,3 +1715,83 @@ com.anynote.core.exception.BusinessException: null
 2023-11-22 19:34:14.405 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 9 ms
 2023-11-22 19:34:15.548 [nacos-grpc-client-executor-20] INFO  com.alibaba.nacos.common.remote.client - [de1b7db0-a69f-4fb7-9841-1b516b563233] Receive server push request, request = NotifySubscriberRequest, requestId = 44
 2023-11-22 19:34:15.550 [nacos-grpc-client-executor-20] INFO  com.alibaba.nacos.common.remote.client - [de1b7db0-a69f-4fb7-9841-1b516b563233] Ack server push request, request = NotifySubscriberRequest, requestId = 44
+2023-11-22 20:45:57.985 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:57.982 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.020 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.021 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.050 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.069 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.069 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.096 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.105 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:45:58.124 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.915 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.926 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.940 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.949 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.958 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.973 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.984 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:02.991 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:03.001 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:03.012 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.921 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.930 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.935 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.948 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.958 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.972 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:07.985 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:08.001 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:08.009 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.911 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.920 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.927 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.931 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.942 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.972 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.980 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.989 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:12.993 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.001 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.665 [Thread-4] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-11-22 20:46:13.665 [Thread-9] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-11-22 20:46:13.668 [Thread-9] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-11-22 20:46:13.674 [Thread-4] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-11-22 20:46:13.744 [Thread-9] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-11-22 20:46:13.743 [Thread-15] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-11-22 20:46:13.806 [Thread-15] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-11-22 20:46:13.834 [Thread-9] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-11-22 20:46:13.917 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.918 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.920 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.927 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.929 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.935 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-11-22 20:46:13.947 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.948 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.949 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.950 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.955 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.956 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:13.975 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-11-22 20:46:15.086 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-11-22 20:46:15.087 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-11-22 20:46:15.112 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2023-11-22 20:46:15.120 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2023-11-22 20:46:15.274 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2023-11-22 20:46:15.288 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2023-11-22 20:46:15.439 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2023-11-22 20:46:15.440 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@34172f89[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2023-11-22 20:46:15.440 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1700652830070_127.0.0.1_65051
+2023-11-22 20:46:15.445 [nacos-grpc-client-executor-718] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - [1700652830070_127.0.0.1_65051]Ignore complete event,isRunning:false,isAbandon=false
+2023-11-22 20:46:15.455 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@5fc4aa98[Running, pool size = 9, active threads = 0, queued tasks = 0, completed tasks = 719]
+2023-11-22 20:46:15.557 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:15.558 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[] result: true
+2023-11-22 20:46:15.562 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-11-22 20:46:15.570 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2023-11-22 20:46:15.599 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2023-11-22 20:46:15.601 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@5b7736df[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2023-11-22 20:46:15.601 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1700643697561_127.0.0.1_54069
+2023-11-22 20:46:15.621 [nacos-grpc-client-executor-3091] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - [1700643697561_127.0.0.1_54069]Ignore complete event,isRunning:false,isAbandon=false
+2023-11-22 20:46:15.627 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@18846b75[Running, pool size = 7, active threads = 0, queued tasks = 0, completed tasks = 3092]
