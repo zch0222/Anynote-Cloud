@@ -9,12 +9,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.Map;
+
 /**
  * 文档
  * @author 称霸幼儿园
  */
 @Data
-@Builder
 @TableName("n_doc")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,19 +28,14 @@ public class Doc extends BaseEntity {
     private Long id;
 
     /**
-     * 原始文件名
+     * 文件id
      */
-    private String originalFileName;
+    private Long fileId;
 
     /**
-     * 文件名
+     * 文档名称
      */
-    private String fileName;
-
-    /**
-     * 文件URL地址
-     */
-    private String url;
+    private String name;
 
     /**
      * 知识库id
@@ -46,7 +43,7 @@ public class Doc extends BaseEntity {
     private Long knowledgeBaseId;
 
     /**
-     * 文档类型 1. PDF
+     * 文档类型 0. PDF
      */
     private Integer type;
 
@@ -66,4 +63,21 @@ public class Doc extends BaseEntity {
     @TableLogic
     @TableField("is_delete")
     private Integer deleted;
+
+    @Builder
+    public Doc(Long id, Long fileId, String name, Long knowledgeBaseId, Integer type, Integer dataScope, String permissions, Integer deleted,
+               Long createBy, Date createTime, Long updateBy,
+               Date updateTime, String remark, Map<String, Object> params) {
+        super(createBy, createTime, updateBy, updateTime, remark, params);
+        this.id = id;
+        this.fileId = fileId;
+        this.name = name;
+        this.knowledgeBaseId = knowledgeBaseId;
+        this.type = type;
+        this.dataScope = dataScope;
+        this.permissions = permissions;
+        this.deleted = deleted;
+    }
+
+
 }

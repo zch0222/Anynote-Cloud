@@ -21,17 +21,18 @@ import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
+import com.anynote.file.api.enums.FileSources;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.po.FilePO;
 import com.anynote.note.api.model.bo.GenerateNoteEditLogMessage;
-import com.anynote.note.api.model.po.Note;
-import com.anynote.note.api.model.po.NoteHistory;
-import com.anynote.note.api.model.po.NoteImage;
-import com.anynote.note.api.model.po.NoteText;
+import com.anynote.note.api.model.po.*;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
 import com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect;
 import com.anynote.note.enums.KnowledgeBasePermissions;
+import com.anynote.note.enums.NoteFileType;
 import com.anynote.note.enums.NotePermissions;
+import com.anynote.note.mapper.NoteFileMapper;
 import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.mapper.NoteTextMapper;
 import com.anynote.note.model.bo.*;
@@ -57,6 +58,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 笔记服务实现
@@ -80,7 +82,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     @Autowired
     private NoteTextMapper noteTextMapper;
 
-    @Autowired
+    @Resource
     private RemoteFileService remoteFileService;
 
     @Autowired
@@ -339,8 +341,10 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 //                .file(uploadParam.getImage())
 //                .path(StringUtils.format("note/{}", uploadParam.getId()))
 //                .build();
-        ResData<FileDTO> fileDTOResData = remoteFileService.uploadFile(uploadParam.getImage(),
-                StringUtils.format("note/{}", uploadParam.getId()));
+        ResData<FilePO> fileDTOResData = remoteFileService.uploadFile(uploadParam.getImage(),
+                StringUtils.format("note/{}", uploadParam.getId()), loginUser.getSysUser().getId(),
+                StringUtils.isNotNull(uploadParam.getUploadId()) ? uploadParam.getUploadId() : UUID.randomUUID().toString().replace("-", ""),
+                FileSources.NOTE_IMAGE.getValue());
         if (StringUtils.isNull(fileDTOResData) || StringUtils.isNull(fileDTOResData.getData())) {
             throw new BusinessException("图片保存失败", ResCode.INNER_FILE_SERVICE_ERROR);
         }
@@ -348,18 +352,27 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         if (!ResData.SUCCESS.equals(fileDTOResData.getCode())) {
             throw new BusinessException("图片保存失败", ResCode.INNER_FILE_SERVICE_ERROR);
         }
-        FileDTO fileDTO = fileDTOResData.getData();
+        FilePO filePO = fileDTOResData.getData();
 
-        NoteImage noteImage = NoteImage.builder()
-                .originalFileName(fileDTO.getOriginalFileName())
-                .fileName(fileDTO.getFileName())
-                .url(fileDTO.getUrl())
-                .userId(loginUser.getSysUser().getId())
-                .build();
-        noteImageService.getBaseMapper().insert(noteImage);
+//        NoteImage noteImage = NoteImage.builder()
+//                .originalFileName(filePO.getOriginalFileName())
+//                .fileName(filePO.getFileName())
+//                .url(filePO.getUrl())
+//                .userId(loginUser.getSysUser().getId())
+//                .build();
+//        noteImageService.getBaseMapper().insert(noteImage);
+
+        // 异步保存笔记文件日志
+        String destination = rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.SAVE_NOTE_FILE.name();
+        rocketMQTemplate.asyncSend(destination, NoteFile.builder()
+                        .fileId(filePO.getId())
+                        .noteId(uploadParam.getNoteId())
+                        .type(NoteFileType.NOTE_IMAGE.getValue())
+                .build(), RocketmqSendCallbackBuilder.commonCallback());
+
         return MarkdownImage.builder()
-                .image(MarkdownUtil.buildMarkdownImage(noteImage.getOriginalFileName(),
-                        noteImage.getUrl()))
+                .image(MarkdownUtil.buildMarkdownImage(filePO.getOriginalFileName(),
+                        filePO.getUrl()))
                 .build();
     }
 

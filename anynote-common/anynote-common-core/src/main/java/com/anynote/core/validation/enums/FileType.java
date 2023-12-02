@@ -9,6 +9,7 @@ public enum FileType {
     IMAGE,
     MEDIA,
     VIDEO,
-    DEFAULT
+    DEFAULT,
+    PDF
     ;
 }

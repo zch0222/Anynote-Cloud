@@ -1,0 +1,495 @@
+2023-12-02 18:34:07.065 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-02 18:34:09.094 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of c0fab932-5199-4178-a74f-b092de36bef9_config-0
+2023-12-02 18:34:09.153 [main] INFO  org.reflections.Reflections - Reflections took 40 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-12-02 18:34:09.187 [main] INFO  org.reflections.Reflections - Reflections took 18 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-12-02 18:34:09.201 [main] INFO  org.reflections.Reflections - Reflections took 12 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-12-02 18:34:09.397 [main] INFO  org.reflections.Reflections - Reflections took 193 ms to scan 162 urls, producing 0 keys and 0 values 
+2023-12-02 18:34:09.412 [main] INFO  org.reflections.Reflections - Reflections took 14 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-12-02 18:34:09.428 [main] INFO  org.reflections.Reflections - Reflections took 13 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-12-02 18:34:09.445 [main] INFO  org.reflections.Reflections - Reflections took 14 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-12-02 18:34:09.594 [main] INFO  org.reflections.Reflections - Reflections took 147 ms to scan 162 urls, producing 0 keys and 0 values 
+2023-12-02 18:34:09.595 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-12-02 18:34:09.596 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/749981943
+2023-12-02 18:34:09.596 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$335/1313960293
+2023-12-02 18:34:09.598 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-12-02 18:34:09.599 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-12-02 18:34:09.608 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:34:13.500 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1701513253277_127.0.0.1_1362
+2023-12-02 18:34:13.500 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Notify connected event to listeners.
+2023-12-02 18:34:13.501 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:34:13.501 [main] INFO  com.alibaba.nacos.common.remote.client - [c0fab932-5199-4178-a74f-b092de36bef9_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/1164699452
+2023-12-02 18:34:13.565 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-manage] & group[DEFAULT_GROUP]
+2023-12-02 18:34:13.571 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-manage.yml] & group[DEFAULT_GROUP]
+2023-12-02 18:34:13.595 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-manage-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-manage.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-manage,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-12-02 18:34:13.605 [main] INFO  com.anynote.manage.AnyNoteManageApplication - The following 1 profile is active: "dev"
+2023-12-02 18:34:14.649 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-02 18:34:14.652 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-12-02 18:34:14.696 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26 ms. Found 0 Redis repository interfaces.
+2023-12-02 18:34:14.889 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=27d92657-5f25-3e2b-b002-907fd14ad806
+2023-12-02 18:34:15.433 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18092 (http)
+2023-12-02 18:34:15.446 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18092"]
+2023-12-02 18:34:15.447 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-02 18:34:15.447 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-12-02 18:34:15.708 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-02 18:34:15.709 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2068 ms
+2023-12-02 18:34:16.085 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-note' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:34:16.207 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:34:21.726 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-12-02 18:34:21.853 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 742a7da3-a13e-44c7-81c6-ece8d2bfa6b5
+2023-12-02 18:34:21.854 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] RpcClient init label, labels = {module=naming, source=sdk}
+2023-12-02 18:34:21.856 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-12-02 18:34:21.856 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-12-02 18:34:21.856 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-12-02 18:34:21.856 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:34:21.978 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Success to connect to server [localhost:8848] on start up, connectionId = 1701513261868_127.0.0.1_1577
+2023-12-02 18:34:21.978 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:34:21.978 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Notify connected event to listeners.
+2023-12-02 18:34:21.978 [main] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/1164699452
+2023-12-02 18:34:22.032 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18092"]
+2023-12-02 18:34:22.061 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18092 (http) with context path ''
+2023-12-02 18:34:22.082 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-manage 2.0.0.1:18092 register finished
+2023-12-02 18:34:22.586 [nacos-grpc-client-executor-6] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Receive server push request, request = NotifySubscriberRequest, requestId = 128
+2023-12-02 18:34:22.591 [nacos-grpc-client-executor-6] INFO  com.alibaba.nacos.common.remote.client - [742a7da3-a13e-44c7-81c6-ece8d2bfa6b5] Ack server push request, request = NotifySubscriberRequest, requestId = 128
+2023-12-02 18:34:23.547 [main] INFO  com.anynote.manage.AnyNoteManageApplication - Started AnyNoteManageApplication in 18.23 seconds (JVM running for 19.694)
+2023-12-02 18:34:23.552 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-manage, group=DEFAULT_GROUP
+2023-12-02 18:34:23.553 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-manage.yml, group=DEFAULT_GROUP
+2023-12-02 18:34:23.553 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-manage-dev.yml, group=DEFAULT_GROUP
+2023-12-02 18:34:42.048 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-02 18:34:43.518 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0
+2023-12-02 18:34:43.566 [main] INFO  org.reflections.Reflections - Reflections took 31 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-12-02 18:34:43.599 [main] INFO  org.reflections.Reflections - Reflections took 19 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-12-02 18:34:43.617 [main] INFO  org.reflections.Reflections - Reflections took 16 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-12-02 18:34:43.845 [main] INFO  org.reflections.Reflections - Reflections took 225 ms to scan 238 urls, producing 0 keys and 0 values 
+2023-12-02 18:34:43.860 [main] INFO  org.reflections.Reflections - Reflections took 13 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-12-02 18:34:43.874 [main] INFO  org.reflections.Reflections - Reflections took 11 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-12-02 18:34:43.887 [main] INFO  org.reflections.Reflections - Reflections took 11 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-12-02 18:34:44.076 [main] INFO  org.reflections.Reflections - Reflections took 186 ms to scan 238 urls, producing 0 keys and 0 values 
+2023-12-02 18:34:44.077 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-12-02 18:34:44.077 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1042891691
+2023-12-02 18:34:44.078 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$335/1893563925
+2023-12-02 18:34:44.078 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-12-02 18:34:44.078 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-12-02 18:34:44.087 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:34:47.215 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1701513286999_127.0.0.1_2470
+2023-12-02 18:34:47.215 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Notify connected event to listeners.
+2023-12-02 18:34:47.216 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:34:47.216 [main] INFO  com.alibaba.nacos.common.remote.client - [7fd6d8c6-d5b5-4a62-86e4-6c32277168c0_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/1832284192
+2023-12-02 18:34:47.281 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-12-02 18:34:47.286 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-12-02 18:34:47.298 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-12-02 18:34:47.307 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-12-02 18:34:48.975 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-02 18:34:48.979 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-12-02 18:34:49.033 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+2023-12-02 18:34:49.436 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=7bbec1ec-00b5-336d-bb3a-4bd9925a1193
+2023-12-02 18:34:50.178 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-12-02 18:34:50.193 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-12-02 18:34:50.194 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-02 18:34:50.195 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-12-02 18:34:50.456 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-02 18:34:50.457 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3117 ms
+2023-12-02 18:34:53.398 [Thread-10] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-12-02 18:34:53.398 [Thread-6] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-12-02 18:34:53.399 [Thread-10] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-12-02 18:34:53.399 [Thread-6] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-12-02 18:34:53.471 [Thread-13] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-12-02 18:34:53.471 [Thread-6] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-12-02 18:34:53.471 [Thread-13] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-12-02 18:34:53.471 [Thread-6] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-12-02 18:34:54.109 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2023-12-02 18:34:54.115 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2023-12-02 18:34:54.439 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2023-12-02 18:34:54.439 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@29852ada[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2023-12-02 18:34:54.439 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1701513261868_127.0.0.1_1577
+2023-12-02 18:34:54.441 [nacos-grpc-client-executor-17] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - [1701513261868_127.0.0.1_1577]Ignore complete event,isRunning:false,isAbandon=false
+2023-12-02 18:34:54.442 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@14be8531[Running, pool size = 6, active threads = 0, queued tasks = 0, completed tasks = 18]
+2023-12-02 18:34:56.461 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:34:56.697 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:34:57.868 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:34:57.895 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:34:59.067 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteFile ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:35:01.752 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-12-02 18:45:41.318 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-02 18:45:43.196 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of cf48077f-4789-4d47-845f-42a94f92bb98_config-0
+2023-12-02 18:45:43.244 [main] INFO  org.reflections.Reflections - Reflections took 35 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-12-02 18:45:43.269 [main] INFO  org.reflections.Reflections - Reflections took 13 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-12-02 18:45:43.285 [main] INFO  org.reflections.Reflections - Reflections took 14 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-12-02 18:45:43.428 [main] INFO  org.reflections.Reflections - Reflections took 141 ms to scan 162 urls, producing 0 keys and 0 values 
+2023-12-02 18:45:43.443 [main] INFO  org.reflections.Reflections - Reflections took 14 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-12-02 18:45:43.453 [main] INFO  org.reflections.Reflections - Reflections took 9 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-12-02 18:45:43.463 [main] INFO  org.reflections.Reflections - Reflections took 8 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-12-02 18:45:43.593 [main] INFO  org.reflections.Reflections - Reflections took 127 ms to scan 162 urls, producing 0 keys and 0 values 
+2023-12-02 18:45:43.594 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-12-02 18:45:43.595 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/749981943
+2023-12-02 18:45:43.595 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$335/1313960293
+2023-12-02 18:45:43.595 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-12-02 18:45:43.596 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-12-02 18:45:43.602 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:45:47.290 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1701513947045_127.0.0.1_7449
+2023-12-02 18:45:47.290 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Notify connected event to listeners.
+2023-12-02 18:45:47.290 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:45:47.292 [main] INFO  com.alibaba.nacos.common.remote.client - [cf48077f-4789-4d47-845f-42a94f92bb98_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/1164699452
+2023-12-02 18:45:47.353 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-manage] & group[DEFAULT_GROUP]
+2023-12-02 18:45:47.360 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-manage.yml] & group[DEFAULT_GROUP]
+2023-12-02 18:45:47.372 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-manage-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-manage.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-manage,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-12-02 18:45:47.379 [main] INFO  com.anynote.manage.AnyNoteManageApplication - The following 1 profile is active: "dev"
+2023-12-02 18:45:48.540 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-02 18:45:48.544 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-12-02 18:45:48.579 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2023-12-02 18:45:48.808 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=27d92657-5f25-3e2b-b002-907fd14ad806
+2023-12-02 18:45:49.391 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18092 (http)
+2023-12-02 18:45:49.406 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18092"]
+2023-12-02 18:45:49.406 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-02 18:45:49.406 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-12-02 18:45:49.610 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-02 18:45:49.610 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2200 ms
+2023-12-02 18:45:49.860 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-note' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:45:49.954 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:45:51.213 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-02 18:45:53.398 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0
+2023-12-02 18:45:53.447 [main] INFO  org.reflections.Reflections - Reflections took 30 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-12-02 18:45:53.480 [main] INFO  org.reflections.Reflections - Reflections took 22 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-12-02 18:45:53.492 [main] INFO  org.reflections.Reflections - Reflections took 10 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-12-02 18:45:53.754 [main] INFO  org.reflections.Reflections - Reflections took 259 ms to scan 238 urls, producing 0 keys and 0 values 
+2023-12-02 18:45:53.768 [main] INFO  org.reflections.Reflections - Reflections took 13 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-12-02 18:45:53.780 [main] INFO  org.reflections.Reflections - Reflections took 10 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-12-02 18:45:53.792 [main] INFO  org.reflections.Reflections - Reflections took 10 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-12-02 18:45:53.987 [main] INFO  org.reflections.Reflections - Reflections took 193 ms to scan 238 urls, producing 0 keys and 0 values 
+2023-12-02 18:45:53.988 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-12-02 18:45:53.990 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1042891691
+2023-12-02 18:45:53.990 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$335/1893563925
+2023-12-02 18:45:53.990 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-12-02 18:45:53.991 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-12-02 18:45:53.997 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:45:54.834 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-12-02 18:45:54.949 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of de547037-6478-4c0c-ae99-af26005f426e
+2023-12-02 18:45:54.949 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] RpcClient init label, labels = {module=naming, source=sdk}
+2023-12-02 18:45:54.950 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-12-02 18:45:54.951 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-12-02 18:45:54.951 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-12-02 18:45:54.951 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:45:55.067 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Success to connect to server [localhost:8848] on start up, connectionId = 1701513954957_127.0.0.1_7618
+2023-12-02 18:45:55.067 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Notify connected event to listeners.
+2023-12-02 18:45:55.067 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:45:55.068 [main] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/1164699452
+2023-12-02 18:45:55.123 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18092"]
+2023-12-02 18:45:55.138 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18092 (http) with context path ''
+2023-12-02 18:45:55.156 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-manage 2.0.0.1:18092 register finished
+2023-12-02 18:45:56.610 [main] INFO  com.anynote.manage.AnyNoteManageApplication - Started AnyNoteManageApplication in 17.016 seconds (JVM running for 18.458)
+2023-12-02 18:45:56.615 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-manage, group=DEFAULT_GROUP
+2023-12-02 18:45:56.615 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-manage.yml, group=DEFAULT_GROUP
+2023-12-02 18:45:56.616 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-manage-dev.yml, group=DEFAULT_GROUP
+2023-12-02 18:45:56.988 [nacos-grpc-client-executor-9] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Receive server push request, request = NotifySubscriberRequest, requestId = 1
+2023-12-02 18:45:56.991 [nacos-grpc-client-executor-9] INFO  com.alibaba.nacos.common.remote.client - [de547037-6478-4c0c-ae99-af26005f426e] Ack server push request, request = NotifySubscriberRequest, requestId = 1
+2023-12-02 18:45:58.011 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1701513957798_127.0.0.1_7705
+2023-12-02 18:45:58.014 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:45:58.014 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Notify connected event to listeners.
+2023-12-02 18:45:58.016 [main] INFO  com.alibaba.nacos.common.remote.client - [8765bb9b-8fe7-48b5-80f5-8253ccf814ab_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/807239968
+2023-12-02 18:45:58.202 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-12-02 18:45:58.209 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-12-02 18:45:58.221 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-12-02 18:45:58.229 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-12-02 18:45:59.510 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-02 18:45:59.513 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-12-02 18:45:59.568 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
+2023-12-02 18:45:59.914 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=7bbec1ec-00b5-336d-bb3a-4bd9925a1193
+2023-12-02 18:46:00.534 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-12-02 18:46:00.542 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-12-02 18:46:00.542 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-02 18:46:00.543 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-12-02 18:46:00.710 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-02 18:46:00.710 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2448 ms
+2023-12-02 18:46:06.820 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:46:07.032 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:46:08.438 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:46:08.466 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:46:09.803 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteFile ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:46:12.666 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-12-02 18:46:14.241 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-12-02 18:46:14.241 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteTaskMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-12-02 18:46:15.785 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-12-02 18:46:15.785 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-12-02 18:46:15.868 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b
+2023-12-02 18:46:15.868 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] RpcClient init label, labels = {module=naming, source=sdk}
+2023-12-02 18:46:15.869 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-12-02 18:46:15.869 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-12-02 18:46:15.869 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-12-02 18:46:15.869 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:46:15.994 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Success to connect to server [localhost:8848] on start up, connectionId = 1701513975887_127.0.0.1_7901
+2023-12-02 18:46:15.994 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:46:15.994 [main] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/807239968
+2023-12-02 18:46:15.994 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Notify connected event to listeners.
+2023-12-02 18:46:16.028 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18091"]
+2023-12-02 18:46:16.039 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18091 (http) with context path ''
+2023-12-02 18:46:16.048 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-note 2.0.0.1:18091 register finished
+2023-12-02 18:46:16.530 [nacos-grpc-client-executor-8] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Receive server push request, request = NotifySubscriberRequest, requestId = 9
+2023-12-02 18:46:16.536 [nacos-grpc-client-executor-8] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Ack server push request, request = NotifySubscriberRequest, requestId = 9
+2023-12-02 18:46:17.169 [main] INFO  com.anynote.note.AnyNoteNoteApplication - Started AnyNoteNoteApplication in 28.043 seconds (JVM running for 30.048)
+2023-12-02 18:46:17.174 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note-dev.yml, group=DEFAULT_GROUP
+2023-12-02 18:46:17.174 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note, group=DEFAULT_GROUP
+2023-12-02 18:46:17.175 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note.yml, group=DEFAULT_GROUP
+2023-12-02 18:49:38.574 [http-nio-18091-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-02 18:49:38.574 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-12-02 18:49:38.575 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-12-02 18:49:38.631 [http-nio-18091-exec-1] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - Request method 'POST' not supported
+org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:256)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:442)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:383)
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:125)
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:67)
+	at org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:498)
+	at org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1265)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1047)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+2023-12-02 18:50:07.988 [nacos-grpc-client-executor-66] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Receive server push request, request = NotifySubscriberRequest, requestId = 14
+2023-12-02 18:50:07.988 [nacos-grpc-client-executor-66] INFO  com.alibaba.nacos.common.remote.client - [b9626963-ee6a-49b7-bb0d-d42f5d3c3c4b] Ack server push request, request = NotifySubscriberRequest, requestId = 14
+2023-12-02 18:53:40.262 [http-nio-18091-exec-4] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - Required request parameter 'uploadId' for method parameter type String is not present
+org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'uploadId' for method parameter type String is not present
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValueInternal(RequestParamMethodArgumentResolver.java:218)
+	at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValue(RequestParamMethodArgumentResolver.java:193)
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:114)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:179)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:146)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)
+2023-12-02 18:54:24.145 [Thread-9] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2023-12-02 18:54:24.145 [Thread-4] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2023-12-02 18:54:24.145 [Thread-9] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2023-12-02 18:54:24.145 [Thread-4] WARN  com.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2023-12-02 18:54:24.156 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-12-02 18:54:24.159 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[2.0.0.1:10911] result: true
+2023-12-02 18:54:24.160 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-12-02 18:54:24.161 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[2.0.0.1:10911] result: true
+2023-12-02 18:54:24.806 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-12-02 18:54:24.807 [SpringApplicationShutdownHook] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - container destroyed, DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-12-02 18:54:24.812 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2023-12-02 18:54:24.817 [SpringApplicationShutdownHook] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2023-12-02 18:54:25.153 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown rpc client, set status to shutdown
+2023-12-02 18:54:25.153 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Shutdown client event executor java.util.concurrent.ScheduledThreadPoolExecutor@2e826365[Running, pool size = 2, active threads = 2, queued tasks = 0, completed tasks = 0]
+2023-12-02 18:54:25.153 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client - Close current connection 1701513975887_127.0.0.1_7901
+2023-12-02 18:54:25.154 [nacos-grpc-client-executor-122] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - [1701513975887_127.0.0.1_7901]Ignore complete event,isRunning:false,isAbandon=false
+2023-12-02 18:54:25.155 [SpringApplicationShutdownHook] INFO  com.alibaba.nacos.common.remote.client.grpc.GrpcClient - Shutdown grpc executor java.util.concurrent.ThreadPoolExecutor@7b6ac79d[Running, pool size = 5, active threads = 0, queued tasks = 0, completed tasks = 123]
+2023-12-02 18:54:25.291 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[127.0.0.1:9876] result: true
+2023-12-02 18:54:25.291 [NettyClientSelector_1] INFO  RocketmqRemoting - closeChannel: close the connection to remote address[2.0.0.1:10911] result: true
+2023-12-02 18:54:25.292 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-0} closing ...
+2023-12-02 18:54:33.952 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+2023-12-02 18:54:35.022 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0
+2023-12-02 18:54:35.062 [main] INFO  org.reflections.Reflections - Reflections took 27 ms to scan 1 urls, producing 3 keys and 6 values 
+2023-12-02 18:54:35.086 [main] INFO  org.reflections.Reflections - Reflections took 14 ms to scan 1 urls, producing 4 keys and 9 values 
+2023-12-02 18:54:35.098 [main] INFO  org.reflections.Reflections - Reflections took 8 ms to scan 1 urls, producing 3 keys and 10 values 
+2023-12-02 18:54:35.247 [main] INFO  org.reflections.Reflections - Reflections took 147 ms to scan 238 urls, producing 0 keys and 0 values 
+2023-12-02 18:54:35.255 [main] INFO  org.reflections.Reflections - Reflections took 7 ms to scan 1 urls, producing 1 keys and 5 values 
+2023-12-02 18:54:35.266 [main] INFO  org.reflections.Reflections - Reflections took 9 ms to scan 1 urls, producing 1 keys and 7 values 
+2023-12-02 18:54:35.276 [main] INFO  org.reflections.Reflections - Reflections took 7 ms to scan 1 urls, producing 2 keys and 8 values 
+2023-12-02 18:54:35.427 [main] INFO  org.reflections.Reflections - Reflections took 150 ms to scan 238 urls, producing 0 keys and 0 values 
+2023-12-02 18:54:35.428 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] RpcClient init label, labels = {module=config, Vipserver-Tag=null, source=sdk, Amory-Tag=null, Location-Tag=null, taskId=0, AppName=unknown}
+2023-12-02 18:54:35.429 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$334/1251967187
+2023-12-02 18:54:35.429 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Register server push request handler:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$$Lambda$335/901689694
+2023-12-02 18:54:35.429 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Registry connection listener to current client:com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$1
+2023-12-02 18:54:35.429 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] RpcClient init, ServerListFactory = com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$2
+2023-12-02 18:54:35.435 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:54:37.707 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Success to connect to server [localhost:8848] on start up, connectionId = 1701514477519_127.0.0.1_8997
+2023-12-02 18:54:37.708 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Notify connected event to listeners.
+2023-12-02 18:54:37.708 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:54:37.708 [main] INFO  com.alibaba.nacos.common.remote.client - [78e63ad7-7b8f-42a3-9224-8abecd9cd3ca_config-0] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/918307166
+2023-12-02 18:54:37.749 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note] & group[DEFAULT_GROUP]
+2023-12-02 18:54:37.752 [main] WARN  com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[anynote-note.yml] & group[DEFAULT_GROUP]
+2023-12-02 18:54:37.758 [main] INFO  org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration - Located property source: [BootstrapPropertySource {name='bootstrapProperties-anynote-note-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-anynote-note,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-application-dev.yml,DEFAULT_GROUP'}]
+2023-12-02 18:54:37.763 [main] INFO  com.anynote.note.AnyNoteNoteApplication - The following 1 profile is active: "dev"
+2023-12-02 18:54:38.560 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-12-02 18:54:38.563 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-12-02 18:54:38.595 [main] INFO  org.springframework.data.repository.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2023-12-02 18:54:38.849 [main] INFO  org.springframework.cloud.context.scope.GenericScope - BeanFactory id=7bbec1ec-00b5-336d-bb3a-4bd9925a1193
+2023-12-02 18:54:39.302 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 18091 (http)
+2023-12-02 18:54:39.310 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-18091"]
+2023-12-02 18:54:39.310 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-02 18:54:39.310 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-12-02 18:54:39.466 [main] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-02 18:54:39.466 [main] INFO  org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1687 ms
+2023-12-02 18:54:44.331 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserNoteTask ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:54:44.520 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-file' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:54:45.803 [main] INFO  org.springframework.cloud.openfeign.FeignClientFactoryBean - For 'anynote-system' URL not provided. Will try picking an instance via load-balancing.
+2023-12-02 18:54:45.827 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.UserKnowledgeBase ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:54:47.023 [main] WARN  com.baomidou.mybatisplus.core.injector.DefaultSqlInjector - class com.anynote.note.api.model.po.NoteFile ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2023-12-02 18:54:49.829 [main] WARN  org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2023-12-02 18:54:51.382 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_task_group', namespace='', nameServer='localhost:9876', topic='note_task_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-12-02 18:54:51.382 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteTaskMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2023-12-02 18:54:52.898 [main] INFO  org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer - running container: DefaultRocketMQListenerContainer{consumerGroup='note_group', namespace='', nameServer='localhost:9876', topic='note_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false}
+2023-12-02 18:54:52.898 [main] INFO  org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration - Register the listener to container, listenerBeanName:noteMessageListener, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2023-12-02 18:54:52.986 [main] INFO  com.alibaba.nacos.common.remote.client - [RpcClientFactory] create a new rpc client of 307a06a2-1f85-495d-a8c2-55496676a02e
+2023-12-02 18:54:52.986 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] RpcClient init label, labels = {module=naming, source=sdk}
+2023-12-02 18:54:52.987 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] RpcClient init, ServerListFactory = com.alibaba.nacos.client.naming.core.ServerListManager
+2023-12-02 18:54:52.988 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Registry connection listener to current client:com.alibaba.nacos.client.naming.remote.gprc.redo.NamingGrpcRedoService
+2023-12-02 18:54:52.988 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Register server push request handler:com.alibaba.nacos.client.naming.remote.gprc.NamingPushRequestHandler
+2023-12-02 18:54:52.988 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Try to connect to server on start up, server: {serverIp = 'localhost', server main port = 8848}
+2023-12-02 18:54:53.099 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Success to connect to server [localhost:8848] on start up, connectionId = 1701514492994_127.0.0.1_9099
+2023-12-02 18:54:53.099 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$ConnectResetRequestHandler
+2023-12-02 18:54:53.099 [com.alibaba.nacos.client.remote.worker] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Notify connected event to listeners.
+2023-12-02 18:54:53.099 [main] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Register server push request handler:com.alibaba.nacos.common.remote.client.RpcClient$$Lambda$343/918307166
+2023-12-02 18:54:53.140 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-18091"]
+2023-12-02 18:54:53.154 [main] INFO  org.springframework.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 18091 (http) with context path ''
+2023-12-02 18:54:53.163 [main] INFO  com.alibaba.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP anynote-note 2.0.0.1:18091 register finished
+2023-12-02 18:54:53.639 [nacos-grpc-client-executor-6] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Receive server push request, request = NotifySubscriberRequest, requestId = 17
+2023-12-02 18:54:53.644 [nacos-grpc-client-executor-6] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Ack server push request, request = NotifySubscriberRequest, requestId = 17
+2023-12-02 18:54:54.286 [main] INFO  com.anynote.note.AnyNoteNoteApplication - Started AnyNoteNoteApplication in 21.618 seconds (JVM running for 22.961)
+2023-12-02 18:54:54.290 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note-dev.yml, group=DEFAULT_GROUP
+2023-12-02 18:54:54.291 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note, group=DEFAULT_GROUP
+2023-12-02 18:54:54.291 [main] INFO  com.alibaba.cloud.nacos.refresh.NacosContextRefresher - [Nacos Config] Listening config: dataId=anynote-note.yml, group=DEFAULT_GROUP
+2023-12-02 18:55:00.927 [http-nio-18091-exec-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-02 18:55:00.927 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-12-02 18:55:00.929 [http-nio-18091-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2023-12-02 18:55:01.561 [http-nio-18091-exec-1] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2023-12-02 18:55:02.532 [nacos-grpc-client-executor-10] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Receive server push request, request = NotifySubscriberRequest, requestId = 18
+2023-12-02 18:55:02.532 [nacos-grpc-client-executor-10] INFO  com.alibaba.nacos.common.remote.client - [307a06a2-1f85-495d-a8c2-55496676a02e] Ack server push request, request = NotifySubscriberRequest, requestId = 18
+2023-12-02 18:55:04.996 [NettyClientPublicExecutor_1] INFO  com.anynote.common.rocketmq.callback.RocketmqSendCallback - async onSuccess SendResult=SendResult [sendStatus=SEND_OK, msgId=7F0000013CBC18B4AAC209358CEF0000, offsetMsgId=0200000100002A9F000000000009B671, messageQueue=MessageQueue [topic=note_topic, brokerName=DESKTOP-F0UBG6B, queueId=1], queueOffset=116]
+2023-12-02 18:57:02.267 [http-nio-18091-exec-2] ERROR com.anynote.common.security.handler.GlobalExceptionHandler - 文件类型不支持，支持的文件类型为: pdf
+com.anynote.core.exception.BusinessException: null
+	at com.anynote.core.validation.aspect.UploadAspect.validate(UploadAspect.java:63)
+	at com.anynote.core.validation.aspect.UploadAspect.doBefore(UploadAspect.java:46)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:617)
+	at org.springframework.aop.aspectj.AspectJMethodBeforeAdvice.before(AspectJMethodBeforeAdvice.java:44)
+	at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:57)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.anynote.note.controller.DocController$$EnhancerBySpringCGLIB$$9eccabb8.createPDF(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:696)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:750)

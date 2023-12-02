@@ -95,6 +95,10 @@ public class TokenUtil {
         return null;
     }
 
+    public Long getUserId() {
+        return this.getLoginUser().getSysUser().getId();
+    }
+
 
     /**
      * 删除用户的所有token

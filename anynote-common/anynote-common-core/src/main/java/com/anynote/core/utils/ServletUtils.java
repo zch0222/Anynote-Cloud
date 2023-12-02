@@ -148,6 +148,17 @@ public class ServletUtils
         return getRequest().getSession();
     }
 
+
+    public static <T> void setRequestAttributes(String key, T value) {
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        attributes.setAttribute(key, value, RequestAttributes.SCOPE_REQUEST);
+    }
+
+    public static <T> T getRequestAttributes(String key) {
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        return (T) attributes.getAttribute(key, RequestAttributes.SCOPE_REQUEST);
+    }
+
     public static ServletRequestAttributes getRequestAttributes()
     {
         try

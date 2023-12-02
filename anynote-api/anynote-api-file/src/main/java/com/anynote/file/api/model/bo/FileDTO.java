@@ -21,11 +21,16 @@ public class FileDTO {
 
     private String fileName;
 
+    /**
+     * 文件哈希
+     */
+    private String hash;
+
     private String url;
 
     /**
-     * 文件类型 1.笔记图片
+     * 来源 0.笔记图片 1.知识库封面 3.知识库文档
      */
-    private Integer type;
+    private Integer source;
 
 }

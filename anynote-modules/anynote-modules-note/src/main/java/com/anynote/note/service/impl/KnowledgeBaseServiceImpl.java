@@ -13,7 +13,9 @@ import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
+import com.anynote.file.api.enums.FileSources;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.po.FilePO;
 import com.anynote.note.api.model.po.UserKnowledgeBase;
 import com.anynote.note.mapper.UserKnowledgeBaseMapper;
 import com.anynote.note.model.bo.*;
@@ -46,12 +48,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -68,10 +72,10 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     @Autowired
     private UserKnowledgeBaseMapper userKnowledgeBaseMapper;
 
-    @Autowired
+    @Resource
     private RemoteUserService remoteUserService;
 
-    @Autowired
+    @Resource
     private RemoteFileService remoteFileService;
 
 //    @Override
@@ -140,9 +144,18 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     }
 
     @Override
-    public FileDTO uploadKnowledgeBaseCover(MultipartFile image) {
-        ResData<FileDTO> fileDTOResData = remoteFileService.uploadFile(image, FileConstants.KNOWLEDGE_BASE_COVER);
-        return RemoteResDataUtil.getResData(fileDTOResData, "封面上传失败");
+    public FileDTO uploadKnowledgeBaseCover(MultipartFile image, String uploadId) {
+        ResData<FilePO> fileDTOResData = remoteFileService.uploadFile(image, FileConstants.KNOWLEDGE_BASE_COVER,
+                tokenUtil.getUserId(),uploadId, FileSources.KNOWLEDGE_BASE_COVER.getValue());
+        FilePO filePO = RemoteResDataUtil.getResData(fileDTOResData, "封面上传失败");
+        return FileDTO.builder()
+                .fileId(filePO.getId())
+                .originalFileName(filePO.getOriginalFileName())
+                .fileName(filePO.getFileName())
+                .hash(filePO.getHash())
+                .url(filePO.getUrl())
+                .source(filePO.getSource())
+                .build();
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -327,8 +340,9 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
         }
 //        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         MultipartFile multipartFile = MultipartFileUtil.toMultipartFile(bos.toByteArray(), "Members.xlsx");
-        ResData<FileDTO> fileDTOResData = remoteFileService.uploadFile(multipartFile, FileConstants.KNOWLEDGE_BASE_PATH +
-                StringUtils.format("/{}/", importUserParam.getId()) + FileConstants.MEMBER_EXCELS);
+        ResData<FilePO> fileDTOResData = remoteFileService.uploadFile(multipartFile, FileConstants.KNOWLEDGE_BASE_PATH +
+                StringUtils.format("/{}/", importUserParam.getId()) + FileConstants.MEMBER_EXCELS, loginUser.getSysUser().getId(),
+                UUID.randomUUID().toString().replace("-", ""), FileSources.KNOWLEDGE_BASE_MEMBER_EXCEL.getValue());
         if (StringUtils.isNull(fileDTOResData) || StringUtils.isNull(fileDTOResData.getData())) {
             throw new BusinessException("导入名单失败");
         }

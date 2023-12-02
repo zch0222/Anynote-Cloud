@@ -1,12 +1,26 @@
 package com.anynote.file.service.impl;
 
+import com.anynote.common.redis.service.RedisService;
+import com.anynote.core.constant.CacheConstants;
+import com.anynote.core.constant.RequestAttributesConstants;
+import com.anynote.core.exception.BusinessException;
+import com.anynote.core.utils.ServletUtils;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.bo.UploadProgress;
+import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.factory.FilePluginFactory;
+import com.anynote.file.mapper.FileMapper;
 import com.anynote.file.service.FileService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -14,11 +28,15 @@ import java.util.UUID;
  * @author 称霸幼儿园
  */
 @Service
-public class FileServiceImpl implements FileService {
+public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
+        implements FileService {
 
 
     @Autowired
     private FilePluginFactory filePluginFactory;
+
+    @Resource
+    private RedisService redisService;
 
 //    @Override
 //    public FileDTO upload(NoteImageUploadParam uploadParam) {
@@ -37,14 +55,36 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public FileDTO upload(MultipartFile file, String path) {
+    public FilePO upload(CommonsMultipartFile file, String path, Long userId, String uploadId, Integer source) {
+        ServletUtils.setRequestAttributes(RequestAttributesConstants.FILE_UPLOAD_ID_KEY, uploadId);
         String fileName = UUID.randomUUID().toString().replace("-", "") + "_" + file.getOriginalFilename();
         String url = filePluginFactory.filePlugin()
                 .multipartFileUpload(file, path, fileName);
-        return FileDTO.builder()
-                .originalFileName(file.getOriginalFilename())
-                .fileName(fileName)
-                .url(url)
-                .build();
+        Date date = new Date();
+        FilePO filePO = null;
+        try {
+            filePO = FilePO.builder()
+                    .hash(DigestUtils.sha512Hex(file.getInputStream()))
+                    .originalFileName(file.getOriginalFilename())
+                    .fileName(fileName)
+                    .url(url)
+                    .source(source)
+                    .deleted(0)
+                    .type(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")))
+                    .createBy(userId)
+                    .createTime(date)
+                    .updateBy(userId)
+                    .updateTime(date)
+                    .build();
+        } catch (IOException e) {
+            throw new BusinessException("计算文件Hash失败");
+        }
+        this.baseMapper.insert(filePO);
+        return filePO;
+    }
+
+    @Override
+    public UploadProgress getFileUploadProgress(String uploadId) {
+        return redisService.getCacheObject(CacheConstants.FILE_UPLOAD_PROGRESS_KEY + uploadId);
     }
 }

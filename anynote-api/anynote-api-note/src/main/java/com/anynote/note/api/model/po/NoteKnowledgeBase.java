@@ -36,6 +36,11 @@ public class NoteKnowledgeBase extends BaseEntity {
     private String cover;
 
     /**
+     * 封面文件id
+     */
+    private Long coverFileId;
+
+    /**
      * 类型 (0.普通知识库 1.课程知识库)
      */
     private Integer type;

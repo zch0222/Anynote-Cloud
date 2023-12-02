@@ -67,8 +67,9 @@ public class KnowledgeBaseController {
 
     @Upload(value = FileType.IMAGE, max = 10)
     @PostMapping("covers")
-    public ResData<FileDTO> uploadKnowledgeBaseCover(@NotNull(message = "图片不能为空") @RequestParam("image") MultipartFile image) {
-        return ResUtil.success(knowledgeBaseService.uploadKnowledgeBaseCover(image));
+    public ResData<FileDTO> uploadKnowledgeBaseCover(@NotNull(message = "图片不能为空") @RequestParam("image") MultipartFile image,
+                                                     @NotNull(message = "uploadId不能为空") @RequestParam("uploadId") String uploadId) {
+        return ResUtil.success(knowledgeBaseService.uploadKnowledgeBaseCover(image, uploadId));
     }
 
     @Url(value = "cover", param = "createKnowledgeBaeDTO")

@@ -124,10 +124,12 @@ public class NoteController {
 
     @PostMapping("images")
     public ResData<MarkdownImage> uploadNoteImage(@RequestParam("image") @NotNull(message = "图片文件不能为空") MultipartFile image,
-                                                  @RequestParam("noteId") @NotNull(message = "笔记id不能为空") Long noteId) {
+                                                  @RequestParam("noteId") @NotNull(message = "笔记id不能为空") Long noteId,
+                                                  @RequestParam(value = "uploadId", required = false) String uploadId) {
         NoteImageUploadParam imageUploadParam = new NoteImageUploadParam();
         imageUploadParam.setId(noteId);
         imageUploadParam.setImage(image);
+        imageUploadParam.setUploadId(uploadId);
         return ResUtil.success(noteService.uploadNoteImage(imageUploadParam));
     }
 

@@ -43,6 +43,9 @@ public class FileTypeUtils {
         else if (FileType.VIDEO.equals(fileType)) {
             return Arrays.asList(MimeTypeUtils.VIDEO_EXTENSION);
         }
+        else if (FileType.PDF.equals(fileType)) {
+            return Arrays.asList(MimeTypeUtils.DOC_PDF_EXTENSION);
+        }
         else {
             return Arrays.asList(MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
         }

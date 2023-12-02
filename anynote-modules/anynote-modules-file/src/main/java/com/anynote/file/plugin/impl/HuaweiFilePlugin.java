@@ -8,11 +8,14 @@ import com.anynote.file.model.bo.HuaweiOBSConfig;
 import com.anynote.file.plugin.FilePlugin;
 import com.obs.services.ObsClient;
 import com.obs.services.exception.ObsException;
+import com.obs.services.model.PutObjectRequest;
 import com.obs.services.model.PutObjectResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 华为云文件插件
@@ -36,7 +39,7 @@ public class HuaweiFilePlugin implements FilePlugin {
     }
 
     @Override
-    public String multipartFileUpload(MultipartFile file, String path, String fileName) {
+    public String multipartFileUpload(CommonsMultipartFile file, String path, String fileName) {
         ObsClient obsClient = null;
         try {
             obsClient = this.buildObsClient();
@@ -71,4 +74,5 @@ public class HuaweiFilePlugin implements FilePlugin {
         return new ObsClient(huaweiOBSConfig.getAccessKey(),
                 huaweiOBSConfig.getAccessSecret(), huaweiOBSConfig.getEndPoint());
     }
+
 }

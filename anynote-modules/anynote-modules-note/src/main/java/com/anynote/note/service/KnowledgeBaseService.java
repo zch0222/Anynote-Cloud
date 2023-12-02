@@ -32,7 +32,7 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
      * @param image 封面
      * @return
      */
-    public FileDTO uploadKnowledgeBaseCover(MultipartFile image);
+    public FileDTO uploadKnowledgeBaseCover(MultipartFile image, String uploadId);
 
     /**
      * 创建知识库

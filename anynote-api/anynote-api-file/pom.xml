@@ -25,6 +25,11 @@
             <artifactId>feign-form-spring</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
 <!--        <dependency>-->
 <!--            <groupId>com.baomidou</groupId>-->

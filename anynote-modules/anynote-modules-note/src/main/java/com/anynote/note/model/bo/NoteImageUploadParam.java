@@ -10,4 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class NoteImageUploadParam extends NoteQueryParam {
 
     private MultipartFile image;
+
+    private String uploadId;
+
+    public Long getNoteId() {
+        return this.getId();
+    }
+
+    public void setNoteId(Long id) {
+        this.setId(id);
+    }
 }

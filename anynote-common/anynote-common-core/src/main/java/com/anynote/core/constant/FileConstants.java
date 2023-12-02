@@ -12,4 +12,6 @@ public class FileConstants {
     public static final String KNOWLEDGE_BASE_COVER = "knowledge_base/cover";
 
     public static final String MEMBER_EXCELS = "member_excels";
+
+    public static final String DOC_PDF = "doc/pdf";
 }

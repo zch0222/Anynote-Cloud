@@ -9,8 +9,10 @@ import com.anynote.common.rocketmq.tags.NoteTagsEnum;
 import com.anynote.note.api.model.bo.GenerateNoteEditLogMessage;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteEditLog;
+import com.anynote.note.api.model.po.NoteFile;
 import com.anynote.note.api.model.po.NoteOperationLog;
 import com.anynote.note.enums.NoteOperationType;
+import com.anynote.note.mapper.NoteFileMapper;
 import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.model.bo.NoteQueryParam;
 import com.anynote.note.service.*;
@@ -24,6 +26,7 @@ import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
@@ -46,6 +49,9 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
 
     @Autowired
     private NoteService noteService;
+
+    @Resource
+    private NoteFileMapper noteFileMapper;
 
     @Autowired
     private NoteOperationLogService noteOperationLogService;
@@ -76,7 +82,9 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
         else if (NoteTagsEnum.DELETE_NOTE_INDEX == NoteTagsEnum.valueOf(messageExt.getTags())) {
             log.info("删除索引...");
             noteElasticsearchService.deleteNoteIndex(Long.valueOf(new String(messageExt.getBody())));
-
+        }
+        else if (NoteTagsEnum.SAVE_NOTE_FILE.equals(NoteTagsEnum.valueOf(messageExt.getTags()))) {
+            saveNoteFile(JSON.parseObject(new String(messageExt.getBody()), NoteFile.class));
         }
     }
 
@@ -166,6 +174,10 @@ public class NoteMessageListener implements RocketMQListener<MessageExt> {
                 noteEditLogService.getBaseMapper().insert(noteEditLog);
             }
         }
+    }
+
+    private void saveNoteFile(NoteFile noteFile) {
+        noteFileMapper.insert(noteFile);
     }
 
 

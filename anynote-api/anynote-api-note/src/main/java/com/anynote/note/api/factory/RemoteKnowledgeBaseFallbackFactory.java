@@ -1,4 +1,4 @@
-package com.anynote.note.api.model.factory;
+package com.anynote.note.api.factory;
 
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.enums.ResCode;

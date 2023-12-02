@@ -65,6 +65,7 @@ public class GlobalExceptionHandler {
         return ResData.error(ResCode.USER_REQUEST_PARAM_ERROR, e.getFieldErrors().iterator().next().getDefaultMessage());
     }
 
+
     @ExceptionHandler(BindException.class)
     public ResData handleBindException(BindException e) {
         log.error(e.getMessage(), e);
