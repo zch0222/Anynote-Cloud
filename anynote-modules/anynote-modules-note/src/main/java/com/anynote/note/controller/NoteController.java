@@ -54,6 +54,11 @@ public class NoteController {
     @Resource
     private NoteOperationLogService noteOperationLogService;
 
+    @GetMapping()
+    public ResData<PageBean<Note>> getNoteList(Integer page, Integer pageSize, Long knowledgeBaseId) {
+        return null;
+    }
+
 
     /**
      * 获取最近更新的笔记 (未完成)
