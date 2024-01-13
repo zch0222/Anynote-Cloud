@@ -25,6 +25,16 @@ public class SearchPageBean<T> {
     private Long total;
 
     /**
+     * 当前页码
+     */
+    private Integer current;
+
+    /**
+     * 总页数
+     */
+    private Integer pages;
+
+    /**
      * 1是所有结果，0还有更多结果
      */
     private Integer exactResult;

@@ -165,6 +165,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         note.setUpdateBy(loginUser.getSysUser().getId());
         note.setCreateTime(date);
 
+
+
         this.baseMapper.insert(note);
         String destination = rocketMQProperties.getNoteTopic() +  ":" + NoteTagsEnum.GENERATOR_NOTE_INDEX.name();
         rocketMQTemplate.asyncSend(destination, note.getId(), RocketmqSendCallbackBuilder.commonCallback());
@@ -273,9 +275,15 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
             throw new BusinessException("搜索笔记失败，请联系管理员");
         }
 
-        SearchPageBean<EsNoteIndex> esNoteIndexSearchPageBean = ElasticsearchUtil.buildSearchPageBean(searchResponse, EsNoteIndex.class);
+        SearchPageBean<EsNoteIndex> esNoteIndexSearchPageBean = ElasticsearchUtil.buildSearchPageBean(searchResponse, EsNoteIndex.class,
+                noteSearchDTO.getPageSize(), noteSearchDTO.getPage());
         for (SearchVO<EsNoteIndex> esNoteIndexSearchVO : esNoteIndexSearchPageBean.getRows()) {
-            esNoteIndexSearchVO.getSource().setPermissions(this.getNotePermissions(esNoteIndexSearchVO.getSource().getId()).getValue());
+            try {
+                esNoteIndexSearchVO.getSource().setPermissions(this.getNotePermissions(esNoteIndexSearchVO.getSource().getId()).getValue());
+            } catch (UserParamException e) {
+                esNoteIndexSearchVO.getSource().setPermissions(0);
+                log.error("搜索：笔记" + esNoteIndexSearchVO.getSource().getId() + "不存在");
+            }
         }
         return esNoteIndexSearchPageBean;
     }

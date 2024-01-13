@@ -16,7 +16,8 @@ import java.util.List;
  */
 public class ElasticsearchUtil {
 
-    public static <T> SearchPageBean<T> buildSearchPageBean(SearchResponse<T> searchResponse, Class tClass) {
+    public static <T> SearchPageBean<T> buildSearchPageBean(SearchResponse<T> searchResponse, Class tClass,
+                                                            Integer pageSize, Integer page) {
         TotalHits total = searchResponse.hits().total();
         List<Hit<T>> hits = searchResponse.hits().hits();
         List<SearchVO<T>> tList = new ArrayList<>();
@@ -31,6 +32,8 @@ public class ElasticsearchUtil {
                 .rows(tList)
                 .total(total.value())
                 .exactResult(exactResult)
+                .pages((int) Math.ceil(1.0 * total.value() / pageSize))
+                .current(page)
                 .build();
     }
 }
