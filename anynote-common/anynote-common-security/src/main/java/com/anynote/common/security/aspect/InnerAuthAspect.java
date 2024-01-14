@@ -21,7 +21,8 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class InnerAuthAspect implements Ordered {
+@Order(0)
+public class InnerAuthAspect {
     @Before("@annotation(innerAuth)")
     public void doBefore(JoinPoint joinPoint, InnerAuth innerAuth) throws Throwable {
         String source = ServletUtils.getRequest().getHeader(SecurityConstants.FROM_SOURCE);
@@ -37,9 +38,4 @@ public class InnerAuthAspect implements Ordered {
         }
     }
 
-
-    @Override
-    public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE + 1;
-    }
 }

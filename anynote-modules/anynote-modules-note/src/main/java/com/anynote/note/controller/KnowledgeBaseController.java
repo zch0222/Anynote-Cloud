@@ -78,6 +78,7 @@ public class KnowledgeBaseController {
         return ResUtil.success(knowledgeBaseService.createKnowledgeBase(createKnowledgeBaeDTO));
     }
 
+
     @GetMapping
     public ResData<PageBean<NoteKnowledgeBaseDTO>> getUsersKnowledgeBases(@NotNull(message = "页码不能为空") Integer page,
                                                                           @NotNull(message = "页面容量不能为空") Integer pageSize) {
