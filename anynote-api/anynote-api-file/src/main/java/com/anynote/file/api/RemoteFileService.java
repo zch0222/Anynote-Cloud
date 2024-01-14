@@ -4,9 +4,7 @@ import com.anynote.core.constant.ServiceNameConstants;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.config.MultipartSupportConfig;
 import com.anynote.file.api.factory.RemoteFileFallbackFactory;
-import com.anynote.file.api.model.bo.FileDTO;
-import com.anynote.file.api.model.bo.FileUploadParam;
-import com.anynote.file.api.model.bo.UploadProgress;
+import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.po.FilePO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -38,5 +36,8 @@ public interface RemoteFileService {
     @GetMapping("files/progress/{uploadId}")
     public ResData<UploadProgress> getFileUploadProgress(@PathVariable("uploadId") String uploadId);
 
+    @PostMapping("createHuaweiOBSTemporarySignature")
+    public ResData<HuaweiOBSTemporarySignature> createHuaweiOBSTemporarySignature(
+            @RequestBody @Validated CreateHuaweiOBSTemporarySignatureDTO createHuaweiOBSTemporarySignatureDTO);
 
 }

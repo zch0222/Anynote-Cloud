@@ -3,9 +3,7 @@ package com.anynote.file.controller;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.ResData;
-import com.anynote.file.api.model.bo.FileDTO;
-import com.anynote.file.api.model.bo.FileUploadParam;
-import com.anynote.file.api.model.bo.UploadProgress;
+import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.mapper.FileMapper;
 import com.anynote.file.service.FileService;
@@ -46,5 +44,13 @@ public class FileController {
     @GetMapping("progress/{uploadId}")
     public ResData<UploadProgress> getFileUploadProgress(@PathVariable("uploadId") String uploadId) {
         return ResUtil.success(fileService.getFileUploadProgress(uploadId));
+    }
+
+    @InnerAuth
+    @PostMapping("createHuaweiOBSTemporarySignature")
+    public ResData<HuaweiOBSTemporarySignature> createHuaweiOBSTemporarySignature(
+            @RequestBody @Validated CreateHuaweiOBSTemporarySignatureDTO createHuaweiOBSTemporarySignatureDTO) {
+        return ResUtil.success(fileService.createHuaweiOBSTemporarySignature(createHuaweiOBSTemporarySignatureDTO.getPath(),
+                createHuaweiOBSTemporarySignatureDTO.getFileName(), createHuaweiOBSTemporarySignatureDTO.getExpireSeconds()));
     }
 }

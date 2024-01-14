@@ -42,7 +42,8 @@ public enum ResCode {
     INNER_NOTE_SERVICE_ERROR("B0403", "笔记模块调用失败", "笔记模块调用失败"),
 
     CALLING_SERVICE_ERROR("C0001", "调用第三方服务出错", "调用第三方服务出错"),
-    HUAWEI_OBS_UPLOAD_ERROR("C160", "华为OBS上传错误", "华为OBS上传错误")
+    HUAWEI_OBS_UPLOAD_ERROR("C160", "华为OBS上传错误", "华为OBS上传错误"),
+    HUAWEI_OBS_CREATE_TEMPORARY_SIGNATURE_FAIL("C161", "华为OBS创建临时签名失败", "华为OBS创建临时签名失败")
     ;
 
     /**

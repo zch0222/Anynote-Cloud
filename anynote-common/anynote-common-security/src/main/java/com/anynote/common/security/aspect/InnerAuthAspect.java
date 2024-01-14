@@ -5,10 +5,13 @@ import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.exception.auth.InnerAuthException;
 import com.anynote.core.utils.ServletUtils;
 import com.anynote.core.utils.StringUtils;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,8 +22,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class InnerAuthAspect implements Ordered {
-    @Around("@annotation(innerAuth)")
-    public Object innerAround(ProceedingJoinPoint point, InnerAuth innerAuth) throws Throwable {
+    @Before("@annotation(innerAuth)")
+    public void doBefore(JoinPoint joinPoint, InnerAuth innerAuth) throws Throwable {
         String source = ServletUtils.getRequest().getHeader(SecurityConstants.FROM_SOURCE);
 
         if (!StringUtils.equals(SecurityConstants.INNER, source)) {
@@ -32,7 +35,6 @@ public class InnerAuthAspect implements Ordered {
         if (innerAuth.isUser() && StringUtils.isEmpty(accessToken)) {
             throw new InnerAuthException("没有设置用户信息，不允许访问");
         }
-        return point.proceed();
     }
 
 

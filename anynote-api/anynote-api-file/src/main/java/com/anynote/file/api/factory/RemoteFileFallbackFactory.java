@@ -4,9 +4,7 @@ import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
-import com.anynote.file.api.model.bo.FileDTO;
-import com.anynote.file.api.model.bo.FileUploadParam;
-import com.anynote.file.api.model.bo.UploadProgress;
+import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.po.FilePO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -39,6 +37,11 @@ public class RemoteFileFallbackFactory implements FallbackFactory<RemoteFileServ
 
             @Override
             public ResData<UploadProgress> getFileUploadProgress(String uploadId) {
+                return ResUtil.error(ResCode.INNER_FILE_SERVICE_ERROR);
+            }
+
+            @Override
+            public ResData<HuaweiOBSTemporarySignature> createHuaweiOBSTemporarySignature(CreateHuaweiOBSTemporarySignatureDTO createHuaweiOBSTemporarySignatureDTO) {
                 return ResUtil.error(ResCode.INNER_FILE_SERVICE_ERROR);
             }
         };

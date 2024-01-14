@@ -6,6 +6,7 @@ import com.anynote.core.constant.RequestAttributesConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ServletUtils;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.bo.UploadProgress;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.factory.FilePluginFactory;
@@ -86,5 +87,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
     @Override
     public UploadProgress getFileUploadProgress(String uploadId) {
         return redisService.getCacheObject(CacheConstants.FILE_UPLOAD_PROGRESS_KEY + uploadId);
+    }
+
+    @Override
+    public HuaweiOBSTemporarySignature createHuaweiOBSTemporarySignature(String path, String fileName, Long expireSeconds) {
+        return filePluginFactory.huaweiFilePlugin().createTemporarySignature(path, fileName, expireSeconds);
     }
 }
