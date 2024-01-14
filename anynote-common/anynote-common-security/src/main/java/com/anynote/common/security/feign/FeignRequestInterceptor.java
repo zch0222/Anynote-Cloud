@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author 称霸幼儿园
  */
-@Component
+//@Component
 public class FeignRequestInterceptor implements RequestInterceptor {
 
     @Override
@@ -50,6 +50,8 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             if (StringUtils.isNotEmpty(accessToken)) {
                 requestTemplate.header(SecurityConstants.ACCESS_TOKEN, accessToken);
             }
+
+            requestTemplate.header(SecurityConstants.FROM_SOURCE, SecurityConstants.INNER);
 
 //            String contentType = headers.get(SecurityConstants.CONTENT_TYPE);
 //            if (StringUtils.isNotEmpty(contentType)) {

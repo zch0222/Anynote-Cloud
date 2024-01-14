@@ -3,3 +3,4 @@ com.anynote.common.security.handler.GlobalExceptionHandler
 com.anynote.common.security.token.TokenUtil
 com.anynote.common.security.properties.JWTTokenProperties
 com.anynote.common.security.aspect.InnerAuthAspect
+com.anynote.common.security.feign.FeignAutoConfiguration
