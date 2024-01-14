@@ -36,4 +36,17 @@ public class FilePluginFactory {
         }
     }
 
+    public HuaweiFilePlugin huaweiFilePlugin() {
+        if (OssTypeEnum.HUAWEI_OBS.equals(OssTypeEnum.valueOf(((SysConfig) redisService
+                .getCacheObject(ConfigEnum.OSS_TYPE.name())).getValue()))) {
+            HuaweiOBSConfig huaweiOBSConfig = JSON.parseObject(((SysConfig)
+                            redisService.getCacheObject(ConfigEnum.HUAWEI_OBS_CONFIG.name())).getValue(),
+                    HuaweiOBSConfig.class);
+            return new HuaweiFilePlugin(huaweiOBSConfig);
+        }
+        else {
+            throw new BusinessException("文件上传失败", ResCode.CALLING_SERVICE_ERROR);
+        }
+    }
+
 }
