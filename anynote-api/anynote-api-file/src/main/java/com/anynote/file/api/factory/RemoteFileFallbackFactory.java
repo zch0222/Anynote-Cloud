@@ -1,20 +1,19 @@
 package com.anynote.file.api.factory;
 
+import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.enums.ResCode;
+import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.bo.*;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
+import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
 import com.anynote.file.api.model.po.FilePO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * 文件服务降级
@@ -43,6 +42,11 @@ public class RemoteFileFallbackFactory implements FallbackFactory<RemoteFileServ
             @Override
             public ResData<HuaweiOBSTemporarySignature> createHuaweiOBSTemporarySignature(CreateHuaweiOBSTemporarySignatureDTO createHuaweiOBSTemporarySignatureDTO) {
                 return ResUtil.error(ResCode.INNER_FILE_SERVICE_ERROR);
+            }
+
+            @Override
+            public ResData<FilePO> completeHuaweiOBSUpload(CompleteUploadDTO completeUploadDTO) {
+                throw new BusinessException(ResCode.INNER_FILE_SERVICE_ERROR);
             }
         };
     }

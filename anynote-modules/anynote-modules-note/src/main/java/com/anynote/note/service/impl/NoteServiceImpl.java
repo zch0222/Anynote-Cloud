@@ -4,6 +4,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.alibaba.fastjson2.JSON;
+import com.anynote.common.datascope.aspect.BasePermissionsAspect;
 import com.anynote.common.elasticsearch.constant.ElasticsearchIndexConstants;
 import com.anynote.common.elasticsearch.model.EsNoteIndex;
 import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
@@ -14,15 +15,20 @@ import com.anynote.common.rocketmq.properties.RocketMQProperties;
 import com.anynote.common.rocketmq.tags.NoteTagsEnum;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
+import com.anynote.core.constant.FileConstants;
+import com.anynote.core.constant.HuaweiOBSConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.user.UserParamException;
+import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.enums.FileSources;
-import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
+import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
+import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.note.api.model.bo.GenerateNoteEditLogMessage;
 import com.anynote.note.api.model.po.*;
@@ -32,13 +38,12 @@ import com.anynote.note.datascope.aspect.RequiresNotePermissionsAspect;
 import com.anynote.note.enums.KnowledgeBasePermissions;
 import com.anynote.note.enums.NoteFileType;
 import com.anynote.note.enums.NotePermissions;
-import com.anynote.note.mapper.NoteFileMapper;
 import com.anynote.note.mapper.NoteMapper;
 import com.anynote.note.mapper.NoteTextMapper;
 import com.anynote.note.model.bo.*;
+import com.anynote.note.model.dto.CompleteNoteImageUploadDTO;
 import com.anynote.note.model.dto.NoteSearchDTO;
 import com.anynote.note.service.KnowledgeBaseService;
-import com.anynote.note.service.NoteHistoryService;
 import com.anynote.note.service.NoteImageService;
 import com.anynote.note.service.NoteService;
 import com.anynote.note.utils.MarkdownUtil;
@@ -189,8 +194,8 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
 
     /**
      * 删除笔记
-     * @param param
-     * @return
+     * @param param 笔记删除参数
+     * @return 删除结果
      */
     @Transactional(rollbackFor = Exception.class)
     @RequiresNotePermissions(NotePermissions.MANAGE)
@@ -456,4 +461,31 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
         return noteInfo.getDataScope();
     }
 
+    @Override
+    @RequiresNotePermissions(NotePermissions.EDIT)
+    public HuaweiOBSTemporarySignature getImageUploadTempSignature(NoteImageUploadSignatureCreateParam createParam) {
+        return RemoteResDataUtil.getResData(remoteFileService.createHuaweiOBSTemporarySignature(CreateHuaweiOBSTemporarySignatureDTO.builder()
+                .ContentType(createParam.getContentType())
+                .expireSeconds(HuaweiOBSConstants.NOTE_IMAGE_TEMPORARY_SIGNATURE_EXPIRE_SECONDS)
+                .fileName(createParam.getFileName())
+                .path(StringUtils.format(FileConstants.NOTE_IMAGE_PATH_TEMPLATE, createParam.getNoteId(),
+                        createParam.getNoteId()))
+                .uploadId(createParam.getUploadId())
+                .source(FileSources.NOTE_IMAGE.getValue()).build()), "上传图片失败");
+    }
+
+    @Override
+    public String completeNoteImageUpload(CompleteNoteImageUploadDTO completeUploadDTO) {
+        FilePO filePO = RemoteResDataUtil.getResData(remoteFileService.completeHuaweiOBSUpload(completeUploadDTO),
+                "上传异常，请联系管理员");
+
+        // 异步保存笔记文件日志
+        String destination = rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.SAVE_NOTE_FILE.name();
+        rocketMQTemplate.asyncSend(destination, NoteFile.builder()
+                .fileId(filePO.getId())
+                .noteId(completeUploadDTO.getNoteId())
+                .type(NoteFileType.NOTE_IMAGE.getValue())
+                .build(), RocketmqSendCallbackBuilder.commonCallback());
+        return Constants.SUCCESS_RES;
+    }
 }

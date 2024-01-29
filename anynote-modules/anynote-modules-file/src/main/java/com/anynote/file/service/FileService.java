@@ -3,6 +3,7 @@ package com.anynote.file.service;
 import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.bo.UploadProgress;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.swagger.models.auth.In;
@@ -21,6 +22,15 @@ public interface FileService extends IService<FilePO> {
 
     public UploadProgress getFileUploadProgress(String uploadId);
 
-    public HuaweiOBSTemporarySignature createHuaweiOBSTemporarySignature(String path, String fileName, Long expireSeconds);
+    public HuaweiOBSTemporarySignature createHuaweiOBSTemporarySignature(String path, String fileName,
+                                                                         Long expireSeconds, String contentType,
+                                                                         String uploadId, Integer source);
+
+    /**
+     * 完成上传回调
+     * @param completeUploadDTO 完成上传DTO
+     * @return file ID
+     */
+    public FilePO completeUpload(CompleteUploadDTO completeUploadDTO);
 
 }

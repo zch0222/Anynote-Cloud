@@ -70,14 +70,17 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         String accessToken = getAccessToken(exchange.getRequest());
 
+        LoginUser loginUser = null;
+
         try {
-            authAccessToken(exchange, accessToken, url);
+            loginUser = authAccessToken(exchange, accessToken, url);
         } catch (TokenException e) {
             log.error(e.getErrorMessage(), e);
             return unauthorizedResponse(exchange, e.getErrorCode());
         }
 
         addHeader(mutate, SecurityConstants.ACCESS_TOKEN, accessToken);
+        addHeader(mutate, SecurityConstants.DETAILS_USER_ID, loginUser.getUserId());
 
         // 内部请求来源信息消除
         removeHeader(mutate, SecurityConstants.FROM_SOURCE);
@@ -120,7 +123,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         mutate.header(name, valueEncode);
     }
 
-    private void authAccessToken(ServerWebExchange exchange, String accessToken, String url) {
+    private LoginUser authAccessToken(ServerWebExchange exchange, String accessToken, String url) {
         if (StringUtils.isNull(accessToken)) {
             throw new TokenException(ResCode.ACCESS_TOKEN_NOT_FOUND);
         }
@@ -134,6 +137,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
         if (StringUtils.matches(url, securityManageProperties.getUrls()) && !SysUser.isAdminX(loginUser.getSysUser().getRole())) {
             throw new TokenException(ResCode.UNAUTHORIZED_ERROR);
         }
+        return loginUser;
+
     }
 
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, ResCode resCode) {

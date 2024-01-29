@@ -3,11 +3,14 @@ package com.anynote.file.service.impl;
 import com.anynote.common.redis.service.RedisService;
 import com.anynote.core.constant.CacheConstants;
 import com.anynote.core.constant.RequestAttributesConstants;
+import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ServletUtils;
+import com.anynote.core.utils.StringUtils;
 import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.bo.UploadProgress;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.factory.FilePluginFactory;
 import com.anynote.file.mapper.FileMapper;
@@ -23,6 +26,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 笔记图片文件服务
@@ -90,7 +94,44 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
     }
 
     @Override
-    public HuaweiOBSTemporarySignature createHuaweiOBSTemporarySignature(String path, String fileName, Long expireSeconds) {
-        return filePluginFactory.huaweiFilePlugin().createTemporarySignature(path, fileName, expireSeconds);
+    public HuaweiOBSTemporarySignature createHuaweiOBSTemporarySignature(String path, String fileName, Long expireSeconds,
+                                                                         String contentType, String uploadId, Integer source) {
+        Date date = new Date();
+        FilePO filePO = FilePO.builder()
+                .originalFileName(fileName)
+                .fileName(UUID.randomUUID().toString().replace("-", "") + "_" + fileName)
+                .createBy(Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID)))
+                .deleted(0)
+                .createTime(date)
+                .type(contentType)
+                .build();
+        HuaweiOBSTemporarySignature huaweiOBSTemporarySignature = filePluginFactory
+                .huaweiFilePlugin().createTemporarySignature(path,
+                        filePO.getFileName(),
+                        expireSeconds, contentType);
+        filePO.setUrl(filePO.getUrl());
+        redisService.setCacheObject(CacheConstants.FILE_UPLOAD_ID +
+                        ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID) + ":" + uploadId, filePO,
+                expireSeconds + 20L, TimeUnit.SECONDS);
+        return huaweiOBSTemporarySignature;
+    }
+
+    @Override
+    public FilePO completeUpload(CompleteUploadDTO completeUploadDTO) {
+        Date date = new Date();
+        FilePO filePO = redisService.getCacheObject(CacheConstants.FILE_UPLOAD_ID +
+                ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID) + ":" +
+                completeUploadDTO.getUploadId());
+        if (StringUtils.isNull(filePO)) {
+            throw new BusinessException("上传超时");
+        }
+        filePO.setHash(completeUploadDTO.getHash());
+        filePO.setUpdateTime(date);
+        filePO.setUpdateBy(Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID)));
+        this.baseMapper.insert(filePO);
+        redisService.deleteObject(CacheConstants.FILE_UPLOAD_ID +
+                ServletUtils.getRequestAttributes(SecurityConstants.DETAILS_USER_ID) + ":" +
+                completeUploadDTO.getUploadId());
+        return filePO;
     }
 }

@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * 客户端工具类
- * 
+ *
  * @author ruoyi
  */
 public class ServletUtils
@@ -182,6 +182,16 @@ public class ServletUtils
         return urlDecode(value);
     }
 
+
+    public static String getHeader(String name) {
+        String value = ((ServletRequestAttributes)
+                RequestContextHolder.currentRequestAttributes()).getRequest().getHeader(name);
+        if (StringUtils.isEmpty(value)) {
+            return StringUtils.EMPTY;
+        }
+        return value;
+    }
+
     public static Map<String, String> getHeaders(HttpServletRequest request)
     {
         Map<String, String> map = new LinkedCaseInsensitiveMap<>();
@@ -200,7 +210,7 @@ public class ServletUtils
 
     /**
      * 将字符串渲染到客户端
-     * 
+     *
      * @param response 渲染对象
      * @param string 待渲染的字符串
      */
@@ -221,7 +231,7 @@ public class ServletUtils
 
     /**
      * 是否是Ajax异步请求
-     * 
+     *
      * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request)
@@ -250,7 +260,7 @@ public class ServletUtils
 
     /**
      * 内容编码
-     * 
+     *
      * @param str 内容
      * @return 编码后的内容
      */
@@ -268,7 +278,7 @@ public class ServletUtils
 
     /**
      * 内容解码
-     * 
+     *
      * @param str 内容
      * @return 解码后的内容
      */

@@ -1,21 +1,21 @@
 package com.anynote.file.api;
 
 import com.anynote.core.constant.ServiceNameConstants;
+import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.config.MultipartSupportConfig;
 import com.anynote.file.api.factory.RemoteFileFallbackFactory;
 import com.anynote.file.api.model.bo.*;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
+import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
 import com.anynote.file.api.model.po.FilePO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 
 /**
  * @author 称霸幼儿园
@@ -39,5 +39,8 @@ public interface RemoteFileService {
     @PostMapping("createHuaweiOBSTemporarySignature")
     public ResData<HuaweiOBSTemporarySignature> createHuaweiOBSTemporarySignature(
             @RequestBody @Validated CreateHuaweiOBSTemporarySignatureDTO createHuaweiOBSTemporarySignatureDTO);
+
+    @PostMapping("completeHuaweiOBSUpload")
+    public ResData<FilePO> completeHuaweiOBSUpload(@RequestBody @Validated CompleteUploadDTO completeUploadDTO);
 
 }

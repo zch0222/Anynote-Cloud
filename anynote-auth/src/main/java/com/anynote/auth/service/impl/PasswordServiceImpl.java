@@ -44,6 +44,7 @@ public class PasswordServiceImpl implements PasswordService {
             throw new LoginException(errorMessage, ResCode.USER_PASSWORD_TRY_ERROR);
         }
 
+        // 有问题的
         if (!this.matches(sysUser, rawPassword)) {
             retryCount = retryCount + 1;
             redisService.setCacheObject(getCacheKey(sysUser.getUsername()), retryCount, Constants.PASSWORD_ERROR_LACK_TIME, TimeUnit.MINUTES);

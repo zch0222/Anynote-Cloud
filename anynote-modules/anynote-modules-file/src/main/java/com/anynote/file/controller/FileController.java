@@ -2,20 +2,18 @@ package com.anynote.file.controller;
 
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
+import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.bo.*;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
+import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
 import com.anynote.file.api.model.po.FilePO;
-import com.anynote.file.mapper.FileMapper;
 import com.anynote.file.service.FileService;
-import kotlin.UByte;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.annotation.Resource;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -51,6 +49,15 @@ public class FileController {
     public ResData<HuaweiOBSTemporarySignature> createHuaweiOBSTemporarySignature(
             @RequestBody @Validated CreateHuaweiOBSTemporarySignatureDTO createHuaweiOBSTemporarySignatureDTO) {
         return ResUtil.success(fileService.createHuaweiOBSTemporarySignature(createHuaweiOBSTemporarySignatureDTO.getPath(),
-                createHuaweiOBSTemporarySignatureDTO.getFileName(), createHuaweiOBSTemporarySignatureDTO.getExpireSeconds()));
+                createHuaweiOBSTemporarySignatureDTO.getFileName(), createHuaweiOBSTemporarySignatureDTO.getExpireSeconds(),
+                createHuaweiOBSTemporarySignatureDTO.getContentType(), createHuaweiOBSTemporarySignatureDTO.getUploadId(),
+                createHuaweiOBSTemporarySignatureDTO.getSource()));
+    }
+
+    @InnerAuth
+    @PostMapping("completeHuaweiOBSUpload")
+    public ResData<FilePO> completeHuaweiOBSUpload(
+            @RequestBody @Validated CompleteUploadDTO completeUploadDTO) {
+        return ResUtil.success(fileService.completeUpload(completeUploadDTO));
     }
 }

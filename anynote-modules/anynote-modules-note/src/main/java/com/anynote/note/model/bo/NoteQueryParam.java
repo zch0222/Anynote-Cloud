@@ -1,14 +1,12 @@
 package com.anynote.note.model.bo;
 
 import com.anynote.core.web.model.bo.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * @author 称霸幼儿园
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor

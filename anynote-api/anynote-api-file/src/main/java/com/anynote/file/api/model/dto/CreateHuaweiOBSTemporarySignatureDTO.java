@@ -1,4 +1,4 @@
-package com.anynote.file.api.model.bo;
+package com.anynote.file.api.model.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -27,4 +27,18 @@ public class CreateHuaweiOBSTemporarySignatureDTO {
     @Min(value = 1, message = "过期时间错误")
     private Long expireSeconds;
 
+    @NotBlank(message = "ContentType不能为空")
+    private String ContentType;
+
+    /**
+     * 上传ID
+     */
+    @NotBlank(message = "上传ID不能为空")
+    private String uploadId;
+
+    /**
+     * 文件来源
+     */
+    @NotNull(message = "文件来源不能为空")
+    private Integer source;
 }

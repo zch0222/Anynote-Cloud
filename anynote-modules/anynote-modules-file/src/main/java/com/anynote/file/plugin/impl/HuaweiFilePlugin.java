@@ -16,6 +16,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 华为云文件插件
@@ -70,13 +72,19 @@ public class HuaweiFilePlugin implements FilePlugin {
         }
     }
 
-    public HuaweiOBSTemporarySignature createTemporarySignature(String path, String fileName, Long expireSeconds) {
+    public HuaweiOBSTemporarySignature createTemporarySignature(String path, String fileName, Long expireSeconds, String contentType) {
         ObsClient obsClient = null;
         try {
             obsClient = this.buildObsClient();
             TemporarySignatureRequest request = new TemporarySignatureRequest(HttpMethodEnum.PUT, expireSeconds);
             request.setBucketName(huaweiOBSConfig.getBucketName());
             request.setObjectKey(huaweiOBSConfig.getBasePath() + "/" + path + "/" + fileName);
+
+            // 设置文件类型
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Content-Type", contentType);
+            request.setHeaders(headers);
+
             TemporarySignatureResponse response = obsClient.createTemporarySignature(request);
 
             log.info("Creating bucket using temporary signature url:");

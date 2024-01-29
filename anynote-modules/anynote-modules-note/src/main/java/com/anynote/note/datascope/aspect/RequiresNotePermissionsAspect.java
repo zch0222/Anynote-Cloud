@@ -1,5 +1,6 @@
 package com.anynote.note.datascope.aspect;
 
+import com.anynote.common.datascope.aspect.BasePermissionsAspect;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.exception.auth.AuthException;
 import com.anynote.core.exception.user.UserParamException;
@@ -15,6 +16,7 @@ import com.anynote.note.service.NoteService;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.po.SysUser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.extern.java.Log;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -35,7 +37,7 @@ import java.util.Map;
 @Aspect
 @Order(2)
 @Component
-public class RequiresNotePermissionsAspect {
+public class RequiresNotePermissionsAspect extends BasePermissionsAspect {
 
     @Autowired
     private TokenUtil tokenUtil;
@@ -80,6 +82,7 @@ public class RequiresNotePermissionsAspect {
 
         param.setUpdateBy(loginUser.getSysUser().getId());
         param.setUpdateTime(new Date(System.currentTimeMillis()));
+        addLoginUser(param, loginUser);
 
 //        LoginUser loginUser = tokenUtil.getLoginUser();
 //        SysUser sysUser = loginUser.getSysUser();
@@ -117,9 +120,9 @@ public class RequiresNotePermissionsAspect {
 //                throw new AuthException("没有权限编辑笔记", ResCode.UNAUTHORIZED_ERROR);
 //            }
 //        }
-
-
     }
+
+
 
     private void addNotePermissions(NoteQueryParam queryParam, NotePermissions notePermissions) {
         if (StringUtils.isNull(queryParam.getParams())) {

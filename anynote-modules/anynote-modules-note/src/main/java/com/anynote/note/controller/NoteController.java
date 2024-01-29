@@ -10,6 +10,8 @@ import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
+import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
+import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.note.api.model.po.Note;
 import com.anynote.note.api.model.po.NoteOperationLog;
 import com.anynote.note.datascope.annotation.RequiresNotePermissions;
@@ -17,9 +19,7 @@ import com.anynote.note.enums.NotePermissions;
 import com.anynote.note.mapper.NoteHistoryMapper;
 import com.anynote.note.mapper.NoteOperationLogMapper;
 import com.anynote.note.model.bo.*;
-import com.anynote.note.model.dto.NoteCreateDTO;
-import com.anynote.note.model.dto.NoteEditDTO;
-import com.anynote.note.model.dto.NoteSearchDTO;
+import com.anynote.note.model.dto.*;
 import com.anynote.note.model.vo.NoteHistoryListItemVO;
 import com.anynote.note.model.vo.NoteHistoryVO;
 import com.anynote.note.service.NoteHistoryService;
@@ -137,6 +137,22 @@ public class NoteController {
         imageUploadParam.setUploadId(uploadId);
         return ResUtil.success(noteService.uploadNoteImage(imageUploadParam));
     }
+
+    @PostMapping("img")
+    public ResData<HuaweiOBSTemporarySignature> imageUploadTempLink(@Validated @RequestBody NoteImageUploadTempLinkDTO noteImageUploadTempLinkDTO) {
+        return ResUtil.success(noteService.getImageUploadTempSignature(NoteImageUploadSignatureCreateParam
+                .NoteImageUploadSignatureCreateParamBuilder()
+                        .fileName(noteImageUploadTempLinkDTO.getFileName())
+                        .contentType(noteImageUploadTempLinkDTO.getContentType())
+                        .uploadId(noteImageUploadTempLinkDTO.getUploadId())
+                        .noteId(noteImageUploadTempLinkDTO.getNoteId()).build()));
+    }
+
+    @PutMapping("img")
+    public ResData<String> completeNoteImageUpload(@Validated @RequestBody CompleteNoteImageUploadDTO completeUploadDTO) {
+        return ResUtil.success(noteService.completeNoteImageUpload(completeUploadDTO));
+    }
+
 
     @GetMapping("search")
     public ResData<SearchPageBean<EsNoteIndex>> searchNote(@Valid NoteSearchDTO noteSearchDTO) {
