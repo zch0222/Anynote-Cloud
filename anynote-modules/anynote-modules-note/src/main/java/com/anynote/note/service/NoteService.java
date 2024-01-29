@@ -57,7 +57,7 @@ public interface NoteService extends IService<Note> {
      */
     public HuaweiOBSTemporarySignature getImageUploadTempSignature(NoteImageUploadSignatureCreateParam createParam);
 
-    public String completeNoteImageUpload(CompleteNoteImageUploadDTO completeUploadDTO);
+    public String completeNoteImageUpload(NoteImageCompleteParam noteImageCompleteParam);
 
     public Integer submitNote(Long noteId);
 

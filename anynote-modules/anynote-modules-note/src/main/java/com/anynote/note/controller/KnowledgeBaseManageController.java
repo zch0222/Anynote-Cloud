@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @RestController
 @RequestMapping("/manage/bases")
 @Validated
-public class KnowledgeBaseManageConroller {
+public class KnowledgeBaseManageController {
 
     @Autowired
     private KnowledgeBaseService knowledgeBaseService;

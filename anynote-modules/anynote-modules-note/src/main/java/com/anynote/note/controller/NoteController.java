@@ -150,7 +150,10 @@ public class NoteController {
 
     @PutMapping("img")
     public ResData<String> completeNoteImageUpload(@Validated @RequestBody CompleteNoteImageUploadDTO completeUploadDTO) {
-        return ResUtil.success(noteService.completeNoteImageUpload(completeUploadDTO));
+        return ResUtil.success(noteService.completeNoteImageUpload(NoteImageCompleteParam.NoteImageCompleteParamBuilder()
+                        .noteId(completeUploadDTO.getNoteId())
+                        .hash(completeUploadDTO.getHash())
+                        .uploadId(completeUploadDTO.getUploadId()).build()));
     }
 
 

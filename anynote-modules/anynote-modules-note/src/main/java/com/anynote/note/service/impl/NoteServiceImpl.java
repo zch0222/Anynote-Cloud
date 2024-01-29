@@ -475,15 +475,19 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
     }
 
     @Override
-    public String completeNoteImageUpload(CompleteNoteImageUploadDTO completeUploadDTO) {
-        FilePO filePO = RemoteResDataUtil.getResData(remoteFileService.completeHuaweiOBSUpload(completeUploadDTO),
+    @RequiresNotePermissions(NotePermissions.EDIT)
+    public String completeNoteImageUpload(NoteImageCompleteParam noteImageCompleteParam) {
+        FilePO filePO = RemoteResDataUtil.getResData(remoteFileService.completeHuaweiOBSUpload(CompleteUploadDTO.builder()
+                        .uploadId(noteImageCompleteParam.getUploadId())
+                        .hash(noteImageCompleteParam.getHash())
+                        .build()),
                 "上传异常，请联系管理员");
 
         // 异步保存笔记文件日志
         String destination = rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.SAVE_NOTE_FILE.name();
         rocketMQTemplate.asyncSend(destination, NoteFile.builder()
                 .fileId(filePO.getId())
-                .noteId(completeUploadDTO.getNoteId())
+                .noteId(noteImageCompleteParam.getNoteId())
                 .type(NoteFileType.NOTE_IMAGE.getValue())
                 .build(), RocketmqSendCallbackBuilder.commonCallback());
         return Constants.SUCCESS_RES;
