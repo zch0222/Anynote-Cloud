@@ -30,6 +30,8 @@ public class KnowledgeBaseQueryParam extends BaseEntity {
 
     private Integer pageSize;
 
+    private Integer permissions;
+
     public KnowledgeBaseQueryParam(Long id, Integer page, Integer pageSize) {
         this.id = id;
         this.page = page;

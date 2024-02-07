@@ -128,12 +128,14 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     }
     @Override
     @DataScope
-    public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize) {
+    public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize, Integer permissions) {
         LoginUser loginUser = tokenUtil.getLoginUser();
-        PageHelper.startPage(page, pageSize, "update_time desc");
-        List<NoteKnowledgeBaseDTO> noteKnowledgeBaseDTOList = this.baseMapper.selectUserKnowledgeBaseList(KnowledgeBaseQueryParam.builder()
+        KnowledgeBaseQueryParam queryParam = KnowledgeBaseQueryParam.builder()
+                .permissions(permissions)
                 .status(0)
-                .build());
+                .build();
+        PageHelper.startPage(page, pageSize, "update_time desc");
+        List<NoteKnowledgeBaseDTO> noteKnowledgeBaseDTOList = this.baseMapper.selectUserKnowledgeBaseList(queryParam);
         PageInfo<NoteKnowledgeBaseDTO> pageInfo = new PageInfo<>(noteKnowledgeBaseDTOList);
         return PageBean.<NoteKnowledgeBaseDTO>builder()
                 .current(page)

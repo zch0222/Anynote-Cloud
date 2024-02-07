@@ -2,6 +2,7 @@ package com.anynote.note.controller;
 
 import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.common.security.annotation.InnerAuth;
+import com.anynote.core.constant.ErrorMessageConstants;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.validation.annotation.Upload;
 import com.anynote.core.validation.annotation.Url;
@@ -18,6 +19,7 @@ import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -81,8 +83,9 @@ public class KnowledgeBaseController {
 
     @GetMapping
     public ResData<PageBean<NoteKnowledgeBaseDTO>> getUsersKnowledgeBases(@NotNull(message = "页码不能为空") Integer page,
-                                                                          @NotNull(message = "页面容量不能为空") Integer pageSize) {
-        return ResUtil.success(knowledgeBaseService.getUserKnowledgeBases(page, pageSize));
+                                                                          @NotNull(message = "页面容量不能为空") Integer pageSize,
+                                                                          @NotNull(message = ErrorMessageConstants.QUERY_PARAM_ERROR) Integer permissions) {
+        return ResUtil.success(knowledgeBaseService.getUserKnowledgeBases(page, pageSize, permissions));
     }
 
     @GetMapping("users")

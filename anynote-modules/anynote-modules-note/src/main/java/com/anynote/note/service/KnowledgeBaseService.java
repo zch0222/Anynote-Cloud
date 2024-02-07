@@ -47,7 +47,7 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
      * @param pageSize
      * @return
      */
-    public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize);
+    public PageBean<NoteKnowledgeBaseDTO> getUserKnowledgeBases(Integer page, Integer pageSize, Integer permissions);
 
     /**
      * 获取用户所有知识库的id

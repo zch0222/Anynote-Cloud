@@ -126,7 +126,10 @@
             AND n_knowledge_base.status = #{status}
         </if>
         <if test="organizationId != null">
-            AND n_organization_knowledge_base.organization_id = {organizationId}
+            AND n_organization_knowledge_base.organization_id = #{organizationId}
+        </if>
+        <if test="permissions != null">
+            AND n_user_knowledge_base.permissions &lt;= #{permissions}
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}

@@ -9,4 +9,6 @@ public class ErrorMessageConstants {
     public static final String PAGE_NULL = "页码不能为空";
 
     public static final String PAGE_SIZE_NULL = "页面大小不能为空";
+
+    public static final String QUERY_PARAM_ERROR = "查询参数错误";
 }
