@@ -9,6 +9,7 @@
         <result property="taskName" column="task_name"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>
+        <result property="taskDescribe" column="task_describe"/>
         <result property="knowledgeBaseId" column="knowledge_base_id"/>
         <result property="status" column="status"/>
         <result property="submissionNoteId" column="note_id"/>
@@ -58,7 +59,7 @@
 <!--        AND-->
 <!--            sys_user.id = #{submitUserId};-->
         SELECT DISTINCT
-            n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time,
+            n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time, n_note_task.task_describe,
             n_note_task.knowledge_base_id, n_note_task.status, n_note_task_submission_record.note_id,
             n_note_task_submission_record.submit_time, sys_user.username as creator_username,
             sys_user.nickname as creator_nickname, n_note_task.update_time, n_user_note_task.status as submission_status

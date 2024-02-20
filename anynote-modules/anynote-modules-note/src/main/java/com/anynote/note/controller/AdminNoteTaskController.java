@@ -71,6 +71,7 @@ public class AdminNoteTaskController {
                         .endTime(noteTaskUpdateDTO.getEndTime())
                         .startTime(noteTaskUpdateDTO.getStartTime())
                         .noteTaskId(noteTaskUpdateDTO.getId())
+                        .taskDescribe(noteTaskUpdateDTO.getTaskDescribe())
                 .build()));
 
     }

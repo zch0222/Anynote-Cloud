@@ -32,4 +32,6 @@ public class NoteTaskUpdateDTO {
     private Date startTime;
 
     private Date endTime;
+
+    private String taskDescribe;
 }

@@ -1,15 +1,13 @@
 package com.anynote.note.model.dto;
 
 import com.anynote.note.api.model.po.NoteTask;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 管理员笔记列表
  * @author 称霸幼儿园
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 public class AdminNoteTaskDTO extends NoteTask {
@@ -36,6 +34,7 @@ public class AdminNoteTaskDTO extends NoteTask {
         this.setCreateTime(noteTask.getCreateTime());
         this.setUpdateBy(noteTask.getUpdateBy());
         this.setUpdateTime(noteTask.getUpdateTime());
+        this.setTaskDescribe(noteTask.getTaskDescribe());
         this.setDeleted(null);
     }
 }

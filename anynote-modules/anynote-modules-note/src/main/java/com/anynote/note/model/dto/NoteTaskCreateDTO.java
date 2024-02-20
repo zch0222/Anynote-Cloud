@@ -35,4 +35,6 @@ public class NoteTaskCreateDTO {
      */
     @NotNull(message = "知识库id不能为空")
     private Long knowledgeBaseId;
+
+    private String taskDescribe;
 }

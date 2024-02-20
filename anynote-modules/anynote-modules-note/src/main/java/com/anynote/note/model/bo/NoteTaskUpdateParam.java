@@ -23,14 +23,18 @@ public class NoteTaskUpdateParam extends NoteTaskQueryParam {
 
     private Date endTime;
 
+    private String taskDescribe;
+
 
     @Builder(builderMethodName = "NoteTaskUpdateParamBuilder")
     public NoteTaskUpdateParam(String taskName,
-                               Date endTime, Date startTime, Long noteTaskId) {
+                               Date endTime, Date startTime, Long noteTaskId, String taskDescribe) {
         this.taskName = taskName;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.taskDescribe = taskDescribe;
         this.setNoteTaskId(noteTaskId);
+
     }
 
     public Long getKnowledgeBaseId() {

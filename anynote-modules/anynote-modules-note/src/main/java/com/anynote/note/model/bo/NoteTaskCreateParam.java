@@ -1,10 +1,7 @@
 package com.anynote.note.model.bo;
 
 import com.anynote.note.model.dto.NoteTaskCreateDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -13,6 +10,7 @@ import java.util.Date;
  * 笔记任务创建参数
  * @author 称霸幼儿园
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,10 +31,13 @@ public class NoteTaskCreateParam extends KnowledgeBaseQueryParam {
      */
     private Date endTime;
 
+    private String taskDescribe;
+
     public NoteTaskCreateParam(NoteTaskCreateDTO noteTaskCreateDTO) {
         this.setId(noteTaskCreateDTO.getKnowledgeBaseId());
         this.taskName = noteTaskCreateDTO.getTaskName();
         this.startTime = noteTaskCreateDTO.getStartTime();
         this.endTime = noteTaskCreateDTO.getEndTime();
+        this.taskDescribe = noteTaskCreateDTO.getTaskDescribe();
     }
 }

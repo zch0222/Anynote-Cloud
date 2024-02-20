@@ -107,6 +107,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .taskName(updateParam.getTaskName())
                 .startTime(updateParam.getStartTime())
                 .endTime(updateParam.getEndTime())
+                .taskDescribe(updateParam.getTaskDescribe())
                 .build();
         noteTask.setUpdateBy(loginUser.getSysUser().getId());
         noteTask.setUpdateTime(date);
@@ -180,6 +181,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .knowledgeBaseId(taskCreateParam.getId())
                 .status(0)
                 .deleted(0)
+                .taskDescribe(taskCreateParam.getTaskDescribe())
                 .build();
         noteTask.setCreateBy(loginUser.getSysUser().getId());
         noteTask.setUpdateBy(loginUser.getSysUser().getId());

@@ -10,10 +10,13 @@ import com.anynote.core.validation.enums.FileType;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
 import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
+import com.anynote.note.model.dto.CompleteKnowledgeBaseUploadDTO;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
+import com.anynote.note.model.dto.KnowledgeBaseCoverUploadTempLinkDTO;
 import com.anynote.note.model.dto.KnowledgeBaseUpdateDTO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
@@ -72,6 +75,17 @@ public class KnowledgeBaseController {
     public ResData<FileDTO> uploadKnowledgeBaseCover(@NotNull(message = "图片不能为空") @RequestParam("image") MultipartFile image,
                                                      @NotNull(message = "uploadId不能为空") @RequestParam("uploadId") String uploadId) {
         return ResUtil.success(knowledgeBaseService.uploadKnowledgeBaseCover(image, uploadId));
+    }
+
+    @PostMapping("covers/img")
+    public ResData<HuaweiOBSTemporarySignature> coverUploadTempLink(@Validated @RequestBody
+                                                                        KnowledgeBaseCoverUploadTempLinkDTO uploadTempLinkDTO) {
+        return ResUtil.success(knowledgeBaseService.createCoverUploadTempSignature(uploadTempLinkDTO));
+    }
+
+    @PutMapping("covers/img")
+    public ResData<String> completeCoverUpload(@Validated @RequestBody CompleteKnowledgeBaseUploadDTO completeKnowledgeBaseUploadDTO) {
+        return ResUtil.success(knowledgeBaseService.completeCoverUpload(completeKnowledgeBaseUploadDTO));
     }
 
     @Url(value = "cover", param = "createKnowledgeBaeDTO")

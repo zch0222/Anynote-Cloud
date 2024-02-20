@@ -7,6 +7,7 @@ import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ServletUtils;
 import com.anynote.core.utils.StringUtils;
+import com.anynote.core.utils.UrlUtil;
 import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.bo.UploadProgress;
@@ -104,12 +105,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
                 .deleted(0)
                 .createTime(date)
                 .type(contentType)
+                .source(source)
                 .build();
         HuaweiOBSTemporarySignature huaweiOBSTemporarySignature = filePluginFactory
                 .huaweiFilePlugin().createTemporarySignature(path,
                         filePO.getFileName(),
                         expireSeconds, contentType);
-        filePO.setUrl(filePO.getUrl());
+        filePO.setUrl(UrlUtil.removeAllParams(huaweiOBSTemporarySignature.getSignedUrl()));
         redisService.setCacheObject(CacheConstants.FILE_UPLOAD_ID +
                         ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID) + ":" + uploadId, filePO,
                 expireSeconds + 20L, TimeUnit.SECONDS);

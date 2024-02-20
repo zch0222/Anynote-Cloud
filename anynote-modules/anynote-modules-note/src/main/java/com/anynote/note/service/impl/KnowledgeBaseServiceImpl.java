@@ -4,6 +4,7 @@ import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.constant.FileConstants;
+import com.anynote.core.constant.HuaweiOBSConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.user.UserParamException;
 import com.anynote.core.utils.MultipartFileUtil;
@@ -15,11 +16,15 @@ import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.enums.FileSources;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
+import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.note.api.model.po.UserKnowledgeBase;
 import com.anynote.note.mapper.UserKnowledgeBaseMapper;
 import com.anynote.note.model.bo.*;
+import com.anynote.note.model.dto.CompleteKnowledgeBaseUploadDTO;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
+import com.anynote.note.model.dto.KnowledgeBaseCoverUploadTempLinkDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
 import com.anynote.note.model.vo.UploadKnowledgeBaeCoverVO;
 import com.anynote.note.validate.annotation.PageValid;
@@ -341,7 +346,7 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
             throw new BusinessException("导入名单失败");
         }
 //        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
-        MultipartFile multipartFile = MultipartFileUtil.toMultipartFile(bos.toByteArray(), "Members.xlsx");
+        MultipartFile multipartFile = MultipartFileUtil.toMultipartFile(bos.toByteArray(), "Members.xls");
         ResData<FilePO> fileDTOResData = remoteFileService.uploadFile(multipartFile, FileConstants.KNOWLEDGE_BASE_PATH +
                 StringUtils.format("/{}/", importUserParam.getId()) + FileConstants.MEMBER_EXCELS, loginUser.getSysUser().getId(),
                 UUID.randomUUID().toString().replace("-", ""), FileSources.KNOWLEDGE_BASE_MEMBER_EXCEL.getValue());
@@ -446,5 +451,23 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
                 .total(pageInfo.getTotal())
                 .rows(noteKnowledgeBaseDTOList)
                 .build();
+    }
+
+    @Override
+    public HuaweiOBSTemporarySignature createCoverUploadTempSignature(KnowledgeBaseCoverUploadTempLinkDTO uploadTempLinkDTO) {
+        return RemoteResDataUtil.getResData(remoteFileService.createHuaweiOBSTemporarySignature(CreateHuaweiOBSTemporarySignatureDTO.builder()
+                        .ContentType(uploadTempLinkDTO.getContentType())
+                        .expireSeconds(HuaweiOBSConstants.KNOWLEDGE_BASE_COVER_TEMPORARY_SIGNATURE_EXPIRE_SECONDS)
+                        .fileName(uploadTempLinkDTO.getFileName())
+                        .path(FileConstants.KNOWLEDGE_BASE_COVER)
+                        .uploadId(uploadTempLinkDTO.getUploadId())
+                        .source(FileSources.KNOWLEDGE_BASE_COVER.getValue()).build()), "图片上传失败");
+    }
+
+    @Override
+    public String completeCoverUpload(CompleteKnowledgeBaseUploadDTO completeKnowledgeBaseUploadDTO) {
+        FilePO filePO = RemoteResDataUtil.getResData(remoteFileService
+                .completeHuaweiOBSUpload(completeKnowledgeBaseUploadDTO), "上传异常，请联系管理员");
+        return Constants.SUCCESS_RES;
     }
 }

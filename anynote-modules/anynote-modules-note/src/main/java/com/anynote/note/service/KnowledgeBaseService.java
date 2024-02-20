@@ -2,9 +2,12 @@ package com.anynote.note.service;
 
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.file.api.model.bo.FileDTO;
+import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
 import com.anynote.note.model.bo.*;
+import com.anynote.note.model.dto.CompleteKnowledgeBaseUploadDTO;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
+import com.anynote.note.model.dto.KnowledgeBaseCoverUploadTempLinkDTO;
 import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
@@ -81,6 +84,11 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
 
 
     public String updateKnowledgeBase(KnowledgeBaseUpdateParam updateParam);
+
+    public HuaweiOBSTemporarySignature createCoverUploadTempSignature(KnowledgeBaseCoverUploadTempLinkDTO uploadTempLinkDTO);
+
+    public String completeCoverUpload(CompleteKnowledgeBaseUploadDTO completeKnowledgeBaseUploadDTO);
+
 
     /**
      * 超级管理员获取知识库列表
