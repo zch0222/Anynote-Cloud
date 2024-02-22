@@ -41,6 +41,13 @@ public interface SysUserService extends IService<SysUser> {
 
     public Integer updateSysUser(SysUser sysUser);
 
+
+    /**
+     * 获取用户自己的信息
+     * @return 获取用户自己的信息
+     */
+    public SysUser getMyUserInfo();
+
     /**
      * 超级管理员获取用户列表
      * @param queryParam

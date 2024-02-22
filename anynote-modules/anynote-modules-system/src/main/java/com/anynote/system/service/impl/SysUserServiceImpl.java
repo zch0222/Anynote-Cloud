@@ -1,10 +1,13 @@
 package com.anynote.system.service.impl;
 
+import com.anynote.common.security.token.TokenUtil;
 import com.anynote.common.security.utils.SecurityUtils;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
+import com.anynote.core.web.model.bo.ResData;
+import com.anynote.system.api.RemoteUserService;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
@@ -26,6 +29,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +53,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private ThreadPoolTaskExecutor asyncExecutor;
+
+    @Resource
+    private TokenUtil tokenUtil;
 
     /**
      * 根据用户名获取用户信息
@@ -197,5 +204,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = sysUserList.get(0);
         sysUser.setPassword("");
         return sysUser;
+    }
+
+    @Override
+    public SysUser getMyUserInfo() {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        return this.getSysUserInfoById(loginUser.getSysUser().getId());
     }
 }

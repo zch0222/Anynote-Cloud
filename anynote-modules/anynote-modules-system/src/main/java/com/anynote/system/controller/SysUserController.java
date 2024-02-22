@@ -98,4 +98,9 @@ public class SysUserController {
         sysUser.setId(userId);
         return ResUtil.success(sysUserService.updateSysUser(sysUser));
     }
+
+    @GetMapping("mine")
+    public ResData<SysUser> getMyInfo() {
+        return ResUtil.success(sysUserService.getMyUserInfo());
+    }
 }
