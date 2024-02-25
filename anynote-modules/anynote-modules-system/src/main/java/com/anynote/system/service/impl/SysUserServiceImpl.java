@@ -109,7 +109,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     sysUser.setDeleted(0);
                     sysUser.setPassword(SecurityUtils.encryptPassword(password));
                     if (false == checkUsername(sysUser.getUsername())) {
-                        knowledgeBaseImportUser.setPassword("用户名已经存在");
+                        knowledgeBaseImportUser.setPassword("用户名已经存在，邀请进入知识库");
+                        knowledgeBaseImportUser.setUserId(this.getUserIdByUserName(sysUser.getUsername()));
                         failUserNameList.add(knowledgeBaseImportUser.getUsername());
                         failCount[0] = failCount[0] + 1;
                     }
@@ -120,8 +121,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                         knowledgeBaseImportUser.setPassword(password);
                         knowledgeBaseImportUser.setUserId(sysUser.getId());
                     }
-
-
                     return knowledgeBaseImportUser;
                 }).collect(Collectors.toList());
         // 异步执行
@@ -144,6 +143,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .eq(SysUser::getUsername, username)
                 .select(SysUser::getUsername);
         return StringUtils.isNull(this.baseMapper.selectOne(sysUserLambdaQueryWrapper));
+    }
+
+    private Long getUserIdByUserName(String username) {
+        LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        sysUserLambdaQueryWrapper
+                .eq(SysUser::getUsername, username)
+                .select(SysUser::getId);
+        SysUser sysUser = this.baseMapper.selectOne(sysUserLambdaQueryWrapper);
+        if (StringUtils.isNull(sysUser)) {
+            throw new BusinessException("用户名不存在", ResCode.USER_REQUEST_PARAM_ERROR);
+        }
+        return sysUser.getId();
     }
 
     @Override
