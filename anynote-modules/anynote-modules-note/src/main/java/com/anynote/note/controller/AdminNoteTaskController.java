@@ -7,10 +7,8 @@ import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.bo.NoteOperationCount;
 import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
 import com.anynote.note.model.bo.*;
-import com.anynote.note.model.dto.AdminNoteTaskDTO;
-import com.anynote.note.model.dto.NoteTaskCreateDTO;
-import com.anynote.note.model.dto.NoteTaskSubmissionRecordDTO;
-import com.anynote.note.model.dto.NoteTaskUpdateDTO;
+import com.anynote.note.model.dto.*;
+import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.anynote.note.service.NoteTaskService;
 import com.anynote.note.service.NoteTaskSubmissionRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +102,19 @@ public class AdminNoteTaskController {
     public ResData<String> returnSubmissions(@NotNull(message = "提交记录id不能为空") @PathVariable("id") Long id) {
         NoteTaskSubmissionRecord noteTaskSubmissionRecord = noteTaskSubmissionRecordService.getBaseMapper().selectById(id);
         return ResUtil.success(noteTaskService.returnSubmission(new SubmissionReturnParam(noteTaskSubmissionRecord, noteTaskSubmissionRecord.getNoteTaskId())));
+    }
+
+    /**
+     * 获取用户的任务分析
+     * @return
+     */
+    @GetMapping("analyze/user")
+    public ResData<NoteTaskUserAnalyzeVO> getUserNoteTaskAnalyze(@Validated UserNoteTaskAnalyzeDTO userNoteTaskAnalyzeDTO) {
+        return ResUtil.success(noteTaskService.getUserNoteTaskAnalyze(NoteTaskAnalyzeQueryParam.NoteTaskAnalyzeQueryParamBuilder()
+                .userId(userNoteTaskAnalyzeDTO.getUserId())
+                .knowledgeBaseId(userNoteTaskAnalyzeDTO.getKnowledgeBaseId())
+                .page(userNoteTaskAnalyzeDTO.getPage())
+                .pageSize(userNoteTaskAnalyzeDTO.getPageSize()).build()));
     }
 
 

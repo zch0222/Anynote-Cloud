@@ -27,6 +27,18 @@
         <result property="count" column="count"/>
     </resultMap>
 
+    <!-- In your mapper XML file -->
+    <resultMap id="NoteTaskAnalyzePOResultMap" type="com.anynote.note.model.po.NoteTaskAnalyzePO">
+        <id property="noteTaskId" column="note_task_id" />
+        <id property="username" column="username" />
+        <result property="nickname" column="nickname" />
+        <result property="taskName" column="task_name" />
+        <result property="knowledgeBaseName" column="knowledge_base_name" />
+        <result property="noteId" column="note_id" />
+        <result property="editCount" column="edit_count" />
+    </resultMap>
+
+
     <select id="selectMemberNoteTaskList" resultMap="MemberNoteTaskDTOResult">
 <!--        SELECT DISTINCT-->
 <!--            n_note_task.id, n_note_task.task_name, n_note_task.start_time, n_note_task.end_time,-->
@@ -98,6 +110,34 @@
           AND
             n_note_task_submission_record.note_task_id = #{noteTaskId}
         GROUP BY n_note_task_submission_record.note_id, sys_user.nickname, sys_user.id;
+    </select>
+
+    <select id="selectNoteTaskAnalyze" resultMap="NoteTaskAnalyzePOResultMap">
+        SELECT
+            sys_user.username, sys_user.nickname, n_note_task.task_name, n_knowledge_base.name as knowledge_base_name,
+            note_task_id, n_note_task_submission_record.note_id,  COUNT(*) as edit_count
+        FROM
+            n_note_task_submission_record
+        LEFT JOIN
+            n_note_task ON n_note_task_submission_record.note_task_id = n_note_task.id
+        LEFT JOIN
+            n_knowledge_base ON n_note_task.knowledge_base_id = n_knowledge_base.id
+        LEFT JOIN
+            n_note_history ON n_note_task_submission_record.note_id = n_note_history.note_id
+        LEFT JOIN
+            sys_user ON n_note_task_submission_record.user_id = sys_user.id
+        LEFT JOIN
+            n_note ON n_note.id = n_note_task_submission_record.note_id
+        WHERE
+            n_knowledge_base.id = #{knowledgeBaseId}
+        <if test="userId != null">
+            AND
+            sys_user.id = #{userId}
+        </if>
+        GROUP BY
+            n_note_task_submission_record.user_id, note_task_id,
+            n_note_task_submission_record.note_id, n_knowledge_base.name, sys_user.nickname, sys_user.username,
+            n_note_task.task_name, n_knowledge_base.id
     </select>
 
 

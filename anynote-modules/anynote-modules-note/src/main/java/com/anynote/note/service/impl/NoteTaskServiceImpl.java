@@ -23,7 +23,9 @@ import com.anynote.note.mapper.UserNoteTaskMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
+import com.anynote.note.model.po.NoteTaskAnalyzePO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
+import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.anynote.note.service.*;
 import com.anynote.note.validate.annotation.PageValid;
 import com.anynote.system.api.model.bo.LoginUser;
@@ -628,5 +630,30 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     public List<NoteTaskHistoryVO> getNoteTaskHistoryList(Long noteTaskId) {
         LoginUser loginUser = tokenUtil.getLoginUser();
         return noteTaskOperationHistoryService.getNoteTaskHistoryList(loginUser.getSysUser().getId(), noteTaskId);
+    }
+
+
+    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "权限不足")
+    @Override
+    public NoteTaskUserAnalyzeVO getUserNoteTaskAnalyze(NoteTaskAnalyzeQueryParam queryParam) {
+        PageHelper.startPage(queryParam.getPage(), queryParam.getPageSize());
+        List<NoteTaskAnalyzePO> noteTaskAnalyzes = this.baseMapper.selectNoteTaskAnalyze(queryParam);
+        PageInfo<NoteTaskAnalyzePO> pageInfo = new PageInfo<>(noteTaskAnalyzes);
+
+        long sumEditCounts = 0L;
+        for (NoteTaskAnalyzePO noteTaskAnalyzePO : noteTaskAnalyzes) {
+            sumEditCounts = sumEditCounts + noteTaskAnalyzePO.getEditCount();
+        }
+        double averageEditCounts = 0.0;
+        if (sumEditCounts != 0L) {
+            averageEditCounts = 1.0 * sumEditCounts / noteTaskAnalyzes.size();
+        }
+        return NoteTaskUserAnalyzeVO.NoteTaskUserAnalyzeVOBuilder()
+                .averageEditCounts(averageEditCounts)
+                .rows(noteTaskAnalyzes)
+                .pages(pageInfo.getPages())
+                .current(queryParam.getPage())
+                .total(pageInfo.getTotal())
+                .build();
     }
 }

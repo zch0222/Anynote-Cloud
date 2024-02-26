@@ -8,6 +8,7 @@ import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
+import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -61,5 +62,7 @@ public interface NoteTaskService extends IService<NoteTask> {
      * @return 用户笔记任务操作历史列表
      */
     public List<NoteTaskHistoryVO> getNoteTaskHistoryList(Long noteTaskId);
+
+    public NoteTaskUserAnalyzeVO getUserNoteTaskAnalyze(NoteTaskAnalyzeQueryParam queryParam);
 
 }
