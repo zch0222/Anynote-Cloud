@@ -77,11 +77,13 @@ public class AdminNoteTaskController {
     @GetMapping("submissions")
     public ResData<PageBean<NoteTaskSubmissionRecordDTO>> getAdminNoteTaskSubmissionRecords(@NotNull(message = "任务id不能为空") Long noteTaskId,
                                                                                             @NotNull(message = "页码不能未空") Integer page,
-                                                                                            @NotNull(message = "页码容量不能为空") Integer pageSize) {
+                                                                                            @NotNull(message = "页码容量不能为空") Integer pageSize,
+                                                                                            @NotNull(message = "提交状态不能为空") Integer userTaskStatus) {
         NoteTaskSubmissionRecordQueryParam noteTaskSubmissionRecordQueryParam = new NoteTaskSubmissionRecordQueryParam();
         noteTaskSubmissionRecordQueryParam.setNoteTaskId(noteTaskId);
         noteTaskSubmissionRecordQueryParam.setPageSize(pageSize);
         noteTaskSubmissionRecordQueryParam.setPage(page);
+        noteTaskSubmissionRecordQueryParam.setUserTaskStatus(userTaskStatus);
         return ResUtil.success(noteTaskSubmissionRecordService.getNoteTaskSubmitRecords(noteTaskSubmissionRecordQueryParam));
     }
 

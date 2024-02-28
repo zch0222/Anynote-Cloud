@@ -30,24 +30,18 @@
             n_note_task_submission_record.create_time, n_note_task_submission_record.update_by, n_note_task_submission_record.update_time,
             n_note_task_submission_record.remark, sys_user.username, sys_user.nickname, n_note.title as note_title, n_note_task_submission_record.note_history_id
         FROM
-            n_note_task_submission_record
-        LEFT JOIN
+            n_user_note_task
+                LEFT JOIN
+            sys_user ON n_user_note_task.user_id = sys_user.id
+                LEFT JOIN
+            n_note_task_submission_record ON (n_note_task_submission_record.note_task_id = n_user_note_task.note_task_id AND
+                                              n_note_task_submission_record.user_id = n_user_note_task.user_id)
+                LEFT JOIN
             n_note ON n_note_task_submission_record.note_id = n_note.id
-        LEFT JOIN
-            sys_user ON n_note_task_submission_record.user_id = sys_user.id
         WHERE
-            n_note_task_submission_record.is_delete = 0
+            n_user_note_task.note_task_id = #{noteTaskId}
           AND
-            n_note_task_submission_record.status = 0
-        <if test="userId != null">
-            AND n_note_task_submission_record.user_id = #{userId}
-        </if>
-        <if test="noteTaskId != null">
-            AND n_note_task_submission_record.note_task_id = #{noteTaskId}
-        </if>
-        <if test="noteId != null">
-            AND n_note_task_submission_record.note_id = #{noteId}
-        </if>
+            n_user_note_task.status = #{userTaskStatus}
 
     </select>
 
