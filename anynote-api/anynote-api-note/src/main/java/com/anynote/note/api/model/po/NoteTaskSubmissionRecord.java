@@ -33,6 +33,11 @@ public class NoteTaskSubmissionRecord extends BaseEntity {
      */
     private Long noteHistoryId;
 
+    /**
+     * 笔记编辑次数，提交时
+     */
+    private Long noteEditCount;
+
     private Date submitTime;
 
     /**
