@@ -5,12 +5,15 @@ import com.anynote.core.constant.SysOrganizationConstants;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.po.SysOrganization;
+import com.anynote.system.api.model.po.SysUserOrganization;
 import com.anynote.system.mapper.SysOrganizationMapper;
 import com.anynote.system.service.SysOrganizationService;
+import com.anynote.system.service.SysUserOrganizationService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,6 +23,9 @@ import java.util.List;
 @Service
 public class SysOrganizationServiceImpl extends ServiceImpl<SysOrganizationMapper, SysOrganization>
         implements SysOrganizationService {
+
+    @Resource
+    private SysUserOrganizationService sysUserOrganizationService;
 
     @Override
     public void associateKnowledgeUserOrganization(List<KnowledgeBaseImportUser> knowledgeBaseImportUserList) {
@@ -48,8 +54,13 @@ public class SysOrganizationServiceImpl extends ServiceImpl<SysOrganizationMappe
                                 sysOrganization.getId(), SysOrganizationConstants.USER_ORGANIZATION_STATUS_NORMAL);
                     }
                     else {
-                        this.baseMapper.insertUserSysOrganization(knowledgeBaseImportUser.getUserId(),
-                                sysOrganizationInfo.getId(), SysOrganizationConstants.USER_ORGANIZATION_STATUS_NORMAL);
+                        SysUserOrganization sysUserOrganization =
+                                sysUserOrganizationService.getSysUserOrganization(knowledgeBaseImportUser.getUserId(),
+                                        sysOrganizationInfo.getId());
+                        if (StringUtils.isNull(sysUserOrganization)) {
+                            this.baseMapper.insertUserSysOrganization(knowledgeBaseImportUser.getUserId(),
+                                    sysOrganizationInfo.getId(), SysOrganizationConstants.USER_ORGANIZATION_STATUS_NORMAL);
+                        }
                     }
                 }
         );

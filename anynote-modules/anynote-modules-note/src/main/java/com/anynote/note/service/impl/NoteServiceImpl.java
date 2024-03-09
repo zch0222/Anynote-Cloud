@@ -492,4 +492,5 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note>
                 .build(), RocketmqSendCallbackBuilder.commonCallback());
         return Constants.SUCCESS_RES;
     }
+
 }

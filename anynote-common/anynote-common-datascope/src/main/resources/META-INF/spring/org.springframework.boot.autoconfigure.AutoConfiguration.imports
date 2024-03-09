@@ -1,2 +1,3 @@
 com.anynote.common.datascope.aspect.DataScopeAspect
 com.anynote.common.datascope.aspect.DataScopeInterceptorAspect
+com.anynote.common.datascope.aspect.RolePermissionsAspect

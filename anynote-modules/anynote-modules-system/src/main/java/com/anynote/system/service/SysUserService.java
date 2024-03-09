@@ -6,6 +6,7 @@ import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.anynote.system.api.model.bo.SysUserQueryParam;
+import com.anynote.system.model.dto.ResetPasswordDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -34,7 +35,7 @@ public interface SysUserService extends IService<SysUser> {
 
     public KnowledgeBaseUserImportDTO importKnowledgeBaseUser(KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO);
 
-    public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize);
+    public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize, String username);
 
     public SysUser getSysUserById(Long userId);
 
@@ -47,6 +48,10 @@ public interface SysUserService extends IService<SysUser> {
      * @return 获取用户自己的信息
      */
     public SysUser getMyUserInfo();
+
+    public SysUser getPublicUserInfoByUsername(String username);
+
+    public String resetPassword(ResetPasswordDTO resetPasswordDTO);
 
     /**
      * 超级管理员获取用户列表

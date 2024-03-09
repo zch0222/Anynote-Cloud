@@ -131,7 +131,10 @@
         WHERE
             sys_user.is_delete = 0
           AND
-            n_user_knowledge_base.knowledge_base_id = #{knowledgeBaseId};
+            n_user_knowledge_base.knowledge_base_id = #{knowledgeBaseId}
+        <if test="username != null and username != ''">
+            AND sys_user.username = #{username}
+        </if> ;
     </select>
 
     <insert id="insertUserRole">

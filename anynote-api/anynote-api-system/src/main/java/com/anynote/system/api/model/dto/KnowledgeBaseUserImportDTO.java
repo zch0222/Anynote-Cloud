@@ -17,13 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class KnowledgeBaseUserImportDTO {
+
     @NotNull(message = "知识库用户列表不能为空")
     private List<KnowledgeBaseImportUser> knowledgeBaseImportUserList;
 
-    private List<String> failUserNameList;
+//    private List<String> failUserNameList;
 
-    /**
-     * 失败条数
-     */
-    private Integer failCount;
+    private List<ImportFailUser> failUserList;
+
 }
+
+

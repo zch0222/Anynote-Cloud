@@ -4,6 +4,7 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
+import com.anynote.note.api.model.po.UserKnowledgeBase;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.CompleteKnowledgeBaseUploadDTO;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
@@ -72,6 +73,8 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
 
     public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(KnowledgeBaseUsersQueryParam queryParam);
 
+    public String removeKnowledgeBaseUser(KnowledgeBaseUsersDeleteParam deleteParam);
+
     public List<NoteKnowledgeBaseDTO> selectOrganizationKnowledgeBasesByUserIdByPage(Long userId);
 
     public Integer getUserKnowledgeBasePermissions(Long userId, Long knowledgeBaseId);
@@ -88,6 +91,10 @@ public interface KnowledgeBaseService extends IService<NoteKnowledgeBase> {
     public HuaweiOBSTemporarySignature createCoverUploadTempSignature(KnowledgeBaseCoverUploadTempLinkDTO uploadTempLinkDTO);
 
     public String completeCoverUpload(CompleteKnowledgeBaseUploadDTO completeKnowledgeBaseUploadDTO);
+
+    public UserKnowledgeBase getUserKnowledgeBase(Long userId, Long knowledgeBaseId);
+
+    public void addUserToKnowledgeBase(UserKnowledgeBase userKnowledgeBase);
 
 
     /**

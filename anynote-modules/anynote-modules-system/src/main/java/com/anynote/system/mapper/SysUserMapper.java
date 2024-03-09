@@ -26,7 +26,8 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     public Integer insertUserRole(@Param("userId") Long userId,
                                   @Param("roleId") Long roleId);
 
-    public List<KnowledgeBaseUserVO> selectKnowledgeBaseUsers(@Param("knowledgeBaseId") Long knowledgeBaseId);
+    public List<KnowledgeBaseUserVO> selectKnowledgeBaseUsers(@Param("knowledgeBaseId") Long knowledgeBaseId,
+                                                              @Param("username") String username);
 
     public List<SysUser> selectSysUser(SysUserQueryParam queryParam);
 }

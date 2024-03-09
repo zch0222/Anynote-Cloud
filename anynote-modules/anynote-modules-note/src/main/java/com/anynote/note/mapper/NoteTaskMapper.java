@@ -6,8 +6,10 @@ import com.anynote.note.model.bo.NoteTaskAnalyzeQueryParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.po.NoteTaskAnalyzePO;
+import com.anynote.note.model.po.NoteTaskChartsPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +25,8 @@ public interface NoteTaskMapper extends BaseMapper<NoteTask> {
     public List<NoteOperationCount> selectNoteOperationCount(Long noteTaskId);
 
     public List<NoteTaskAnalyzePO> selectNoteTaskAnalyze(NoteTaskAnalyzeQueryParam queryParam);
+
+    public List<NoteTaskChartsPO> selectNoteTaskCharts(@Param("noteTaskId") Long noteTaskId);
+
 
 }

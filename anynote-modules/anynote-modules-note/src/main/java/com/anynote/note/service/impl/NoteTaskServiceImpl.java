@@ -24,6 +24,7 @@ import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.po.NoteTaskAnalyzePO;
+import com.anynote.note.model.po.NoteTaskChartsPO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.anynote.note.service.*;
@@ -93,6 +94,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
     @Resource
     private NoteTaskOperationHistoryService noteTaskOperationHistoryService;
 
+    @Resource
+    private NoteOperationLogService noteOperationLogService;
 
     /**
      * 更新笔记任务
@@ -359,6 +362,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .noteId(submitParam.getId())
                 .noteHistoryId(noteHistoryService.getLatestNoteHistory(submitParam.getNoteId()).getId())
                 .submitTime(new Date())
+                .noteEditCount(noteOperationLogService.selectNoteEditCount(submitParam.getNoteId()))
                 .status(NoteTaskSubmissionRecordStatus.NORMAL.getValue())
                 .deleted(0)
                 .build();
@@ -655,5 +659,24 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .current(queryParam.getPage())
                 .total(pageInfo.getTotal())
                 .build();
+    }
+
+    @Override
+    public Integer insertUserNoteTask(UserNoteTask userNoteTask) {
+        return userNoteTaskMapper.insert(userNoteTask);
+    }
+
+    @Override
+    public List<NoteTask> getNoteTasksByKnowledgeBaseId(Long knowledgeBaseId) {
+        LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteTaskLambdaQueryWrapper
+                .eq(NoteTask::getKnowledgeBaseId, knowledgeBaseId);
+        return this.baseMapper.selectList(noteTaskLambdaQueryWrapper);
+    }
+
+    @RequiresNoteTaskPermissions(NoteTaskPermissions.MANAGE)
+    @Override
+    public List<NoteTaskChartsPO> getNoteTaskChartsData(NoteTaskChartsQueryParam queryParam) {
+        return this.baseMapper.selectNoteTaskCharts(queryParam.getNoteTaskId());
     }
 }

@@ -5,6 +5,7 @@ import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
+import com.anynote.note.model.bo.NoteTaskChartsQueryParam;
 import com.anynote.note.model.bo.NoteTaskCreateParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
 import com.anynote.note.model.bo.NoteTaskSubmitParam;
@@ -12,6 +13,7 @@ import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.dto.NoteTaskSubmissionRecordCreateDTO;
 import com.anynote.note.model.dto.NoteTaskCreateDTO;
 import com.anynote.note.model.dto.UserNoteTaskAnalyzeDTO;
+import com.anynote.note.model.po.NoteTaskChartsPO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.anynote.note.service.NoteTaskService;
@@ -72,6 +74,19 @@ public class NoteTaskController {
         return ResUtil.success(noteTaskService.getNoteTaskHistoryList(id));
     }
 
+
+    /**
+     * 获取任务图标数据
+     * @param id 任务id
+     * @return 任务图表数据
+     */
+    @GetMapping("{id}/charts")
+    public ResData<List<NoteTaskChartsPO>> getNoteTaskChartsData(@NotNull(message = "任务ID不能为空") @PathVariable("id") Long id) {
+        NoteTaskChartsQueryParam noteTaskChartsQueryParam = new NoteTaskChartsQueryParam();
+        noteTaskChartsQueryParam.setNoteTaskId(id);
+        return ResUtil.success(noteTaskService.getNoteTaskChartsData(noteTaskChartsQueryParam));
+
+    }
 
 
 

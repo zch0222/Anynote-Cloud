@@ -38,6 +38,19 @@
         <result property="editCount" column="edit_count" />
     </resultMap>
 
+    <resultMap id="NoteTaskChartsPOResultMap" type="com.anynote.note.model.po.NoteTaskChartsPO">
+        <result column="note_task_id" property="noteTaskId" />
+        <result column="user_id" property="userId" />
+        <result column="note_id" property="noteId" />
+        <result column="note_history_id" property="noteHistoryId" />
+        <result column="note_edit_count" property="noteEditCount" />
+        <result column="submit_time" property="submitTime" />
+        <result column="status" property="status" />
+        <result column="update_time" property="updateTime" />
+        <result column="username" property="username" />
+        <result column="nickname" property="nickname" />
+    </resultMap>
+
 
     <select id="selectMemberNoteTaskList" resultMap="MemberNoteTaskDTOResult">
 <!--        SELECT DISTINCT-->
@@ -138,6 +151,24 @@
             n_note_task_submission_record.user_id, note_task_id,
             n_note_task_submission_record.note_id, n_knowledge_base.name, sys_user.nickname, sys_user.username,
             n_note_task.task_name, n_knowledge_base.id
+    </select>
+
+    <select id="selectNoteTaskCharts" resultMap="NoteTaskChartsPOResultMap">
+        SELECT
+            n_note_task_submission_record.note_task_id, n_note_task_submission_record.user_id,
+            n_note_task_submission_record.note_id, n_note_task_submission_record.note_history_id, n_note_task_submission_record.note_edit_count,
+            n_note_task_submission_record.submit_time, n_note_task_submission_record.status, n_note.update_time, sys_user.username,
+            sys_user.nickname
+        FROM
+            n_note_task_submission_record
+                LEFT JOIN
+            n_note ON n_note.id = n_note_task_submission_record.note_id
+                LEFT JOIN
+            sys_user ON sys_user.id = n_note_task_submission_record.user_id
+        WHERE
+            n_note_task_submission_record.note_task_id = #{noteTaskId}
+          AND
+            n_note_task_submission_record.status = 0;
     </select>
 
 

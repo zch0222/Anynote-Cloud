@@ -3,10 +3,12 @@ package com.anynote.note.service;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.model.bo.NoteOperationCount;
 import com.anynote.note.api.model.po.NoteTask;
+import com.anynote.note.api.model.po.UserNoteTask;
 import com.anynote.note.enums.NoteTaskPermissions;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.AdminNoteTaskDTO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
+import com.anynote.note.model.po.NoteTaskChartsPO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -64,5 +66,16 @@ public interface NoteTaskService extends IService<NoteTask> {
     public List<NoteTaskHistoryVO> getNoteTaskHistoryList(Long noteTaskId);
 
     public NoteTaskUserAnalyzeVO getUserNoteTaskAnalyze(NoteTaskAnalyzeQueryParam queryParam);
+
+    public Integer insertUserNoteTask(UserNoteTask userNoteTask);
+
+    /**
+     * 根据知识库ID获取笔记任务列表
+     * @param knowledgeBaseId
+     * @return
+     */
+    public List<NoteTask> getNoteTasksByKnowledgeBaseId(Long knowledgeBaseId);
+
+    public List<NoteTaskChartsPO> getNoteTaskChartsData(NoteTaskChartsQueryParam queryParam);
 
 }

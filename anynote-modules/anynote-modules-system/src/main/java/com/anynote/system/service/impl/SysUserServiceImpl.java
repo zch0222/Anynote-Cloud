@@ -2,19 +2,23 @@ package com.anynote.system.service.impl;
 
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.common.security.utils.SecurityUtils;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.system.api.RemoteUserService;
+import com.anynote.system.api.enums.KnowledgeBaseUserImportErrorType;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.dto.ImportFailUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.anynote.system.mapper.SysUserMapper;
 import com.anynote.system.api.model.bo.SysUserQueryParam;
+import com.anynote.system.model.dto.ResetPasswordDTO;
 import com.anynote.system.service.SysOrganizationService;
 import com.anynote.system.service.SysPermissionService;
 import com.anynote.system.service.SysRoleService;
@@ -92,8 +96,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public KnowledgeBaseUserImportDTO importKnowledgeBaseUser(KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO) {
-        Integer[] failCount = {0};
-        List<String> failUserNameList = new ArrayList<>();
+//        List<String> failUserNameList = new ArrayList<>();
+        List<ImportFailUser> failUserList = new ArrayList<>();
         String password = RandomStringUtils.randomNumeric(10);
         List<KnowledgeBaseImportUser> knowledgeBaseImportUserList = knowledgeBaseUserImportDTO.getKnowledgeBaseImportUserList().stream()
                 .map(knowledgeBaseImportUser -> {
@@ -111,15 +115,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     if (false == checkUsername(sysUser.getUsername())) {
                         knowledgeBaseImportUser.setPassword("用户名已经存在，邀请进入知识库");
                         knowledgeBaseImportUser.setUserId(this.getUserIdByUserName(sysUser.getUsername()));
-                        failUserNameList.add(knowledgeBaseImportUser.getUsername());
-                        failCount[0] = failCount[0] + 1;
                     }
                     else {
-                        this.baseMapper.insert(sysUser);
-                        asyncExecutor.submit(() -> associateUserRole(sysUser.getId(), 2L));
-                        sysUser.setPassword(password);
-                        knowledgeBaseImportUser.setPassword(password);
-                        knowledgeBaseImportUser.setUserId(sysUser.getId());
+                        try {
+                            this.baseMapper.insert(sysUser);
+                            asyncExecutor.submit(() -> associateUserRole(sysUser.getId(), 2L));
+                            sysUser.setPassword(password);
+                            knowledgeBaseImportUser.setPassword(password);
+                            knowledgeBaseImportUser.setUserId(sysUser.getId());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            failUserList.add(ImportFailUser.builder()
+                                    .username(knowledgeBaseImportUser.getUsername())
+                                    .reason(KnowledgeBaseUserImportErrorType.REGISTRATION_FAILED.getValue())
+                                    .build());
+//                            failUserNameList.add(knowledgeBaseImportUser.getUsername());
+//                            failCount[0] = failCount[0] + 1;
+                        }
                     }
                     return knowledgeBaseImportUser;
                 }).collect(Collectors.toList());
@@ -127,8 +139,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         asyncExecutor.submit(() -> {
             sysOrganizationService.associateKnowledgeUserOrganization(knowledgeBaseImportUserList);
         });
-        knowledgeBaseUserImportDTO.setFailCount(failCount[0]);
-        knowledgeBaseUserImportDTO.setFailUserNameList(failUserNameList);
+//        knowledgeBaseUserImportDTO.setFailUserNameList(failUserNameList);
+        knowledgeBaseUserImportDTO.setFailUserList(failUserList);
         return knowledgeBaseUserImportDTO;
     }
 
@@ -158,9 +170,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize) {
+    public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(Long knowledgeBaseId, Integer page, Integer pageSize, String username) {
         PageHelper.startPage(page, pageSize, "user_id asc");
-        List<KnowledgeBaseUserVO> knowledgeBaseUserVOList = this.baseMapper.selectKnowledgeBaseUsers(knowledgeBaseId);
+        List<KnowledgeBaseUserVO> knowledgeBaseUserVOList = this.baseMapper.selectKnowledgeBaseUsers(knowledgeBaseId, username);
         PageInfo<KnowledgeBaseUserVO> pageInfo = new PageInfo<>(knowledgeBaseUserVOList);
         return PageBean.<KnowledgeBaseUserVO>builder()
                 .rows(knowledgeBaseUserVOList)
@@ -221,5 +233,30 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public SysUser getMyUserInfo() {
         LoginUser loginUser = tokenUtil.getLoginUser();
         return this.getSysUserInfoById(loginUser.getSysUser().getId());
+    }
+
+    @Override
+    public String resetPassword(ResetPasswordDTO resetPasswordDTO) {
+        SysUser sysUser = new SysUser();
+        sysUser.setId(resetPasswordDTO.getUserId());
+        sysUser.setPassword(SecurityUtils.encryptPassword(resetPasswordDTO.getNewPassword()));
+        int res = this.updateSysUser(sysUser);
+        if (res == 1) {
+            return Constants.SUCCESS_RES;
+        }
+        throw new BusinessException("重置密码失败，请联系管理员");
+    }
+
+
+    @Override
+    public SysUser getPublicUserInfoByUsername(String username) {
+        List<SysUser> sysUserList = this.baseMapper.selectSysUser(SysUserQueryParam.builder()
+                .username(username).build());
+        if (sysUserList.size() != 1) {
+            throw new BusinessException("查询用户信息失败");
+        }
+        SysUser sysUser = sysUserList.get(0);
+        sysUser.setPassword("");
+        return sysUser;
     }
 }

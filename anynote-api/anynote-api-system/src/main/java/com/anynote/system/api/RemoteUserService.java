@@ -37,7 +37,8 @@ public interface RemoteUserService {
     @GetMapping("user/bases")
     public ResData<PageBean<KnowledgeBaseUserVO>> getKnowledgeBaseUsers(@RequestParam("knowledgeBaseId") Long knowledgeBaseId,
                                                                         @RequestParam("page") Integer page,
-                                                                        @RequestParam("pageSize") Integer pageSize);
+                                                                        @RequestParam("pageSize") Integer pageSize,
+                                                                        @RequestParam("username") String username);
 
     @GetMapping("user/{userId}")
     public ResData<SysUser> getSysUserById(@PathVariable("userId") @NotNull(message = "用户id不能为空") Long userId);

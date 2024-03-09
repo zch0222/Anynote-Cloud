@@ -7,9 +7,7 @@ import com.anynote.core.constant.FileConstants;
 import com.anynote.core.constant.HuaweiOBSConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.user.UserParamException;
-import com.anynote.core.utils.MultipartFileUtil;
-import com.anynote.core.utils.RemoteResDataUtil;
-import com.anynote.core.utils.StringUtils;
+import com.anynote.core.utils.*;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
@@ -19,7 +17,10 @@ import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
 import com.anynote.file.api.model.po.FilePO;
+import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.api.model.po.UserKnowledgeBase;
+import com.anynote.note.api.model.po.UserNoteTask;
+import com.anynote.note.enums.NoteTaskPermissions;
 import com.anynote.note.mapper.UserKnowledgeBaseMapper;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.CompleteKnowledgeBaseUploadDTO;
@@ -27,8 +28,10 @@ import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
 import com.anynote.note.model.dto.KnowledgeBaseCoverUploadTempLinkDTO;
 import com.anynote.note.model.vo.CreateKnowledgeBaseVO;
 import com.anynote.note.model.vo.UploadKnowledgeBaeCoverVO;
+import com.anynote.note.service.NoteTaskService;
 import com.anynote.note.validate.annotation.PageValid;
 import com.anynote.system.api.RemoteUserService;
+import com.anynote.system.api.enums.KnowledgeBaseUserImportErrorType;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
@@ -39,6 +42,7 @@ import com.anynote.note.model.dto.KnowledgeBaseImportUserVO;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.service.KnowledgeBaseService;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.dto.ImportFailUser;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
@@ -48,10 +52,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.models.auth.In;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.ls.LSException;
 
 import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
@@ -82,6 +89,10 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
 
     @Resource
     private RemoteFileService remoteFileService;
+
+    @Resource
+    @Lazy
+    private NoteTaskService noteTaskService;
 
 //    @Override
 //    public Long createKnowledgeBase(KnowledgeBaseCreateParam createParam) {
@@ -249,7 +260,7 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
     @Override
     public PageBean<KnowledgeBaseUserVO> getKnowledgeBaseUsers(KnowledgeBaseUsersQueryParam queryParam) {
         ResData<PageBean<KnowledgeBaseUserVO>> resData = remoteUserService
-                .getKnowledgeBaseUsers(queryParam.getId(), queryParam.getPage(), queryParam.getPageSize());
+                .getKnowledgeBaseUsers(queryParam.getId(), queryParam.getPage(), queryParam.getPageSize(), queryParam.getUsername());
 
         if (StringUtils.isNull(resData) || StringUtils.isNull(resData.getData())) {
             throw new BusinessException("获取知识库用户失败，请联系管理员");
@@ -259,6 +270,23 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
             throw new BusinessException("获取知识库用户失败，请联系管理员");
         }
         return resData.getData();
+    }
+
+    @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "没有权限执行操作")
+    @Override
+    public String removeKnowledgeBaseUser(KnowledgeBaseUsersDeleteParam deleteParam) {
+        if (deleteParam.getUserId().equals(tokenUtil.getUserId())) {
+            throw new BusinessException("您不能移除自己");
+        }
+        LambdaQueryWrapper<UserKnowledgeBase> userKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userKnowledgeBaseLambdaQueryWrapper
+                .eq(UserKnowledgeBase::getKnowledgeBaseId, deleteParam.getKnowledgeBaseId())
+                .eq(UserKnowledgeBase::getUserId, deleteParam.getUserId());
+        int res = userKnowledgeBaseMapper.delete(userKnowledgeBaseLambdaQueryWrapper);
+        if (1 == res) {
+            return Constants.SUCCESS_RES;
+        }
+        throw new BusinessException("移除失败，请联系管理员");
     }
 
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "没有权限导入用户")
@@ -332,11 +360,11 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
             throw new BusinessException("导入名单失败");
         }
 
-        List<KnowledgeBaseImportUser> resKnowledgeBaseUserList = userImportResData.getData().getKnowledgeBaseImportUserList();
+        KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO = userImportResData.getData();
 
-        associateKnowledgeUserKnowledgeBase(resKnowledgeBaseUserList, importUserParam.getId());
+        associateKnowledgeUserKnowledgeBase(knowledgeBaseUserImportDTO, importUserParam.getId());
 
-        addKnowledgeBaseUserPassword(sheet, resKnowledgeBaseUserList);
+        addKnowledgeBaseUserPassword(sheet, knowledgeBaseUserImportDTO.getKnowledgeBaseImportUserList());
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
@@ -359,8 +387,8 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
         }
         return KnowledgeBaseImportUserVO.builder()
                 .excelUrl(fileDTOResData.getData().getUrl())
-                .failCount(userImportResData.getData().getFailCount())
-                .failUserNameList(userImportResData.getData().getFailUserNameList())
+                .failCount(knowledgeBaseUserImportDTO.getFailUserList().size())
+                .failUserList(knowledgeBaseUserImportDTO.getFailUserList())
                 .build();
     }
 
@@ -377,15 +405,72 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
         }
     }
 
-    private void associateKnowledgeUserKnowledgeBase(List<KnowledgeBaseImportUser> knowledgeBaseImportUserList, Long knowledgeBaseId) {
-        knowledgeBaseImportUserList.stream().forEach(
+    private void associateKnowledgeUserKnowledgeBase(KnowledgeBaseUserImportDTO knowledgeBaseUserImportDTO, Long knowledgeBaseId) {
+        List<KnowledgeBaseImportUser> knowledgeBaseImportUserList = knowledgeBaseUserImportDTO.getKnowledgeBaseImportUserList();
+        List<ImportFailUser> failUserList = knowledgeBaseUserImportDTO.getFailUserList();
+        knowledgeBaseImportUserList.forEach(
                 knowledgeBaseImportUser -> {
-                    if (StringUtils.isNotNull(knowledgeBaseImportUser.getUserId())) {
-                        this.baseMapper.insertUserKnowledgeBase(knowledgeBaseImportUser.getUserId(), knowledgeBaseId,
-                                KnowledgeBasePermissions.EDIT.getValue());
+                    if (StringUtils.isNull(knowledgeBaseImportUser.getUserId())) {
+                        return;
+                    }
+
+                    if (StringUtils.isNull(this.getUserKnowledgeBase(knowledgeBaseImportUser.getUserId(), knowledgeBaseId))) {
+//                        ((KnowledgeBaseService)AopContext.currentProxy()).addUserToKnowledgeBase(UserKnowledgeBase.builder()
+//                                .userId(knowledgeBaseImportUser.getUserId())
+//                                .knowledgeBaseId(knowledgeBaseId)
+//                                .permissions(KnowledgeBasePermissions.EDIT.getValue())
+//                                .build());
+                        AopUtil.getCurrentProxy(this.getClass()).addUserToKnowledgeBase(UserKnowledgeBase.builder()
+                                .userId(knowledgeBaseImportUser.getUserId())
+                                .knowledgeBaseId(knowledgeBaseId)
+                                .permissions(KnowledgeBasePermissions.EDIT.getValue())
+                                .build());
+//                        this.baseMapper.insertUserKnowledgeBase(knowledgeBaseImportUser.getUserId(), knowledgeBaseId,
+//                                KnowledgeBasePermissions.EDIT.getValue());
+                        //
+
+                    }
+                    else {
+                        failUserList.add(ImportFailUser.builder()
+                                        .username(knowledgeBaseImportUser.getUsername())
+                                .reason(KnowledgeBaseUserImportErrorType.USER_EXISTS_IN_KNOWLEDGE_BASE.getValue()).build());
+                        knowledgeBaseImportUser.setPassword(KnowledgeBaseUserImportErrorType.USER_EXISTS_IN_KNOWLEDGE_BASE.getValue());
                     }
                 }
         );
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void addUserToKnowledgeBase(UserKnowledgeBase userKnowledgeBase) {
+        userKnowledgeBaseMapper.insert(userKnowledgeBase);
+        List<NoteTask> noteTasks = noteTaskService.getNoteTasksByKnowledgeBaseId(userKnowledgeBase.getKnowledgeBaseId());
+        for (NoteTask noteTask : noteTasks) {
+            try {
+                noteTaskService.insertUserNoteTask(UserNoteTask.builder()
+                        .noteTaskId(noteTask.getId())
+                        .userId(userKnowledgeBase.getUserId())
+                        .permissions(NoteTaskPermissions.SUBMIT.getValue())
+                        .status(0)
+                        .build());
+            } catch (Exception e) {
+                log.error("管理任务失败");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 获取用户知识库
+     * @param userId
+     * @param knowledgeBaseId
+     * @return
+     */
+    public UserKnowledgeBase getUserKnowledgeBase(Long userId, Long knowledgeBaseId) {
+        LambdaQueryWrapper<UserKnowledgeBase> userKnowledgeBaseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userKnowledgeBaseLambdaQueryWrapper
+                .eq(UserKnowledgeBase::getUserId, userId)
+                .eq(UserKnowledgeBase::getKnowledgeBaseId, knowledgeBaseId);
+        return userKnowledgeBaseMapper.selectOne(userKnowledgeBaseLambdaQueryWrapper);
     }
 
     @Override

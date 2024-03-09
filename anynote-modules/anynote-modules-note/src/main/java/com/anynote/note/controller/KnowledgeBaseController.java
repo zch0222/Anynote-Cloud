@@ -13,6 +13,7 @@ import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.note.model.bo.KnowledgeBaseQueryParam;
 import com.anynote.note.model.bo.KnowledgeBaseUpdateParam;
+import com.anynote.note.model.bo.KnowledgeBaseUsersDeleteParam;
 import com.anynote.note.model.bo.KnowledgeBaseUsersQueryParam;
 import com.anynote.note.model.dto.CompleteKnowledgeBaseUploadDTO;
 import com.anynote.note.model.dto.CreateKnowledgeBaeDTO;
@@ -105,12 +106,23 @@ public class KnowledgeBaseController {
     @GetMapping("users")
     public ResData<PageBean<KnowledgeBaseUserVO>> getKnowledgeBaseUsers(@NotNull(message = "知识库id不能为空") Long knowledgeBaseId,
                                                                         @NotNull(message = "页码不能为空") Integer page,
-                                                                        @NotNull(message = "页面容量不能为空") Integer pageSize) {
+                                                                        @NotNull(message = "页面容量不能为空") Integer pageSize,
+                                                                        String username) {
         KnowledgeBaseUsersQueryParam queryParam = new KnowledgeBaseUsersQueryParam();
         queryParam.setId(knowledgeBaseId);
         queryParam.setPage(page);
         queryParam.setPageSize(pageSize);
+        queryParam.setUsername(username);
         return ResUtil.success(knowledgeBaseService.getKnowledgeBaseUsers(queryParam));
+    }
+
+    @DeleteMapping("users")
+    public ResData<String> removeKnowledgeBaseUser(@NotNull(message = "用户ID不能为空") Long userId,
+                                                   @NotNull(message = "知识库ID不能为空") Long knowledgeBaseId) {
+        KnowledgeBaseUsersDeleteParam knowledgeBaseUsersDeleteParam = new KnowledgeBaseUsersDeleteParam();
+        knowledgeBaseUsersDeleteParam.setUserId(userId);
+        knowledgeBaseUsersDeleteParam.setKnowledgeBaseId(knowledgeBaseId);
+        return ResUtil.success(knowledgeBaseService.removeKnowledgeBaseUser(knowledgeBaseUsersDeleteParam));
     }
 
 //    @PostMapping

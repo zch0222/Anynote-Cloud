@@ -7,7 +7,7 @@ package com.anynote.common.rocketmq.tags;
 public enum NoteTaskTagsEnum {
     SUBMIT("提交任务"),
 
-    INSERT_HISTORY("插入操作历史")
+    INSERT_HISTORY("插入操作历史"),
     ;
 
     private final String description;

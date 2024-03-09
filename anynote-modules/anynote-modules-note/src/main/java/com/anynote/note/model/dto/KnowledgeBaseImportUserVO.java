@@ -1,5 +1,6 @@
 package com.anynote.note.model.dto;
 
+import com.anynote.system.api.model.dto.ImportFailUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class KnowledgeBaseImportUserVO {
      */
     private String excelUrl;
 
-    private List<String> failUserNameList;
+//    private List<String> failUserNameList;
+    private List<ImportFailUser> failUserList;
 
     /**
      * 失败条数
