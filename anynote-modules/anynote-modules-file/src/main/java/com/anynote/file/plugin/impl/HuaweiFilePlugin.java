@@ -3,9 +3,13 @@ package com.anynote.file.plugin.impl;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
+import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
+import com.anynote.file.api.model.bo.OSSSignature;
+import com.anynote.file.api.model.bo.OssSliceUploadTaskInfo;
 import com.anynote.file.enums.OssTypeEnum;
 import com.anynote.file.model.bo.HuaweiOBSConfig;
+import com.anynote.file.model.bo.OssObjectComposeResponse;
 import com.anynote.file.plugin.FilePlugin;
 import com.obs.services.ObsClient;
 import com.obs.services.exception.ObsException;
@@ -15,8 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -128,4 +132,29 @@ public class HuaweiFilePlugin implements FilePlugin {
                 huaweiOBSConfig.getAccessSecret(), huaweiOBSConfig.getEndPoint());
     }
 
+    @Override
+    public OSSSignature getOssSignature(Integer durationSeconds, String objectName) {
+        return null;
+    }
+
+    @Override
+    public FileDTO sliceUpload(MultipartFile file, String hash, String objectName) {
+        return null;
+    }
+
+    @Override
+    public OssSliceUploadTaskInfo createOssSliceUploadTask(String hash, Double fileSize, String path, String objectName,
+                                                           String uploadId) {
+        return null;
+    }
+
+    @Override
+    public boolean exist(String objectName) {
+        return false;
+    }
+
+    @Override
+    public OssObjectComposeResponse composeOssSliceUploadObject(List<String> objectNameList, String targetObjectName) {
+        return null;
+    }
 }

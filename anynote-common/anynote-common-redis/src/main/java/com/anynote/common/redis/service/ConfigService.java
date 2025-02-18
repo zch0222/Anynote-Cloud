@@ -32,4 +32,9 @@ public class ConfigService {
         return sysConfig.getValue();
     }
 
+    public String getMinIOConfig() {
+        SysConfig sysConfig = redisService.getConfig(ConfigEnum.MIN_IO_CONFIG);
+        return sysConfig.getValue();
+    }
+
 }

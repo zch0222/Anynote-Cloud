@@ -50,6 +50,11 @@ public enum ConfigEnum {
     /**
      * AI服务器OPEN API KEY
      */
-    AI_SERVER_API_KEY
+    AI_SERVER_API_KEY,
+
+    /**
+     * MIN IO 配置
+     */
+    MIN_IO_CONFIG
     ;
 }

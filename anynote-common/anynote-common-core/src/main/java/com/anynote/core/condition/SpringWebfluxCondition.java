@@ -19,7 +19,9 @@ public class SpringWebfluxCondition implements Condition {
         // 检查是否存在关键类
         try {
             classLoader.loadClass("org.springframework.web.reactive.DispatcherHandler");
-            return true;
+            // 排除GateWay
+            return context.getClassLoader()
+                    .getResource("org/springframework/cloud/gateway/config/GatewayAutoConfiguration.class") == null;
         } catch (ClassNotFoundException ex) {
             return false;
         }

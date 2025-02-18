@@ -1,0 +1,20 @@
+package com.anynote.common.redis.constant;
+
+/**
+ * Redis 前缀
+ */
+public class RedisKey {
+
+    /**
+     * Oss 分片上传任务前缀 <br/>
+     * 第一个参数是用户id，第二个参数是uploadId
+     */
+    public static final String OSS_SLICE_UPLOAD_TASK = "task:{}:oss_slice_upload_task:{}";
+
+
+    /**
+     * Oss已经上传完成的分片set <br/>
+     * 参数是uploadId
+     */
+    public static final String OSS_SLICE_UPLOAD_TASK_FINISHED_SLICE_INDEX_SET = "oss_slice_upload_task_finished_slice_index_set:{}";
+}

@@ -17,6 +17,16 @@ public class FileDTO {
 
     private Long fileId;
 
+    /**
+     * 对象存储类型
+     */
+    private String ossType;
+
+    /**
+     * 对象名称
+     */
+    private String objectName;
+
     private String originalFileName;
 
     private String fileName;

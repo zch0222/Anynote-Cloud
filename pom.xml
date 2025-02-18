@@ -58,9 +58,19 @@
         <alibabacloud-green20220302.version>2.0.7</alibabacloud-green20220302.version>
         <com.aliyun.green20220302.version>2.2.5</com.aliyun.green20220302.version>
         <net.logstash.logback.version>6.6</net.logstash.logback.version>
+        <io.minio.minio.version>8.5.12</io.minio.minio.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/io.minio/minio -->
+            <!-- MinIO -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${io.minio.minio.version}</version>
+            </dependency>
+
 
             <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
             <!-- logstash日志 -->

@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Component
 @Slf4j
-//@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class AuthFilter implements GlobalFilter, Ordered {
 
     @Autowired

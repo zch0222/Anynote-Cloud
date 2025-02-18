@@ -27,6 +27,24 @@ public class RedisService {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
+     * 向一个Set集合添加元素
+     * @param key 集合key
+     * @param vales 要添加的值
+     * @param <T>
+     */
+    public <T> void addToSet(String key, Collection<T> vales) {
+        redisTemplate.opsForSet().add(key, vales);
+    }
+
+    public <T> Set<T> getSet(String key) {
+        return redisTemplate.opsForSet().members(key);
+    }
+
+    public Long getSetSize(String key) {
+        return redisTemplate.opsForSet().size(key);
+    }
+
+    /**
      *
      * 缓存基本对象，Integer、String、实体类等
      *

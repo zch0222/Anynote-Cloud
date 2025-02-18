@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.note.mapper.MoocMapper">
+    <resultMap id="MoocListVOResultMap" type="com.anynote.note.model.vo.MoocListVO">
+        <!-- MoocListVO 的字段 -->
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="moocDescription" column="mooc_description"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="knowledgeBaseId" column="knowledge_base_id"/>
+        <result property="moocPermission" column="mooc_permission"/>
+        <result property="creatorUsername" column="creator_username"/>
+
+        <!-- 继承 BaseEntity 的字段 -->
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    
+    <select id="getMoocList" resultMap="MoocListVOResultMap">
+        SELECT
+            n_mooc.id, n_mooc.data_scope, n_mooc.knowledge_base_id,
+            n_mooc.permissions, creator_user.username as creator_username, n_mooc.is_delete, n_mooc.create_by, n_mooc.create_time,
+            n_mooc.update_by, n_mooc.update_time
+        FROM
+            n_mooc
+                LEFT JOIN
+            sys_user as creator_user ON creator_user.id = n_mooc.create_by
+        WHERE
+            n_mooc.knowledge_base_id = #{knowledgeBaseId}
+          AND
+            n_mooc.is_delete = 0
+        ${params.knowledgeBaseScope}
+    </select>
+</mapper>

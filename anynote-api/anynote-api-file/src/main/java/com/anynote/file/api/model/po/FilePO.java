@@ -26,6 +26,16 @@ public class FilePO extends BaseEntity {
     private Long id;
 
     /**
+     * 对象存储类型
+     */
+    private String ossType;
+
+    /**
+     * 对象名称
+     */
+    private String objectName;
+
+    /**
      * 原始文件名
      */
     private String originalFileName;

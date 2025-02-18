@@ -9,5 +9,7 @@ public enum OssTypeEnum {
     /**
      * 华为OBS
      */
-    HUAWEI_OBS;
+    HUAWEI_OBS,
+
+    MIN_IO;
 }
