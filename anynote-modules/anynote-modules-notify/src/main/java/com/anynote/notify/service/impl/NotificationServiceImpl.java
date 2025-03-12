@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.SignalType;
 
 
 import javax.annotation.Resource;
@@ -61,14 +62,18 @@ public class NotificationServiceImpl implements NotificationService {
                 });
         Flux<ServerSentEvent<String>> heartbeatFlux = Flux.interval(Duration.ofSeconds(10))
                 .map(tick -> {
-                    log.info("heartbeat");
+                    log.info("{}: heartbeat", loginUser.getUsername());
                     return ServerSentEvent.<String>builder()
                             .id(new Date().toString())
                             .data("heartbeat")
                             .event("heartbeat")
                             .build();
                 });
-        return Flux.merge(subFlux, heartbeatFlux);
+        return Flux.merge(subFlux, heartbeatFlux).doFinally(signal -> {
+            if (signal == SignalType.CANCEL) {
+                log.info("{}: CANCEL", loginUser.getUsername());
+            }
+        });
 //        try {
 //            LoginUser loginUser = tokenUtil.getLoginUser(accessToken);
 //            Duration awaitDuration = Duration.ofSeconds(30);

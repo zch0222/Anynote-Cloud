@@ -1,14 +1,13 @@
 package com.anynote.file.service;
 
 import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
+import com.anynote.file.api.model.bo.ObjectURL;
 import com.anynote.file.api.model.bo.UploadProgress;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.po.FilePO;
-import com.anynote.file.api.model.vo.OssSliceUploadChunkMarkVO;
-import com.anynote.file.api.model.vo.OssSliceUploadComposeOV;
-import com.anynote.file.api.model.vo.OssSliceUploadSignatureVO;
-import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
+import com.anynote.file.api.model.vo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
@@ -39,6 +38,16 @@ public interface FileService extends IService<FilePO> {
 
     public FilePO getFileById(Long id);
 
+    /**
+     * 创建一个分片任务
+     * @param path 文件路径
+     * @param fileName 文件名称
+     * @param hash 文件哈希
+     * @param fileSize 文件大小
+     * @param contentType contentType
+     * @param source 文件来源
+     * @return 文件任务信息
+     */
     public OssSliceUploadTaskVO createOssSliceUploadTask(String path, String fileName,
                                                          String hash, Double fileSize, String contentType,
                                                          Integer source);
@@ -49,7 +58,7 @@ public interface FileService extends IService<FilePO> {
      * @param chunkIndexList 分片id列表
      * @return 分片签名
      */
-    public OssSliceUploadSignatureVO getOssSliceUploadSignature(String uploadId, List<Integer> chunkIndexList);
+    public OssSliceUploadSignatureVO getOssSliceUploadSignature(String uploadId, Set<Integer> chunkIndexList);
 
 
     /**
@@ -60,6 +69,13 @@ public interface FileService extends IService<FilePO> {
      */
     public OssSliceUploadChunkMarkVO markOssUploadSlice(String uploadId, Set<Integer> chunkIndexList);
 
+    /**
+     * 获取上传任务信息
+     * @param uploadId 上传id
+     * @return 上传任务信息
+     */
+    public OssSliceUploadTaskVO getOssSliceUploadTaskInfo(String uploadId);
+
 
     /**
      * 对象存储合并上传的分片
@@ -68,4 +84,11 @@ public interface FileService extends IService<FilePO> {
      */
     public OssSliceUploadComposeOV ossSliceUploadComposeObject(String uploadId);
 
+
+    /**
+     * 公共的获取文件信息接口
+     * @param objectName 对象名称
+     * @return 文件信息
+     */
+    public ObjectURL getObjectUrlByObjectName(String objectName);
 }

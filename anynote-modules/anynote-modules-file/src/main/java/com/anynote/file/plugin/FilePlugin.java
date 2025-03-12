@@ -4,6 +4,7 @@ import com.anynote.file.api.model.bo.FileDTO;
 import com.anynote.file.api.model.bo.OSSSignature;
 import com.anynote.file.api.model.bo.OssSliceUploadTaskInfo;
 import com.anynote.file.enums.OssTypeEnum;
+import com.anynote.file.api.model.bo.ObjectURL;
 import com.anynote.file.model.bo.OssObjectComposeResponse;
 import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,4 +58,12 @@ public interface FilePlugin {
      * @return 对象名称
      */
     public OssObjectComposeResponse composeOssSliceUploadObject(List<String> objectNameList, String targetObjectName);
+
+    /**
+     * 获取对象URL
+     * @param objectName 对象名称
+     * @param durationSeconds 过期时间(秒)
+     * @return 对象URL信息
+     */
+    public ObjectURL getObjectUrl(String objectName, Integer durationSeconds);
 }

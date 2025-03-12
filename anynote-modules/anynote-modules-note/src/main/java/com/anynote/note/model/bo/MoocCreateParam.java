@@ -18,6 +18,11 @@ public class MoocCreateParam extends MoocParam {
     private String title;
 
     /**
+     * 封面
+     */
+    private String cover;
+
+    /**
      * 慕课描述
      */
     private String moocDescription;
@@ -29,10 +34,11 @@ public class MoocCreateParam extends MoocParam {
 
     @Builder(builderMethodName = "MoocCreateParamBuilder")
     public MoocCreateParam(String title, String moocDescription, Long knowledgeBaseId,
-                           Integer dataScope) {
+                           Integer dataScope, String cover) {
         this.title = title;
         this.moocDescription = moocDescription;
         this.dataScope = dataScope;
+        this.cover = cover;
         this.setKnowledgeBaseId(knowledgeBaseId);
     }
 

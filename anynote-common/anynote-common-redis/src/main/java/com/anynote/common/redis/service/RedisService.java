@@ -33,7 +33,13 @@ public class RedisService {
      * @param <T>
      */
     public <T> void addToSet(String key, Collection<T> vales) {
-        redisTemplate.opsForSet().add(key, vales);
+        if (vales.isEmpty()) {
+            redisTemplate.opsForSet().add(key);
+        }
+        else {
+            redisTemplate.opsForSet().add(key, vales.toArray());
+        }
+
     }
 
     public <T> Set<T> getSet(String key) {

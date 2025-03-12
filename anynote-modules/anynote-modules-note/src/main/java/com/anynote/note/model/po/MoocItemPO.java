@@ -19,12 +19,17 @@ import java.util.Map;
 @NoArgsConstructor
 public class MoocItemPO extends BaseEntity {
     /**
-     * 慕课id
+     * 慕课 Item id
      */
     private Long id;
 
     /**
-     * 慕课标题
+     * 慕课id
+     */
+    private Long moocId;
+
+    /**
+     * 慕课Item标题
      */
     private String title;
 
@@ -39,6 +44,11 @@ public class MoocItemPO extends BaseEntity {
     private String objectName;
 
     /**
+     * 父Item id，如果为0表示没有父节点
+     */
+    private Long parentId;
+
+    /**
      * 删除标志(0标识未删除 1表示删除)
      */
     @TableField("is_delete")
@@ -46,13 +56,15 @@ public class MoocItemPO extends BaseEntity {
     private Integer deleted;
 
     @Builder
-    public MoocItemPO(Long id, String title, Integer moocItemType, String objectName, Integer deleted, Long createBy,
+    public MoocItemPO(Long id, Long moocId, String title, Integer moocItemType, String objectName, Long parentId, Integer deleted, Long createBy,
                       Date createTime, Long updateBy, Date updateTime, String remark, Map<String, Object> params) {
         super(createBy, createTime, updateBy, updateTime, remark, params);
         this.id = id;
+        this.moocId = moocId;
         this.title = title;
         this.moocItemType = moocItemType;
         this.objectName = objectName;
+        this.parentId = parentId;
         this.deleted = deleted;
     }
 }

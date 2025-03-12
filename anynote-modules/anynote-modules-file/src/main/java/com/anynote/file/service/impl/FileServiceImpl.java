@@ -13,10 +13,7 @@ import com.anynote.core.utils.file.FileUtils;
 import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.po.FilePO;
-import com.anynote.file.api.model.vo.OssSliceUploadChunkMarkVO;
-import com.anynote.file.api.model.vo.OssSliceUploadComposeOV;
-import com.anynote.file.api.model.vo.OssSliceUploadSignatureVO;
-import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
+import com.anynote.file.api.model.vo.*;
 import com.anynote.file.factory.FilePluginFactory;
 import com.anynote.file.mapper.FileMapper;
 import com.anynote.file.model.bo.OssObjectComposeResponse;
@@ -184,16 +181,18 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
                                                          String hash, Double fileSize,
                                                          String contentType, Integer source) {
         String uploadId = UUID.randomUUID().toString().replace("-", "");
-        //Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
+        Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
 
-        // debug
-        Long userId = userId = 0L;
+//        // debug
+//        Long userId = userId = 0L;
 
         Date date = new Date();
         FilePO filePO = FilePO.builder()
                 .originalFileName(fileName)
                 .fileName(UUID.randomUUID().toString().replace("-", "") + "." +
                         FileUtils.getFileExtension(fileName))
+                .hash(hash)
+                .fileSize(fileSize)
                 .createBy(userId)
                 .deleted(0)
                 .createTime(date)
@@ -207,8 +206,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
                         path, filePO.getFileName()), uploadId);
         ossSliceUploadTaskInfo.setFileInfo(filePO);
         ossSliceUploadTaskInfo.setUploadId(uploadId);
+        filePO.setOssType(ossSliceUploadTaskInfo.getOssType());
+        filePO.setObjectName(ossSliceUploadTaskInfo.getObjectName());
         redisService.setCacheObject(getOssSliceUploadTaskInfoKey(userId, uploadId), ossSliceUploadTaskInfo);
-        redisService.addToSet(getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId), new HashSet<>());
+        //redisService.addToSet(getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId), new HashSet<>());
         return OssSliceUploadTaskVO.builder()
                 .originalFileName(fileName)
                 .fileName(filePO.getFileName())
@@ -216,17 +217,22 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
                 .uploadId(uploadId)
                 .chunkSize(ossSliceUploadTaskInfo.getChunkSize())
                 .totalChunk(ossSliceUploadTaskInfo.getTotalChunk())
+                .hash(hash)
+                .finishedChunks(new HashSet<>())
                 .build();
     }
 
     @Override
-    public OssSliceUploadSignatureVO getOssSliceUploadSignature(String uploadId, List<Integer> chunkIndexList) {
+    public OssSliceUploadSignatureVO getOssSliceUploadSignature(String uploadId, Set<Integer> chunkIndexList) {
 
-        //Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
+        Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
 
         // debug
-        Long userId = 0L;
+        //Long userId = 0L;
         OssSliceUploadTaskInfo ossSliceUploadTaskInfo = redisService.getCacheObject(getOssSliceUploadTaskInfoKey(userId, uploadId));
+        if (StringUtils.isNull(ossSliceUploadTaskInfo)) {
+            throw new BusinessException("上传任务不存在");
+        }
         for (Integer chunkIndex : chunkIndexList) {
             if (chunkIndex <= 0 || chunkIndex > ossSliceUploadTaskInfo.getTotalChunk()) {
                 log.error(StringUtils.format("ERROR CHUNK_INDEX: OssSliceUploadId: {}, TotalChunk: {}, chunkIndex: {}", uploadId,
@@ -260,9 +266,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
      */
     @Override
     public OssSliceUploadChunkMarkVO markOssUploadSlice(String uploadId, Set<Integer> chunkIndexList) {
-        Long userId = userId = 0L;
-        String setKey = getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId);
+        //Long userId = userId = 0L;
+        Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
         OssSliceUploadTaskInfo ossSliceUploadTaskInfo = redisService.getCacheObject(getOssSliceUploadTaskInfoKey(userId, uploadId));
+        if (StringUtils.isNull(ossSliceUploadTaskInfo)) {
+            throw new BusinessException("上传任务不存在");
+        }
+        String setKey = getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId);
+
         FilePlugin filePlugin = filePluginFactory.filePlugin();
         List<Integer> markedChunkIndexList = new ArrayList<>(chunkIndexList.size());
         try {
@@ -289,23 +300,73 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
                 .build();
     }
 
+    @Override
+    public OssSliceUploadTaskVO getOssSliceUploadTaskInfo(String uploadId) {
+        Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
+        OssSliceUploadTaskInfo ossSliceUploadTaskInfo = redisService.getCacheObject(getOssSliceUploadTaskInfoKey(userId, uploadId));
+        if (StringUtils.isNull(ossSliceUploadTaskInfo)) {
+            throw new BusinessException("任务不存在");
+        }
+        Set<Integer> finishedChunks = redisService.getCacheSet(getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId));
+        return OssSliceUploadTaskVO.builder()
+                .uploadId(uploadId)
+                .originalFileName(ossSliceUploadTaskInfo.getFileInfo().getOriginalFileName())
+                .fileName(ossSliceUploadTaskInfo.getFileInfo().getFileName())
+                .fileSize(ossSliceUploadTaskInfo.getFileInfo().getFileSize())
+                .chunkSize(ossSliceUploadTaskInfo.getChunkSize())
+                .totalChunk(ossSliceUploadTaskInfo.getTotalChunk())
+                .hash(ossSliceUploadTaskInfo.getFileInfo().getHash())
+                .finishedChunks(finishedChunks)
+                .build();
+    }
 
     @Override
     public OssSliceUploadComposeOV ossSliceUploadComposeObject(String uploadId) {
-        Long userId = userId = 0L;
+        //Long userId = userId = 0L;
+        Long userId = Long.valueOf(ServletUtils.getHeader(SecurityConstants.DETAILS_USER_ID));
         OssSliceUploadTaskInfo ossSliceUploadTaskInfo = redisService
                 .getCacheObject(getOssSliceUploadTaskInfoKey(userId, uploadId));
+        if (StringUtils.isNull(ossSliceUploadTaskInfo)) {
+            throw new BusinessException("上传任务不存在");
+        }
+        Set<Integer> finishedChunks = redisService.getCacheSet(getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId));
+        if (finishedChunks.size() != ossSliceUploadTaskInfo.getTotalChunk()) {
+            throw new BusinessException("文件上传未完成");
+        }
         FilePlugin filePlugin = filePluginFactory.filePlugin();
         List<String> objectNameList = IntStream
-                .range(1, ossSliceUploadTaskInfo.getChunkSize()+1)
+                .range(1, ossSliceUploadTaskInfo.getTotalChunk()+1)
                 .mapToObj(chunkIndex -> getOssSliceUploadChunkObjectName(ossSliceUploadTaskInfo, chunkIndex))
                 .collect(Collectors.toList());
         OssObjectComposeResponse ossObjectComposeResponse = filePlugin
                 .composeOssSliceUploadObject(objectNameList, ossSliceUploadTaskInfo.getObjectName());
 
+        FilePO filePO = ossSliceUploadTaskInfo.getFileInfo();
+        Date now = new Date();
+        filePO.setCreateBy(userId);
+        filePO.setUpdateBy(userId);
+        filePO.setCreateTime(now);
+        filePO.setUpdateTime(now);
+        baseMapper.insert(filePO);
+
+        redisService.deleteObject(getOssSliceUploadTaskInfoKey(userId, uploadId));
+        redisService.deleteObject(getOssSliceUploadTaskFinishedSliceIndexSetKey(uploadId));
         return OssSliceUploadComposeOV.builder()
-                .objectName(ossObjectComposeResponse.getObjectName())
+                .fileId(filePO.getId())
+                .objectName(ossSliceUploadTaskInfo.getObjectName())
                 .hash(ossObjectComposeResponse.getHash())
                 .build();
+    }
+
+    @Override
+    public ObjectURL getObjectUrlByObjectName(String objectName) {
+        ObjectURL cacheObjectUrl = redisService.getCacheObject(StringUtils.format(RedisKey.OSS_OBJECT_URL, objectName));
+        if (StringUtils.isNotNull(cacheObjectUrl)) {
+            return cacheObjectUrl;
+        }
+        ObjectURL objectURL = filePluginFactory.filePlugin().getObjectUrl(objectName, 3600*24*7);
+        redisService.setCacheObject(StringUtils.format(RedisKey.OSS_OBJECT_URL, objectName), objectURL,
+                3600*24*7-600L, TimeUnit.SECONDS);
+        return objectURL;
     }
 }

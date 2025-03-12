@@ -31,6 +31,11 @@ public class MoocPO extends BaseEntity {
     private String title;
 
     /**
+     * 封面
+     */
+    private String cover;
+
+    /**
      * 慕课描述
      */
     private String moocDescription;
@@ -58,12 +63,13 @@ public class MoocPO extends BaseEntity {
     private Integer deleted;
 
     @Builder
-    public MoocPO(Long id, String title, String moocDescription, Integer dataScope, Long knowledgeBaseId,
+    public MoocPO(Long id, String title, String cover, String moocDescription, Integer dataScope, Long knowledgeBaseId,
                   String permissions, Integer deleted, Long createBy, Date createTime, Long updateBy,
                   Date updateTime, String remark, Map<String, Object> params) {
         super(createBy, createTime, updateBy, updateTime, remark, params);
         this.id = id;
         this.title = title;
+        this.cover = cover;
         this.moocDescription = moocDescription;
         this.dataScope = dataScope;
         this.knowledgeBaseId = knowledgeBaseId;

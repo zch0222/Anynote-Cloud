@@ -9,6 +9,7 @@ import com.anynote.file.api.model.bo.OSSSignature;
 import com.anynote.file.api.model.bo.OssSliceUploadTaskInfo;
 import com.anynote.file.enums.OssTypeEnum;
 import com.anynote.file.model.bo.MinIOConfig;
+import com.anynote.file.api.model.bo.ObjectURL;
 import com.anynote.file.model.bo.OssObjectComposeResponse;
 import com.anynote.file.plugin.FilePlugin;
 import io.minio.*;
@@ -23,7 +24,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -57,7 +59,7 @@ public class MinIOFilePlugin implements FilePlugin {
 
     @Override
     public OSSSignature getOssSignature(Integer durationSeconds, String objectName) {
-        String preSignedObjectUrl = this.getPreSignedObjectUrl(objectName, durationSeconds);
+        String preSignedObjectUrl = this.getPreSignedObjectUrl(objectName, Method.PUT, 3600, TimeUnit.SECONDS);
         return OSSSignature.builder()
                 .type(OSSSignatureType.MIN_IO)
                 .credentials(MinIOSignatureData.builder()
@@ -69,16 +71,18 @@ public class MinIOFilePlugin implements FilePlugin {
     /**
      * 获取MinIO PreSignedObject Url
      * @param objectName 对象名称
-     * @param durationSeconds 过期时间（秒为单位）
+     * @param method 方法
+     * @param duration 过期时间
+     * @param unit 过期时间单位
      * @return 预签名URL
      */
-    private String getPreSignedObjectUrl(String objectName, Integer durationSeconds) {
+    private String getPreSignedObjectUrl(String objectName, Method method, Integer duration, TimeUnit unit) {
         try {
             String url = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
-                    .method(Method.PUT)
+                    .method(method)
                     .bucket(this.minIOConfig.getBucketName())
                     .object(StringUtils.format("{}/{}", this.minIOConfig.getBasePath(), objectName))
-                    .expiry(durationSeconds, TimeUnit.SECONDS)
+                    .expiry(duration, unit)
                     .build());
             log.info("PreSignedObjectUrl: {}", url);
             return url;
@@ -235,9 +239,10 @@ public class MinIOFilePlugin implements FilePlugin {
         // 分片数量
         int chunkCount = (int) Math.ceil((double) fileSize / chunkSize);
         return OssSliceUploadTaskInfo.builder()
+                .ossType(OssTypeEnum.MIN_IO.name())
                 .totalChunk(chunkCount)
                 .chunkSize(chunkSize)
-                .chunkFolder(StringUtils.format("{}/{}/{}", this.minIOConfig.getBasePath(), path, uploadId))
+                .chunkFolder(StringUtils.format("{}/{}", path, uploadId))
                 .objectName(objectName)
                 .build();
     }
@@ -246,7 +251,7 @@ public class MinIOFilePlugin implements FilePlugin {
     public boolean exist(String objectName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         return minioClient.statObject(StatObjectArgs.builder()
                 .bucket(this.minIOConfig.getBucketName())
-                .object(objectName)
+                .object(StringUtils.format("{}/{}", this.minIOConfig.getBasePath(), objectName))
                 .build()) != null;
     }
 
@@ -255,13 +260,13 @@ public class MinIOFilePlugin implements FilePlugin {
         List<ComposeSource> sources = objectNameList.stream()
                 .map(objectName -> ComposeSource.builder()
                         .bucket(this.minIOConfig.getBucketName())
-                        .object(objectName)
+                        .object(StringUtils.format("{}/{}", this.minIOConfig.getBasePath(), objectName))
                         .build())
                 .collect(Collectors.toList());
         try {
             ObjectWriteResponse objectWriteResponse = this.minioClient.composeObject(ComposeObjectArgs.builder()
                     .bucket(this.minIOConfig.getBucketName())
-                    .object(targetObjectName)
+                    .object(StringUtils.format("{}/{}", this.minIOConfig.getBasePath(), targetObjectName))
                     .sources(sources)
                     .build());
             return OssObjectComposeResponse.builder()
@@ -269,7 +274,23 @@ public class MinIOFilePlugin implements FilePlugin {
                     .build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new BusinessException(StringUtils.format("合并文件：\"{}\"失败"));
+            throw new BusinessException(StringUtils.format("合并文件：\"{}\"失败", targetObjectName));
         }
+    }
+
+
+    @Override
+    public ObjectURL getObjectUrl(String objectName, Integer durationSeconds) {
+        // 获取当前时间
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.SECOND, durationSeconds);
+        String url = getPreSignedObjectUrl(objectName, Method.GET ,durationSeconds, TimeUnit.SECONDS);
+
+        return ObjectURL.builder()
+                .url(url)
+                .expireTime(calendar.getTime())
+                .build();
     }
 }

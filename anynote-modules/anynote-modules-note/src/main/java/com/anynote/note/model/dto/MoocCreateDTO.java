@@ -17,6 +17,9 @@ public class MoocCreateDTO {
     @Size(min = 3, max = 500, message = "慕课标题长度必须在3~500")
     private String title;
 
+    @NotNull(message = "请选择慕课封面")
+    private String cover;
+
     /**
      * 慕课描述
      */

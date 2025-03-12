@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 public class OssSliceUploadComposeOV {
 
     /**
+     * 文件id
+     */
+    private Long fileId;
+
+    /**
      * 对象名
      */
     private String objectName;

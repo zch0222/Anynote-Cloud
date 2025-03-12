@@ -32,6 +32,11 @@ public class MoocVO implements Serializable {
     private String title;
 
     /**
+     * 慕课封面
+     */
+    private String cover;
+
+    /**
      * 慕课描述
      */
     private String moocDescription;

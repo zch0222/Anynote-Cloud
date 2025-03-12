@@ -8,7 +8,9 @@ import com.anynote.file.api.factory.RemoteFileFallbackFactory;
 import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
+import com.anynote.file.api.model.dto.OssSliceUploadTaskCreateDTO;
 import com.anynote.file.api.model.po.FilePO;
+import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -46,4 +48,8 @@ public interface RemoteFileService {
 
     @GetMapping(value = "{id}")
     public ResData<FilePO> getFileById(@PathVariable("id") Long id, @RequestHeader("from-source") String fromSource);
+
+    @PostMapping("/ossSliceUploadTasks")
+    public ResData<OssSliceUploadTaskVO> createOssSliceUploadTask(@RequestBody @Validated
+                                                                  OssSliceUploadTaskCreateDTO ossSliceUploadTaskCreateDTO);
 }

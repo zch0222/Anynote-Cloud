@@ -25,7 +25,18 @@ public enum FileSources {
     /**
      * 知识库用户导入名单
      */
-    KNOWLEDGE_BASE_MEMBER_EXCEL(3)
+    KNOWLEDGE_BASE_MEMBER_EXCEL(3),
+
+
+    /**
+     * 慕课封面
+     */
+    MOOC_COVER(4),
+
+    /**
+     * 慕课视频
+     */
+    MOOC_VIDEO(5)
     ;
 
     private final int value;

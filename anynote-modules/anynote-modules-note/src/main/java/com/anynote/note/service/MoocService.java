@@ -1,10 +1,12 @@
 package com.anynote.note.service;
 
 import com.anynote.core.web.model.bo.PageBean;
-import com.anynote.note.model.bo.MoocCreateParam;
-import com.anynote.note.model.bo.MoocQueryParam;
-import com.anynote.note.model.dto.MoocListDTO;
+import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
+import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
+import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
+import com.anynote.note.model.vo.MoocItemListVO;
+import com.anynote.note.model.vo.MoocItemVO;
 import com.anynote.note.model.vo.MoocListVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -27,4 +29,33 @@ public interface MoocService extends IService<MoocPO> {
      * @return
      */
     public PageBean<MoocListVO> getMoocList(MoocQueryParam moocQueryParam);
+
+    /**
+     * 创建慕课封面上传任务
+     * @param ossSliceUploadTaskCreatePublicDTO
+     * @return
+     */
+    public OssSliceUploadTaskVO createMoocCoverUploadTask(OssSliceUploadTaskCreatePublicDTO ossSliceUploadTaskCreatePublicDTO);
+
+
+    /**
+     * 创建慕课Item
+     * @param moocItemCreateParam 慕课Item
+     * @return SUCCESS
+     */
+    public String createItems(MoocItemCreateParam moocItemCreateParam);
+
+    /**
+     *
+     * @param moocItemQueryParam 查询param
+     * @return moocItem列表
+     */
+    public PageBean<MoocItemListVO> getMoocItemList(MoocItemQueryParam moocItemQueryParam);
+
+    /**
+     * 创建慕课视频上传任务
+     * @param moocVideoCreateParam 慕课视频上传任务创建Param
+     * @return
+     */
+    public OssSliceUploadTaskVO createMoocVideoUploadTask(MoocVideoCreateParam moocVideoCreateParam);
 }

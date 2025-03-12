@@ -9,6 +9,7 @@ import com.anynote.file.api.model.bo.OSSSignature;
 import com.anynote.file.api.model.bo.OssSliceUploadTaskInfo;
 import com.anynote.file.enums.OssTypeEnum;
 import com.anynote.file.model.bo.HuaweiOBSConfig;
+import com.anynote.file.api.model.bo.ObjectURL;
 import com.anynote.file.model.bo.OssObjectComposeResponse;
 import com.anynote.file.plugin.FilePlugin;
 import com.obs.services.ObsClient;
@@ -155,6 +156,11 @@ public class HuaweiFilePlugin implements FilePlugin {
 
     @Override
     public OssObjectComposeResponse composeOssSliceUploadObject(List<String> objectNameList, String targetObjectName) {
+        return null;
+    }
+
+    @Override
+    public ObjectURL getObjectUrl(String objectName, Integer durationSeconds) {
         return null;
     }
 }

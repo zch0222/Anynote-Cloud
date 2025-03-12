@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 public class FileServiceTest {
@@ -30,7 +32,7 @@ public class FileServiceTest {
 
     @Test
     void testGetOssSliceUploadSignature() {
-        List<Integer> list = new ArrayList<>();
+        Set<Integer> list = new HashSet<>();
         list.add(1);
         list.add(2);
         list.add(3);

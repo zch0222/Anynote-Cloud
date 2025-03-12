@@ -79,6 +79,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
             return unauthorizedResponse(exchange, e.getErrorCode());
         }
 
+        // 消除用户id
+        removeHeader(mutate, SecurityConstants.DETAILS_USER_ID);
+
         addHeader(mutate, SecurityConstants.ACCESS_TOKEN, accessToken);
         addHeader(mutate, SecurityConstants.DETAILS_USER_ID, loginUser.getUserId());
 

@@ -9,7 +9,9 @@ import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
+import com.anynote.file.api.model.dto.OssSliceUploadTaskCreateDTO;
 import com.anynote.file.api.model.po.FilePO;
+import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
@@ -52,6 +54,11 @@ public class RemoteFileFallbackFactory implements FallbackFactory<RemoteFileServ
             @Override
             public ResData<FilePO> getFileById(Long id, String fromSource) {
                 throw new BusinessException("获取文件失败");
+            }
+
+            @Override
+            public ResData<OssSliceUploadTaskVO> createOssSliceUploadTask(OssSliceUploadTaskCreateDTO ossSliceUploadTaskCreateDTO) {
+                throw new BusinessException("创建分片任务失败");
             }
         };
     }

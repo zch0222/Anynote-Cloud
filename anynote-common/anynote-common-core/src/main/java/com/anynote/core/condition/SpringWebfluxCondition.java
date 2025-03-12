@@ -15,15 +15,14 @@ public class SpringWebfluxCondition implements Condition {
         if (classLoader == null) {
             return false;
         }
-
-        // 检查是否存在关键类
         try {
-            classLoader.loadClass("org.springframework.web.reactive.DispatcherHandler");
-            // 排除GateWay
+            classLoader.loadClass("org.springframework.web.servlet.DispatcherServlet");
+            // 如果存在 DispatcherServlet，说明是 Spring MVC 环境
+            return false;
+        } catch (ClassNotFoundException e) {
+            // 如果不存在 DispatcherServlet，说明是 Spring WebFlux 环境
             return context.getClassLoader()
                     .getResource("org/springframework/cloud/gateway/config/GatewayAutoConfiguration.class") == null;
-        } catch (ClassNotFoundException ex) {
-            return false;
         }
     }
 }

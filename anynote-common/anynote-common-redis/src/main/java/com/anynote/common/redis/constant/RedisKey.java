@@ -17,4 +17,10 @@ public class RedisKey {
      * 参数是uploadId
      */
     public static final String OSS_SLICE_UPLOAD_TASK_FINISHED_SLICE_INDEX_SET = "oss_slice_upload_task_finished_slice_index_set:{}";
+
+    /**
+     * 文件对象URL <br/>
+     * 参数是对象名称
+     */
+    public static final String OSS_OBJECT_URL = "oss_object_url:{}";
 }

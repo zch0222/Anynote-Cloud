@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -30,4 +32,9 @@ public class OssSliceUploadTaskVO {
     private Integer totalChunk;
 
     private String hash;
+
+    /**
+     * 已经完成的分片编号
+     */
+    private Set<Integer> finishedChunks;
 }

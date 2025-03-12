@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.note.mapper.MoocItemMapper">
+
+    <resultMap id="MoocItemVOResultMap" type="com.anynote.note.model.vo.MoocItemVO">
+        <!-- 映射 MoocItemListVO 的属性 -->
+        <id property="id" column="id"/>
+        <result property="moocId" column="mooc_id"/>
+        <result property="title" column="title"/>
+        <result property="moocItemType" column="mooc_item_type"/>
+        <result property="objectName" column="object_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+
+        <!-- 映射 MoocItemTextVO 的属性 -->
+        <association property="moocItemText" javaType="com.anynote.note.model.vo.MoocItemTextVO">
+            <id property="id" column="mooc_item_text_id"/>
+            <result property="moocItemId" column="mooc_item_id"/>
+            <result property="itemText" column="item_text"/>
+            <result property="createBy" column="mooc_item_text_create_by"/>
+            <result property="createTime" column="mooc_item_text_create_time"/>
+            <result property="updateBy" column="mooc_item_text_update_by"/>
+            <result property="updateTime" column="mooc_item_text_update_time"/>
+        </association>
+    </resultMap>
+
+    <select id="selectMoocItemVOById" resultMap="MoocItemVOResultMap">
+        SELECT
+            n_mooc_item.id,
+            n_mooc_item.mooc_id,
+            n_mooc_item.title,
+            n_mooc_item.mooc_item_type,
+            n_mooc_item.object_name,
+            n_mooc_item.parent_id,
+            n_mooc_item.create_by,
+            n_mooc_item.create_time,
+            n_mooc_item.update_by,
+            n_mooc_item.update_time,
+            n_mooc_item_text.id AS mooc_item_text_id,
+            n_mooc_item_text.mooc_item_id,
+            n_mooc_item_text.item_text,
+            n_mooc_item_text.create_by AS mooc_item_text_create_by,
+            n_mooc_item_text.create_time AS mooc_item_text_create_time,
+            n_mooc_item_text.update_by AS mooc_item_text_update_by,
+            n_mooc_item_text.update_time AS mooc_item_text_update_time
+        FROM
+            n_mooc_item
+                LEFT JOIN
+            n_mooc_item_text ON (n_mooc_item.id = n_mooc_item_text.mooc_item_id AND n_mooc_item_text.is_delete = 0)
+        WHERE
+            n_mooc_item.is_delete = 0
+          AND
+            n_mooc_item.id = #{moocItemId}
+          AND
+            n_mooc_item.mooc_id = #{moocId}
+    </select>
+
+
+
+</mapper>

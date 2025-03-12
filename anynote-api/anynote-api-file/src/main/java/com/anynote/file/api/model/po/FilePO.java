@@ -1,13 +1,11 @@
 package com.anynote.file.api.model.po;
 
 import com.anynote.core.web.model.bo.BaseEntity;
+import com.anynote.file.api.model.bo.OssSliceUploadTaskInfo;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +13,7 @@ import java.util.Map;
 /**
  * @author 称霸幼儿园
  */
+@EqualsAndHashCode(callSuper = true)
 @TableName("f_file")
 @Data
 @AllArgsConstructor
@@ -52,6 +51,11 @@ public class FilePO extends BaseEntity {
     private String hash;
 
     /**
+     * 文件大小
+     */
+    private Double fileSize;
+
+    /**
      * 文件URL地址
      */
     private String url;
@@ -74,11 +78,14 @@ public class FilePO extends BaseEntity {
     private String type;
 
     @Builder
-    public FilePO(Long id, String hash, String originalFileName, String fileName, String url, Integer source,
+    public FilePO(Long id, String ossType, String objectName, String hash, Double fileSize, String originalFileName, String fileName, String url, Integer source,
                   Integer deleted, String type, Long createBy, Date createTime, Long updateBy,
                   Date updateTime, String remark, Map<String, Object> params) {
         super(createBy, createTime, updateBy, updateTime, remark, params);
+        this.ossType = ossType;
+        this.objectName = objectName;
         this.hash = hash;
+        this.fileSize = fileSize;
         this.id = id;
         this.originalFileName = originalFileName;
         this.fileName = fileName;
@@ -87,5 +94,4 @@ public class FilePO extends BaseEntity {
         this.deleted = deleted;
         this.type = type;
     }
-
 }

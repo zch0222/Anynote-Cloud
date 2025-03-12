@@ -24,6 +24,11 @@ public class OssSliceUploadTaskInfo implements Serializable {
      */
     private FilePO fileInfo;
 
+    /**
+     * ossType类型
+     */
+    private String ossType;
+
     private String chunkFolder;
 
     /**
