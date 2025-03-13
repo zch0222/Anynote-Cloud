@@ -21,7 +21,6 @@
         <module>anynote-auth</module>
         <module>anynote-api</module>
         <module>anynote-admin</module>
-        <module>anynote-modules/anynote-modules-job</module>
     </modules>
     <properties>
         <anynote.version>0.0.1-SNAPSHOT</anynote.version>
