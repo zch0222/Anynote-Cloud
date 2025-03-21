@@ -4,6 +4,7 @@ import com.anynote.file.api.model.bo.HuaweiOBSTemporarySignature;
 import com.anynote.file.api.model.bo.ObjectURL;
 import com.anynote.file.api.model.bo.UploadProgress;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
+import com.anynote.file.api.model.dto.DownloadObjectDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.api.model.vo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -91,4 +92,11 @@ public interface FileService extends IService<FilePO> {
      * @return 文件信息
      */
     public ObjectURL getObjectUrlByObjectName(String objectName);
+
+    /**
+     * 下载对象到本地目录
+     * @param downloadObjectDTO
+     * @return
+     */
+    public String downloadObject(DownloadObjectDTO downloadObjectDTO);
 }

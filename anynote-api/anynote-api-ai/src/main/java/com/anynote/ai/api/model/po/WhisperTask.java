@@ -24,20 +24,21 @@ public class WhisperTask extends BaseEntity {
      */
     private Long id;
 
+
     /**
-     * task uuid python端生成
+     * 需要识别的文件对象名称
      */
-    private String taskId;
+    private String fileObjectName;
 
     /**
      * srt文件地址
      */
-    private String srtUrl;
+    private String srtObjectName;
 
     /**
      * txt文件地址
      */
-    private String txtUrl;
+    private String txtObjectName;
 
     /**
      * 任务状态
@@ -50,13 +51,13 @@ public class WhisperTask extends BaseEntity {
     private Integer deleted;
 
     @Builder
-    public WhisperTask(Long id, String taskId, String srtUrl, String txtUrl, Integer taskStatus, Integer deleted, Long createBy,
+    public WhisperTask(Long id, String fileObjectName, String srtObjectName, String txtObjectName, Integer taskStatus, Integer deleted, Long createBy,
                        Date createTime, Long updateBy, Date updateTime, String remark, Map<String, Object> params) {
         super(createBy, createTime, updateBy, updateTime, remark, params);
         this.id = id;
-        this.taskId = taskId;
-        this.srtUrl = srtUrl;
-        this.txtUrl = txtUrl;
+        this.fileObjectName = fileObjectName;
+        this.srtObjectName = srtObjectName;
+        this.txtObjectName = txtObjectName;
         this.taskStatus = taskStatus;
         this.deleted = deleted;
     }

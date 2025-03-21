@@ -20,6 +20,7 @@ import com.anynote.common.rocketmq.properties.RocketMQProperties;
 import com.anynote.common.rocketmq.tags.WhisperTagsEnum;
 import com.anynote.core.constant.RedisConstants;
 import com.google.gson.Gson;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.MessageModel;
@@ -100,69 +101,72 @@ public class WhisperListener implements RocketMQListener<MessageExt> {
 //        redisService.batchPublish(Arrays.asList(redisMessages));
         WhisperTaskStatusVO whisperTaskStatusVO = whisperTaskStatusUpdatedMQParam.getWhisperTaskStatusVO();
         boolean isFinished = WhisperTaskStatusVO.Status.FINISHED.equals(WhisperTaskStatusVO.Status.valueOf(whisperTaskStatusVO.getStatus()));
-        String whisperTaskLockKey = RedisConstants.WHISPER_TASK_LOG_LOCK_KEY + whisperTaskStatusUpdatedMQParam
+        WhisperTaskCreatedMQParam whisperTaskCreatedMQParam = redisService
+                .getCacheObject(RedisConstants.WHISPER_TASK_INFO +
+                        whisperTaskStatusUpdatedMQParam.getWhisperTaskStatusVO().getTaskId());
+        String whisperTaskLockKey = RedisConstants.WHISPER_TASK_LOG_LOCK_KEY + whisperTaskCreatedMQParam
                 .getWhisperTaskId() + ":STATUS:" + whisperTaskStatusVO.getStatus();
+        Date now = new Date();
         if (redisService.setNX(whisperTaskLockKey, "")) {
             redisService.expire(whisperTaskLockKey, 3600);
             whisperTaskLogService.getBaseMapper().insert(WhisperTaskLog.builder()
-                    .whisperTaskId(whisperTaskStatusUpdatedMQParam.getWhisperTaskId())
+                    .whisperTaskId(whisperTaskCreatedMQParam.getWhisperTaskId())
                     .taskStatus(whisperTaskStatusUpdatedMQParam.getWhisperTaskStatusVO().getStatus())
-                    .userId(whisperTaskStatusUpdatedMQParam.getUserId())
+                    .userId(whisperTaskCreatedMQParam.getUserId())
                     .deleted(0)
-                    .updateTime(whisperTaskStatusUpdatedMQParam.getUpdateTime())
-                    .createTime(whisperTaskStatusUpdatedMQParam.getCreateTime()).build());
+                    .updateTime(now)
+                    .createTime(now).build());
         }
         if (isFinished) {
-            Date now = new Date();
             whisperTaskTextService.getBaseMapper().insert(WhisperTaskText
                     .builder()
-                    .whisperTaskId(whisperTaskStatusUpdatedMQParam.getWhisperTaskId())
+                    .whisperTaskId(whisperTaskCreatedMQParam.getWhisperTaskId())
                     .whisperText(whisperTaskStatusVO.getResult().getText())
-                    .updateBy(whisperTaskStatusUpdatedMQParam.getUserId())
+                    .updateBy(whisperTaskCreatedMQParam.getUserId())
                     .updateTime(now)
-                    .createBy(whisperTaskStatusUpdatedMQParam.getUserId())
+                    .createBy(whisperTaskCreatedMQParam.getUserId())
                     .deleted(0)
                     .createTime(now)
                     .build());
         }
         whisperTaskService.getBaseMapper().updateById(WhisperTask.builder()
-                .id(whisperTaskStatusUpdatedMQParam.getWhisperTaskId())
+                .id(whisperTaskCreatedMQParam.getWhisperTaskId())
                 .taskStatus(WhisperTaskStatusVO.Status.valueOf(whisperTaskStatusUpdatedMQParam.getWhisperTaskStatusVO().getStatus()).getValue())
-                        .srtUrl(isFinished ? whisperTaskStatusVO.getResult().getSrt() : "")
-                        .txtUrl(isFinished ? whisperTaskStatusVO.getResult().getTxt() : "")
-                .updateTime(whisperTaskStatusUpdatedMQParam.getUpdateTime())
+                        .srtObjectName(isFinished ? whisperTaskStatusVO.getResult().getSrt() : "")
+                        .srtObjectName(isFinished ? whisperTaskStatusVO.getResult().getTxt() : "")
+                .updateTime(now)
                 .build());
         List<RedisMessage> messageList = new ArrayList<>(1);
         messageList.add(RedisMessage.builder()
-                .channel(RedisChannel.WHISPER_TASK_STATUS_CHANNEL + whisperTaskStatusUpdatedMQParam.getWhisperTaskId())
+                .channel(RedisChannel.WHISPER_TASK_STATUS_CHANNEL + whisperTaskCreatedMQParam.getWhisperTaskId())
                         .message(gson.toJson(whisperTaskStatusVO))
                 .build());
         redisService.batchPublish(messageList);
     }
 
     private void onWhisperTaskSubmitted(WhisperTaskCreatedMQParam whisperTaskCreatedMQParam) {
-        String aiServerAddress = configService.getAIServerAddress();
         WhisperSubmitVO whisperSubmitVO = whisperTaskCreatedMQParam.getWhisperSubmitVO();
-        webClient.get()
-                .uri(aiServerAddress + WhisperConstants.WHISPER_TASK_STATUS_URL + whisperSubmitVO.getTaskId())
-                .retrieve()
-                .bodyToFlux(WhisperTaskStatusVO.class)
-                .subscribeOn(Schedulers.boundedElastic())
-                .subscribe(whisperTaskStatusVO -> {
-                    log.info(gson.toJson(whisperTaskStatusVO));
-                    Date now = new Date();
-                    if (WhisperTaskStatusVO.Type.STATUS_UPDATE
-                            .equals(WhisperTaskStatusVO.Type.valueOf(whisperTaskStatusVO.getType()))) {
-                        String destination = rocketMQProperties.getNoteTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
-                        rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParam.builder()
-                                        .whisperTaskStatusVO(whisperTaskStatusVO)
-                                        .userId(whisperTaskCreatedMQParam.getUserId())
-                                        .whisperTaskId(whisperTaskCreatedMQParam.getWhisperTaskId())
-                                        .createTime(now)
-                                        .updateTime(now).build()),
-                                RocketmqSendCallbackBuilder.commonCallback());
-                    }
-                });
+        redisService.setCacheObject(RedisConstants.WHISPER_TASK_INFO + whisperSubmitVO.getTaskId(), whisperTaskCreatedMQParam);
+//        webClient.get()
+//                .uri(aiServerAddress + WhisperConstants.WHISPER_TASK_STATUS_URL + whisperSubmitVO.getTaskId())
+//                .retrieve()
+//                .bodyToFlux(WhisperTaskStatusVO.class)
+//                .subscribeOn(Schedulers.boundedElastic())
+//                .subscribe(whisperTaskStatusVO -> {
+//                    log.info(gson.toJson(whisperTaskStatusVO));
+//                    Date now = new Date();
+//                    if (WhisperTaskStatusVO.Type.STATUS_UPDATE
+//                            .equals(WhisperTaskStatusVO.Type.valueOf(whisperTaskStatusVO.getType()))) {
+//                        String destination = rocketMQProperties.getNoteTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
+//                        rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParam.builder()
+//                                        .whisperTaskStatusVO(whisperTaskStatusVO)
+//                                        .userId(whisperTaskCreatedMQParam.getUserId())
+//                                        .whisperTaskId(whisperTaskCreatedMQParam.getWhisperTaskId())
+//                                        .createTime(now)
+//                                        .updateTime(now).build()),
+//                                RocketmqSendCallbackBuilder.commonCallback());
+//                    }
+//                });
         log.info("onWhisperTaskSubmitted RocketMQ task finished");
     }
 }

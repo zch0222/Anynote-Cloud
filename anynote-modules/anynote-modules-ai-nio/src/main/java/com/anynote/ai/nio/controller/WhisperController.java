@@ -1,12 +1,11 @@
 package com.anynote.ai.nio.controller;
 
 import com.anynote.ai.api.model.vo.WhisperTaskStatusVO;
-import com.anynote.ai.nio.datascope.annotation.RequiresWhisperTaskPermissions;
 import com.anynote.ai.nio.model.bo.WhisperTaskQueryParam;
-import com.anynote.ai.nio.model.dto.WhisperDTO;
+import com.anynote.ai.api.model.dto.WhisperDTO;
 import com.anynote.ai.api.model.vo.WhisperSubmitVO;
 import com.anynote.ai.nio.service.WhisperService;
-import com.anynote.core.exception.BusinessException;
+import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.ResData;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +32,11 @@ public class WhisperController {
         return whisperService.whisper(whisperDTO);
     }
 
+    @InnerAuth
     @PostMapping("submit")
-    public Mono<ResData<WhisperSubmitVO>> submitWhisperTask(@Validated @RequestBody WhisperDTO whisperDTO,
-                                                            @Validated @NotNull(message = "Token不能为空") @RequestHeader("accessToken") String accessToken) {
-        return whisperService.submitWhisper(whisperDTO, accessToken)
+    public Mono<ResData<WhisperSubmitVO>> submitWhisperTask(@RequestHeader("from-source") String fromSource,
+                                                            @Validated @RequestBody WhisperDTO whisperDTO) {
+        return whisperService.submitWhisper(whisperDTO)
                 .flatMap(whisperSubmitVO -> Mono.just(ResUtil.success(whisperSubmitVO)));
     }
 

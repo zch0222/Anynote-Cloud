@@ -132,6 +132,17 @@ public class FileController {
         return ResUtil.success(fileService.getObjectUrlByObjectName(objectName));
     }
 
+    /**
+     * 下载Object到服务器本地路径
+     * @param downloadObjectDTO
+     * @return
+     */
+    @PostMapping("downloadObject")
+    @InnerAuth
+    public ResData<String> downloadObject(@RequestBody @Validated DownloadObjectDTO downloadObjectDTO) {
+        return ResUtil.success(fileService.downloadObject(downloadObjectDTO));
+    }
+
 
 
 

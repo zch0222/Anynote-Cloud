@@ -10,6 +10,11 @@
     <name>anynote-modules-ai-nio</name>
     <dependencies>
 
+        <dependency>
+            <groupId>com.openai</groupId>
+            <artifactId>openai-java</artifactId>
+        </dependency>
+
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -81,6 +86,17 @@
         <dependency>
             <groupId>com.anynote</groupId>
             <artifactId>anynote-api-ai</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.anynote</groupId>
+                    <artifactId>anynote-common-security</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-file</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.anynote</groupId>

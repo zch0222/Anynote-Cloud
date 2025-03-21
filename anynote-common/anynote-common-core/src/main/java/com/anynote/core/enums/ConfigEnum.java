@@ -55,6 +55,11 @@ public enum ConfigEnum {
     /**
      * MIN IO 配置
      */
-    MIN_IO_CONFIG
+    MIN_IO_CONFIG,
+
+    /**
+     * Whisper 服务config
+     */
+    WHISPER_CONFIG
     ;
 }

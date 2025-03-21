@@ -18,4 +18,16 @@ public class RemoteResDataUtil {
         }
         return resData.getData();
     }
+
+    public static <T> T getResData(ResData<T> resData) {
+        if (StringUtils.isNull(resData) || StringUtils.isNull(resData.getData())) {
+            throw new BusinessException("未知异常");
+        }
+
+        if (!ResData.SUCCESS.equals(resData.getCode())) {
+            log.error(resData.getMsg());
+            throw new BusinessException(resData.getMsg());
+        }
+        return resData.getData();
+    }
 }

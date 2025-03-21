@@ -2,6 +2,7 @@ package com.anynote.file.api.factory;
 
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
+import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.enums.ResCode;
 import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.ResData;
@@ -9,6 +10,7 @@ import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
+import com.anynote.file.api.model.dto.DownloadObjectDTO;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreateDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
@@ -59,6 +61,18 @@ public class RemoteFileFallbackFactory implements FallbackFactory<RemoteFileServ
             @Override
             public ResData<OssSliceUploadTaskVO> createOssSliceUploadTask(OssSliceUploadTaskCreateDTO ossSliceUploadTaskCreateDTO) {
                 throw new BusinessException("创建分片任务失败");
+            }
+
+            @Override
+            public ResData<String> downloadObject(DownloadObjectDTO downloadObjectDTO) {
+                throw new BusinessException(StringUtils.format("下载文件对象\"{}\"失败",
+                        downloadObjectDTO.getObjectName()));
+            }
+
+            @Override
+            public ResData<String> downloadObject(DownloadObjectDTO downloadObjectDTO, String fromSource) {
+                throw new BusinessException(StringUtils.format("下载文件对象\"{}\"失败",
+                        downloadObjectDTO.getObjectName()));
             }
         };
     }

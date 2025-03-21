@@ -1,5 +1,8 @@
 package com.anynote.note.service.impl;
 
+import com.anynote.ai.api.RemoteWhisperService;
+import com.anynote.ai.api.model.dto.WhisperDTO;
+import com.anynote.ai.api.model.po.WhisperTask;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
@@ -61,6 +64,9 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
 
     @Resource
     private MoocItemTextService moocItemTextService;
+
+    @Resource
+    private RemoteWhisperService remoteWhisperService;
 
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限创建慕课")
@@ -150,9 +156,11 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
                         .updateTime(now)
                         .build())
                 .collect(Collectors.toList());
-        boolean textSaveRes = moocItemTextService.saveBatch(itemTextList);
-        if (!textSaveRes) {
-            throw new BusinessException("保存Item Text失败");
+        if (!itemTextList.isEmpty()) {
+            boolean textSaveRes = moocItemTextService.saveBatch(itemTextList);
+            if (!textSaveRes) {
+                throw new BusinessException("保存Item Text失败");
+            }
         }
         return Constants.SUCCESS_RES;
     }
@@ -186,5 +194,22 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
                 .createOssSliceUploadTask(new OssSliceUploadTaskCreateDTO(moocVideoCreateParam.getOssSliceUploadTaskCreatePublicDTO(),
                         StringUtils.format(FileConstants.MOOC_VIDEO_PATH_TEMPLATE, loginUser.getUserId()),
                         FileSources.MOOC_COVER.getValue())), "慕课视频上传任务创建失败");
+    }
+
+    @RequiresPermissions(value = "n:mooc:update", paramIdName = "moocId", queryParamName = "moocItemAsrParam")
+    @Override
+    public String moocItemAsr(MoocItemAsrParam moocItemAsrParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        MoocItemPO moocItemPO = moocItemService.getOne(new LambdaQueryWrapper<MoocItemPO>()
+                .eq(MoocItemPO::getId, moocItemAsrParam.getMoocItemId())
+                .eq(MoocItemPO::getMoocId, moocItemAsrParam.getMoocId()));
+        if (StringUtils.isNull(moocItemPO)) {
+            throw new BusinessException("Mooc Item不存在");
+        }
+         RemoteResDataUtil.getResData(remoteWhisperService
+                .submitWhisperTask(WhisperDTO.builder().objectName(moocItemPO.getObjectName())
+                        .language(moocItemAsrParam.getLanguage())
+                        .build(), "inner"));
+        return Constants.SUCCESS_RES;
     }
 }

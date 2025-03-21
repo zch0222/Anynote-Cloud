@@ -16,11 +16,11 @@ public class WhisperTaskStatusUpdatedMQParam {
 
     private WhisperTaskStatusVO whisperTaskStatusVO;
 
-    private Long whisperTaskId;
-
-    private Long userId;
-
-    private Date updateTime;
-
-    private Date createTime;
+//    private Long whisperTaskId;
+//
+//    private Long userId;
+//
+//    private Date updateTime;
+//
+//    private Date createTime;
 }

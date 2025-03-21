@@ -12,6 +12,7 @@ import com.anynote.core.utils.UrlUtil;
 import com.anynote.core.utils.file.FileUtils;
 import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
+import com.anynote.file.api.model.dto.DownloadObjectDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.api.model.vo.*;
 import com.anynote.file.factory.FilePluginFactory;
@@ -368,5 +369,11 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
         redisService.setCacheObject(StringUtils.format(RedisKey.OSS_OBJECT_URL, objectName), objectURL,
                 3600*24*7-600L, TimeUnit.SECONDS);
         return objectURL;
+    }
+
+    @Override
+    public String downloadObject(DownloadObjectDTO downloadObjectDTO) {
+        return filePluginFactory.filePlugin().downloadObject(downloadObjectDTO.getObjectName(),
+                downloadObjectDTO.getFileFolder());
     }
 }

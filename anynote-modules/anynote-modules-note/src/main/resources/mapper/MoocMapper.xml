@@ -22,7 +22,7 @@
     
     <select id="getMoocList" resultMap="MoocListVOResultMap">
         SELECT
-            n_mooc.id, n_mooc.data_scope, n_mooc.knowledge_base_id,
+            n_mooc.id, n_mooc.title, n_mooc.mooc_description, n_mooc.data_scope, n_mooc.knowledge_base_id,
             n_mooc.permissions, creator_user.username as creator_username, n_mooc.is_delete, n_mooc.create_by, n_mooc.create_time,
             n_mooc.update_by, n_mooc.update_time
         FROM

@@ -163,4 +163,9 @@ public class HuaweiFilePlugin implements FilePlugin {
     public ObjectURL getObjectUrl(String objectName, Integer durationSeconds) {
         return null;
     }
+
+    @Override
+    public String downloadObject(String objectName, String savePath) {
+        return "";
+    }
 }

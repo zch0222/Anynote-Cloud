@@ -18,17 +18,23 @@ import io.minio.credentials.Credentials;
 import io.minio.errors.*;
 import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class MinIOFilePlugin implements FilePlugin {
@@ -36,6 +42,10 @@ public class MinIOFilePlugin implements FilePlugin {
     private final MinIOConfig minIOConfig;
 
     private final MinioClient minioClient;
+
+    private String getOriginalObjectName(String objectName) {
+        return StringUtils.format("{}/{}", this.minIOConfig.getBasePath(), objectName);
+    }
 
 
 
@@ -292,5 +302,34 @@ public class MinIOFilePlugin implements FilePlugin {
                 .url(url)
                 .expireTime(calendar.getTime())
                 .build();
+    }
+
+
+    @Override
+    public String downloadObject(String objectName, String savePath) {
+        Path folderPath = Paths.get(savePath);
+        if (!Files.exists(folderPath)) {
+            throw new BusinessException("文件目录不存在");
+        }
+        try {
+            if (!exist(objectName)) {
+                throw new BusinessException(StringUtils.format("文件对象\"{}\"不存在", getOriginalObjectName(objectName)));
+            }
+            String extension = FilenameUtils.getExtension(objectName);
+            Path filePath = folderPath.resolve(StringUtils.format("{}.{}", UUID.randomUUID().toString(),
+                    extension));
+            try (InputStream inputStream = this.minioClient.getObject(
+                    GetObjectArgs.builder()
+                            .bucket(this.minIOConfig.getBucketName())
+                            .object(getOriginalObjectName(objectName))
+                            .build()
+            )) {
+                Files.copy(inputStream, filePath);
+            }
+            return filePath.toAbsolutePath().toString();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new BusinessException(StringUtils.format("下载文件对象\"{}\"失败"));
+        }
     }
 }

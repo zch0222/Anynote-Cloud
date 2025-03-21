@@ -8,6 +8,7 @@ import com.anynote.file.api.factory.RemoteFileFallbackFactory;
 import com.anynote.file.api.model.bo.*;
 import com.anynote.file.api.model.dto.CompleteUploadDTO;
 import com.anynote.file.api.model.dto.CreateHuaweiOBSTemporarySignatureDTO;
+import com.anynote.file.api.model.dto.DownloadObjectDTO;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreateDTO;
 import com.anynote.file.api.model.po.FilePO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
@@ -52,4 +53,11 @@ public interface RemoteFileService {
     @PostMapping("/ossSliceUploadTasks")
     public ResData<OssSliceUploadTaskVO> createOssSliceUploadTask(@RequestBody @Validated
                                                                   OssSliceUploadTaskCreateDTO ossSliceUploadTaskCreateDTO);
+
+    @PostMapping("downloadObject")
+    public ResData<String> downloadObject(@RequestBody @Validated DownloadObjectDTO downloadObjectDTO);
+
+    @PostMapping("downloadObject")
+    public ResData<String> downloadObject(@RequestBody @Validated DownloadObjectDTO downloadObjectDTO,
+                                          @RequestHeader("from-source") String fromSource);
 }

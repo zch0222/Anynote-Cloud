@@ -6,7 +6,6 @@ import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
 import com.anynote.note.model.vo.MoocItemListVO;
-import com.anynote.note.model.vo.MoocItemVO;
 import com.anynote.note.model.vo.MoocListVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -58,4 +57,11 @@ public interface MoocService extends IService<MoocPO> {
      * @return
      */
     public OssSliceUploadTaskVO createMoocVideoUploadTask(MoocVideoCreateParam moocVideoCreateParam);
+
+    /**
+     * 慕课对象语音识别
+     * @param moocItemAsrParam
+     * @return
+     */
+    public String moocItemAsr(MoocItemAsrParam moocItemAsrParam);
 }

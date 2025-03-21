@@ -90,6 +90,8 @@ public class MoocController {
                 .moocId(moocItemListDTO.getMoocId())
                 .parentId(moocItemListDTO.getParentId())
                 .moocItemType(moocItemListDTO.getMoocItemType())
+                .page(moocItemListDTO.getPage())
+                .pageSize(moocItemListDTO.getPageSize())
                 .build()));
     }
 
@@ -119,6 +121,20 @@ public class MoocController {
         return ResUtil.success(moocService.createMoocVideoUploadTask(MoocVideoCreateParam.MoocVideoCreateParamBuilder()
                         .ossSliceUploadTaskCreatePublicDTO(createDTO)
                         .moocId(createDTO.getMoocId())
+                .build()));
+    }
+
+    /**
+     * 慕课Item 语音识别
+     * @param moocAsrDTO
+     * @return SUCCESS
+     */
+    @PostMapping("asr")
+    public ResData<String> asrMoocItem(@RequestBody @Validated MoocAsrDTO moocAsrDTO) {
+        return ResUtil.success(moocService.moocItemAsr(MoocItemAsrParam.MoocItemAsrParamBuilder()
+                .moocId(moocAsrDTO.getMoocId())
+                .moocItemId(moocAsrDTO.getMoocItemId())
+                .language(moocAsrDTO.getLanguage())
                 .build()));
     }
 

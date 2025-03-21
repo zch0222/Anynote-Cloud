@@ -66,4 +66,12 @@ public interface FilePlugin {
      * @return 对象URL信息
      */
     public ObjectURL getObjectUrl(String objectName, Integer durationSeconds);
+
+    /**
+     * 下载Object到服务器本地
+     * @param objectName 对象名称
+     * @param savePath 保存目录（建议用绝对地址）
+     * @return 保存的地址
+     */
+    public String downloadObject(String objectName, String savePath);
 }

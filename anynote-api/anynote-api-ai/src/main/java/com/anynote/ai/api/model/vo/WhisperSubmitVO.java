@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WhisperSubmitVO {
 
-    private String taskId;
+    private Long taskId;
 }

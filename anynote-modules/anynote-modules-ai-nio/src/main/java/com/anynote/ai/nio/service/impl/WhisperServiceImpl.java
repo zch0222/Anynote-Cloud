@@ -1,15 +1,17 @@
 package com.anynote.ai.nio.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.anynote.ai.api.model.bo.WhisperTaskCreatedMQParam;
+import com.anynote.ai.api.enums.WhisperTaskStatus;
+import com.anynote.ai.api.model.bo.WhisperTaskStatusUpdatedMQParamV1;
 import com.anynote.ai.api.model.po.WhisperTask;
 import com.anynote.ai.api.model.vo.WhisperTaskStatusVO;
-import com.anynote.ai.nio.constants.WhisperConstants;
 import com.anynote.ai.nio.datascope.annotation.RequiresWhisperTaskPermissions;
+import com.anynote.ai.nio.model.bo.WhisperConfig;
 import com.anynote.ai.nio.model.bo.WhisperTaskQueryParam;
-import com.anynote.ai.nio.model.dto.WhisperDTO;
+import com.anynote.ai.api.model.dto.WhisperDTO;
 import com.anynote.ai.api.model.vo.WhisperSubmitVO;
 import com.anynote.ai.nio.model.vo.WhisperVO;
+import com.anynote.ai.nio.service.FfmpegService;
 import com.anynote.ai.nio.service.WhisperService;
 import com.anynote.ai.nio.service.WhisperTaskService;
 import com.anynote.common.redis.constant.RedisChannel;
@@ -18,13 +20,19 @@ import com.anynote.common.rocketmq.callback.RocketmqSendCallbackBuilder;
 import com.anynote.common.rocketmq.properties.RocketMQProperties;
 import com.anynote.common.rocketmq.tags.WhisperTagsEnum;
 import com.anynote.common.security.token.TokenUtil;
+import com.anynote.core.constant.SecurityConstants;
+import com.anynote.core.exception.BusinessException;
+import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
-import com.anynote.core.web.model.bo.ResData;
+import com.anynote.file.api.RemoteFileService;
+import com.anynote.file.api.model.dto.DownloadObjectDTO;
 import com.anynote.system.api.model.bo.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -36,6 +44,8 @@ import reactor.core.scheduler.Schedulers;
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -68,6 +78,18 @@ public class WhisperServiceImpl implements WhisperService {
 
     @Resource
     private WhisperTaskService whisperTaskService;
+
+    @Resource
+    private Executor whisperExecutor;
+
+    @Resource
+    private Executor ffmpegExecutor;
+
+    @Resource
+    private RemoteFileService remoteFileService;
+
+    @Resource
+    private FfmpegService ffmpegService;
 
 
 
@@ -119,37 +141,98 @@ public class WhisperServiceImpl implements WhisperService {
                 });
     }
 
-    @Override
-    public Mono<WhisperSubmitVO> submitWhisper(WhisperDTO whisperDTO, String accessToken) {
-        String aiServiceAddress = configService.getAIServerAddress();
-        LoginUser loginUser = tokenUtil.getLoginUser(accessToken);
-        ParameterizedTypeReference<ResData<WhisperSubmitVO>> resType = new ParameterizedTypeReference<ResData<WhisperSubmitVO>>(){};
-        Date createTime = new Date();
+    private String ffmpeg() {
+        log.info("FFMPEG");
+        return "FFMPEG";
+    }
+
+    private void whisper(String s) {
+        log.info("whisper----" + s);
+    }
+
+    /**
+     * 调用远程Whisper服务
+     */
+    private String remoteWhisper(String audioPath, String language) {
+        WhisperConfig whisperConfig = gson.fromJson(configService.getWhisperConfig(), WhisperConfig.class);
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        builder.part("file", new FileSystemResource(audioPath));
+        builder.part("language", "zh");
+        builder.part("model", "whisper-1");
+        builder.part("response_format", "srt");
         return webClient.post()
-                .uri(aiServiceAddress + WhisperConstants.WHISPER_TASK_SUBMIT_URL)
-                .body(Mono.just(whisperDTO), WhisperDTO.class)
+                .uri(whisperConfig.getBaseUrl() + "/audio/transcriptions")
+                .header("Authorization", StringUtils.format("Bearer {}", whisperConfig.getApiKey()))
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .bodyValue(builder.build())
                 .retrieve()
-                .bodyToMono(resType)
-                .flatMap(resData -> {
-                    log.info(gson.toJson(resData));
-                    WhisperSubmitVO whisperSubmitVO = resData.getData();
-                    Date updateTime = new Date();
-                    WhisperTask whisperTask = WhisperTask
-                            .builder()
-                            .taskId(whisperSubmitVO.getTaskId())
-                            .taskStatus(WhisperTaskStatusVO.Status.STARTING.getValue())
-                            .createTime(createTime)
-                            .updateTime(updateTime)
-                            .createBy(loginUser.getUserId())
-                            .updateBy(loginUser.getUserId()).build();
-                    whisperTaskService.getBaseMapper().insert(whisperTask);
-                    String destination = rocketMQProperties.getNoteTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_SUBMITTED.name();
-                    rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskCreatedMQParam.builder()
-                                            .whisperSubmitVO(whisperSubmitVO)
-                                    .whisperTaskId(whisperTask.getId()).userId(loginUser.getUserId()).build()),
-                            RocketmqSendCallbackBuilder.commonCallback());
-                    return Mono.just(whisperSubmitVO);
-                });
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    @Override
+    public void whisperV1(WhisperDTO whisperDTO, Long taskId) {
+        WhisperConfig whisperConfig = gson.fromJson(configService.getWhisperConfig(), WhisperConfig.class);
+        CompletableFuture.supplyAsync(() -> {
+            log.info("whisper object: {}, language: {}, start download",
+                    whisperDTO.getObjectName(), whisperDTO.getLanguage());
+            return RemoteResDataUtil.getResData(remoteFileService
+                    .downloadObject(DownloadObjectDTO.builder()
+                            .objectName(whisperDTO.getObjectName())
+                            .fileFolder(whisperConfig.getTmpFileFolder())
+                            .build(), "inner"));
+        }, whisperExecutor)
+        .thenApplyAsync(filePath -> {
+            log.info("whisper object: {}, language: {}, start ffmpeg",
+                    whisperDTO.getObjectName(), whisperDTO.getLanguage());
+            return ffmpegService.copyAudio(filePath);
+        }, ffmpegExecutor).thenAcceptAsync(audioPath -> {
+            log.info("whisper object: {}, language: {}, start remote whisper",
+                    whisperDTO.getObjectName(), whisperDTO.getLanguage());
+            String srt = remoteWhisper(audioPath, whisperDTO.getLanguage());
+            log.info(srt);
+            String destination = rocketMQProperties.getAiChatTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
+            rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParamV1
+                            .builder().status(WhisperTaskStatus.SUCCESS)
+                            .taskId(taskId)
+                            .result(WhisperTaskStatusUpdatedMQParamV1.Result.builder()
+                                    .srt(srt)
+                                    .build())
+                            .build()),
+                    RocketmqSendCallbackBuilder.commonCallback());
+        }, whisperExecutor)
+        .exceptionally(ex -> {
+            log.error("whisper object: {}, language: {}, error",
+                    whisperDTO.getObjectName(), whisperDTO.getLanguage(), ex);
+            String destination = rocketMQProperties.getAiChatTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
+            rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParamV1
+                            .builder().status(WhisperTaskStatus.FAILED)
+                            .taskId(taskId)
+                            .errorMessage(ex.getMessage())
+                            .build()),
+                    RocketmqSendCallbackBuilder.commonCallback());
+            throw new BusinessException(StringUtils.format("whisper object: {}, language: {}, error",
+                    whisperDTO.getObjectName(), whisperDTO.getLanguage()));
+        });
+    }
+
+    @Override
+    public Mono<WhisperSubmitVO> submitWhisper(WhisperDTO whisperDTO) {
+        return Mono.deferContextual(ctx -> {
+            Date now = new Date();
+            log.info(gson.toJson(whisperDTO));
+            LoginUser loginUser = tokenUtil.getLoginUser(ctx.get(SecurityConstants.ACCESS_TOKEN));
+            WhisperTask whisperTask = WhisperTask.builder()
+                    .createBy(loginUser.getUserId())
+                    .updateBy(loginUser.getUserId())
+                    .createTime(now)
+                    .updateTime(now)
+                    .taskStatus(0)
+                    .build();
+            whisperTaskService.getBaseMapper().insert(whisperTask);
+            whisperV1(whisperDTO, whisperTask.getId());
+            return Mono.just(WhisperSubmitVO.builder().taskId(whisperTask.getId()).build());
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
 
@@ -187,10 +270,9 @@ public class WhisperServiceImpl implements WhisperService {
                     return Flux.just(ServerSentEvent
                             .builder(WhisperTaskStatusVO.builder()
                                     .status(WhisperTaskStatusVO.Status.values()[whisperTask.getTaskStatus()].name())
-                                    .taskId(whisperTask.getTaskId())
                                     .result(WhisperTaskStatusVO.WhisperTaskResult.builder()
-                                            .srt(whisperTask.getSrtUrl())
-                                            .txt(whisperTask.getTxtUrl()).build())
+                                            .srt(whisperTask.getSrtObjectName())
+                                            .txt(whisperTask.getTxtObjectName()).build())
                                     .build())
                             .event("message")
                             .id(String.valueOf(System.currentTimeMillis())).build());

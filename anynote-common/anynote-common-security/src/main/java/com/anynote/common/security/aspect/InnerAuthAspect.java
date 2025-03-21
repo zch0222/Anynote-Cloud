@@ -1,6 +1,7 @@
 package com.anynote.common.security.aspect;
 
 import com.anynote.common.security.annotation.InnerAuth;
+import com.anynote.common.security.condition.SpringMvcCondition;
 import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.exception.auth.InnerAuthException;
 import com.anynote.core.utils.ServletUtils;
@@ -10,6 +11,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Conditional(SpringMvcCondition.class)
 @Order(0)
 public class InnerAuthAspect {
     @Before("@annotation(innerAuth)")

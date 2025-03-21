@@ -37,4 +37,9 @@ public class ConfigService {
         return sysConfig.getValue();
     }
 
+    public String getWhisperConfig() {
+        SysConfig sysConfig = redisService.getConfig(ConfigEnum.WHISPER_CONFIG);
+        return sysConfig.getValue();
+    }
+
 }
