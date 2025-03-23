@@ -1,6 +1,7 @@
 package com.anynote.common.datascope.aspect;
 
 import com.anynote.common.datascope.annotation.RequiresPermissions;
+import com.anynote.common.datascope.constants.PermissionConstants;
 import com.anynote.common.datascope.model.bo.PermissionAuthBO;
 import com.anynote.common.datascope.service.PermissionService;
 import com.anynote.common.security.token.TokenUtil;
@@ -8,6 +9,7 @@ import com.anynote.core.condition.SpringMvcCondition;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.auth.AuthException;
 import com.anynote.core.utils.StringUtils;
+import com.anynote.core.web.model.bo.BaseEntity;
 import com.anynote.core.web.model.bo.QueryParam;
 import com.anynote.system.api.model.bo.LoginUser;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 @Order(1)
 @Aspect
@@ -53,6 +56,17 @@ public class RequiresPermissionsAspect {
         throw new BusinessException("未知异常，请联系管理员");
     }
 
+    private void setParams(Object queryParam, String key, Object value) {
+        if (!(queryParam instanceof BaseEntity)) {
+            return;
+        }
+        BaseEntity baseEntity = (BaseEntity) queryParam;
+        if (StringUtils.isNull(baseEntity.getParams())) {
+            baseEntity.setParams(new HashMap<>());
+        }
+        baseEntity.getParams().put(key, value);
+    }
+
     @Before("@annotation(requiresPermissions)")
     public void doBefore(JoinPoint joinPoint, RequiresPermissions requiresPermissions) {
         Object queryParam = this.getQueryParam(joinPoint, requiresPermissions.queryParamName());
@@ -68,6 +82,7 @@ public class RequiresPermissionsAspect {
             throw new BusinessException("未知异常，请联系管理员");
         }
         PermissionAuthBO permissionAuthBO = permissionService.auth(requiresPermissions.value(), entityId, loginUser.getUserId());
+        setParams(queryParam ,PermissionConstants.PERMISSION_CONTEXT_KEY, permissionAuthBO.getPermission());
         if (!permissionAuthBO.isAuthenticationSuccess()) {
             throw new AuthException();
         }

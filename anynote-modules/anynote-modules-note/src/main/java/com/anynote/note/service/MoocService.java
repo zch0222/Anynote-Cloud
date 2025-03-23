@@ -7,6 +7,7 @@ import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
 import com.anynote.note.model.vo.MoocItemListVO;
 import com.anynote.note.model.vo.MoocListVO;
+import com.anynote.note.model.vo.MoocVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -16,11 +17,25 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface MoocService extends IService<MoocPO> {
 
     /**
+     * 根据慕课id获取慕课信息
+     * @param moocQueryParam 慕课查询参数
+     * @return 慕课信息
+     */
+    public MoocVO getMoocById(MoocQueryParam moocQueryParam);
+
+    /**
      * 创建慕课
      * @param moocCreateParam 慕课创建参数
      * @return 慕课id
      */
     public Long createMooc(MoocCreateParam moocCreateParam);
+
+    /**
+     * 更新慕课
+     * @param moocUpdateParam 慕课更新参数
+     * @return
+     */
+    public String updateMooc(MoocUpdateParam moocUpdateParam);
 
     /**
      * 分页获取慕课列表
@@ -43,6 +58,14 @@ public interface MoocService extends IService<MoocPO> {
      * @return SUCCESS
      */
     public String createItems(MoocItemCreateParam moocItemCreateParam);
+
+
+    /**
+     * 更新Mooc Item
+     * @param moocItemUpdateParam MoocItem更新参数
+     * @return SUCCESS
+     */
+    public String updateMoocItem(MoocItemUpdateParam moocItemUpdateParam);
 
     /**
      *

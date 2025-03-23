@@ -4,6 +4,7 @@ import com.anynote.ai.api.RemoteWhisperService;
 import com.anynote.ai.api.model.dto.WhisperDTO;
 import com.anynote.ai.api.model.po.WhisperTask;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
+import com.anynote.common.datascope.constants.PermissionConstants;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.constant.FileConstants;
@@ -27,6 +28,7 @@ import com.anynote.note.model.po.MoocPO;
 import com.anynote.note.model.vo.MoocItemListVO;
 import com.anynote.note.model.vo.MoocItemVO;
 import com.anynote.note.model.vo.MoocListVO;
+import com.anynote.note.model.vo.MoocVO;
 import com.anynote.note.service.MoocItemService;
 import com.anynote.note.service.MoocItemTextService;
 import com.anynote.note.service.MoocService;
@@ -68,6 +70,14 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
     @Resource
     private RemoteWhisperService remoteWhisperService;
 
+    @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocQueryParam")
+    @Override
+    public MoocVO getMoocById(MoocQueryParam moocQueryParam) {
+        MoocVO moocVO = this.baseMapper.selectMoocById(moocQueryParam.getMoocId());
+        moocVO.setUserPermissions((Integer) moocQueryParam.getParams().get(PermissionConstants.PERMISSION_CONTEXT_KEY));
+        return moocVO;
+    }
+
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE,
             message = "没有权限创建慕课")
     @Override
@@ -89,6 +99,25 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
                 .build();
         this.save(moocPO);
         return moocPO.getId();
+    }
+
+    @RequiresPermissions(value = "n:mooc:update", paramIdName = "moocId", queryParamName = "moocUpdateParam")
+    @Override
+    public String updateMooc(MoocUpdateParam moocUpdateParam) {
+        MoocPO moocPO = MoocPO.builder()
+                .id(moocUpdateParam.getMoocId())
+                .title(moocUpdateParam.getTitle())
+                .cover(moocUpdateParam.getCover())
+                .moocDescription(moocUpdateParam.getMoocDescription())
+                .dataScope(moocUpdateParam.getDataScope())
+                .knowledgeBaseId(moocUpdateParam.getKnowledgeBaseId())
+                .permissions(moocUpdateParam.getMoocPermissions())
+                .build();
+        boolean res = updateById(moocPO);
+        if (!res) {
+            throw new BusinessException("更新失败");
+        }
+        return Constants.SUCCESS_RES;
     }
 
     @KnowledgeBaseDataScope(value = "n_mooc")
@@ -160,6 +189,35 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
             boolean textSaveRes = moocItemTextService.saveBatch(itemTextList);
             if (!textSaveRes) {
                 throw new BusinessException("保存Item Text失败");
+            }
+        }
+        return Constants.SUCCESS_RES;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @RequiresPermissions(value = "n:mooc:update", paramIdName = "moocId", queryParamName = "moocItemUpdateParam")
+    @Override
+    public String updateMoocItem(MoocItemUpdateParam moocItemUpdateParam) {
+        MoocItemPO moocItemPO = MoocItemPO.builder()
+                .id(moocItemUpdateParam.getMoocItemId())
+                .title(moocItemUpdateParam.getTitle())
+                .objectName(moocItemUpdateParam.getObjectName())
+                .parentId(moocItemUpdateParam.getParentId())
+                .build();
+        boolean moocItemUpdateRes = moocItemService.update(moocItemPO, new LambdaQueryWrapper<MoocItemPO>()
+                .eq(MoocItemPO::getId, moocItemPO.getId())
+                .eq(MoocItemPO::getMoocId, moocItemUpdateParam.getMoocId()));
+        if (!moocItemUpdateRes) {
+            throw new BusinessException("更新慕课Item失败");
+        }
+        if (StringUtils.isNotNull(moocItemUpdateParam.getItemText())) {
+            MoocItemTextPO moocItemTextPO = MoocItemTextPO.builder()
+                    .moocItemId(moocItemUpdateParam.getMoocItemId())
+                    .itemText(moocItemUpdateParam.getItemText())
+                    .build();
+            boolean itemTextUpdateRes = moocItemTextService.saveOrUpdate(moocItemTextPO);
+            if (!itemTextUpdateRes) {
+                throw new BusinessException("慕课Item Text保存失败");
             }
         }
         return Constants.SUCCESS_RES;

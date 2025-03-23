@@ -1,6 +1,8 @@
 package com.anynote.note.controller;
 
+import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
+import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
@@ -10,6 +12,7 @@ import com.anynote.note.model.dto.*;
 import com.anynote.note.model.vo.MoocItemListVO;
 import com.anynote.note.model.vo.MoocItemVO;
 import com.anynote.note.model.vo.MoocListVO;
+import com.anynote.note.model.vo.MoocVO;
 import com.anynote.note.service.MoocItemService;
 import com.anynote.note.service.MoocService;
 import org.springframework.validation.annotation.Validated;
@@ -44,6 +47,13 @@ public class MoocController {
                 .build()));
     }
 
+    @PatchMapping("{id}")
+    public ResData<String> updateMooc(@PathVariable("id") @Validated @NotNull(message = "慕课id不能为空") Long id,
+                                      @Validated @RequestBody MoocUpdateDTO moocUpdateDTO) {
+        return ResUtil.success(moocService.updateMooc(new MoocUpdateParam(id, moocUpdateDTO)));
+    }
+
+
     @GetMapping("")
     public ResData<PageBean<MoocListVO>> getMoocList(@Validated MoocListDTO moocListDTO) {
         return ResUtil.success(moocService.getMoocList(MoocQueryParam
@@ -51,6 +61,18 @@ public class MoocController {
                 .knowledgeBaseId(moocListDTO.getKnowledgeId())
                 .page(moocListDTO.getPage())
                 .pageSize(moocListDTO.getPageSize())
+                .build()));
+    }
+
+    /**
+     * 根据id获取慕课信息
+     * @param id 慕课id
+     * @return 慕课信息
+     */
+    @GetMapping("{id}")
+    public ResData<MoocVO> getMoocById(@PathVariable("id") Long id) {
+        return ResUtil.success(moocService.getMoocById(MoocQueryParam.MoocQueryParamBuilder()
+                .moocId(id)
                 .build()));
     }
 
@@ -76,6 +98,27 @@ public class MoocController {
                 .moocId(createDTO.getMoocId())
                 .knowledgeBaseId(createDTO.getKnowledgeBaseId())
                 .items(createDTO.getItems())
+                .build()));
+    }
+
+    /**
+     * 更新慕课Item
+     * @param moocItemUpdateDTO
+     * @return SUCCESS
+     */
+    @PatchMapping("items/{itemId}")
+    public ResData<String> updateMoocItems(@Validated @RequestBody MoocItemUpdateDTO moocItemUpdateDTO,
+                                           @PathVariable @Validated @NotNull(message = "Item Id不能为空") Long itemId) {
+        if (StringUtils.isNull(itemId)) {
+            throw new BusinessException("Item Id不能为空");
+        }
+        return ResUtil.success(moocService.updateMoocItem(MoocItemUpdateParam.MoocItemUpdateParamBuilder()
+                .moocId(moocItemUpdateDTO.getMoocId())
+                .moocItemId(itemId)
+                .title(moocItemUpdateDTO.getTitle())
+                .objectName(moocItemUpdateDTO.getObjectName())
+                .parentId(moocItemUpdateDTO.getParentId())
+                .itemText(moocItemUpdateDTO.getItemText())
                 .build()));
     }
 
