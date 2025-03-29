@@ -18,7 +18,7 @@ public class FileConstants {
     /**
      * 慕课字幕文件
      */
-    public static final String MOOC_SRT_PATH_TEMPLATE = "mooc/srt/{}.srt";
+    public static final String MOOC_SRT_PATH_TEMPLATE = "mooc/srt/{}_{}.srt";
 
     /**
      * 慕课封面地址

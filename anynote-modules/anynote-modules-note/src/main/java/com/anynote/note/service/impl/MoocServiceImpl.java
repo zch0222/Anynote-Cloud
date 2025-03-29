@@ -31,10 +31,7 @@ import com.anynote.note.model.po.MoocItemPO;
 import com.anynote.note.model.po.MoocItemTextPO;
 import com.anynote.note.model.po.MoocPO;
 import com.anynote.note.model.po.MoocVideoItemInfoPO;
-import com.anynote.note.model.vo.MoocItemAsrVO;
-import com.anynote.note.model.vo.MoocItemListVO;
-import com.anynote.note.model.vo.MoocListVO;
-import com.anynote.note.model.vo.MoocVO;
+import com.anynote.note.model.vo.*;
 import com.anynote.note.service.MoocItemService;
 import com.anynote.note.service.MoocItemTextService;
 import com.anynote.note.service.MoocService;
@@ -338,5 +335,35 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
                 .getCacheObject(StringUtils.format(RedisKey.MOOC_ASR_TASK_MOOC_ID_AND_MOOC_ITEM_ID_KEY,
                         moocItemQueryParam.getMoocId(),
                         moocItemQueryParam.getMoocItemId()));
+    }
+
+    @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocItemQueryParam")
+    @Override
+    public MoocVideoItemInfoVO getMoocVideoItemInfo(MoocItemQueryParam moocItemQueryParam) {
+        MoocVideoItemInfoPO moocVideoItemInfoPO = moocVideoItemInfoService
+                .getOne(new LambdaQueryWrapper<MoocVideoItemInfoPO>()
+                        .eq(MoocVideoItemInfoPO::getMoocItemId, moocItemQueryParam.getMoocItemId())
+                        .eq(MoocVideoItemInfoPO::getMoocId, moocItemQueryParam.getMoocId()));
+        if (StringUtils.isNull(moocVideoItemInfoPO)) {
+            throw new BusinessException(StringUtils.format("慕课Item id = {}，不存在视频信息", moocItemQueryParam.getMoocItemId()));
+        }
+
+        return MoocVideoItemInfoVO.builder()
+                .id(moocVideoItemInfoPO.getId())
+                .moocId(moocVideoItemInfoPO.getMoocId())
+                .moocItemId(moocVideoItemInfoPO.getMoocItemId())
+                .videoSummarize(moocVideoItemInfoPO.getVideoSummarize())
+                .srtObjectName(moocVideoItemInfoPO.getSrtObjectName())
+                .build();
+    }
+
+    @RequiresPermissions(value = "n:mooc:manage", paramIdName = "moocId", queryParamName = "moocParam")
+    @Override
+    public String deleteMooc(MoocParam moocParam) {
+        boolean res = this.removeById(moocParam.getMoocId());
+        if (!res) {
+            throw new BusinessException("删除慕课失败");
+        }
+        return Constants.SUCCESS_RES;
     }
 }

@@ -63,7 +63,7 @@ public class MinIOFilePlugin implements FilePlugin {
         try {
             this.minioClient.putObject(PutObjectArgs.builder()
                     .bucket(this.minIOConfig.getBucketName())
-                            .object(objectName)
+                            .object(getOriginalObjectName(objectName))
                             .stream(inputStream, -1, 10485760)
                     .build());
         } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.security.annotation.InnerAuth;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.utils.StringUtils;
@@ -50,6 +51,18 @@ public class MoocController {
     public ResData<String> updateMooc(@PathVariable("id") @Validated @NotNull(message = "慕课id不能为空") Long id,
                                       @Validated @RequestBody MoocUpdateDTO moocUpdateDTO) {
         return ResUtil.success(moocService.updateMooc(new MoocUpdateParam(id, moocUpdateDTO)));
+    }
+
+    /**
+     * 删除慕课
+     * @param moocId 慕课id
+     * @return
+     */
+    @DeleteMapping("/{moocId}")
+    public ResData<String> deleteMooc(@PathVariable Long moocId) {
+        return ResUtil.success(moocService.deleteMooc(MoocParam.MoocParamBuilder()
+                .moocId(moocId)
+                .build()));
     }
 
 
@@ -197,6 +210,15 @@ public class MoocController {
         return ResUtil.success(moocService.getMoocAsrTaskInfo(MoocItemQueryParam.MoocItemQueryParamBuilder()
                 .moocItemId(moocItemId)
                 .moocId(moocId)
+                .build()));
+    }
+
+    @GetMapping("videoItemInfo")
+    public ResData<MoocVideoItemInfoVO> getMoocVideoItemInfo(@Validated @NotNull(message = "慕课Item ID不能为空") Long moocItemId,
+                                                             @Validated @NotNull(message = "慕课id不能为空") Long moocId) {
+        return ResUtil.success(moocService.getMoocVideoItemInfo(MoocItemQueryParam.MoocItemQueryParamBuilder()
+                .moocId(moocId)
+                .moocItemId(moocItemId)
                 .build()));
     }
 

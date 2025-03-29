@@ -27,6 +27,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -74,7 +75,8 @@ public class WhisperListener implements RocketMQListener<MessageExt> {
                 try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(updatedMQParamV1.getResult().getSrt()
                         .getBytes(StandardCharsets.UTF_8))) {
                     objectName = fileService.upload(byteArrayInputStream, updatedMQParamV1.getResult().getSrt().length(),
-                            StringUtils.format(FileConstants.MOOC_SRT_PATH_TEMPLATE, updatedMQParamV1.getTaskId()));
+                            StringUtils.format(FileConstants.MOOC_SRT_PATH_TEMPLATE,
+                                    UUID.randomUUID().toString().replace("-", ""), updatedMQParamV1.getTaskId()));
                 } catch (Exception e) {
                     whisperTaskMQService.sendWhisperTaskStatusUpdateMessage(WhisperTaskStatusUpdatedMQParamV1
                             .builder().status(WhisperTaskStatus.FAILED)

@@ -6,10 +6,7 @@ import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
-import com.anynote.note.model.vo.MoocItemAsrVO;
-import com.anynote.note.model.vo.MoocItemListVO;
-import com.anynote.note.model.vo.MoocListVO;
-import com.anynote.note.model.vo.MoocVO;
+import com.anynote.note.model.vo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -94,5 +91,13 @@ public interface MoocService extends IService<MoocPO> {
 
     public MoocAsrTaskInfo getMoocAsrTaskInfo(MoocItemQueryParam moocItemQueryParam);
 
+    /**
+     * 获取视频慕课信息
+     * @param moocItemQueryParam
+     * @return
+     */
+    public MoocVideoItemInfoVO getMoocVideoItemInfo(MoocItemQueryParam moocItemQueryParam);
+
+    public String deleteMooc(MoocParam moocParam);
 
 }
