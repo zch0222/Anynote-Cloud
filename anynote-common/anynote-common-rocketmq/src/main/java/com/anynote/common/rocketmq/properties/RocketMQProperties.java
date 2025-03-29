@@ -41,4 +41,10 @@ public class RocketMQProperties {
     private String notifyNoteGroup;
 
     private String whisperGroup;
+
+    private String noteWhisperTaskGroup;
+
+    private String aiChatWhisperTaskGroup;
+
+    private String fileWhisperTaskGroup;
 }

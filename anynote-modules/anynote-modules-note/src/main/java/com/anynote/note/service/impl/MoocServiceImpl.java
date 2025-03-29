@@ -1,10 +1,13 @@
 package com.anynote.note.service.impl;
 
 import com.anynote.ai.api.RemoteWhisperService;
+import com.anynote.ai.api.enums.WhisperTaskStatus;
 import com.anynote.ai.api.model.dto.WhisperDTO;
-import com.anynote.ai.api.model.po.WhisperTask;
+import com.anynote.ai.api.model.vo.WhisperSubmitVO;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
 import com.anynote.common.datascope.constants.PermissionConstants;
+import com.anynote.common.redis.constant.RedisKey;
+import com.anynote.common.redis.service.RedisService;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.constant.FileConstants;
@@ -18,6 +21,8 @@ import com.anynote.file.api.model.dto.OssSliceUploadTaskCreateDTO;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.enums.KnowledgeBasePermissions;
+import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.constant.MoocItemType;
 import com.anynote.note.datascope.annotation.KnowledgeBaseDataScope;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;
 import com.anynote.note.mapper.MoocMapper;
@@ -25,15 +30,18 @@ import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocItemPO;
 import com.anynote.note.model.po.MoocItemTextPO;
 import com.anynote.note.model.po.MoocPO;
+import com.anynote.note.model.po.MoocVideoItemInfoPO;
+import com.anynote.note.model.vo.MoocItemAsrVO;
 import com.anynote.note.model.vo.MoocItemListVO;
-import com.anynote.note.model.vo.MoocItemVO;
 import com.anynote.note.model.vo.MoocListVO;
 import com.anynote.note.model.vo.MoocVO;
 import com.anynote.note.service.MoocItemService;
 import com.anynote.note.service.MoocItemTextService;
 import com.anynote.note.service.MoocService;
+import com.anynote.note.service.MoocVideoItemInfoService;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -69,6 +77,12 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
 
     @Resource
     private RemoteWhisperService remoteWhisperService;
+
+    @Resource
+    private RedisService redisService;
+
+    @Resource
+    private MoocVideoItemInfoService moocVideoItemInfoService;
 
     @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocQueryParam")
     @Override
@@ -185,6 +199,21 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
                         .updateTime(now)
                         .build())
                 .collect(Collectors.toList());
+        List<MoocVideoItemInfoPO> moocVideoItemInfoPOList = moocItemPOS.stream()
+                .filter(item -> item.getMoocItemType() == MoocItemType.VIDEO)
+                .map(item -> MoocVideoItemInfoPO.builder()
+                        .moocId(moocItemCreateParam.getMoocId())
+                        .moocItemId(item.getId())
+                        .createBy(loginUser.getUserId())
+                        .updateBy(loginUser.getUserId())
+                        .createTime(now)
+                        .updateTime(now)
+                        .deleted(0)
+                        .build())
+                .collect(Collectors.toList());
+
+        moocVideoItemInfoService.saveBatch(moocVideoItemInfoPOList);
+
         if (!itemTextList.isEmpty()) {
             boolean textSaveRes = moocItemTextService.saveBatch(itemTextList);
             if (!textSaveRes) {
@@ -256,7 +285,7 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
 
     @RequiresPermissions(value = "n:mooc:update", paramIdName = "moocId", queryParamName = "moocItemAsrParam")
     @Override
-    public String moocItemAsr(MoocItemAsrParam moocItemAsrParam) {
+    public MoocItemAsrVO moocItemAsr(MoocItemAsrParam moocItemAsrParam) {
         LoginUser loginUser = tokenUtil.getLoginUser();
         MoocItemPO moocItemPO = moocItemService.getOne(new LambdaQueryWrapper<MoocItemPO>()
                 .eq(MoocItemPO::getId, moocItemAsrParam.getMoocItemId())
@@ -264,10 +293,50 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
         if (StringUtils.isNull(moocItemPO)) {
             throw new BusinessException("Mooc Item不存在");
         }
-         RemoteResDataUtil.getResData(remoteWhisperService
+        WhisperSubmitVO whisperSubmitVO = RemoteResDataUtil.getResData(remoteWhisperService
                 .submitWhisperTask(WhisperDTO.builder().objectName(moocItemPO.getObjectName())
                         .language(moocItemAsrParam.getLanguage())
                         .build(), "inner"));
+        MoocAsrTaskInfo taskInfo =  MoocAsrTaskInfo.builder()
+                .taskId(whisperSubmitVO.getTaskId())
+                .moocId(moocItemAsrParam.getMoocId())
+                .moocItemId(moocItemAsrParam.getMoocItemId())
+                .taskStatus(WhisperTaskStatus.STARTING)
+                .userId(loginUser.getUserId())
+                .build();
+        redisService.setCacheObject(StringUtils.format(RedisKey.MOOC_ASR_TASK, whisperSubmitVO.getTaskId()),
+                taskInfo);
+        redisService.setCacheObject(StringUtils.format(RedisKey.MOOC_ASR_TASK_MOOC_ID_AND_MOOC_ITEM_ID_KEY,
+                        moocItemAsrParam.getMoocId(),
+                        moocItemAsrParam.getMoocItemId()),
+                taskInfo);
+        return MoocItemAsrVO.builder()
+                .taskId(whisperSubmitVO.getTaskId())
+                .build();
+    }
+
+    @Override
+    public String updateAsrInfo(MoocAsrInfoUpdateDTO moocAsrInfoUpdateDTO) {
+        MoocAsrTaskInfo moocAsrTaskInfo = redisService
+                .getCacheObject(StringUtils.format(RedisKey.MOOC_ASR_TASK, moocAsrInfoUpdateDTO.getTaskId()));
+        boolean res = moocVideoItemInfoService.update(new LambdaUpdateWrapper<MoocVideoItemInfoPO>()
+                .eq(MoocVideoItemInfoPO::getMoocItemId, moocAsrTaskInfo.getMoocItemId())
+                .set(MoocVideoItemInfoPO::getSrtObjectName, moocAsrInfoUpdateDTO.getSrtObjectName())
+                .set(MoocVideoItemInfoPO::getUpdateTime, new Date())
+                .set(MoocVideoItemInfoPO::getUpdateBy, 0L));
+        if (!res) {
+            throw new BusinessException(StringUtils.format("更新 moocVideoItemInfo，moocItemId={}失败",
+                    moocAsrTaskInfo.getMoocItemId()));
+        }
         return Constants.SUCCESS_RES;
+    }
+
+    @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocItemQueryParam")
+    @Override
+    public MoocAsrTaskInfo getMoocAsrTaskInfo(MoocItemQueryParam moocItemQueryParam) {
+        return redisService
+                .getCacheObject(StringUtils.format(RedisKey.MOOC_ASR_TASK_MOOC_ID_AND_MOOC_ITEM_ID_KEY,
+                        moocItemQueryParam.getMoocId(),
+                        moocItemQueryParam.getMoocItemId()));
     }
 }

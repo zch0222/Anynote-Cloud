@@ -25,14 +25,19 @@ public enum WhisperTaskStatus {
     WHISPER_DONE(4),
 
     /**
+     * 上传SRT对象
+     */
+    UPLOADING_SRT_OBJECT(5),
+
+    /**
      * 任务成功
      */
-    SUCCESS(5),
+    SUCCESS(6),
 
     /**
      * 任务失败
      */
-    FAILED(6);
+    FAILED(7);
     ;
 
     private final int value;

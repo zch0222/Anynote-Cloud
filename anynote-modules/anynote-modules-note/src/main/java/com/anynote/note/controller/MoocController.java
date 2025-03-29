@@ -1,5 +1,6 @@
 package com.anynote.note.controller;
 
+import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.utils.StringUtils;
@@ -7,12 +8,10 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
+import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.*;
-import com.anynote.note.model.vo.MoocItemListVO;
-import com.anynote.note.model.vo.MoocItemVO;
-import com.anynote.note.model.vo.MoocListVO;
-import com.anynote.note.model.vo.MoocVO;
+import com.anynote.note.model.vo.*;
 import com.anynote.note.service.MoocItemService;
 import com.anynote.note.service.MoocService;
 import org.springframework.validation.annotation.Validated;
@@ -173,11 +172,31 @@ public class MoocController {
      * @return SUCCESS
      */
     @PostMapping("asr")
-    public ResData<String> asrMoocItem(@RequestBody @Validated MoocAsrDTO moocAsrDTO) {
+    public ResData<MoocItemAsrVO> asrMoocItem(@RequestBody @Validated MoocAsrDTO moocAsrDTO) {
         return ResUtil.success(moocService.moocItemAsr(MoocItemAsrParam.MoocItemAsrParamBuilder()
                 .moocId(moocAsrDTO.getMoocId())
                 .moocItemId(moocAsrDTO.getMoocItemId())
                 .language(moocAsrDTO.getLanguage())
+                .build()));
+    }
+
+    /**
+     * 更新慕课ASR的结果
+     * @param moocAsrInfoUpdateDTO
+     * @return
+     */
+    @InnerAuth
+    @PutMapping("asr")
+    public ResData<String> updateAsrInfo(@RequestBody MoocAsrInfoUpdateDTO moocAsrInfoUpdateDTO) {
+        return ResUtil.success(moocService.updateAsrInfo(moocAsrInfoUpdateDTO));
+    }
+
+    @GetMapping("asr")
+    public ResData<MoocAsrTaskInfo> getMoocAsrTaskInfo(@Validated @NotNull(message = "慕课Item ID不能为空") Long moocItemId,
+                                                       @Validated @NotNull(message = "慕课id不能为空") Long moocId) {
+        return ResUtil.success(moocService.getMoocAsrTaskInfo(MoocItemQueryParam.MoocItemQueryParamBuilder()
+                .moocItemId(moocItemId)
+                .moocId(moocId)
                 .build()));
     }
 

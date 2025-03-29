@@ -3,8 +3,10 @@ package com.anynote.note.service;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
+import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
+import com.anynote.note.model.vo.MoocItemAsrVO;
 import com.anynote.note.model.vo.MoocItemListVO;
 import com.anynote.note.model.vo.MoocListVO;
 import com.anynote.note.model.vo.MoocVO;
@@ -86,5 +88,11 @@ public interface MoocService extends IService<MoocPO> {
      * @param moocItemAsrParam
      * @return
      */
-    public String moocItemAsr(MoocItemAsrParam moocItemAsrParam);
+    public MoocItemAsrVO moocItemAsr(MoocItemAsrParam moocItemAsrParam);
+
+    public String updateAsrInfo(MoocAsrInfoUpdateDTO moocAsrInfoUpdateDTO);
+
+    public MoocAsrTaskInfo getMoocAsrTaskInfo(MoocItemQueryParam moocItemQueryParam);
+
+
 }

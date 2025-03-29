@@ -42,7 +42,21 @@
             <artifactId>anynote-api-file</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-rocketmq</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-ai</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-note</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.anynote</groupId>

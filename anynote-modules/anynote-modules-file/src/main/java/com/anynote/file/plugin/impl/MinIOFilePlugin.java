@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -28,10 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,6 +54,23 @@ public class MinIOFilePlugin implements FilePlugin {
                 .endpoint(config.getEndPoint())
                 .credentials(config.getAccessKey(), config.getSecretKey())
                 .build();
+    }
+
+    @Override
+    public String upload(ByteArrayInputStream inputStream, long size, String objectName) {
+//        List<SnowballObject> objects = new ArrayList<>();
+//        objects.add(new SnowballObject(getOriginalObjectName(objectName), inputStream, size, null));
+        try {
+            this.minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(this.minIOConfig.getBucketName())
+                            .object(objectName)
+                            .stream(inputStream, -1, 10485760)
+                    .build());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new BusinessException("上传失败");
+        }
+        return objectName;
     }
 
     @Override

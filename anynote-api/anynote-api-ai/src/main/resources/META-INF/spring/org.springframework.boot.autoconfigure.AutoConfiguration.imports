@@ -3,3 +3,4 @@ com.anynote.ai.api.factory.RemoteTranslateFallbackFactory
 com.anynote.ai.api.RagService
 com.anynote.ai.api.factory.RemoteChatConversationFallbackFactory
 com.anynote.ai.api.factory.RemoteWhisperFallbackFactory
+com.anynote.ai.api.mq.WhisperTaskMQService

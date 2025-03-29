@@ -19,7 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,11 @@ public class HuaweiFilePlugin implements FilePlugin {
     @Override
     public OssTypeEnum getPluginOssType() {
         return OssTypeEnum.HUAWEI_OBS;
+    }
+
+    @Override
+    public String upload(ByteArrayInputStream inputStream, long size, String objectName) {
+        return "";
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -99,4 +100,13 @@ public interface FileService extends IService<FilePO> {
      * @return
      */
     public String downloadObject(DownloadObjectDTO downloadObjectDTO);
+
+    /**
+     * 上传文件
+     * @param inputStream
+     * @param size
+     * @param objectName
+     * @return objectName
+     */
+    public String upload(ByteArrayInputStream inputStream, long size, String objectName);
 }

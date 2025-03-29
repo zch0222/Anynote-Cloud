@@ -23,4 +23,16 @@ public class RedisKey {
      * 参数是对象名称
      */
     public static final String OSS_OBJECT_URL = "oss_object_url:{}";
+
+    /**
+     * 慕课ASR任务 <br/>
+     * 参数是任务id
+     */
+    public static final String MOOC_ASR_TASK = "mooc_asr_task:taskId:{}";
+
+    /**
+     * 第一个参数是慕课id
+     * 第二个参数是慕课item id
+     */
+    public static final String MOOC_ASR_TASK_MOOC_ID_AND_MOOC_ITEM_ID_KEY = "mooc_asr_task:mooc_id:{}:mooc_item_id:{}";
 }

@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -375,5 +376,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
     public String downloadObject(DownloadObjectDTO downloadObjectDTO) {
         return filePluginFactory.filePlugin().downloadObject(downloadObjectDTO.getObjectName(),
                 downloadObjectDTO.getFileFolder());
+    }
+
+    @Override
+    public String upload(ByteArrayInputStream inputStream, long size, String objectName) {
+        return filePluginFactory.filePlugin().upload(inputStream, size, objectName);
     }
 }

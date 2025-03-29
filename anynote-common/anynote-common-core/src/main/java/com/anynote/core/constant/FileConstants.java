@@ -16,6 +16,11 @@ public class FileConstants {
     public static final String MOOC_COVER_PATH_TEMPLATE = "{}/mooc/covers";
 
     /**
+     * 慕课字幕文件
+     */
+    public static final String MOOC_SRT_PATH_TEMPLATE = "mooc/srt/{}.srt";
+
+    /**
      * 慕课封面地址
      * 参数是用户id
      */
@@ -30,4 +35,6 @@ public class FileConstants {
     public static final String MEMBER_EXCELS = "member_excels";
 
     public static final String DOC_PDF = "doc/pdf";
+
+
 }

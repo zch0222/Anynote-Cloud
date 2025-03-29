@@ -4,6 +4,7 @@ import com.anynote.ai.api.model.vo.WhisperTaskStatusVO;
 import com.anynote.ai.nio.model.bo.WhisperTaskQueryParam;
 import com.anynote.ai.api.model.dto.WhisperDTO;
 import com.anynote.ai.api.model.vo.WhisperSubmitVO;
+import com.anynote.ai.nio.model.vo.WhisperTaskStatusVOV1;
 import com.anynote.ai.nio.service.WhisperService;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.time.Duration;
 
 @RestController
 @RequestMapping("whisper")
@@ -42,12 +44,24 @@ public class WhisperController {
 
 
     @GetMapping("/status/{taskId}")
-    public Flux<ServerSentEvent<WhisperTaskStatusVO>> taskStatus(@PathVariable("taskId") Long taskId,
+    public Flux<ServerSentEvent<WhisperTaskStatusVOV1>> taskStatus(@PathVariable("taskId") Long taskId,
                                                                  @Validated @NotNull(message = "Token不能为空") @RequestHeader("accessToken") String accessToken) {
         log.info("TEST");
-        return whisperService.whisperTaskStatus(WhisperTaskQueryParam.builder()
+        Flux<ServerSentEvent<WhisperTaskStatusVOV1>>  heartbeatFlux = Flux.interval(Duration.ofSeconds(10))
+        .map(tick -> {
+            log.info("whisper task status taskId = {}, HEARTBEAT", taskId);
+            return ServerSentEvent.<WhisperTaskStatusVOV1>builder()
+                    .id(String.valueOf(System.currentTimeMillis()))
+                    .event("heartbeat")
+                    .build();
+        });
+        return Flux.merge(heartbeatFlux, whisperService.whisperTaskStatusV1(WhisperTaskQueryParam.builder()
                 .whisperTaskId(taskId).accessToken(accessToken)
-                .build());
+                .build())
+                .flatMap(status -> Flux.just(ServerSentEvent.<WhisperTaskStatusVOV1>builder(status)
+                        .id(String.valueOf(System.currentTimeMillis()))
+                        .event("message")
+                        .build())));
     }
 
 

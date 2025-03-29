@@ -461,4 +461,25 @@ public class ChatServiceImpl implements ChatService {
             }).publishOn(Schedulers.boundedElastic());
         });
     }
+
+    @Override
+    public Flux<ChatCompletionsVO> chatNoConversationCompletions(ChatCompletionsDTO chatCompletionsDTO) {
+        FastApiChatCompletionsDTO.Message message = FastApiChatCompletionsDTO.Message.builder()
+                .role("user")
+                .content(chatCompletionsDTO.getPrompt())
+                .build();
+        List<FastApiChatCompletionsDTO.Message> messageList = new ArrayList<>(1);
+        messageList.add(message);
+        return Flux.just(chatCompletionsDTO)
+                .flatMap(dto -> aiFastApiChatService
+                        .chatCompletions(FastApiChatCompletionsDTO.builder()
+                                .model(chatCompletionsDTO.getModel())
+                                .messages(messageList)
+                                .build()))
+                .flatMap(fastApiChatCompletionsVO -> Flux.just(ChatCompletionsVO.builder()
+                        .status(ChatCompletionsVOStatus.SUCCESS.name().toLowerCase())
+                        .message(fastApiChatCompletionsVO.getChoices().get(0).getDelta().getContent())
+                        .conversationId(chatCompletionsDTO.getConversationId())
+                        .build()));
+    }
 }

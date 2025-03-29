@@ -10,7 +10,9 @@ import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -26,6 +28,15 @@ public interface FilePlugin {
     public String multipartFileUpload(CommonsMultipartFile file, String path, String fileName);
 
     public OSSSignature getOssSignature(Integer durationSeconds, String objectName);
+
+    /**
+     * 上传字节流
+     * @param inputStream
+     * @param objectName 对象名称
+     * @return 对象名称
+     */
+    public String upload(ByteArrayInputStream inputStream, long size, String objectName);
+
 
     /**
      * 分片上传

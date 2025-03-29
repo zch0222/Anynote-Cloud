@@ -50,11 +50,6 @@ public class ChatController {
                 .conversationId(id)
                 .build())
                 .flatMap(chatConversation -> Mono.just(ResUtil.success(chatConversation)));
-//        return Mono.just(ResUtil.success("5555"));
-//        log.info(accessToken);
-//        return chatService.getConversationById(ChatConversationQueryParam.builder()
-//                .conversationId(id).accessToken(accessToken).build());
-
     }
 
     @ApiOperation("更新对话")
@@ -91,6 +86,21 @@ public class ChatController {
                             .build()));
         }
         return chatService.chatCompletions(chatCompletionsDTO)
+                .flatMap(chatCompletionsVO -> Flux.just(ServerSentEvent
+                        .builder(ResData.success(chatCompletionsVO))
+                        .event("message")
+                        .id(String.valueOf(System.currentTimeMillis()))
+                        .build()));
+    }
+
+    /**
+     * 无会话Chat
+     * @param chatCompletionsDTO
+     * @return
+     */
+    @PostMapping("completions/noConversation")
+    public Flux<ServerSentEvent<ResData<ChatCompletionsVO>>> chatCompletionsNoConversation(@Valid @RequestBody ChatCompletionsDTO chatCompletionsDTO) {
+        return chatService.chatNoConversationCompletions(chatCompletionsDTO)
                 .flatMap(chatCompletionsVO -> Flux.just(ServerSentEvent
                         .builder(ResData.success(chatCompletionsVO))
                         .event("message")

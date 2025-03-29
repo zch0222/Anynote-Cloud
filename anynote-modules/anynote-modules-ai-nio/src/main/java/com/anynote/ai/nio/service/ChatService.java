@@ -37,6 +37,13 @@ public interface ChatService {
 
     public Flux<ChatCompletionsVO> chatCompletions(ChatCompletionsDTO chatCompletionsDTO);
 
+    /**
+     * 无会话调用AI
+     * @param chatCompletionsDTO
+     * @return
+     */
+    public Flux<ChatCompletionsVO> chatNoConversationCompletions(ChatCompletionsDTO chatCompletionsDTO);
+
     public Mono<PageBean<ChatConversationInfoVO>> getChatConversationList(ChatConversationListDTO chatConversationListDTO);
 
     public Flux<ChatCompletionsVO> authedChatCompletions(ChatCompletionsDTO chatCompletionsDTO);

@@ -5,11 +5,13 @@ import com.anynote.ai.api.enums.WhisperTaskStatus;
 import com.anynote.ai.api.model.bo.WhisperTaskStatusUpdatedMQParamV1;
 import com.anynote.ai.api.model.po.WhisperTask;
 import com.anynote.ai.api.model.vo.WhisperTaskStatusVO;
+import com.anynote.ai.api.mq.WhisperTaskMQService;
 import com.anynote.ai.nio.datascope.annotation.RequiresWhisperTaskPermissions;
 import com.anynote.ai.nio.model.bo.WhisperConfig;
 import com.anynote.ai.nio.model.bo.WhisperTaskQueryParam;
 import com.anynote.ai.api.model.dto.WhisperDTO;
 import com.anynote.ai.api.model.vo.WhisperSubmitVO;
+import com.anynote.ai.nio.model.vo.WhisperTaskStatusVOV1;
 import com.anynote.ai.nio.model.vo.WhisperVO;
 import com.anynote.ai.nio.service.FfmpegService;
 import com.anynote.ai.nio.service.WhisperService;
@@ -90,6 +92,9 @@ public class WhisperServiceImpl implements WhisperService {
 
     @Resource
     private FfmpegService ffmpegService;
+
+    @Resource
+    private WhisperTaskMQService whisperTaskMQService;
 
 
 
@@ -191,26 +196,38 @@ public class WhisperServiceImpl implements WhisperService {
                     whisperDTO.getObjectName(), whisperDTO.getLanguage());
             String srt = remoteWhisper(audioPath, whisperDTO.getLanguage());
             log.info(srt);
-            String destination = rocketMQProperties.getAiChatTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
-            rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParamV1
-                            .builder().status(WhisperTaskStatus.SUCCESS)
-                            .taskId(taskId)
-                            .result(WhisperTaskStatusUpdatedMQParamV1.Result.builder()
-                                    .srt(srt)
-                                    .build())
-                            .build()),
-                    RocketmqSendCallbackBuilder.commonCallback());
+            whisperTaskMQService.sendWhisperTaskStatusUpdateMessage(WhisperTaskStatusUpdatedMQParamV1
+                    .builder().status(WhisperTaskStatus.UPLOADING_SRT_OBJECT)
+                    .taskId(taskId)
+                    .result(WhisperTaskStatusUpdatedMQParamV1.Result.builder()
+                            .srt(srt)
+                            .build())
+                    .build());
+//            String destination = rocketMQProperties.getAiChatTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
+//            rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParamV1
+//                            .builder().status(WhisperTaskStatus.UPLOADING_SRT_OBJECT)
+//                            .taskId(taskId)
+//                            .result(WhisperTaskStatusUpdatedMQParamV1.Result.builder()
+//                                    .srt(srt)
+//                                    .build())
+//                            .build()),
+//                    RocketmqSendCallbackBuilder.commonCallback());
         }, whisperExecutor)
         .exceptionally(ex -> {
             log.error("whisper object: {}, language: {}, error",
                     whisperDTO.getObjectName(), whisperDTO.getLanguage(), ex);
-            String destination = rocketMQProperties.getAiChatTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
-            rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParamV1
-                            .builder().status(WhisperTaskStatus.FAILED)
-                            .taskId(taskId)
-                            .errorMessage(ex.getMessage())
-                            .build()),
-                    RocketmqSendCallbackBuilder.commonCallback());
+            whisperTaskMQService.sendWhisperTaskStatusUpdateMessage(WhisperTaskStatusUpdatedMQParamV1
+                    .builder().status(WhisperTaskStatus.FAILED)
+                    .taskId(taskId)
+                    .errorMessage(ex.getMessage())
+                    .build());
+//            String destination = rocketMQProperties.getAiChatTopic() + ":" + WhisperTagsEnum.WHISPER_TASK_STATUS_UPDATED.name();
+//            rocketMQTemplate.asyncSend(destination, gson.toJson(WhisperTaskStatusUpdatedMQParamV1
+//                            .builder().status(WhisperTaskStatus.FAILED)
+//                            .taskId(taskId)
+//                            .errorMessage(ex.getMessage())
+//                            .build()),
+//                    RocketmqSendCallbackBuilder.commonCallback());
             throw new BusinessException(StringUtils.format("whisper object: {}, language: {}, error",
                     whisperDTO.getObjectName(), whisperDTO.getLanguage()));
         });
@@ -298,5 +315,33 @@ public class WhisperServiceImpl implements WhisperService {
                 });
         return Flux.merge(heartbeatFlux, redisSubFlux, statusFlux).takeUntil(sse -> StringUtils.isNotNull(sse.data()) &&
                 WhisperTaskStatusVO.Status.FINISHED.name().equals(sse.data().getStatus()));
+    }
+
+    @RequiresWhisperTaskPermissions
+    @Override
+    public Flux<WhisperTaskStatusVOV1> whisperTaskStatusV1(WhisperTaskQueryParam queryParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser(queryParam.getAccessToken());
+        String chanel = RedisChannel.WHISPER_TASK_STATUS_CHANNEL + queryParam.getWhisperTaskId();
+//        Flux<ServerSentEvent<WhisperTaskStatusVOV1>>  heartbeatFlux = Flux.interval(Duration.ofSeconds(10))
+//                .map(tick -> {
+//                    log.info("whisper task status taskId = {}, HEARTBEAT", queryParam.getWhisperTaskId());
+//                    return ServerSentEvent.<WhisperTaskStatusVOV1>builder()
+//                            .id(String.valueOf(System.currentTimeMillis()))
+//                            .event("heartbeat")
+//                            .build();
+//                });
+        Flux<WhisperTaskStatusVOV1> redisSubFlux = reactiveRedisTemplate.listenToChannel(chanel)
+                .map(message -> message.getMessage().toJavaObject(WhisperTaskStatusVOV1.class));
+        Flux<WhisperTaskStatusVOV1> mysqlFlux = Mono.fromCallable(() -> {
+            return whisperTaskService
+                    .getBaseMapper().selectById(queryParam.getWhisperTaskId());
+        }).flux().flatMap(whisperTask -> {
+            log.info("whisper task status taskId = {}, MYSQL", queryParam.getWhisperTaskId());
+            return Flux.just(WhisperTaskStatusVOV1.builder()
+                    .taskId(whisperTask.getId())
+                    .whisperTaskStatus(whisperTask.getTaskStatus())
+                    .build());
+        });
+        return Flux.mergeSequential(mysqlFlux, redisSubFlux);
     }
 }
