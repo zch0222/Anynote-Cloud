@@ -60,4 +60,8 @@ public interface RemoteFileService {
     @PostMapping("downloadObject")
     public ResData<String> downloadObject(@RequestBody @Validated DownloadObjectDTO downloadObjectDTO,
                                           @RequestHeader("from-source") String fromSource);
+
+    @GetMapping("readTextFile")
+    public ResData<String> readTextFile(@RequestParam("objectName") @NotNull(message = "对象名称不能为空") String objectName,
+                                        @RequestHeader("from-source") String fromSource);
 }

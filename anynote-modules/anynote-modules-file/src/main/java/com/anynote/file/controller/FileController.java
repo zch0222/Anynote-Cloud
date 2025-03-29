@@ -128,7 +128,7 @@ public class FileController {
      * @return 文件信息(七天)
      */
     @GetMapping("public/byObjectName")
-    public ResData<ObjectURL> getObjectUrlByObjectName(String objectName) {
+    public ResData<ObjectURL> getObjectUrlByObjectName(@NotNull(message = "对象名称不能为空") String objectName) {
         return ResUtil.success(fileService.getObjectUrlByObjectName(objectName));
     }
 
@@ -143,8 +143,16 @@ public class FileController {
         return ResUtil.success(fileService.downloadObject(downloadObjectDTO));
     }
 
-
-
+    /**
+     * 读取文本文件
+     * @param objectName 对象名称
+     * @return
+     */
+    @GetMapping("readTextFile")
+    @InnerAuth
+    public ResData<String> readTextFile(@NotNull(message = "对象名称不能为空") String objectName) {
+        return ResUtil.success(fileService.readTextFile(objectName));
+    }
 
 
 }

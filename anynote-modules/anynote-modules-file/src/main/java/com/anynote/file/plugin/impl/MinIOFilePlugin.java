@@ -22,9 +22,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -347,5 +345,25 @@ public class MinIOFilePlugin implements FilePlugin {
             log.error(e.getMessage(), e);
             throw new BusinessException(StringUtils.format("下载文件对象\"{}\"失败"));
         }
+    }
+
+    @Override
+    public String readTextFile(String objectName) {
+        StringBuilder sb = new StringBuilder();
+        try (InputStream inputStream = minioClient.getObject(GetObjectArgs.builder()
+                .bucket(minIOConfig.getBucketName())
+                .object(getOriginalObjectName(objectName))
+                .build())) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+        } catch (IOException | ErrorResponseException | InsufficientDataException | InternalException |
+                 InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException | ServerException |
+                 XmlParserException e) {
+            throw new RuntimeException(e);
+        }
+        return sb.toString();
     }
 }

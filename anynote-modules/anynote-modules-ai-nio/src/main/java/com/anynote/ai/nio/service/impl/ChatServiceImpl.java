@@ -14,6 +14,9 @@ import com.anynote.ai.api.model.po.ChatMessage;
 import com.anynote.ai.api.model.vo.ChatCompletionsVO;
 import com.anynote.ai.fastapi.core.AIFastApiChatService;
 import com.anynote.ai.fastapi.model.dto.FastApiChatCompletionsDTO;
+import com.anynote.ai.nio.model.bo.NoteTaskSubmissionAnalyzeBO;
+import com.anynote.ai.nio.model.dto.MoocVideoSummarizeDTO;
+import com.anynote.ai.nio.model.dto.NoteTaskSubmissionAnalyzeDTO;
 import com.anynote.ai.nio.model.vo.ChatConversationInfoVO;
 import com.anynote.ai.nio.model.vo.ChatConversationVO;
 import com.anynote.ai.nio.service.ChatConversationService;
@@ -22,6 +25,7 @@ import com.anynote.ai.nio.service.ChatService;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
 import com.anynote.common.datascope.constants.PermissionConstants;
 import com.anynote.core.constant.Constants;
+import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.constant.SpringWebfluxContextConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.exception.auth.AuthException;
@@ -30,6 +34,12 @@ import com.anynote.core.utils.SpringUtils;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
+import com.anynote.file.api.RemoteFileService;
+import com.anynote.note.api.RemoteMoocService;
+import com.anynote.note.api.RemoteNoteTaskService;
+import com.anynote.note.api.model.vo.AdminNoteTaskVO;
+import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
+import com.anynote.note.api.model.vo.NoteTaskChartsVO;
 import com.anynote.system.api.model.bo.LoginUser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
@@ -75,6 +85,15 @@ public class ChatServiceImpl implements ChatService {
 
     @Resource
     private Gson gson;
+
+    @Resource
+    private RemoteMoocService remoteMoocService;
+
+    @Resource
+    private RemoteFileService remoteFileService;
+
+    @Resource
+    private RemoteNoteTaskService remoteNoteTaskService;
 
 
     @Override
@@ -481,5 +500,74 @@ public class ChatServiceImpl implements ChatService {
                         .message(fastApiChatCompletionsVO.getChoices().get(0).getDelta().getContent())
                         .conversationId(chatCompletionsDTO.getConversationId())
                         .build()));
+    }
+
+    @Override
+    public Flux<ChatCompletionsVO> moocVideoSummarize(MoocVideoSummarizeDTO moocVideoSummarizeDTO) {
+        StringBuffer sb = new StringBuffer();
+        return Mono.deferContextual(ctx -> Mono.fromCallable(() -> RemoteResDataUtil.getResData(remoteMoocService
+                        .getMoocVideoItemInfo(moocVideoSummarizeDTO.getMoocItemId(),
+                                moocVideoSummarizeDTO.getMoocId(),
+                                "inner", ctx.get(SecurityConstants.ACCESS_TOKEN))))
+                        .publishOn(Schedulers.boundedElastic()))
+                .publishOn(Schedulers.boundedElastic())
+                .flux()
+                .flatMap(moocVideoItemInfoVO -> {
+                    log.info("get srtText {}", moocVideoItemInfoVO.getSrtObjectName());
+                    String srtText = RemoteResDataUtil.getResData(remoteFileService
+                            .readTextFile(moocVideoItemInfoVO.getSrtObjectName(), "inner"));
+                    String prompt = StringUtils.format("根据以下视频字幕的内容，总结视频讲述的主要内容：\n{}", srtText);
+                    log.info("PROMPT:\n {}", prompt);
+                    return chatNoConversationCompletions(ChatCompletionsDTO.builder()
+                            .prompt(prompt)
+                            .model(moocVideoSummarizeDTO.getModel())
+                            .build());
+                })
+                .flatMap(chatCompletionsVO -> {
+                    sb.append(chatCompletionsVO.getMessage());
+                    return Flux.just(chatCompletionsVO);
+                }).doFinally(signalType -> {
+                    log.info(sb.toString());
+                });
+    }
+
+    @Override
+    public Flux<ChatCompletionsVO> noteTaskSubmissionAnalyze(NoteTaskSubmissionAnalyzeDTO noteTaskSubmissionAnalyzeDTO) {
+        StringBuffer sb = new StringBuffer();
+        return Mono.deferContextual(ctx -> Mono.fromCallable(() -> {
+                    List<NoteTaskChartsVO> noteTaskChartsVOList = RemoteResDataUtil
+                            .getResData(remoteNoteTaskService
+                                    .getNoteTaskChartsData(noteTaskSubmissionAnalyzeDTO.getNoteTaskId(), "inner",
+                                            ctx.get(SecurityConstants.ACCESS_TOKEN)));
+                    AdminNoteTaskVO adminNoteTaskVO = RemoteResDataUtil.getResData(remoteNoteTaskService.getAdminNoteTaskById(noteTaskSubmissionAnalyzeDTO.getNoteTaskId(),
+                            "inner", ctx.get(SecurityConstants.ACCESS_TOKEN)));
+                    return NoteTaskSubmissionAnalyzeBO.builder()
+                            .noteTaskChartsVOList(noteTaskChartsVOList)
+                            .adminNoteTaskVO(adminNoteTaskVO)
+                            .build();
+                }).publishOn(Schedulers.boundedElastic()))
+                .publishOn(Schedulers.boundedElastic())
+                .flux()
+                .publishOn(Schedulers.boundedElastic())
+                .flatMap(noteTaskSubmissionAnalyzeBO -> {
+                    AdminNoteTaskVO adminNoteTaskVO = noteTaskSubmissionAnalyzeBO.getAdminNoteTaskVO();
+                    String prompt = StringUtils.format("以下是一份学生学习笔记任务提交统计，任务开始时间是{}，任务结束时间是{}。\n" +
+                            "应该提交的数量是：{}，实际提交的数量是：{}" +
+                            "chartsPOList表示的是在startTime到endTime之间提交的用户，editCount表示笔记编辑的次数，评价标准为提交时间和编辑次数。\n" +
+                            "请你评价一下这次任务的总体质量。\n{}", adminNoteTaskVO.getStartTime(), adminNoteTaskVO.getEndTime(),
+                            adminNoteTaskVO.getNeedSubmitCount(), adminNoteTaskVO.getSubmittedCount(),
+                            gson.toJson(noteTaskSubmissionAnalyzeBO.getNoteTaskChartsVOList()));
+                    log.info(prompt);
+                    return chatNoConversationCompletions(ChatCompletionsDTO.builder()
+                            .prompt(prompt)
+                            .model(noteTaskSubmissionAnalyzeDTO.getModel())
+                            .build());
+                })
+                .flatMap(chatCompletionsVO -> {
+                    sb.append(chatCompletionsVO.getMessage());
+                    return Flux.just(chatCompletionsVO);
+                }).doFinally(signalType -> {
+                    log.info(sb.toString());
+                });
     }
 }

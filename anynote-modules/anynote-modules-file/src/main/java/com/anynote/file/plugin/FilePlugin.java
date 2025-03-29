@@ -85,4 +85,11 @@ public interface FilePlugin {
      * @return 保存的地址
      */
     public String downloadObject(String objectName, String savePath);
+
+    /**
+     * 读取文本文件
+     * @param objectName 对象名称
+     * @return 文本文件内容
+     */
+    public String readTextFile(String objectName);
 }

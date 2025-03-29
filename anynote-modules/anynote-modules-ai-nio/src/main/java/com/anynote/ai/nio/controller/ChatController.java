@@ -6,6 +6,8 @@ import com.anynote.ai.api.model.dto.ChatCompletionsDTO;
 import com.anynote.ai.api.model.dto.ChatConversationListDTO;
 import com.anynote.ai.api.model.dto.ChatConversationUpdateDTO;
 import com.anynote.ai.api.model.vo.ChatCompletionsVO;
+import com.anynote.ai.nio.model.dto.MoocVideoSummarizeDTO;
+import com.anynote.ai.nio.model.dto.NoteTaskSubmissionAnalyzeDTO;
 import com.anynote.ai.nio.model.vo.ChatConversationInfoVO;
 import com.anynote.ai.nio.model.vo.ChatConversationVO;
 import com.anynote.ai.nio.service.ChatService;
@@ -16,6 +18,7 @@ import com.anynote.core.web.model.bo.ResData;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.codec.ServerSentEvent;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -101,6 +104,36 @@ public class ChatController {
     @PostMapping("completions/noConversation")
     public Flux<ServerSentEvent<ResData<ChatCompletionsVO>>> chatCompletionsNoConversation(@Valid @RequestBody ChatCompletionsDTO chatCompletionsDTO) {
         return chatService.chatNoConversationCompletions(chatCompletionsDTO)
+                .flatMap(chatCompletionsVO -> Flux.just(ServerSentEvent
+                        .builder(ResData.success(chatCompletionsVO))
+                        .event("message")
+                        .id(String.valueOf(System.currentTimeMillis()))
+                        .build()));
+    }
+
+    /**
+     * 总结慕课
+     * @param moocVideoSummarizeDTO
+     * @return 总结
+     */
+    @PostMapping("moocVideoSummarize")
+    public Flux<ServerSentEvent<ResData<ChatCompletionsVO>>> moocVideoSummarize(@Validated @RequestBody MoocVideoSummarizeDTO moocVideoSummarizeDTO) {
+        return chatService.moocVideoSummarize(moocVideoSummarizeDTO)
+                .flatMap(chatCompletionsVO -> Flux.just(ServerSentEvent
+                        .builder(ResData.success(chatCompletionsVO))
+                        .event("message")
+                        .id(String.valueOf(System.currentTimeMillis()))
+                        .build()));
+    }
+
+    /**
+     * 分析笔记任务提交情况
+     * @param noteTaskSubmissionAnalyzeDTO
+     * @return
+     */
+    @PostMapping("noteTaskSubmissionAnalyze")
+    public Flux<ServerSentEvent<ResData<ChatCompletionsVO>>> noteTaskSubmissionAnalyze(@RequestBody @Validated NoteTaskSubmissionAnalyzeDTO noteTaskSubmissionAnalyzeDTO) {
+        return chatService.noteTaskSubmissionAnalyze(noteTaskSubmissionAnalyzeDTO)
                 .flatMap(chatCompletionsVO -> Flux.just(ServerSentEvent
                         .builder(ResData.success(chatCompletionsVO))
                         .event("message")

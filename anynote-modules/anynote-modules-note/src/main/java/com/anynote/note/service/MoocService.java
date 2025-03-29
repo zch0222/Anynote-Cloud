@@ -4,6 +4,7 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
 import com.anynote.note.model.vo.*;

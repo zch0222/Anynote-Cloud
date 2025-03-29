@@ -175,4 +175,9 @@ public class HuaweiFilePlugin implements FilePlugin {
     public String downloadObject(String objectName, String savePath) {
         return "";
     }
+
+    @Override
+    public String readTextFile(String objectName) {
+        return "";
+    }
 }

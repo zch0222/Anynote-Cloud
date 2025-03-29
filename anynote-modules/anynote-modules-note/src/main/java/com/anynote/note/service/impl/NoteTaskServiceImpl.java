@@ -25,11 +25,11 @@ import com.anynote.note.mapper.NoteTaskOperationHistoryMapper;
 import com.anynote.note.mapper.NoteTaskMapper;
 import com.anynote.note.mapper.UserNoteTaskMapper;
 import com.anynote.note.model.bo.*;
-import com.anynote.note.model.dto.AdminNoteTaskDTO;
+import com.anynote.note.api.model.vo.AdminNoteTaskVO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.po.NoteTaskAnalyzePO;
 import com.anynote.note.model.po.NoteTaskSubmissionTimePO;
-import com.anynote.note.model.vo.NoteTaskChartsVO;
+import com.anynote.note.api.model.vo.NoteTaskChartsVO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.anynote.note.service.*;
@@ -491,7 +491,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
      */
     @Override
     @RequiresKnowledgeBasePermissions(value = KnowledgeBasePermissions.MANAGE, message = "权限不足")
-    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
+    public AdminNoteTaskVO getAdminNoteTaskById(NoteTaskQueryParam queryParam) {
         LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
         noteTaskLambdaQueryWrapper
                 .eq(NoteTask::getId, queryParam.getNoteTaskId());
@@ -499,7 +499,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
         return this.getAdminNoteTaskInfo(noteTask);
     }
 
-    private AdminNoteTaskDTO getAdminNoteTaskInfo(NoteTask noteTask) {
+    private AdminNoteTaskVO getAdminNoteTaskInfo(NoteTask noteTask) {
         Long needSubmitCount = this.getNoteTaskNeedSubmitCount(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
                 .noteTaskId(noteTask.getId())
                 .build());
@@ -510,15 +510,15 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                 .eq(NoteTaskSubmissionRecord::getStatus, NoteTaskSubmissionRecordStatus.NORMAL.getValue());
         noteTask.setSubmittedCount(noteTaskSubmissionRecordService
                 .getBaseMapper().selectCount(submissionRecordLambdaQueryWrapper));
-        AdminNoteTaskDTO adminNoteTaskDTO = new AdminNoteTaskDTO(noteTask);
-        adminNoteTaskDTO.setNeedSubmitCount(needSubmitCount);
+        AdminNoteTaskVO adminNoteTaskVO = new AdminNoteTaskVO(noteTask);
+        adminNoteTaskVO.setNeedSubmitCount(needSubmitCount);
         if (0L == needSubmitCount) {
-            adminNoteTaskDTO.setSubmissionProgress(100.0);
+            adminNoteTaskVO.setSubmissionProgress(100.0);
         } else {
-            adminNoteTaskDTO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskDTO.getSubmittedCount() / needSubmitCount)
+            adminNoteTaskVO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskVO.getSubmittedCount() / needSubmitCount)
                     .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         }
-        return adminNoteTaskDTO;
+        return adminNoteTaskVO;
     }
 
     /**
@@ -531,7 +531,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
             message = "没有权限查看笔记任务信息")
     @PageValid
     @Override
-    public PageBean<AdminNoteTaskDTO> getAdminNoteTasks(NoteTaskQueryParam queryParam) {
+    public PageBean<AdminNoteTaskVO> getAdminNoteTasks(NoteTaskQueryParam queryParam) {
 
         LambdaQueryWrapper<NoteTask> noteTaskLambdaQueryWrapper = new LambdaQueryWrapper<>();
         noteTaskLambdaQueryWrapper
@@ -543,7 +543,7 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
 //        Long needSubmitCount = knowledgeBaseService.getKnowledgeBaseMemberCount(queryParam);
 //        DecimalFormat df = new DecimalFormat("#.00");
 
-        List<AdminNoteTaskDTO> adminNoteTaskDTOList = noteTaskList.stream()
+        List<AdminNoteTaskVO> adminNoteTaskVOList = noteTaskList.stream()
                 .map(noteTask -> {
                     Long needSubmitCount = this.getNoteTaskNeedSubmitCount(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
                             .noteTaskId(noteTask.getId())
@@ -555,16 +555,16 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                             .eq(NoteTaskSubmissionRecord::getStatus, NoteTaskSubmissionRecordStatus.NORMAL.getValue());
                     noteTask.setSubmittedCount(noteTaskSubmissionRecordService
                             .getBaseMapper().selectCount(submissionRecordLambdaQueryWrapper));
-                    AdminNoteTaskDTO adminNoteTaskDTO = new AdminNoteTaskDTO(noteTask);
-                    adminNoteTaskDTO.setNeedSubmitCount(needSubmitCount);
+                    AdminNoteTaskVO adminNoteTaskVO = new AdminNoteTaskVO(noteTask);
+                    adminNoteTaskVO.setNeedSubmitCount(needSubmitCount);
                     if (0L == needSubmitCount) {
-                        adminNoteTaskDTO.setSubmissionProgress(100.0);
+                        adminNoteTaskVO.setSubmissionProgress(100.0);
                     } else {
-                        adminNoteTaskDTO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskDTO.getSubmittedCount() / needSubmitCount)
+                        adminNoteTaskVO.setSubmissionProgress(new BigDecimal(1.0 * adminNoteTaskVO.getSubmittedCount() / needSubmitCount)
                                 .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                     }
 
-                    return adminNoteTaskDTO;
+                    return adminNoteTaskVO;
                 })
                 .collect(Collectors.toList());
 
@@ -572,8 +572,8 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
 //        pageBean.setPages(pageInfo.getPages());
 //        pageBean.setTotal(pageInfo.getTotal());
 //        pageBean.setRows(adminNoteTaskDTOList);
-        return PageBean.<AdminNoteTaskDTO>builder()
-                .rows(adminNoteTaskDTOList)
+        return PageBean.<AdminNoteTaskVO>builder()
+                .rows(adminNoteTaskVOList)
                 .pages(pageInfo.getPages())
                 .total(pageInfo.getTotal())
                 .current(queryParam.getPage())

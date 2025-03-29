@@ -1,31 +1,22 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.security.annotation.InnerAuth;
-import com.anynote.core.constant.ErrorMessageConstants;
 import com.anynote.core.utils.ResUtil;
-import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.po.UserNoteTask;
 import com.anynote.note.model.bo.NoteTaskChartsQueryParam;
-import com.anynote.note.model.bo.NoteTaskCreateParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
 import com.anynote.note.model.bo.NoteTaskSubmitParam;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.dto.NoteTaskSubmissionRecordCreateDTO;
-import com.anynote.note.model.dto.NoteTaskCreateDTO;
-import com.anynote.note.model.dto.UserNoteTaskAnalyzeDTO;
-import com.anynote.note.model.po.NoteTaskChartsPO;
-import com.anynote.note.model.vo.NoteTaskChartsVO;
+import com.anynote.note.api.model.vo.NoteTaskChartsVO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
-import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.anynote.note.service.NoteTaskService;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.anynote.note.controller;
 
 import com.anynote.common.security.annotation.InnerAuth;
-import com.anynote.core.constant.Constants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.utils.StringUtils;
@@ -10,6 +9,7 @@ import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.*;
 import com.anynote.note.model.vo.*;

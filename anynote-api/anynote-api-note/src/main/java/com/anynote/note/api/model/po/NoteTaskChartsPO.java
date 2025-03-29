@@ -1,4 +1,4 @@
-package com.anynote.note.model.po;
+package com.anynote.note.api.model.po;
 
 import lombok.Data;
 

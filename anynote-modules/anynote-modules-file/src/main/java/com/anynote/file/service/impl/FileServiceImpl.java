@@ -382,4 +382,9 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
     public String upload(ByteArrayInputStream inputStream, long size, String objectName) {
         return filePluginFactory.filePlugin().upload(inputStream, size, objectName);
     }
+
+    @Override
+    public String readTextFile(String objectName) {
+        return filePluginFactory.filePlugin().readTextFile(objectName);
+    }
 }

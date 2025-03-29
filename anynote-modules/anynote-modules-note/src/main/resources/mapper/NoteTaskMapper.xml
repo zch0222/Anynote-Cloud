@@ -38,7 +38,7 @@
         <result property="editCount" column="edit_count" />
     </resultMap>
 
-    <resultMap id="NoteTaskChartsPOResultMap" type="com.anynote.note.model.po.NoteTaskChartsPO">
+    <resultMap id="NoteTaskChartsPOResultMap" type="com.anynote.note.api.model.po.NoteTaskChartsPO">
 <!--        <id column="operation_id" property="operationId"/>-->
 <!--        <result column="note_task_id" property="noteTaskId" />-->
         <result column="user_id" property="userId" />

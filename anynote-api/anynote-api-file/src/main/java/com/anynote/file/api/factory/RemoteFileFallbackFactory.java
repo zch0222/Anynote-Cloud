@@ -74,6 +74,12 @@ public class RemoteFileFallbackFactory implements FallbackFactory<RemoteFileServ
                 throw new BusinessException(StringUtils.format("下载文件对象\"{}\"失败",
                         downloadObjectDTO.getObjectName()));
             }
+
+
+            @Override
+            public ResData<String> readTextFile(String objectName, String fromSource) {
+                throw new BusinessException("调用readTextFile失败");
+            }
         };
     }
 }

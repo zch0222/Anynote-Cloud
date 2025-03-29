@@ -6,9 +6,9 @@ import com.anynote.note.api.model.po.NoteTask;
 import com.anynote.note.api.model.po.UserNoteTask;
 import com.anynote.note.enums.NoteTaskPermissions;
 import com.anynote.note.model.bo.*;
-import com.anynote.note.model.dto.AdminNoteTaskDTO;
+import com.anynote.note.api.model.vo.AdminNoteTaskVO;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
-import com.anynote.note.model.vo.NoteTaskChartsVO;
+import com.anynote.note.api.model.vo.NoteTaskChartsVO;
 import com.anynote.note.model.vo.NoteTaskHistoryVO;
 import com.anynote.note.model.vo.NoteTaskUserAnalyzeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -24,7 +24,7 @@ public interface NoteTaskService extends IService<NoteTask> {
 
     public String submitNoteTask(NoteTaskSubmitParam submitParam);
 
-    public AdminNoteTaskDTO getAdminNoteTaskById(NoteTaskQueryParam queryParam);
+    public AdminNoteTaskVO getAdminNoteTaskById(NoteTaskQueryParam queryParam);
 
     public Long getNoteTaskKnowledgeBaseId(Long noteTaskId);
 
@@ -36,7 +36,7 @@ public interface NoteTaskService extends IService<NoteTask> {
      */
     public NoteTaskPermissions getNoteTaskPermissions(Long userId, Long taskId);
 
-    public PageBean<AdminNoteTaskDTO> getAdminNoteTasks(NoteTaskQueryParam queryParam);
+    public PageBean<AdminNoteTaskVO> getAdminNoteTasks(NoteTaskQueryParam queryParam);
 
     public PageBean<MemberNoteTaskDTO> getMemberNoteTasks(NoteTaskQueryParam queryParam);
 

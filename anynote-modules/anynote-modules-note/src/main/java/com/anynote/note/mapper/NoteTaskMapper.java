@@ -7,7 +7,7 @@ import com.anynote.note.model.bo.NoteTaskChartsSelectParam;
 import com.anynote.note.model.bo.NoteTaskQueryParam;
 import com.anynote.note.model.dto.MemberNoteTaskDTO;
 import com.anynote.note.model.po.NoteTaskAnalyzePO;
-import com.anynote.note.model.po.NoteTaskChartsPO;
+import com.anynote.note.api.model.po.NoteTaskChartsPO;
 import com.anynote.note.model.po.NoteTaskSubmissionTimePO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

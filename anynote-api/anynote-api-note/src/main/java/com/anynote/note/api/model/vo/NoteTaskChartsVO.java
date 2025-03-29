@@ -1,6 +1,6 @@
-package com.anynote.note.model.vo;
+package com.anynote.note.api.model.vo;
 
-import com.anynote.note.model.po.NoteTaskChartsPO;
+import com.anynote.note.api.model.po.NoteTaskChartsPO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

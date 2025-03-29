@@ -22,6 +22,7 @@ import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.enums.KnowledgeBasePermissions;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.constant.MoocItemType;
 import com.anynote.note.datascope.annotation.KnowledgeBaseDataScope;
 import com.anynote.note.datascope.annotation.RequiresKnowledgeBasePermissions;

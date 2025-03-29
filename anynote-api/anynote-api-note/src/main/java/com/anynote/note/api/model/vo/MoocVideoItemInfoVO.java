@@ -1,6 +1,5 @@
-package com.anynote.note.model.vo;
+package com.anynote.note.api.model.vo;
 
-import com.anynote.core.web.model.bo.BaseEntity;
 import lombok.*;
 
 /**

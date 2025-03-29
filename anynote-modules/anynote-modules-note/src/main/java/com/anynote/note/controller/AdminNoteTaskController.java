@@ -5,6 +5,7 @@ import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.note.api.model.bo.NoteOperationCount;
+import com.anynote.note.api.model.vo.AdminNoteTaskVO;
 import com.anynote.note.api.model.po.NoteTaskSubmissionRecord;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.*;
@@ -42,9 +43,9 @@ public class AdminNoteTaskController {
     }
 
     @GetMapping
-    public ResData<PageBean<AdminNoteTaskDTO>> getAdminNoteTaskList(@NotNull(message = "页码不能为空") Integer page,
-                                                                    @NotNull(message = "页面大小不能为空") Integer pageSize,
-                                                                    @NotNull(message = "知识库id不能为空") Long knowledgeBaseId) {
+    public ResData<PageBean<AdminNoteTaskVO>> getAdminNoteTaskList(@NotNull(message = "页码不能为空") Integer page,
+                                                                   @NotNull(message = "页面大小不能为空") Integer pageSize,
+                                                                   @NotNull(message = "知识库id不能为空") Long knowledgeBaseId) {
         NoteTaskQueryParam noteTaskQueryParam = new NoteTaskQueryParam();
         noteTaskQueryParam.setId(knowledgeBaseId);
         noteTaskQueryParam.setPage(page);
@@ -53,7 +54,7 @@ public class AdminNoteTaskController {
     }
 
     @GetMapping("{id}")
-    public ResData<AdminNoteTaskDTO> getAdminNoteTaskById(@PathVariable @NotNull(message = "任务id不能为空") Long id) {
+    public ResData<AdminNoteTaskVO> getAdminNoteTaskById(@PathVariable @NotNull(message = "任务id不能为空") Long id) {
         return ResUtil.success(noteTaskService.getAdminNoteTaskById(NoteTaskQueryParam.NoteTaskQueryParamBuilder()
                 .noteTaskId(id)
                 .knowledgeBaseId(noteTaskService.getNoteTaskKnowledgeBaseId(id))

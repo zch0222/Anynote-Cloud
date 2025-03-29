@@ -109,4 +109,11 @@ public interface FileService extends IService<FilePO> {
      * @return objectName
      */
     public String upload(ByteArrayInputStream inputStream, long size, String objectName);
+
+    /**
+     * 读取文本文件
+     * @param objectName 对象名称
+     * @return 文本
+     */
+    public String readTextFile(String objectName);
 }

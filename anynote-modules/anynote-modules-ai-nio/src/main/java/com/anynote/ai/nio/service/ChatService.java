@@ -8,6 +8,8 @@ import com.anynote.ai.api.model.dto.ChatConversationListDTO;
 import com.anynote.ai.api.model.po.ChatConversation;
 import com.anynote.ai.api.model.vo.ChatCompletionsVO;
 
+import com.anynote.ai.nio.model.dto.MoocVideoSummarizeDTO;
+import com.anynote.ai.nio.model.dto.NoteTaskSubmissionAnalyzeDTO;
 import com.anynote.ai.nio.model.vo.ChatConversationInfoVO;
 import com.anynote.ai.nio.model.vo.ChatConversationVO;
 import com.anynote.core.web.model.bo.PageBean;
@@ -49,5 +51,14 @@ public interface ChatService {
     public Flux<ChatCompletionsVO> authedChatCompletions(ChatCompletionsDTO chatCompletionsDTO);
 
     public Mono<String> updateChatConversation(ChatConversationUpdateParam updateParam);
+
+    /**
+     * 慕课内容总结
+     * @param moocVideoSummarizeDTO
+     * @return
+     */
+    public Flux<ChatCompletionsVO> moocVideoSummarize(MoocVideoSummarizeDTO moocVideoSummarizeDTO);
+
+    public Flux<ChatCompletionsVO> noteTaskSubmissionAnalyze(NoteTaskSubmissionAnalyzeDTO noteTaskSubmissionAnalyzeDTO);
 
 }
