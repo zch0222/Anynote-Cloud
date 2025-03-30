@@ -34,7 +34,6 @@ public class ContextWebFilter implements WebFilter {
     @NonNull
     public Mono<Void> filter(ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         String accessToken = exchange.getRequest().getHeaders().getFirst(SecurityConstants.ACCESS_TOKEN);
-        log.info(accessToken);
         if (StringUtils.isNotNull(accessToken)) {
             return chain.filter(exchange)
                     .contextWrite(ctx -> ctx.put(SecurityConstants.ACCESS_TOKEN, accessToken))
