@@ -1,4 +1,4 @@
-package com.anynote.ai.fastapi.model.vo;
+package com.anynote.ai.nio.fastapi.vo;
 
 import lombok.Data;
 

@@ -36,6 +36,20 @@ public class ThreadPoolConfig {
         return executor;
     }
 
+    @Bean("ioExecutor")
+    public Executor ioExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(whisperExecutorProperties.getCorePoolSize());
+        executor.setMaxPoolSize(whisperExecutorProperties.getMaxPoolSize());
+        executor.setQueueCapacity(whisperExecutorProperties.getQueueCapacity());
+        executor.setThreadNamePrefix("ioExecutor-");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        executor.setKeepAliveSeconds(60);
+        executor.setAllowCoreThreadTimeOut(true);
+        executor.initialize();
+        return executor;
+    }
+
     /**
      * ffmpeg 线程池
      * @return ffmpeg 线程池

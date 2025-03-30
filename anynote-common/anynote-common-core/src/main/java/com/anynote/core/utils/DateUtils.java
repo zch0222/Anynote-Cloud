@@ -70,4 +70,16 @@ public class DateUtils {
         return formatter.format(localDateTime);
     }
 
+    public static Date getStartOfDay() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime startOfDay = today.atStartOfDay().withNano(0);
+        return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static Date getEndOfDay() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime endOfDay = today.atTime(23, 59, 59, 0);
+        return Date.from(endOfDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
 }

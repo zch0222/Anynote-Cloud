@@ -1,4 +1,4 @@
-package com.anynote.ai.fastapi.model.dto;
+package com.anynote.ai.nio.fastapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.anynote.ai.fastapi.properties;
+package com.anynote.ai.nio.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
