@@ -19,6 +19,7 @@
         <module>anynote-common-rocketmq</module>
         <module>anynote-common-green</module>
         <module>anynote-common-ai-fastapi</module>
+        <module>anynote-common-canal</module>
     </modules>
 
 

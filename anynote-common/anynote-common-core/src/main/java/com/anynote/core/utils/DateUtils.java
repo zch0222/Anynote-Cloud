@@ -70,16 +70,38 @@ public class DateUtils {
         return formatter.format(localDateTime);
     }
 
+    /**
+     * 获取今天开始
+     * @return 今天的00:00:00
+     */
     public static Date getStartOfDay() {
         LocalDate today = LocalDate.now();
         LocalDateTime startOfDay = today.atStartOfDay().withNano(0);
         return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
     }
 
+    /**
+     * 获取今天结束
+     * @return 今天的23:59:59
+     */
     public static Date getEndOfDay() {
         LocalDate today = LocalDate.now();
         LocalDateTime endOfDay = today.atTime(23, 59, 59, 0);
         return Date.from(endOfDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    // 获取下一天的开始时间（00:00:00）
+    public static Date getStartOfNextDay() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        LocalDateTime startOfNextDay = tomorrow.atStartOfDay().withNano(0);
+        return Date.from(startOfNextDay.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    // 获取下一天的结束时间（23:59:59）
+    public static Date getEndOfNextDay() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        LocalDateTime endOfNextDay = tomorrow.atTime(23, 59, 59, 0);
+        return Date.from(endOfNextDay.atZone(ZoneId.systemDefault()).toInstant());
     }
 
 }

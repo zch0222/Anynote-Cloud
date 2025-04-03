@@ -89,6 +89,16 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-rocketmq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-canal</artifactId>
+        </dependency>
+
     </dependencies>
 
     <properties>

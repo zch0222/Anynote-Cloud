@@ -9,6 +9,12 @@
     <artifactId>anynote-modules-note</artifactId>
     <dependencies>
 
+        <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.client -->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.otter</groupId>-->
+<!--            <artifactId>canal.client</artifactId>-->
+<!--        </dependency>-->
+
         <!-- SpringCloud Alibaba Nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

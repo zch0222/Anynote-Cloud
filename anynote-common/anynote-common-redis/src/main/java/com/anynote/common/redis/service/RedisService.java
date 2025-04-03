@@ -26,6 +26,10 @@ public class RedisService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    public <T> List<T> getMulti(List<String> keys) {
+        return redisTemplate.opsForValue().multiGet(keys);
+    }
+
     /**
      * 向一个Set集合添加元素
      * @param key 集合key

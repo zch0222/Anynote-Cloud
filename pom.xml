@@ -61,9 +61,17 @@
         <io.minio.minio.version>8.5.12</io.minio.minio.version>
         <xxl.job.core.version>2.5.0</xxl.job.core.version>
         <openai.java.version>0.31.0</openai.java.version>
+        <canal.version>1.1.4</canal.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.client -->
+            <dependency>
+                <groupId>com.alibaba.otter</groupId>
+                <artifactId>canal.client</artifactId>
+                <version>${canal.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.openai</groupId>
@@ -246,6 +254,12 @@
             <dependency>
                 <groupId>com.anynote</groupId>
                 <artifactId>anynote-common-core</artifactId>
+                <version>${anynote.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.anynote</groupId>
+                <artifactId>anynote-common-canal</artifactId>
                 <version>${anynote.version}</version>
             </dependency>
 

@@ -47,4 +47,14 @@ public class RocketMQProperties {
     private String aiChatWhisperTaskGroup;
 
     private String fileWhisperTaskGroup;
+
+    /**
+     * canal 主题
+     */
+    private String canalTopic;
+
+    /**
+     * canal 慕课主题
+     */
+    private String canalMoocGroup;
 }
