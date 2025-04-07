@@ -133,7 +133,7 @@ public class NoteController {
 
     /**
      * 更新笔记内容
-     * @param note
+     * @param noteId
      * @return
      */
     @PatchMapping("{noteId}")

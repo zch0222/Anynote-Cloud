@@ -9,6 +9,11 @@
     <artifactId>anynote-modules-note</artifactId>
     <dependencies>
 
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-canal</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.client -->
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba.otter</groupId>-->
