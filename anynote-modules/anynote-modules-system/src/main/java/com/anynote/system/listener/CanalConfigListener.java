@@ -33,22 +33,17 @@ public class CanalConfigListener implements RocketMQListener<MessageExt> {
     private final String SYS_CONFIG_TABLE_NAME = "sys_config";
 
     @Resource
-    private ConfigService configService;
-
-    @Resource
     private RedisService redisService;
-
-    @Resource
-    private Gson gson;
 
     @Override
     public void onMessage(MessageExt messageExt) {
         CanalMessage canalMessage = new CanalMessage(messageExt.getBody());
+        // 涉及的表不是sys_config，则不做处理
         if (!SYS_CONFIG_TABLE_NAME.equals(canalMessage.getTableName())) {
             return;
         }
         log.info("sys_config表变化:\n {}", canalMessage.getMessageSrt());
-
+        // 如果涉及的数据库操作不是UPDATE，则不做处理
         if (!CanalMessageType.UPDATE.equals(canalMessage.getType())) {
             return;
         }

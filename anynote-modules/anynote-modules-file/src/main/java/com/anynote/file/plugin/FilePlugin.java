@@ -23,10 +23,27 @@ import java.util.List;
  */
 public interface FilePlugin {
 
+    /**
+     * 获取文件插件类型
+     * @return 文件插件类型
+     */
     public OssTypeEnum getPluginOssType();
 
+    /**
+     * 文件上传
+     * @param file 文件
+     * @param path 保存路径
+     * @param fileName 文件名称
+     * @return 文件连接
+     */
     public String multipartFileUpload(CommonsMultipartFile file, String path, String fileName);
 
+    /**
+     * 获取对象存储预签名URL
+     * @param durationSeconds 过期时间
+     * @param objectName 对象名称
+     * @return 预签名URL
+     */
     public OSSSignature getOssSignature(Integer durationSeconds, String objectName);
 
     /**

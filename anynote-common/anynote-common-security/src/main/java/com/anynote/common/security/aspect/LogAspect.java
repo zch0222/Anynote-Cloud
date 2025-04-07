@@ -23,8 +23,8 @@ import java.util.Arrays;
 @Aspect
 @Component
 @Conditional(SpringMvcCondition.class)
-@Slf4j
-public class LogAop {
+@Slf4j(topic = "RequestLogger")
+public class LogAspect {
 
     @Resource
     private TokenUtil tokenUtil;

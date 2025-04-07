@@ -9,6 +9,12 @@ public class SecurityConstants {
 
     public static final String CONTENT_TYPE = "Content-Type";
 
+    public static final String METHOD = "method";
+
+    public static final String URI = "uri";
+
+    public static final String IP_ADDRESS = "ip_address";
+
     /**
      * 请求来源
      */
