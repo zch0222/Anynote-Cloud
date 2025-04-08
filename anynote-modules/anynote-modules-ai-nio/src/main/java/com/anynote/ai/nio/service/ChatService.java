@@ -1,6 +1,7 @@
 package com.anynote.ai.nio.service;
 
 import com.anynote.ai.api.enums.ChatConversationPermissions;
+import com.anynote.ai.api.model.bo.ChatConversationDeleteParam;
 import com.anynote.ai.api.model.bo.ChatConversationQueryParam;
 import com.anynote.ai.api.model.bo.ChatConversationUpdateParam;
 import com.anynote.ai.api.model.dto.ChatCompletionsDTO;
@@ -47,6 +48,8 @@ public interface ChatService {
     public Flux<ChatCompletionsVO> chatNoConversationCompletions(ChatCompletionsDTO chatCompletionsDTO);
 
     public Mono<PageBean<ChatConversationInfoVO>> getChatConversationList(ChatConversationListDTO chatConversationListDTO);
+
+    public Mono<Boolean> deleteChatConversationById(ChatConversationDeleteParam deleteParam);
 
     public Flux<ChatCompletionsVO> authedChatCompletions(ChatCompletionsDTO chatCompletionsDTO);
 

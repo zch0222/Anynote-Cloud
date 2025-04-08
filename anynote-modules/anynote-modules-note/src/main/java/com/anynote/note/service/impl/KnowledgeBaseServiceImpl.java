@@ -564,4 +564,21 @@ public class KnowledgeBaseServiceImpl extends ServiceImpl<KnowledgeBaseMapper, N
         queryParam.setParams(new HashMap<>(0));
         return this.baseMapper.selectKnowledgeBaseById(queryParam);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteKnowledgeBaseById(Long id) {
+        NoteKnowledgeBase knowledgeBase = this.baseMapper.selectById(id);
+        if (StringUtils.isNull(knowledgeBase)) {
+            throw new BusinessException("知识库不存在");
+        }
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        if (knowledgeBase.getCreateBy().equals(loginUser.getUserId())) {
+            throw new BusinessException("没有权限删除知识库");
+        }
+        int res = this.baseMapper.deleteById(id);
+        if (res != 1) {
+            throw new BusinessException("删除知识库失败");
+        }
+    }
 }

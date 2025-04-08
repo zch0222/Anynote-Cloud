@@ -1,5 +1,6 @@
 package com.anynote.ai.nio.controller;
 
+import com.anynote.ai.api.model.bo.ChatConversationDeleteParam;
 import com.anynote.ai.api.model.bo.ChatConversationQueryParam;
 import com.anynote.ai.api.model.bo.ChatConversationUpdateParam;
 import com.anynote.ai.api.model.dto.ChatCompletionsDTO;
@@ -11,6 +12,7 @@ import com.anynote.ai.nio.model.dto.NoteTaskSubmissionAnalyzeDTO;
 import com.anynote.ai.nio.model.vo.ChatConversationInfoVO;
 import com.anynote.ai.nio.model.vo.ChatConversationVO;
 import com.anynote.ai.nio.service.ChatService;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.core.web.model.bo.PageBean;
@@ -36,6 +38,14 @@ public class ChatController {
 
     @Resource
     private ChatService chatService;
+
+    @DeleteMapping("conversations/{id}")
+    public Mono<ResData<String>> deleteConversation(@PathVariable("id") Long id) {
+        return chatService.deleteChatConversationById(ChatConversationDeleteParam.builder()
+                        .conversationId(id)
+                        .build())
+                .flatMap(res -> Mono.just(ResUtil.success(Constants.SUCCESS_RES)));
+    }
 
     @ApiOperation("对话列表")
     @GetMapping("conversations/list")

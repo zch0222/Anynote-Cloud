@@ -5,6 +5,7 @@ import com.anynote.ai.api.enums.ChatCompletionsVOStatus;
 import com.anynote.ai.api.enums.ChatConversationPermissions;
 import com.anynote.ai.api.enums.ChatConversationType;
 import com.anynote.ai.api.enums.ChatRole;
+import com.anynote.ai.api.model.bo.ChatConversationDeleteParam;
 import com.anynote.ai.api.model.bo.ChatConversationQueryParam;
 import com.anynote.ai.api.model.bo.ChatConversationUpdateParam;
 import com.anynote.ai.api.model.dto.ChatCompletionsDTO;
@@ -473,6 +474,13 @@ public class ChatServiceImpl implements ChatService {
                 return Constants.SUCCESS_RES;
             }).publishOn(Schedulers.boundedElastic());
         });
+    }
+
+    @RequiresPermissions(value = "a:chatConversation:manage", queryParamName = "chatConversationDeleteParam", paramIdName = "conversationId")
+    @Override
+    public Mono<Boolean> deleteChatConversationById(ChatConversationDeleteParam chatConversationDeleteParam) {
+        return Mono.fromCallable(() -> chatConversationService.removeById(chatConversationDeleteParam.getConversationId()))
+                .publishOn(Schedulers.boundedElastic());
     }
 
     @Override

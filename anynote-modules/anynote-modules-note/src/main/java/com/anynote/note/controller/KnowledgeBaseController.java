@@ -2,6 +2,7 @@ package com.anynote.note.controller;
 
 import com.anynote.common.datascope.annotation.DataScope;
 import com.anynote.common.security.annotation.InnerAuth;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.constant.ErrorMessageConstants;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.validation.annotation.Upload;
@@ -56,6 +57,17 @@ public class KnowledgeBaseController {
                                                                                       @NotNull(message = "页面容量不能为空") Integer pageSize) {
         return ResData.success(knowledgeBaseService
                 .getUsersOrganizationKnowledgeBase(page, pageSize));
+    }
+
+    /**
+     * 删除知识库接口
+     * @param id 知识库id
+     * @return SUCCESS
+     */
+    @DeleteMapping("{id}")
+    public ResData<String> deleteKnowledgeBase(@PathVariable("id") @NotNull Long id) {
+        knowledgeBaseService.deleteKnowledgeBaseById(id);
+        return ResUtil.success(Constants.SUCCESS_RES);
     }
 
     /**
