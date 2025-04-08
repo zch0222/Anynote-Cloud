@@ -1,0 +1,81 @@
+{
+  "index_patterns": ["anynote-log-aop-*"],
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1,
+    "refresh_interval": "30s"
+  },
+  "mappings": {
+    "dynamic": false,
+    "properties": {
+      "@timestamp": {
+        "type": "date"
+      },
+      "@version": {
+        "type": "keyword"
+      },
+      "type": {
+        "type": "keyword"
+      },
+      "url": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "method": {
+        "type": "keyword"
+      },
+      "ip": {
+        "type": "ip"
+      },
+      "requestArgs": {
+        "type": "text",
+        "index": false
+      },
+      "response": {
+        "type": "text",
+        "index": false
+      },
+      "success": {
+        "type": "integer"
+      },
+      "errorMsg": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "timeConsuming": {
+        "type": "long"
+      },
+      "userId": {
+        "type": "long"
+      },
+      "userName": {
+        "type": "keyword"
+      },
+      "nickName": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "logger_name": {
+        "type": "keyword"
+      },
+      "level": {
+        "type": "keyword"
+      }
+    }
+  }
+}
