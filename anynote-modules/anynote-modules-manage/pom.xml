@@ -42,10 +42,10 @@
             <artifactId>anynote-common-swagger</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.anynote</groupId>-->
-<!--            <artifactId>anynote-common-core</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-common-core</artifactId>
+        </dependency>
 
         <!--        <dependency>-->
         <!--            <groupId>com.anynote</groupId>-->
@@ -108,6 +108,11 @@
                     <artifactId>spring-boot-starter-security</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-ai</artifactId>
         </dependency>
 
     </dependencies>

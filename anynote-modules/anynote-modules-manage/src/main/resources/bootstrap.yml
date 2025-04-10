@@ -2,6 +2,7 @@ server:
   port: 18092
 
 
+
 spring:
   application:
     name: anynote-manage
@@ -32,3 +33,6 @@ spring:
         # 共享配置
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  mvc:
+    converters:
+      preferred-json-mapper: jackson

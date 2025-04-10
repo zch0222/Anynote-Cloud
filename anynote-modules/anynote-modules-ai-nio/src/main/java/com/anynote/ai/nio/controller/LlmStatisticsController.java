@@ -1,7 +1,9 @@
 package com.anynote.ai.nio.controller;
 
 import com.anynote.ai.api.model.dto.LlmStatisticsCreateDTO;
+import com.anynote.ai.api.model.dto.LlmStatisticsQueryDTO;
 import com.anynote.ai.api.model.po.LlmStatisticsPO;
+import com.anynote.ai.api.model.vo.LlmStatisticsVO;
 import com.anynote.ai.nio.service.LlmStatisticsService;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
@@ -14,6 +16,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -42,5 +45,19 @@ public class LlmStatisticsController {
             llmStatisticsService.getBaseMapper().insert(llmStatisticsPO);
             return ResUtil.success(llmStatisticsPO.getId());
         }).publishOn(Schedulers.boundedElastic());
+    }
+
+    /**
+     * 查询调用统计
+     * @param fromSource
+     * @param llmStatisticsQueryDTO
+     * @return
+     */
+    @InnerAuth
+    @GetMapping("list")
+    public Mono<ResData<List<LlmStatisticsVO>>> getLlmStatistics(@RequestHeader("from-source") String fromSource,
+                                                                 @Validated LlmStatisticsQueryDTO llmStatisticsQueryDTO) {
+        return llmStatisticsService.getLlmStatistics(llmStatisticsQueryDTO)
+                .flatMap(llmStatisticsVOS -> Mono.just(ResUtil.success(llmStatisticsVOS)));
     }
 }
