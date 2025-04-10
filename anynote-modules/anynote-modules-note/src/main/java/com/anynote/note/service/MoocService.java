@@ -59,6 +59,13 @@ public interface MoocService extends IService<MoocPO> {
      */
     public String createItems(MoocItemCreateParam moocItemCreateParam);
 
+    /**
+     * 创建一个慕课Item
+     * @param moocItemCreateParam
+     * @return 新建的慕课Item id
+     */
+    public Long createSingleItem(MoocItemCreateParam moocItemCreateParam);
+
 
     /**
      * 更新Mooc Item
@@ -100,5 +107,12 @@ public interface MoocService extends IService<MoocPO> {
     public MoocVideoItemInfoVO getMoocVideoItemInfo(MoocItemQueryParam moocItemQueryParam);
 
     public String deleteMooc(MoocParam moocParam);
+
+    /**
+     * 批量删除慕课Items
+     * @param moocItemBatchDeleteItemParam
+     * @return
+     */
+    public String batchDeleteMoocItems(MoocItemBatchDeleteItemParam moocItemBatchDeleteItemParam);
 
 }

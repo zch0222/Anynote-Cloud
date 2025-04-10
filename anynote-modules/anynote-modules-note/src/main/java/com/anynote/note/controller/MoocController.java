@@ -8,6 +8,7 @@ import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
+import com.anynote.note.api.model.dto.BatchDeleteMoocItemsDTO;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
 import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.model.bo.*;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
+//import java.util.Collections;
+//import java.util.stream.Collectors;
 
 /**
  * 慕课 Controller
@@ -100,16 +104,29 @@ public class MoocController {
     }
 
     /**
-     * 创建moocItems
+     * 批量创建moocItems
      * @param createDTO
      * @return
      */
-    @PostMapping("items")
+    @PostMapping("itemsCreateBatch")
     public ResData<String> createMoocItems(@Validated @RequestBody MoocItemCreateDTO createDTO) {
         return ResUtil.success(moocService.createItems(MoocItemCreateParam.MoocItemCreateParamBuilder()
                 .moocId(createDTO.getMoocId())
                 .knowledgeBaseId(createDTO.getKnowledgeBaseId())
                 .items(createDTO.getItems())
+                .build()));
+    }
+
+    /**
+     * 创建单个Item
+     * @param createDTO
+     * @return
+     */
+    @PostMapping("items")
+    public ResData<Long> createMoocItem(@Validated @RequestBody MoocItemSingleCreateDTO createDTO) {
+        return ResUtil.success(moocService.createSingleItem(MoocItemCreateParam.MoocItemCreateParamBuilder()
+                .moocId(createDTO.getMoocId())
+                .items(Collections.singletonList(createDTO.getItem()))
                 .build()));
     }
 
@@ -149,6 +166,20 @@ public class MoocController {
                 .pageSize(moocItemListDTO.getPageSize())
                 .build()));
     }
+
+//    /**
+//     * 批量删除慕课Item
+//     * @param batchDeleteMoocItemsDTO
+//     * @return
+//     */
+//    @PostMapping("batchDeleteItems")
+//    public ResData<String> batchDeleteMoocItems(@RequestBody @Validated BatchDeleteMoocItemsDTO batchDeleteMoocItemsDTO) {
+//        return ResUtil.success(moocService.batchDeleteMoocItems(MoocItemBatchDeleteItemParam
+//                .MoocItemBatchDeleteItemParamBuilder()
+//                .itemIds(batchDeleteMoocItemsDTO.getItemIds())
+//                .moocId(batchDeleteMoocItemsDTO.getMoocId())
+//                .build()));
+//    }
 
     /**
      * 根据慕课Item ID获取慕课Item信息

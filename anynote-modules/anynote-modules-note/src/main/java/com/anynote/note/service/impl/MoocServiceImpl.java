@@ -47,10 +47,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -253,7 +250,7 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
     @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocItemQueryParam")
     @Override
     public PageBean<MoocItemListVO> getMoocItemList(MoocItemQueryParam moocItemQueryParam) {
-        PageHelper.startPage(moocItemQueryParam.getPage(), moocItemQueryParam.getPageSize(), "update_time DESC");
+        PageHelper.startPage(moocItemQueryParam.getPage(), moocItemQueryParam.getPageSize(), "title ASC");
         List<MoocItemPO> moocItemPOList = moocItemService.list(new LambdaQueryWrapper<MoocItemPO>()
                 .eq(MoocItemPO::getMoocId, moocItemQueryParam.getMoocId())
                 .eq(MoocItemPO::getParentId, moocItemQueryParam.getParentId())
@@ -366,5 +363,94 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
             throw new BusinessException("删除慕课失败");
         }
         return Constants.SUCCESS_RES;
+    }
+
+    @RequiresPermissions(value = "n:mooc:manage", paramIdName = "moocId", queryParamName = "moocItemBatchDeleteItemParam")
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public String batchDeleteMoocItems(MoocItemBatchDeleteItemParam moocItemBatchDeleteItemParam) {
+        List<MoocItemPO> moocItemList = moocItemService.list(new LambdaQueryWrapper<MoocItemPO>()
+                .eq(MoocItemPO::getMoocId, moocItemBatchDeleteItemParam.getMoocId())
+                .select(MoocItemPO::getId, MoocItemPO::getMoocId, MoocItemPO::getParentId));
+        Map<Long, List<MoocItemPO>> parentIdToMoocItem = new HashMap<>();
+        for (MoocItemPO moocItemPO : moocItemList) {
+            if (!parentIdToMoocItem.containsKey(moocItemPO.getParentId())) {
+                List<MoocItemPO> moocItemPOList = new ArrayList<>();
+                parentIdToMoocItem.put(moocItemPO.getParentId(), moocItemPOList);
+            }
+            parentIdToMoocItem.get(moocItemPO.getParentId()).add(moocItemPO);
+            if (!parentIdToMoocItem.containsKey(moocItemPO.getId())) {
+                parentIdToMoocItem.put(moocItemPO.getId(), new ArrayList<>());
+            }
+        }
+        Set<Long> deleteItemsIds = new HashSet<>();
+        for (Long itemId : moocItemBatchDeleteItemParam.getItemIds()) {
+            if (!parentIdToMoocItem.containsKey(itemId)) {
+                throw new BusinessException("无法删除慕课Item Id = " + itemId);
+            }
+            if (deleteItemsIds.contains(itemId)) {
+                continue;
+            }
+            Deque<Long> idDeque = new ArrayDeque<>();
+            idDeque.addLast(itemId);
+            while (!idDeque.isEmpty()) {
+                Long id = idDeque.removeFirst();
+                deleteItemsIds.add(id);
+                idDeque.addAll(parentIdToMoocItem.get(id).stream()
+                        .map(MoocItemPO::getId)
+                        .filter(moocItemPOId -> !deleteItemsIds.contains(moocItemPOId))
+                        .collect(Collectors.toList()));
+            }
+        }
+        moocItemService.removeByIds(deleteItemsIds);
+        return Constants.SUCCESS_RES;
+    }
+
+//    @RequiresPermissions(value = "n:mooc:update", paramIdName = "moocId", queryParamName = "moocItemCreateParam")
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Long createSingleItem(MoocItemCreateParam moocItemCreateParam) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        Date now = new Date();
+        MoocItemCreateParam.Item item = moocItemCreateParam.getItems().get(0);
+        MoocItemPO moocItemPO = MoocItemPO.builder()
+                .moocId(moocItemCreateParam.getMoocId())
+                .title(item.getTitle())
+                .objectName(item.getObjectName())
+                .parentId(item.getParentId())
+                .moocItemType(item.getMoocItemType())
+                .deleted(0)
+                .createBy(loginUser.getUserId())
+                .updateBy(loginUser.getUserId())
+                .createTime(now)
+                .updateTime(now)
+                .build();
+        moocItemService.save(moocItemPO);
+        if (StringUtils.isNotNull(item.getItemText())) {
+            MoocItemTextPO moocItemTextPO = MoocItemTextPO.builder()
+                    .moocItemId(moocItemPO.getId())
+                    .itemText(item.getItemText())
+                    .deleted(0)
+                    .createBy(loginUser.getUserId())
+                    .updateBy(loginUser.getUserId())
+                    .createTime(now)
+                    .updateTime(now)
+                    .build();
+            moocItemTextService.save(moocItemTextPO);
+        }
+        if (MoocItemType.VIDEO == item.getMoocItemType()) {
+            MoocVideoItemInfoPO moocVideoItemInfoPO = MoocVideoItemInfoPO.builder()
+                    .moocId(moocItemCreateParam.getMoocId())
+                    .moocItemId(moocItemPO.getId())
+                    .createBy(loginUser.getUserId())
+                    .updateBy(loginUser.getUserId())
+                    .createTime(now)
+                    .updateTime(now)
+                    .deleted(0)
+                    .build();
+            moocVideoItemInfoService.save(moocVideoItemInfoPO);
+        }
+        return moocItemPO.getId();
+//        return null;
     }
 }
