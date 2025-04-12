@@ -1,2 +1,3 @@
 com.anynote.system.api.factory.RemoteUserFallbackFactory
 com.anynote.system.api.factory.RemoteSysPermissionRuleFallbackFactory
+com.anynote.system.api.factory.RemoteSysApiStatisticsFallbackFactory

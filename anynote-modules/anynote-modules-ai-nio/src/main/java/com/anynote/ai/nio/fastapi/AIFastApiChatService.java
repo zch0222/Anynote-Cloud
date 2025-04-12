@@ -4,8 +4,13 @@ import com.anynote.ai.nio.fastapi.dto.FastApiChatCompletionsDTO;
 import com.anynote.ai.nio.fastapi.vo.FastApiChatCompletionsVO;
 import com.anynote.ai.nio.service.LlmStatisticsService;
 import com.anynote.common.redis.service.ConfigService;
+import com.anynote.core.constant.SecurityConstants;
+import com.anynote.core.constant.SysApiStatisticsType;
 import com.anynote.core.utils.DateUtils;
+import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
+import com.anynote.system.api.RemoteSysApiStatisticsService;
+import com.anynote.system.api.model.dto.IncreaseApiUsageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.concurrent.Executor;
 
 @Slf4j
@@ -39,10 +45,24 @@ public class AIFastApiChatService {
     @Resource
     private LlmStatisticsService llmStatisticsService;
 
+    @Resource
+    private RemoteSysApiStatisticsService remoteSysApiStatisticsService;
+
     private void increaseLlmUsageCount() {
+//        try {
+//            ioExecutor.execute(() -> {
+//                llmStatisticsService.increaseUsageCount(DateUtils.getStartOfDay(), DateUtils.getEndOfDay());
+//            });
+//        } catch (Exception e) {
+//            log.error("记录LLM调用次数失败", e);
+//        }
         try {
+            Date now = new Date();
             ioExecutor.execute(() -> {
-                llmStatisticsService.increaseUsageCount(DateUtils.getStartOfDay(), DateUtils.getEndOfDay());
+                RemoteResDataUtil.getResData(remoteSysApiStatisticsService.increaseUsage(IncreaseApiUsageDTO.builder()
+                        .time(now)
+                        .type(SysApiStatisticsType.LLM)
+                        .build(), SecurityConstants.INNER));
             });
         } catch (Exception e) {
             log.error("记录LLM调用次数失败", e);

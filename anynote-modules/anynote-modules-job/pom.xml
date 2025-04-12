@@ -43,6 +43,17 @@
 
         <dependency>
             <groupId>com.anynote</groupId>
+            <artifactId>anynote-api-system</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.anynote</groupId>
             <artifactId>anynote-common-swagger</artifactId>
         </dependency>
 
