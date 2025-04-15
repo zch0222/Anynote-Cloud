@@ -2,7 +2,9 @@ package com.anynote.common.redis.service;
 
 import com.anynote.common.redis.model.bo.RedisMessage;
 import com.anynote.core.enums.ConfigEnum;
+import com.anynote.core.utils.StringUtils;
 import com.anynote.system.api.model.po.SysConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.util.CloseableIterator;
@@ -17,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author 称霸幼儿园
  */
+@Slf4j
 @Component
 public class RedisService {
 
@@ -173,12 +176,25 @@ public class RedisService {
                 .match(prefix + "*")
                 .build();
 
-        CloseableIterator<Object> keyIterator = redisTemplate.opsForValue().getOperations().scan(options);
-        while (keyIterator.hasNext()) {
-            redisTemplate.delete(keyIterator.next());
+        try(CloseableIterator<Object> keyIterator = redisTemplate.opsForValue().getOperations().scan(options)) {
+            while (keyIterator.hasNext()) {
+                redisTemplate.delete(keyIterator.next());
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw e;
         }
+//        CloseableIterator<Object> keyIterator = redisTemplate.opsForValue().getOperations().scan(options);
+//        while (keyIterator.hasNext()) {
+//            redisTemplate.delete(keyIterator.next());
+//        }
     }
 
+    /**
+     * 这个方法很危险，key数量过多有可能导致OOM
+     * @param prefix
+     * @return
+     */
     public Map<String, Object> getObjects(String prefix) {
         // 创建扫描选项，匹配所有以prefix为前缀的键
         ScanOptions options = ScanOptions.scanOptions().match(prefix + "*").build();
@@ -187,24 +203,40 @@ public class RedisService {
         CloseableIterator<String> keyIterator = redisTemplate.opsForValue().getOperations().scan(options);
 
         Map<String, Object> resultMap = new HashMap<>();
+        List<String> keys = new ArrayList<>();
         try {
             while (keyIterator.hasNext()) {
                 String key = keyIterator.next();
-                // 从Redis获取与键对应的值
-                Object value = redisTemplate.opsForValue().get(key);
-                if (value != null) {
-                    resultMap.put(key, value);
+                keys.add(key);
+                if (keys.size() >= 100) {
+                    addBatchToResult(keys, resultMap);
+                    keys.clear();
                 }
+            }
+            if (!keys.isEmpty()) {
+                addBatchToResult(keys, resultMap);
             }
         } finally {
             try {
                 keyIterator.close(); // 确保关闭keyIterator
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
-
         return resultMap;
+    }
+
+    private void addBatchToResult(List<String> keys, Map<String, Object> resultMap) {
+        List<Object> values = redisTemplate.opsForValue().multiGet(keys);
+        if (StringUtils.isNull(values)) {
+            return;
+        }
+        for (int i = 0; i < keys.size(); i++) {
+            Object value = values.get(i);
+            if (value != null) {
+                resultMap.put(keys.get(i), value);
+            }
+        }
     }
 
     /**

@@ -74,5 +74,22 @@
             n_mooc.is_delete = 0;
     </select>
 
+    <select id="selectMoocIds" resultType="java.lang.Long">
+        SELECT
+            n_mooc.id
+        FROM
+            n_user_knowledge_base
+        INNER JOIN
+            n_mooc ON n_mooc.knowledge_base_id = n_user_knowledge_base.knowledge_base_id
+        WHERE
+            n_user_knowledge_base.user_id = #{userId}
+          AND
+            n_mooc.is_delete = 0
+          AND
+            (n_mooc.data_scope = 3 OR
+             n_mooc.create_by = #{userId} OR
+             (n_user_knowledge_base.permissions = 1 AND n_mooc.data_scope = 2));
+    </select>
+
 
 </mapper>

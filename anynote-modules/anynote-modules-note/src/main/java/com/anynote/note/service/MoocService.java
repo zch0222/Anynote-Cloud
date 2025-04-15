@@ -1,14 +1,19 @@
 package com.anynote.note.service;
 
+import com.anynote.common.elasticsearch.model.bo.EsMoocIndex;
+import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.api.model.dto.MoocSearchDTO;
 import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.po.MoocPO;
 import com.anynote.note.model.vo.*;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 慕课服务
@@ -114,5 +119,19 @@ public interface MoocService extends IService<MoocPO> {
      * @return
      */
     public String batchDeleteMoocItems(MoocItemBatchDeleteItemParam moocItemBatchDeleteItemParam);
+
+    /**
+     * 搜索慕课信息
+     * @param moocSearchDTO
+     * @return
+     */
+    public SearchPageBean<EsMoocIndex> searchMooc(MoocSearchDTO moocSearchDTO);
+
+
+    /**
+     * 获取用户可见的慕课id列表
+     * @return 用户可见的慕课id列表
+     */
+    public List<Long> getVisibleMoocIds(Long userId);
 
 }

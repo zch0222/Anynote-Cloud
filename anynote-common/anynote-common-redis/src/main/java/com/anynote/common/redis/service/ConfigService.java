@@ -42,4 +42,19 @@ public class ConfigService {
         return sysConfig.getValue();
     }
 
+    public String getNacosWebUrl() {
+        SysConfig sysConfig = redisService.getConfig(ConfigEnum.NACOS_WEB_URL);
+        return sysConfig.getValue();
+    }
+
+    public String getXXLJobWebUrl() {
+        SysConfig sysConfig = redisService.getConfig(ConfigEnum.XXL_JOB_WEB_URL);
+        return sysConfig.getValue();
+    }
+
+    public String getKibanaWebUrl() {
+        SysConfig sysConfig = redisService.getConfig(ConfigEnum.KIBANA_WEB_URL);
+        return sysConfig.getValue();
+    }
+
 }

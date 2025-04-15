@@ -22,4 +22,11 @@ public interface MoocMapper extends BaseMapper<MoocPO> {
 
     public MoocVO selectMoocById(@Param("moocId") Long moocId);
 
+    /**
+     * 查询用户可见的所有慕课id
+     * @param userId 用户id
+     * @return 慕课id列表
+     */
+    public List<Long> selectMoocIds(@Param("userId") Long userId);
+
 }

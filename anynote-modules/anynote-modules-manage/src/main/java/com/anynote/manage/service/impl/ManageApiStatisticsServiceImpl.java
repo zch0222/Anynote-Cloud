@@ -28,8 +28,6 @@ public class ManageApiStatisticsServiceImpl implements ManageApiStatisticsServic
 
     @Override
     public List<LlmStatisticsVO> getLlmStatistics(LlmStatisticsQueryDTO llmStatisticsQueryDTO) {
-        log.info(new Gson().toJson(llmStatisticsQueryDTO));
-        log.info("UUUUUU");
         return RemoteResDataUtil.getResData(remoteLlmStatisticsService
                 .getLlmStatistics(SecurityConstants.INNER, llmStatisticsQueryDTO));
     }

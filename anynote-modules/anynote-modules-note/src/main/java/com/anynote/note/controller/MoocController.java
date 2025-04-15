@@ -1,5 +1,7 @@
 package com.anynote.note.controller;
 
+import com.anynote.common.elasticsearch.model.bo.EsMoocIndex;
+import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.ResUtil;
@@ -10,6 +12,7 @@ import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.model.dto.BatchDeleteMoocItemsDTO;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.api.model.dto.MoocSearchDTO;
 import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.model.bo.*;
 import com.anynote.note.model.dto.*;
@@ -251,6 +254,16 @@ public class MoocController {
                 .moocId(moocId)
                 .moocItemId(moocItemId)
                 .build()));
+    }
+
+    /**
+     * 搜索慕课
+     * @param moocSearchDTO
+     * @return
+     */
+    @GetMapping("search")
+    public ResData<SearchPageBean<EsMoocIndex>> searchMooc(@Validated MoocSearchDTO moocSearchDTO) {
+        return ResUtil.success(moocService.searchMooc(moocSearchDTO));
     }
 
 //    @GetMapping("{id}")

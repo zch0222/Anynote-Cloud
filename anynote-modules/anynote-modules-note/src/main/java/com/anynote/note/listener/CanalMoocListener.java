@@ -46,13 +46,13 @@ public class CanalMoocListener implements RocketMQListener<MessageExt> {
 
     @Override
     public void onMessage(MessageExt messageExt) {
-        log.info(gson.toJson(messageExt));
-        log.info(new String(messageExt.getBody(), StandardCharsets.UTF_8));
         CanalMessage canalMessage = new CanalMessage(messageExt.getBody());
 
         if (!MOOC_TABLE_NAME.equals(canalMessage.getTableName())) {
             return;
         }
+        log.info(gson.toJson(messageExt));
+        log.info(new String(messageExt.getBody(), StandardCharsets.UTF_8));
         if (CanalMessageType.UPDATE.equals(canalMessage.getType()) ||
                 CanalMessageType.INSERT.equals(canalMessage.getType())) {
             List<MoocPO> moocPOList = canalMessage.getData(MoocPO.class);
@@ -64,6 +64,7 @@ public class CanalMoocListener implements RocketMQListener<MessageExt> {
 
 
     private void buildESIndex(MoocPO moocPO) {
+
         EsMoocIndex esMoocIndex = EsMoocIndex.builder()
                 .id(moocPO.getId())
                 .title(moocPO.getTitle())
@@ -76,6 +77,7 @@ public class CanalMoocListener implements RocketMQListener<MessageExt> {
                 .updateBy(moocPO.getUpdateBy())
                 .updateTime(moocPO.getUpdateTime())
                 .build();
+        log.info("Mooc Index Value: {}", gson.toJson(esMoocIndex));
         IndexResponse response = null;
         try {
             response = elasticsearchClient.index(i -> i

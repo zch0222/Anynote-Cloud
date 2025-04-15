@@ -1,11 +1,21 @@
 package com.anynote.note.service.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.anynote.ai.api.RemoteWhisperService;
 import com.anynote.ai.api.enums.WhisperTaskStatus;
 import com.anynote.ai.api.model.dto.WhisperDTO;
 import com.anynote.ai.api.model.vo.WhisperSubmitVO;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
 import com.anynote.common.datascope.constants.PermissionConstants;
+import com.anynote.common.elasticsearch.constant.ElasticsearchIndexConstants;
+import com.anynote.common.elasticsearch.model.EsNoteIndex;
+import com.anynote.common.elasticsearch.model.bo.EsMoocIndex;
+import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
+import com.anynote.common.elasticsearch.utils.ElasticsearchUtil;
 import com.anynote.common.redis.constant.RedisKey;
 import com.anynote.common.redis.service.RedisService;
 import com.anynote.common.security.token.TokenUtil;
@@ -22,6 +32,7 @@ import com.anynote.file.api.model.dto.OssSliceUploadTaskCreatePublicDTO;
 import com.anynote.file.api.model.vo.OssSliceUploadTaskVO;
 import com.anynote.note.api.enums.KnowledgeBasePermissions;
 import com.anynote.note.api.model.dto.MoocAsrInfoUpdateDTO;
+import com.anynote.note.api.model.dto.MoocSearchDTO;
 import com.anynote.note.api.model.vo.MoocVideoItemInfoVO;
 import com.anynote.note.constant.MoocItemType;
 import com.anynote.note.datascope.annotation.KnowledgeBaseDataScope;
@@ -43,6 +54,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +66,7 @@ import java.util.stream.Collectors;
  * 慕课服务实现类
  * @author 称霸幼儿园
  */
+@Slf4j
 @Service
 public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
         implements MoocService {
@@ -78,6 +91,9 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
 
     @Resource
     private MoocVideoItemInfoService moocVideoItemInfoService;
+
+    @Resource
+    private ElasticsearchClient elasticsearchClient;
 
     @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocQueryParam")
     @Override
@@ -452,5 +468,52 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
         }
         return moocItemPO.getId();
 //        return null;
+    }
+
+    @Override
+    public SearchPageBean<EsMoocIndex> searchMooc(MoocSearchDTO moocSearchDTO) {
+        LoginUser loginUser = tokenUtil.getLoginUser();
+        List<Long> moocIds = this.getVisibleMoocIds(loginUser.getUserId());
+        // 数据范围
+        Query moocIdQuery = TermsQuery.of(t -> t
+                .field("id")
+                .terms(TermsQueryField.of(f -> f.value(moocIds.stream()
+                        .map(FieldValue::of)
+                        .collect(Collectors.toList()))))
+        )._toQuery();
+        // 未删除
+        Query notDeletedQuery = TermQuery.of(t -> t
+                .field("deleted")
+                .value(0))
+                ._toQuery();
+        // 关键词查询
+        Query keywordQuery = MatchQuery.of(q -> q
+                .field("all")
+                .query(moocSearchDTO.getKeyword()))
+                ._toQuery();
+        Query query = BoolQuery.of(b -> b.must(Arrays.asList(moocIdQuery, notDeletedQuery, keywordQuery)))._toQuery();
+        log.info("MOOC QUERY: {}", query.toString());
+        int from = (moocSearchDTO.getPage()-1) * moocSearchDTO.getPageSize();
+        try {
+            SearchResponse<EsMoocIndex> searchResponse = elasticsearchClient.search(s -> s
+                            .index(ElasticsearchIndexConstants.MOOC_INDEX)
+                            .query(query)
+                            .from(from)
+                            .size(moocSearchDTO.getPageSize())
+                            .highlight(h -> h
+                                    .requireFieldMatch(false)
+                                    .fields("title", hBuilder -> hBuilder)
+                                    .fragmentSize(20)),
+                    EsMoocIndex.class);
+            return ElasticsearchUtil.buildSearchPageBean(searchResponse, EsMoocIndex.class, moocSearchDTO.getPageSize(), moocSearchDTO.getPage());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new BusinessException("搜索慕课失败");
+        }
+    }
+
+    @Override
+    public List<Long> getVisibleMoocIds(Long userId) {
+        return this.baseMapper.selectMoocIds(userId);
     }
 }

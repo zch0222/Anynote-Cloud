@@ -60,6 +60,12 @@ public enum ConfigEnum {
     /**
      * Whisper 服务config
      */
-    WHISPER_CONFIG
+    WHISPER_CONFIG,
+
+    NACOS_WEB_URL,
+
+    XXL_JOB_WEB_URL,
+
+    KIBANA_WEB_URL
     ;
 }

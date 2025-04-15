@@ -1,9 +1,13 @@
 package com.anynote.canal.model.bo;
 
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -65,7 +69,21 @@ public class CanalMessage {
 
     public <T> List<T> getData(Class<T> clazz) {
         Type type = TypeToken.getParameterized(List.class, clazz).getType();
-        return gson.fromJson(gson.toJson(message.get(DATA_KEY)), type);
+        return new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setFieldNamingStrategy(new FieldNamingStrategy() {
+                    @Override
+                    public String translateName(Field field) {
+                        // 特殊处理 deleted 字段
+                        if (field.getName().equals("deleted")) {
+                            return "is_delete";
+                        }
+                        // 其他字段使用默认策略
+                        return FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES.translateName(field);
+                    }
+                })
+                .create()
+                .fromJson(gson.toJson(message.get(DATA_KEY)), type);
     }
 
 }
