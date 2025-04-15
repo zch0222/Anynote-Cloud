@@ -195,14 +195,14 @@ public class RedisService {
      * @param prefix
      * @return
      */
-    public Map<String, Object> getObjects(String prefix) {
+    public <T> Map<String, T> getObjects(String prefix) {
         // 创建扫描选项，匹配所有以prefix为前缀的键
         ScanOptions options = ScanOptions.scanOptions().match(prefix + "*").build();
 
         // 使用CloseableIterator进行迭代键
         CloseableIterator<String> keyIterator = redisTemplate.opsForValue().getOperations().scan(options);
 
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, T> resultMap = new HashMap<>();
         List<String> keys = new ArrayList<>();
         try {
             while (keyIterator.hasNext()) {
@@ -226,13 +226,13 @@ public class RedisService {
         return resultMap;
     }
 
-    private void addBatchToResult(List<String> keys, Map<String, Object> resultMap) {
+    private <T> void addBatchToResult(List<String> keys, Map<String, T> resultMap) {
         List<Object> values = redisTemplate.opsForValue().multiGet(keys);
         if (StringUtils.isNull(values)) {
             return;
         }
         for (int i = 0; i < keys.size(); i++) {
-            Object value = values.get(i);
+            T value = (T) values.get(i);
             if (value != null) {
                 resultMap.put(keys.get(i), value);
             }

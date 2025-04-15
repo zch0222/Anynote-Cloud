@@ -4,6 +4,7 @@ import com.anynote.common.redis.constant.RedisKey;
 import com.anynote.common.redis.service.RedisService;
 import com.anynote.manage.model.vo.CacheVO;
 import com.anynote.manage.service.ManageCacheService;
+import com.anynote.system.api.model.bo.LoginUser;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,5 +47,15 @@ public class ManageCacheServiceImpl implements ManageCacheService {
                 .cacheMap(moocASRTaskMap)
                 .build());
         return caches;
+    }
+
+    @Override
+    public CacheVO<LoginUser> getOnlineUsers() {
+        Map<String, LoginUser> map = redisService.getObjects("*_{ACCESS_TOKEN}_");
+        return CacheVO.<LoginUser>builder()
+                .cacheKey("*_{ACCESS_TOKEN}_*")
+                .cacheName("在线用户Access Token")
+                .cacheMap(map)
+                .build();
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CacheVO {
+public class CacheVO<T> {
 
     /**
      * 缓存名称
@@ -26,5 +26,5 @@ public class CacheVO {
     /**
      * cache Map
      */
-    private Map<String, Object> cacheMap;
+    private Map<String, T> cacheMap;
 }
