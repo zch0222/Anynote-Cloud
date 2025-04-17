@@ -266,7 +266,8 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
     @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocItemQueryParam")
     @Override
     public PageBean<MoocItemListVO> getMoocItemList(MoocItemQueryParam moocItemQueryParam) {
-        PageHelper.startPage(moocItemQueryParam.getPage(), moocItemQueryParam.getPageSize(), "title ASC");
+        PageHelper.startPage(moocItemQueryParam.getPage(), moocItemQueryParam.getPageSize())
+                .setUnsafeOrderBy("CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(title, ' ', 1), '.', -1) AS UNSIGNED) ASC");
         List<MoocItemPO> moocItemPOList = moocItemService.list(new LambdaQueryWrapper<MoocItemPO>()
                 .eq(MoocItemPO::getMoocId, moocItemQueryParam.getMoocId())
                 .eq(MoocItemPO::getParentId, moocItemQueryParam.getParentId())
