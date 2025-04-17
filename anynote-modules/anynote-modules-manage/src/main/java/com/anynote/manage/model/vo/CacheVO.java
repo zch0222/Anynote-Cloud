@@ -24,6 +24,11 @@ public class CacheVO<T> {
     private String cacheKey;
 
     /**
+     * 缓存数量
+     */
+    private Integer cacheCount;
+
+    /**
      * cache Map
      */
     private Map<String, T> cacheMap;

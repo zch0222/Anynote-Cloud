@@ -27,24 +27,28 @@ public class ManageCacheServiceImpl implements ManageCacheService {
                 .cacheName("分片上传任务")
                 .cacheKey(RedisKey.OSS_SLICE_UPLOAD_TASK)
                 .cacheMap(taskMap)
+                .cacheCount(taskMap.size())
                 .build());
         Map<String, Object> ossSliceUploadTaskFinishedSliceIndexSetMap = redisService.getObjects("oss_slice_upload_task_finished_slice_index_set:");
         caches.add(CacheVO.builder()
                 .cacheName("Oss已经上传完成的分片set")
                 .cacheKey(RedisKey.OSS_SLICE_UPLOAD_TASK_FINISHED_SLICE_INDEX_SET)
                 .cacheMap(ossSliceUploadTaskFinishedSliceIndexSetMap)
+                .cacheCount(ossSliceUploadTaskFinishedSliceIndexSetMap.size())
                 .build());
         Map<String, Object> ossObjectUrlMap = redisService.getObjects("oss_object_url:");
         caches.add(CacheVO.builder()
                 .cacheName("文件对象URL")
                 .cacheKey(RedisKey.OSS_OBJECT_URL)
                 .cacheMap(ossObjectUrlMap)
+                .cacheCount(ossObjectUrlMap.size())
                 .build());
         Map<String, Object> moocASRTaskMap = redisService.getObjects("mooc_asr_task:taskId:");
         caches.add(CacheVO.builder()
                 .cacheName("慕课ASR任务")
                 .cacheKey(RedisKey.OSS_OBJECT_URL)
                 .cacheMap(moocASRTaskMap)
+                .cacheCount(moocASRTaskMap.size())
                 .build());
         return caches;
     }

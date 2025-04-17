@@ -170,19 +170,19 @@ public class MoocController {
                 .build()));
     }
 
-//    /**
-//     * 批量删除慕课Item
-//     * @param batchDeleteMoocItemsDTO
-//     * @return
-//     */
-//    @PostMapping("batchDeleteItems")
-//    public ResData<String> batchDeleteMoocItems(@RequestBody @Validated BatchDeleteMoocItemsDTO batchDeleteMoocItemsDTO) {
-//        return ResUtil.success(moocService.batchDeleteMoocItems(MoocItemBatchDeleteItemParam
-//                .MoocItemBatchDeleteItemParamBuilder()
-//                .itemIds(batchDeleteMoocItemsDTO.getItemIds())
-//                .moocId(batchDeleteMoocItemsDTO.getMoocId())
-//                .build()));
-//    }
+    /**
+     * 批量删除慕课Item
+     * @param batchDeleteMoocItemsDTO
+     * @return
+     */
+    @PostMapping("batchDeleteItems")
+    public ResData<String> batchDeleteMoocItems(@RequestBody @Validated BatchDeleteMoocItemsDTO batchDeleteMoocItemsDTO) {
+        return ResUtil.success(moocService.batchDeleteMoocItems(MoocItemBatchDeleteItemParam
+                .MoocItemBatchDeleteItemParamBuilder()
+                .itemIds(batchDeleteMoocItemsDTO.getItemIds())
+                .moocId(batchDeleteMoocItemsDTO.getMoocId())
+                .build()));
+    }
 
     /**
      * 根据慕课Item ID获取慕课Item信息

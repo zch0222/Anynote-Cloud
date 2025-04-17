@@ -19,7 +19,7 @@ import java.util.Collections;
  * @author 称霸幼儿园
  */
 @RestController
-@RequestMapping("configWeb")
+@RequestMapping("sysWeb")
 public class ManageSysWebController {
 
     @Resource
