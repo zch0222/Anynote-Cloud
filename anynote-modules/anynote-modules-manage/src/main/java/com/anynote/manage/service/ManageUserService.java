@@ -2,6 +2,8 @@ package com.anynote.manage.service;
 
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.system.api.model.bo.SysUserUpdateParam;
+import com.anynote.system.api.model.dto.BanUserDTO;
+import com.anynote.system.api.model.dto.UnBanUserDTO;
 import com.anynote.system.api.model.po.SysUser;
 
 /**
@@ -26,4 +28,10 @@ public interface ManageUserService {
 
 
     public Integer updateSysUser(SysUserUpdateParam updateParam);
+
+    public void banUser(BanUserDTO banUserDTO);
+
+    public void unBanUser(UnBanUserDTO unBanUserDTO);
+
+
 }

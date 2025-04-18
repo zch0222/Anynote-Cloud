@@ -1,13 +1,14 @@
 package com.anynote.manage.controller;
 
+import com.anynote.common.redis.service.RedisService;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.manage.model.vo.CacheVO;
+import com.anynote.manage.model.vo.OnlineUserVO;
 import com.anynote.manage.service.ManageCacheService;
 import com.anynote.system.api.model.bo.LoginUser;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +24,8 @@ public class ManageCacheController {
     @Resource
     private ManageCacheService manageCacheService;
 
+    @Resource
+    private RedisService redisService;
 
     /**
      * 获取所有缓存
@@ -38,7 +41,18 @@ public class ManageCacheController {
      * @return
      */
     @GetMapping("onlineUsers")
-    public ResData<CacheVO<LoginUser>> getOnlineUsers() {
+    public ResData<List<OnlineUserVO>> getOnlineUsers() {
         return ResUtil.success(manageCacheService.getOnlineUsers());
+    }
+
+    /**
+     * 删除缓存
+     * @param cacheKey 缓存键
+     * @return
+     */
+    @DeleteMapping("{cacheKey}")
+    public ResData<String> deleteCache(@PathVariable("cacheKey") String cacheKey) {
+        redisService.deleteObject(cacheKey);
+        return ResUtil.success(Constants.SUCCESS_RES);
     }
 }

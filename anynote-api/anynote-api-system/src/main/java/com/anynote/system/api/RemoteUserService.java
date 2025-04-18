@@ -7,8 +7,10 @@ import com.anynote.core.web.model.bo.ResData;
 import com.anynote.system.api.factory.RemoteUserFallbackFactory;
 import com.anynote.system.api.model.bo.KnowledgeBaseImportUser;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.dto.BanUserDTO;
 import com.anynote.system.api.model.dto.CreateUserDTO;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
+import com.anynote.system.api.model.dto.UnBanUserDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -66,4 +68,10 @@ public interface RemoteUserService {
 
     @PostMapping("user")
     public ResData<CreateResEntity> createUser(@RequestBody @Valid CreateUserDTO createUserDTO);
+
+    @PostMapping("user/banUser")
+    public ResData<String> banUser(@RequestBody @Validated BanUserDTO banUserDTO);
+
+    @PostMapping("user/unBanUser")
+    public ResData<String> unBanUser(@RequestBody @Validated UnBanUserDTO unBanUserDTO);
 }

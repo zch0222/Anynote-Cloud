@@ -3,7 +3,7 @@ package com.anynote.ai.nio.controller;
 import com.anynote.ai.api.model.dto.LlmStatisticsCreateDTO;
 import com.anynote.ai.api.model.dto.LlmStatisticsQueryDTO;
 import com.anynote.ai.api.model.po.LlmStatisticsPO;
-import com.anynote.ai.api.model.vo.LlmStatisticsVO;
+import com.anynote.ai.api.model.vo.StatisticsVO;
 import com.anynote.ai.nio.service.LlmStatisticsService;
 import com.anynote.common.security.annotation.InnerAuth;
 import com.anynote.core.utils.ResUtil;
@@ -55,8 +55,8 @@ public class LlmStatisticsController {
      */
     @InnerAuth
     @GetMapping("list")
-    public Mono<ResData<List<LlmStatisticsVO>>> getLlmStatistics(@RequestHeader("from-source") String fromSource,
-                                                                 @Validated LlmStatisticsQueryDTO llmStatisticsQueryDTO) {
+    public Mono<ResData<List<StatisticsVO>>> getLlmStatistics(@RequestHeader("from-source") String fromSource,
+                                                              @Validated LlmStatisticsQueryDTO llmStatisticsQueryDTO) {
         return llmStatisticsService.getLlmStatistics(llmStatisticsQueryDTO)
                 .flatMap(llmStatisticsVOS -> Mono.just(ResUtil.success(llmStatisticsVOS)));
     }

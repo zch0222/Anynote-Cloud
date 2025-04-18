@@ -3,12 +3,13 @@ package com.anynote.manage.service.impl;
 
 import com.anynote.ai.api.RemoteLlmStatisticsService;
 import com.anynote.ai.api.model.dto.LlmStatisticsQueryDTO;
-import com.anynote.ai.api.model.vo.LlmStatisticsVO;
+import com.anynote.ai.api.model.vo.StatisticsVO;
 import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.utils.RemoteResDataUtil;
-import com.anynote.core.web.model.bo.ResData;
 import com.anynote.manage.service.ManageApiStatisticsService;
-import com.google.gson.Gson;
+import com.anynote.system.api.RemoteSysApiStatisticsService;
+import com.anynote.system.api.model.dto.SysApiStatisticsListDTO;
+import com.anynote.system.api.model.vo.SysApiStatisticsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +27,17 @@ public class ManageApiStatisticsServiceImpl implements ManageApiStatisticsServic
     @Resource
     private RemoteLlmStatisticsService remoteLlmStatisticsService;
 
+    @Resource
+    private RemoteSysApiStatisticsService remoteSysApiStatisticsService;
+
     @Override
-    public List<LlmStatisticsVO> getLlmStatistics(LlmStatisticsQueryDTO llmStatisticsQueryDTO) {
+    public List<StatisticsVO> getLlmStatistics(LlmStatisticsQueryDTO llmStatisticsQueryDTO) {
         return RemoteResDataUtil.getResData(remoteLlmStatisticsService
                 .getLlmStatistics(SecurityConstants.INNER, llmStatisticsQueryDTO));
+    }
+
+    @Override
+    public List<SysApiStatisticsVO> getSysApiStatistics(SysApiStatisticsListDTO sysApiStatisticsListDTO) {
+        return RemoteResDataUtil.getResData(remoteSysApiStatisticsService.getSysApiStatistics(sysApiStatisticsListDTO));
     }
 }

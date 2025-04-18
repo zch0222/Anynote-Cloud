@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LlmStatisticsVO {
+public class StatisticsVO {
 
     /**
      * 日志id

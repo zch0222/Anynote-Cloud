@@ -1,5 +1,6 @@
 package com.anynote.manage.service.impl;
 
+import com.alibaba.nacos.shaded.com.google.gson.Gson;
 import com.anynote.common.security.utils.SecurityUtils;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.RemoteResDataUtil;
@@ -9,7 +10,10 @@ import com.anynote.core.web.model.bo.ResData;
 import com.anynote.manage.service.ManageUserService;
 import com.anynote.system.api.RemoteUserService;
 import com.anynote.system.api.model.bo.SysUserUpdateParam;
+import com.anynote.system.api.model.dto.BanUserDTO;
+import com.anynote.system.api.model.dto.UnBanUserDTO;
 import com.anynote.system.api.model.po.SysUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +21,7 @@ import javax.annotation.Resource;
 /**
  * @author 称霸幼儿园
  */
+@Slf4j
 @Service
 public class ManageUserServiceImpl implements ManageUserService {
 
@@ -47,5 +52,15 @@ public class ManageUserServiceImpl implements ManageUserService {
             throw new BusinessException("未知异常，请联系管理员");
         }
         return count;
+    }
+
+    @Override
+    public void banUser(BanUserDTO banUserDTO) {
+        RemoteResDataUtil.getResData(remoteUserService.banUser(banUserDTO));
+    }
+
+    @Override
+    public void unBanUser(UnBanUserDTO unBanUserDTO) {
+        RemoteResDataUtil.getResData(remoteUserService.unBanUser(unBanUserDTO));
     }
 }

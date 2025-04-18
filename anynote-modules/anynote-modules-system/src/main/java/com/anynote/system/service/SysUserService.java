@@ -64,4 +64,16 @@ public interface SysUserService extends IService<SysUser> {
     public SysUser getSysUserInfoById(Long userId);
 
     public Long createUser(CreateUserDTO createUserDTO);
+
+    /**
+     * 封禁用户
+     * @param userId
+     */
+    public void banUser(Long userId);
+
+    /**
+     * 解封用户
+     * @param userId
+     */
+    public void unbanUser(Long userId);
 }

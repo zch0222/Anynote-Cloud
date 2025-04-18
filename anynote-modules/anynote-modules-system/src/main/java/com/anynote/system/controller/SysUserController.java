@@ -2,13 +2,16 @@ package com.anynote.system.controller;
 
 import com.anynote.common.datascope.annotation.RolePermissions;
 import com.anynote.common.security.annotation.InnerAuth;
+import com.anynote.core.constant.Constants;
 import com.anynote.core.enums.Role;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.CreateResEntity;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.dto.BanUserDTO;
 import com.anynote.system.api.model.dto.KnowledgeBaseUserImportDTO;
+import com.anynote.system.api.model.dto.UnBanUserDTO;
 import com.anynote.system.api.model.po.SysUser;
 import com.anynote.system.api.model.vo.KnowledgeBaseUserVO;
 import com.anynote.system.api.model.bo.SysUserQueryParam;
@@ -127,6 +130,20 @@ public class SysUserController {
         return ResUtil.success(CreateResEntity.builder()
                         .id(sysUserService.createUser(createUserDTO))
                 .build());
+    }
+
+    @InnerAuth
+    @PostMapping("banUser")
+    public ResData<String> banUser(@Validated @RequestBody BanUserDTO banUserDTO) {
+        sysUserService.banUser(banUserDTO.getUserId());
+        return ResUtil.success(Constants.SUCCESS_RES);
+    }
+
+    @InnerAuth
+    @PostMapping("unBanUser")
+    public ResData<String> unBanUser(@Validated @RequestBody UnBanUserDTO unBanUserDTO) {
+        sysUserService.unbanUser(unBanUserDTO.getUserId());
+        return ResUtil.success(Constants.SUCCESS_RES);
     }
 
 

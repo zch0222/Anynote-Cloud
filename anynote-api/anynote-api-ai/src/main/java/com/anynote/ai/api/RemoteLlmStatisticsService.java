@@ -1,10 +1,9 @@
 package com.anynote.ai.api;
 
 import com.anynote.ai.api.factory.RemoteLlmStatisticsFallbackFactory;
-import com.anynote.ai.api.factory.RemoteTranslateFallbackFactory;
 import com.anynote.ai.api.model.dto.LlmStatisticsCreateDTO;
 import com.anynote.ai.api.model.dto.LlmStatisticsQueryDTO;
-import com.anynote.ai.api.model.vo.LlmStatisticsVO;
+import com.anynote.ai.api.model.vo.StatisticsVO;
 import com.anynote.core.constant.ServiceNameConstants;
 import com.anynote.core.web.model.bo.ResData;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,6 +22,6 @@ public interface RemoteLlmStatisticsService {
                                              @RequestBody @Validated LlmStatisticsCreateDTO llmStatisticsCreateDTO);
 
     @GetMapping("llmStatistics/list")
-    public ResData<List<LlmStatisticsVO>> getLlmStatistics(@RequestHeader("from-source") String fromSource,
-                                                          @SpringQueryMap LlmStatisticsQueryDTO llmStatisticsQueryDTO);
+    public ResData<List<StatisticsVO>> getLlmStatistics(@RequestHeader("from-source") String fromSource,
+                                                        @SpringQueryMap LlmStatisticsQueryDTO llmStatisticsQueryDTO);
 }

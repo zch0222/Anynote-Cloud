@@ -1,10 +1,13 @@
 package com.anynote.manage.controller;
 
+import com.anynote.core.constant.Constants;
 import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.manage.service.ManageUserService;
 import com.anynote.system.api.model.bo.SysUserUpdateParam;
+import com.anynote.system.api.model.dto.BanUserDTO;
+import com.anynote.system.api.model.dto.UnBanUserDTO;
 import com.anynote.system.api.model.po.SysUser;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +52,18 @@ public class ManageUserController {
                                          @NotNull(message = "用户信息不能为空") @RequestBody @Valid SysUserUpdateParam updateParam) {
         updateParam.setUserId(userId);
         return ResUtil.success(manageUserService.updateSysUser(updateParam));
+    }
+
+    @PostMapping("banUser")
+    public ResData<String> banUser(@Validated @RequestBody BanUserDTO banUserDTO) {
+        manageUserService.banUser(banUserDTO);
+        return ResUtil.success(Constants.SUCCESS_RES);
+    }
+
+    @PostMapping("unBanUser")
+    public ResData<String> unBanUser(@Validated @RequestBody UnBanUserDTO unBanUserDTO) {
+        manageUserService.unBanUser(unBanUserDTO);
+        return ResUtil.success(Constants.SUCCESS_RES);
     }
 
 

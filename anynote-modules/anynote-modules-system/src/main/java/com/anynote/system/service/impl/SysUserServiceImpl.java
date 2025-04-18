@@ -285,4 +285,36 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.associateUserRole(sysUser.getId(), 4L);
         return sysUser.getId();
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void banUser(Long userId) {
+        SysUser sysUser = this.baseMapper.selectById(userId);
+        if (StringUtils.isNull(sysUser)) {
+            throw new BusinessException("用户不存在");
+        }
+        tokenUtil.removeTokens(sysUser.getUsername());
+        SysUser newSysUser = new SysUser();
+        newSysUser.setId(userId);
+        newSysUser.setStatus(1);
+        boolean res = this.updateById(newSysUser);
+        if (!res) {
+            throw new BusinessException("封禁失败");
+        }
+    }
+
+    @Override
+    public void unbanUser(Long userId) {
+        SysUser sysUser = this.baseMapper.selectById(userId);
+        if (StringUtils.isNull(sysUser)) {
+            throw new BusinessException("用户不存在");
+        }
+        SysUser newSysUser = new SysUser();
+        newSysUser.setId(userId);
+        newSysUser.setStatus(0);
+        boolean res = this.updateById(newSysUser);
+        if (!res) {
+            throw new BusinessException("解封失败");
+        }
+    }
 }

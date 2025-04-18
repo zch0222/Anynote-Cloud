@@ -2,7 +2,7 @@ package com.anynote.ai.nio.service;
 
 import com.anynote.ai.api.model.dto.LlmStatisticsQueryDTO;
 import com.anynote.ai.api.model.po.LlmStatisticsPO;
-import com.anynote.ai.api.model.vo.LlmStatisticsVO;
+import com.anynote.ai.api.model.vo.StatisticsVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import reactor.core.publisher.Mono;
 
@@ -21,5 +21,5 @@ public interface LlmStatisticsService extends IService<LlmStatisticsPO> {
      */
     public void increaseUsageCount(Date startTime, Date endTime);
 
-    public Mono<List<LlmStatisticsVO>> getLlmStatistics(LlmStatisticsQueryDTO llmStatisticsQueryDTO);
+    public Mono<List<StatisticsVO>> getLlmStatistics(LlmStatisticsQueryDTO llmStatisticsQueryDTO);
 }

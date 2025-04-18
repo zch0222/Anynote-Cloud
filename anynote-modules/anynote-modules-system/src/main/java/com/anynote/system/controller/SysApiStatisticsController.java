@@ -6,16 +6,16 @@ import com.anynote.core.utils.ResUtil;
 import com.anynote.core.web.model.bo.ResData;
 import com.anynote.system.api.model.dto.ApiStatisticsCreateDTO;
 import com.anynote.system.api.model.dto.IncreaseApiUsageDTO;
+import com.anynote.system.api.model.dto.SysApiStatisticsListDTO;
 import com.anynote.system.api.model.po.SysApiStatisticsPO;
+import com.anynote.system.api.model.vo.SysApiStatisticsVO;
 import com.anynote.system.service.SysApiStatisticsService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * API 用量统计
@@ -50,6 +50,12 @@ public class SysApiStatisticsController {
     public ResData<String> increaseUsage(@Validated @RequestBody IncreaseApiUsageDTO increaseApiUsageDTO) {
         sysApiStatisticsService.increaseUsageCount(increaseApiUsageDTO.getTime(), increaseApiUsageDTO.getType());
         return ResUtil.success(Constants.SUCCESS_RES);
+    }
+
+    @InnerAuth
+    @PostMapping("getApiStatistics")
+    public ResData<List<SysApiStatisticsVO>> getApiStatistics(@Validated @RequestBody SysApiStatisticsListDTO sysApiStatisticsListDTO) {
+        return ResUtil.success(sysApiStatisticsService.getSysApiStatistics(sysApiStatisticsListDTO));
     }
 
 }
