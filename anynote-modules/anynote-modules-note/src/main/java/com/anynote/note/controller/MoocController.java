@@ -1,5 +1,7 @@
 package com.anynote.note.controller;
 
+import com.anynote.ai.api.model.dto.GetMoocVideoSummarizesByMoocIdDTO;
+import com.anynote.ai.api.model.po.MoocVideoSummarizePO;
 import com.anynote.common.elasticsearch.model.bo.EsMoocIndex;
 import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.common.security.annotation.InnerAuth;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
+import java.util.List;
 //import java.util.Collections;
 //import java.util.stream.Collectors;
 
@@ -253,6 +256,19 @@ public class MoocController {
         return ResUtil.success(moocService.getMoocVideoItemInfo(MoocItemQueryParam.MoocItemQueryParamBuilder()
                 .moocId(moocId)
                 .moocItemId(moocItemId)
+                .build()));
+    }
+
+    /**
+     * 获取慕课视频AI总结
+     * @param moocVideoSummarizesDTO
+     * @return
+     */
+    @GetMapping("videoSummarizes")
+    public ResData<List<MoocVideoSummarizePO>> getMoocVideoSummarize(@Validated GetMoocVideoSummarizesByMoocIdDTO moocVideoSummarizesDTO) {
+        return ResUtil.success(moocService.getMoocVideoSummarize(MoocItemQueryParam.MoocItemQueryParamBuilder()
+                .moocId(moocVideoSummarizesDTO.getMoocId())
+                .moocItemId(moocVideoSummarizesDTO.getMoocItemId())
                 .build()));
     }
 

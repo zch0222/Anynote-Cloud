@@ -12,6 +12,7 @@ import com.anynote.ai.api.model.dto.ChatCompletionsDTO;
 import com.anynote.ai.api.model.dto.ChatConversationListDTO;
 import com.anynote.ai.api.model.po.ChatConversation;
 import com.anynote.ai.api.model.po.ChatMessage;
+import com.anynote.ai.api.model.po.MoocVideoSummarizePO;
 import com.anynote.ai.api.model.vo.ChatCompletionsVO;
 import com.anynote.ai.nio.fastapi.AIFastApiChatService;
 import com.anynote.ai.nio.fastapi.dto.FastApiChatCompletionsDTO;
@@ -23,6 +24,7 @@ import com.anynote.ai.nio.model.vo.ChatConversationVO;
 import com.anynote.ai.nio.service.ChatConversationService;
 import com.anynote.ai.nio.service.ChatMessageService;
 import com.anynote.ai.nio.service.ChatService;
+import com.anynote.ai.nio.service.MoocVideoSummarizeService;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
 import com.anynote.common.datascope.constants.PermissionConstants;
 import com.anynote.core.constant.Constants;
@@ -53,6 +55,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -89,6 +92,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Resource
     private RemoteNoteTaskService remoteNoteTaskService;
+
+    @Resource
+    private MoocVideoSummarizeService moocVideoSummarizeService;
+
+    @Resource
+    private Executor ioExecutor;
 
 
     @Override
@@ -507,10 +516,14 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Flux<ChatCompletionsVO> moocVideoSummarize(MoocVideoSummarizeDTO moocVideoSummarizeDTO) {
         StringBuffer sb = new StringBuffer();
-        return Mono.deferContextual(ctx -> Mono.fromCallable(() -> RemoteResDataUtil.getResData(remoteMoocService
-                        .getMoocVideoItemInfo(moocVideoSummarizeDTO.getMoocItemId(),
-                                moocVideoSummarizeDTO.getMoocId(),
-                                "inner", ctx.get(SecurityConstants.ACCESS_TOKEN))))
+        AtomicReference<LoginUser> loginUser = new AtomicReference<>();
+        return Mono.deferContextual(ctx -> Mono.fromCallable(() -> {
+            loginUser.set(ctx.get(SpringWebfluxContextConstants.LOGIN_USER));
+            return RemoteResDataUtil.getResData(remoteMoocService
+                    .getMoocVideoItemInfo(moocVideoSummarizeDTO.getMoocItemId(),
+                            moocVideoSummarizeDTO.getMoocId(),
+                            "inner", ctx.get(SecurityConstants.ACCESS_TOKEN)));
+                        })
                         .publishOn(Schedulers.boundedElastic()))
                 .publishOn(Schedulers.boundedElastic())
                 .flux()
@@ -528,8 +541,22 @@ public class ChatServiceImpl implements ChatService {
                 .flatMap(chatCompletionsVO -> {
                     sb.append(chatCompletionsVO.getMessage());
                     return Flux.just(chatCompletionsVO);
-                }).doFinally(signalType -> {
-                    log.info(sb.toString());
+                })
+                .publishOn(Schedulers.boundedElastic())
+                .doFinally(signalType -> {
+                    log.info("SAVE");
+                    Date now = new Date();
+                    ioExecutor.execute(() -> moocVideoSummarizeService.getBaseMapper().insert(MoocVideoSummarizePO.builder()
+                            .moocId(moocVideoSummarizeDTO.getMoocId())
+                            .moocItemId(moocVideoSummarizeDTO.getMoocItemId())
+                            .content(sb.toString())
+                            .model(moocVideoSummarizeDTO.getModel())
+                            .deleted(0)
+                            .updateTime(now)
+                            .createTime(now)
+                            .updateBy(loginUser.get().getUserId())
+                            .createBy(loginUser.get().getUserId())
+                            .build()));
                 });
     }
 

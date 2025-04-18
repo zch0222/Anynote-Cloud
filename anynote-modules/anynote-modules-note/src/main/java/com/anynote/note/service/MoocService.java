@@ -1,5 +1,7 @@
 package com.anynote.note.service;
 
+import com.anynote.ai.api.model.dto.GetMoocVideoSummarizesByMoocIdDTO;
+import com.anynote.ai.api.model.po.MoocVideoSummarizePO;
 import com.anynote.common.elasticsearch.model.bo.EsMoocIndex;
 import com.anynote.common.elasticsearch.model.bo.SearchPageBean;
 import com.anynote.core.web.model.bo.PageBean;
@@ -133,5 +135,12 @@ public interface MoocService extends IService<MoocPO> {
      * @return 用户可见的慕课id列表
      */
     public List<Long> getVisibleMoocIds(Long userId);
+
+    /**
+     * 获取慕课视频AI总结
+     * @param moocItemQueryParam
+     * @return
+     */
+    public List<MoocVideoSummarizePO> getMoocVideoSummarize(MoocItemQueryParam moocItemQueryParam);
 
 }

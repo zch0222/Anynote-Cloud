@@ -5,9 +5,13 @@ import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import com.alibaba.nacos.shaded.com.google.gson.Gson;
+import com.anynote.ai.api.RemoteMoocVideoSummarizeService;
 import com.anynote.ai.api.RemoteWhisperService;
 import com.anynote.ai.api.enums.WhisperTaskStatus;
+import com.anynote.ai.api.model.dto.GetMoocVideoSummarizesByMoocIdDTO;
 import com.anynote.ai.api.model.dto.WhisperDTO;
+import com.anynote.ai.api.model.po.MoocVideoSummarizePO;
 import com.anynote.ai.api.model.vo.WhisperSubmitVO;
 import com.anynote.common.datascope.annotation.RequiresPermissions;
 import com.anynote.common.datascope.constants.PermissionConstants;
@@ -21,6 +25,7 @@ import com.anynote.common.redis.service.RedisService;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.Constants;
 import com.anynote.core.constant.FileConstants;
+import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
@@ -94,6 +99,9 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
 
     @Resource
     private ElasticsearchClient elasticsearchClient;
+
+    @Resource
+    private RemoteMoocVideoSummarizeService remoteMoocVideoSummarizeService;
 
     @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocQueryParam")
     @Override
@@ -516,5 +524,18 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
     @Override
     public List<Long> getVisibleMoocIds(Long userId) {
         return this.baseMapper.selectMoocIds(userId);
+    }
+
+    @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocItemQueryParam")
+    @Override
+    public List<MoocVideoSummarizePO> getMoocVideoSummarize(MoocItemQueryParam moocItemQueryParam) {
+        log.info(moocItemQueryParam.getMoocItemId().toString());
+        GetMoocVideoSummarizesByMoocIdDTO getMoocVideoSummarizesByMoocIdDTO = new GetMoocVideoSummarizesByMoocIdDTO();
+        getMoocVideoSummarizesByMoocIdDTO.setMoocItemId(moocItemQueryParam.getMoocItemId());
+        getMoocVideoSummarizesByMoocIdDTO.setMoocId(moocItemQueryParam.getMoocId());
+        log.info(new Gson().toJson(new MoocVideoSummarizePO()));
+        return RemoteResDataUtil.getResData(remoteMoocVideoSummarizeService
+                .getMoocVideoSummarizesByMoocItemId(SecurityConstants.INNER,
+                        getMoocVideoSummarizesByMoocIdDTO));
     }
 }
