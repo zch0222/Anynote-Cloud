@@ -60,6 +60,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,7 +101,7 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
     @Resource
     private ElasticsearchClient elasticsearchClient;
 
-    @Resource
+    @Autowired
     private RemoteMoocVideoSummarizeService remoteMoocVideoSummarizeService;
 
     @RequiresPermissions(value = "n:mooc:read", paramIdName = "moocId", queryParamName = "moocQueryParam")
@@ -533,9 +534,7 @@ public class MoocServiceImpl extends ServiceImpl<MoocMapper, MoocPO>
         GetMoocVideoSummarizesByMoocIdDTO getMoocVideoSummarizesByMoocIdDTO = new GetMoocVideoSummarizesByMoocIdDTO();
         getMoocVideoSummarizesByMoocIdDTO.setMoocItemId(moocItemQueryParam.getMoocItemId());
         getMoocVideoSummarizesByMoocIdDTO.setMoocId(moocItemQueryParam.getMoocId());
-        log.info(new Gson().toJson(new MoocVideoSummarizePO()));
-        return RemoteResDataUtil.getResData(remoteMoocVideoSummarizeService
-                .getMoocVideoSummarizesByMoocItemId(SecurityConstants.INNER,
-                        getMoocVideoSummarizesByMoocIdDTO));
+
+        return RemoteResDataUtil.getResData(remoteMoocVideoSummarizeService.getMoocVideoSummarizesByMoocItemId(SecurityConstants.INNER, getMoocVideoSummarizesByMoocIdDTO));
     }
 }

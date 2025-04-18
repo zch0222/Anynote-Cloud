@@ -8,6 +8,7 @@ import com.anynote.core.web.model.bo.ResData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -19,11 +20,6 @@ public class RemoteMoocVideoFallbackFactory implements FallbackFactory<RemoteMoo
 
     @Override
     public RemoteMoocVideoSummarizeService create(Throwable cause) {
-        return new RemoteMoocVideoSummarizeService() {
-            @Override
-            public ResData<List<MoocVideoSummarizePO>> getMoocVideoSummarizesByMoocItemId(String fromSource, GetMoocVideoSummarizesByMoocIdDTO getMoocVideoSummarizesByMoocIdDTO) {
-                return null;
-            }
-        };
+        return null;
     }
 }
