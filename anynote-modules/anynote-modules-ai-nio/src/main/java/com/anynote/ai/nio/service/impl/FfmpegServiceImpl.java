@@ -21,9 +21,19 @@ public class FfmpegServiceImpl implements FfmpegService {
                 UUID.randomUUID().toString().replace("-", ""));
         Path audioPath = Paths.get(audioSaveFolder).resolve(audioName);
         try {
-            Process process = new ProcessBuilder(
-                    "ffmpeg", "-i", filePath, "-vn", "-c:a", "copy", audioPath.toString())
-                    .start();
+            // 构建 ffmpeg 命令
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "ffmpeg",
+                    "-i", filePath,       // 输入文件
+                    "-vn",                 // 禁用视频流
+                    "-acodec", "libmp3lame", // 使用 MP3 编码
+                    "-ab", "192k",         // 音频比特率
+                    "-y",                  // 覆盖输出文件（如果存在）
+                    audioPath.toString()
+            );
+//            Process process = new ProcessBuilder(
+//                    "ffmpeg", "-i", filePath, "-vn", "-c:a", "copy", audioPath.toString())
+//                    .start();
             process.waitFor();
         } catch (IOException | InterruptedException e) {
             log.error(e.getMessage(), e);
