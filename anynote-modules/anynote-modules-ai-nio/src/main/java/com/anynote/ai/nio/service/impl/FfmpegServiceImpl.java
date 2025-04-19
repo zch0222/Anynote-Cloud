@@ -22,7 +22,7 @@ public class FfmpegServiceImpl implements FfmpegService {
         Path audioPath = Paths.get(audioSaveFolder).resolve(audioName);
         try {
             // 构建 ffmpeg 命令
-            ProcessBuilder processBuilder = new ProcessBuilder(
+            Process process = new ProcessBuilder(
                     "ffmpeg",
                     "-i", filePath,       // 输入文件
                     "-vn",                 // 禁用视频流
@@ -30,7 +30,7 @@ public class FfmpegServiceImpl implements FfmpegService {
                     "-ab", "192k",         // 音频比特率
                     "-y",                  // 覆盖输出文件（如果存在）
                     audioPath.toString()
-            );
+            ).start();
 //            Process process = new ProcessBuilder(
 //                    "ffmpeg", "-i", filePath, "-vn", "-c:a", "copy", audioPath.toString())
 //                    .start();
