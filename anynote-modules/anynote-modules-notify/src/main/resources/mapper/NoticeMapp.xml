@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anynote.notify.mapper.NoticeMapper">
+
+
+    <resultMap id="NoticeVOResultMap" type="com.anynote.notify.model.vo.NoticeVO">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="type" column="type" />
+        <result property="status" column="status" />
+        <result property="level" column="level" />
+        <result property="createTime" column="create_time" />
+        <result property="createBy" column="create_by" />
+        <result property="updateTime" column="update_time" />
+        <result property="updateBy" column="update_by" />
+        <result property="knowledgeName" column="knowledge_name" />
+        <result property="knowledgeBaseId" column="knowledge_base_id" />
+    </resultMap>
+
+    <select id="selectNoticeList" resultMap="NoticeVOResultMap">
+        SELECT
+            ntc_notice.id, ntc_notice.title, ntc_notice.content, ntc_notice.type, ntc_notice.status, ntc_notice.level,
+            ntc_notice.create_by, ntc_notice.update_time, ntc_notice.update_by, ntc_notice.create_by,
+            n_knowledge_base.name as knowledge_name, n_knowledge_base.id as knowledge_base_id
+        FROM
+            ntc_user_notice
+                INNER JOIN
+            ntc_notice ON ntc_user_notice.notice_id = ntc_notice.id AND ntc_notice.is_delete = 0
+                LEFT JOIN
+            ntc_knowledge_base_notice ON ntc_notice.id = ntc_knowledge_base_notice.notice_id
+                LEFT JOIN
+            n_knowledge_base ON n_knowledge_base.id = ntc_knowledge_base_notice.knowledge_base_id AND
+                                n_knowledge_base.is_delete = 0
+        WHERE
+            ntc_user_notice.user_id = #{userId};
+    </select>
+
+
+</mapper>

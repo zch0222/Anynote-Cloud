@@ -3,9 +3,11 @@ package com.anynote.notify.service.impl;
 import com.anynote.common.redis.constant.RedisChannel;
 import com.anynote.common.redis.model.bo.RedisMessage;
 import com.anynote.common.redis.service.RedisService;
+import com.anynote.core.constant.SpringWebfluxContextConstants;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
+import com.anynote.core.web.model.bo.PageBean;
 import com.anynote.note.api.RemoteKnowledgeBaseService;
 import com.anynote.note.api.model.dto.NoteKnowledgeBaseDTO;
 import com.anynote.note.api.model.po.NoteKnowledgeBase;
@@ -17,15 +19,22 @@ import com.anynote.notify.api.model.po.UserNotice;
 import com.anynote.notify.mapper.KnowledgeBaseNoticeMapper;
 import com.anynote.notify.mapper.NoticeMapper;
 import com.anynote.notify.mapper.UserNoticeMapper;
+import com.anynote.notify.model.dto.NoticeListDTO;
 import com.anynote.notify.model.vo.NoticeVO;
 import com.anynote.notify.service.NoticeService;
 import com.anynote.notify.service.UserNoticeService;
+import com.anynote.system.api.model.bo.LoginUser;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -118,5 +127,25 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     @Override
     public int saveNotice(Notice notice) {
         return this.baseMapper.insert(notice);
+    }
+
+    @Override
+    public Mono<PageBean<NoticeVO>> getNoticeList(NoticeListDTO noticeListDTO) {
+        return Mono.deferContextual(ctx -> {
+            LoginUser loginUser = ctx.get(SpringWebfluxContextConstants.LOGIN_USER);
+
+            return Mono.fromCallable(() -> {
+                log.info("Get Notice List, page: {}, pageSize: {}", noticeListDTO.getPage(), noticeListDTO.getPageSize());
+                PageHelper.startPage(noticeListDTO.getPage(), noticeListDTO.getPageSize(),
+                        "ntc_notice.update_time");
+                List<NoticeVO> noticeVOList = this.baseMapper.selectNoticeList(loginUser.getUserId());
+                PageInfo<NoticeVO> pageInfo = new PageInfo<>(noticeVOList);
+                return PageBean.<NoticeVO>builder()
+                        .rows(noticeVOList)
+                        .pages(pageInfo.getPages())
+                        .current(noticeListDTO.getPage())
+                        .total(pageInfo.getTotal()).build();
+            }).publishOn(Schedulers.boundedElastic());
+        });
     }
 }
