@@ -164,7 +164,7 @@ public class WhisperServiceImpl implements WhisperService {
         builder.part("file", new FileSystemResource(audioPath));
         builder.part("language", "zh");
         builder.part("model", "whisper-1");
-        builder.part("response_format", "srt");
+        builder.part("response_format", "vtt");
         return webClient.post()
                 .uri(whisperConfig.getBaseUrl() + "/audio/transcriptions")
                 .header("Authorization", StringUtils.format("Bearer {}", whisperConfig.getApiKey()))
