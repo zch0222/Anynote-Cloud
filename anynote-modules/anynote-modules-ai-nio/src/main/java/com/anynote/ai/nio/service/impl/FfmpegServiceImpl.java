@@ -25,10 +25,12 @@ public class FfmpegServiceImpl implements FfmpegService {
             Process process = new ProcessBuilder(
                     "ffmpeg",
                     "-i", filePath,       // 输入文件
-                    "-vn",                 // 禁用视频流
+                    "-vn",               // 禁用视频流
                     "-acodec", "libmp3lame", // 使用 MP3 编码
-                    "-ab", "192k",         // 音频比特率
-                    "-y",                  // 覆盖输出文件（如果存在）
+                    "-ab", "64k",        // 更低的音频比特率（原为192k）
+                    "-ar", "22050",      // 降低采样率（CD质量是44100）
+                    "-ac", "1",          // 单声道（原默认是立体声2）
+                    "-y",                // 覆盖输出文件（如果存在）
                     audioPath.toString()
             ).start();
 //            Process process = new ProcessBuilder(
