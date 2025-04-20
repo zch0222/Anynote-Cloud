@@ -273,21 +273,20 @@ public class NoteTaskServiceImpl extends ServiceImpl<NoteTaskMapper, NoteTask>
                         .build();
                 noteTaskOperationHistoryService.asyncSaveNoteTaskOperationHistory(addUserNoteTaskOperationHistory);
             }
+            rocketMQTemplate.asyncSend(rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.NOTE_TASK_CREATED.name(),
+                    new Gson().toJson(NoteTaskCreatedMessageBody.builder()
+                            .noteTaskId(noteTask.getId())
+                            .taskName(noteTask.getTaskName())
+                            .startTime(noteTask.getStartTime())
+                            .endTime(noteTask.getEndTime())
+                            .knowledgeBaseId(noteTask.getKnowledgeBaseId())
+                            .status(noteTask.getStatus())
+                            .taskDescribe(noteTask.getTaskDescribe())
+                            .createBy(noteTask.getCreateBy())
+                            .createTime(noteTask.getCreateTime())
+                            .updateBy(noteTask.getUpdateBy())
+                            .updateTime(noteTask.getUpdateTime()).build()), RocketmqSendCallbackBuilder.commonCallback());
         });
-
-        rocketMQTemplate.asyncSend(rocketMQProperties.getNoteTopic() + ":" + NoteTagsEnum.NOTE_TASK_CREATED.name(),
-                new Gson().toJson(NoteTaskCreatedMessageBody.builder()
-                        .noteTaskId(noteTask.getId())
-                        .taskName(noteTask.getTaskName())
-                        .startTime(noteTask.getStartTime())
-                        .endTime(noteTask.getEndTime())
-                        .knowledgeBaseId(noteTask.getKnowledgeBaseId())
-                        .status(noteTask.getStatus())
-                        .taskDescribe(noteTask.getTaskDescribe())
-                        .createBy(noteTask.getCreateBy())
-                        .createTime(noteTask.getCreateTime())
-                        .updateBy(noteTask.getUpdateBy())
-                        .updateTime(noteTask.getUpdateTime()).build()), RocketmqSendCallbackBuilder.commonCallback());
         return noteTask.getId();
     }
 
