@@ -21,7 +21,7 @@ public class SysApiStatisics {
     @Resource
     private SysApiStatisticsService sysApiStatisticsService;
 
-    //@Test
+    @Test
     public void test() {
         // 定义时间格式
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -39,28 +39,85 @@ public class SysApiStatisics {
 
         // 遍历每一分钟
         while (current.isBefore(end)) {
+
+            LocalDateTime nextDay = current.plusDays(1);
+            int llmDayUsageCount = 0;
+            int whisperDayUsageCount = 0;
+
+            while (current.isBefore(nextDay)) {
+                LocalDateTime nextHour = current.plusHours(1);
+                int llmHourUsageCount = 0;
+                int whisperHourUsageCount = 0;
+                while (current.isBefore(nextHour)) {
+                    int llmMinuteUsageCount = new Random().nextInt(25);
+                    int whisperMinuteUsageCount = new Random().nextInt(25);
+                    llmHourUsageCount += llmMinuteUsageCount;
+                    whisperHourUsageCount += whisperMinuteUsageCount;
+                    sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()
+                            .startTime(Date.from(current.withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
+                            .endTime(Date.from(current.withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
+                            .usageCount(llmMinuteUsageCount)
+                            .type(0)
+                            .statisticsInterval(0)
+                            .deleted(0)
+                            .createTime(now)
+                            .updateTime(now)
+                            .build());
+                    sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()
+                            .startTime(Date.from(current.withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
+                            .endTime(Date.from(current.withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
+                            .usageCount(whisperMinuteUsageCount)
+                            .type(1)
+                            .statisticsInterval(0)
+                            .deleted(0)
+                            .createTime(now)
+                            .updateTime(now)
+                            .build());
+                    current = current.plusMinutes(1);
+                }
+                sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()
+                        .startTime(Date.from(nextHour.minusHours(1).withMinute(0).withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
+                        .endTime(Date.from(nextHour.minusHours(1).withMinute(59).withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
+                        .usageCount(llmHourUsageCount)
+                        .type(0)
+                        .statisticsInterval(1)
+                        .deleted(0)
+                        .createTime(now)
+                        .updateTime(now)
+                        .build());
+                sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()
+                        .startTime(Date.from(nextHour.minusHours(1).withMinute(0).withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
+                        .endTime(Date.from(nextHour.minusHours(1).withMinute(59).withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
+                        .usageCount(whisperHourUsageCount)
+                        .type(1)
+                        .statisticsInterval(1)
+                        .deleted(0)
+                        .createTime(now)
+                        .updateTime(now)
+                        .build());
+                llmDayUsageCount += llmHourUsageCount;
+                whisperDayUsageCount += whisperHourUsageCount;
+            }
             sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()
-                    .startTime(Date.from(current.withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
-                    .endTime(Date.from(current.withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
-                    .usageCount(new Random().nextInt(500))
+                    .startTime(Date.from(nextDay.minusDays(1).withHour(0).withMinute(0).withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
+                    .endTime(Date.from(nextDay.minusDays(1).withHour(23).withMinute(59).withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
+                    .usageCount(llmDayUsageCount)
                     .type(0)
-                    .statisticsInterval(0)
+                    .statisticsInterval(2)
                     .deleted(0)
                     .createTime(now)
                     .updateTime(now)
                     .build());
             sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()
-                    .startTime(Date.from(current.withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
-                    .endTime(Date.from(current.withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
-                    .usageCount(new Random().nextInt(500))
+                    .startTime(Date.from(nextDay.minusDays(1).withMinute(0).withSecond(0).atZone(ZoneId.systemDefault()).toInstant()))
+                    .endTime(Date.from(nextDay.minusDays(1).withHour(23).withMinute(59).withSecond(59).atZone(ZoneId.systemDefault()).toInstant()))
+                    .usageCount(whisperDayUsageCount)
                     .type(1)
-                    .statisticsInterval(0)
+                    .statisticsInterval(2)
                     .deleted(0)
                     .createTime(now)
                     .updateTime(now)
                     .build());
-            // 增加一分钟
-            current = current.plusMinutes(1);
         }
         sysApiStatisticsService.saveBatch(sysApiStatisticsPOS);
     }

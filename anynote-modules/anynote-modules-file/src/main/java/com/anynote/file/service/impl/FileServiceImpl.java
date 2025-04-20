@@ -72,7 +72,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, FilePO>
     public FilePO upload(CommonsMultipartFile file, String path, Long userId, String uploadId, Integer source) {
         ServletUtils.setRequestAttributes(RequestAttributesConstants.FILE_UPLOAD_ID_KEY, uploadId);
         String fileName = UUID.randomUUID().toString().replace("-", "") + "_" + file.getOriginalFilename();
-        String url = filePluginFactory.filePlugin()
+        String url = filePluginFactory.huaweiFilePlugin()
                 .multipartFileUpload(file, path, fileName);
         Date date = new Date();
         FilePO filePO = null;
