@@ -26,9 +26,9 @@ public class SysApiStatisticsHandler {
                 SecurityConstants.INNER));
     }
 
-    @XxlJob("llmApiStatisticsHourCreate")
+    @XxlJob("apiStatisticsHourCreate")
     public void llmApiStatisticsHourCreate() {
-        log.info("新建下一小时LLM API统计");
+        log.info("新建下一小时 API统计");
         try {
             createApiStatistics(ApiStatisticsCreateDTO.builder()
                     .startTime(DateUtils.getStartOfNextHour())
@@ -36,14 +36,20 @@ public class SysApiStatisticsHandler {
                     .type(SysApiStatisticsType.LLM)
                     .statisticsInterval(SysApiStatisticsInterval.HOUR)
                     .build());
+            createApiStatistics(ApiStatisticsCreateDTO.builder()
+                    .startTime(DateUtils.getStartOfNextHour())
+                    .endTime(DateUtils.getEndOfNextHour())
+                    .type(SysApiStatisticsType.WHISPER)
+                    .statisticsInterval(SysApiStatisticsInterval.HOUR)
+                    .build());
         } catch (Exception e) {
-            log.error("新建下一小时LLM API统计失败", e);
+            log.error("新建下一小时 API统计失败", e);
         }
     }
 
-    @XxlJob("llmApiStatisticsMinuteCreate")
+    @XxlJob("apiStatisticsMinuteCreate")
     public void llmApiStatisticsMinuteCreate() {
-        log.info("新建下一分钟LLM API统计");
+        log.info("新建下一分钟 API统计");
         try {
             createApiStatistics(ApiStatisticsCreateDTO.builder()
                     .startTime(DateUtils.getStartOfNextMinute())
@@ -51,14 +57,20 @@ public class SysApiStatisticsHandler {
                     .type(SysApiStatisticsType.LLM)
                     .statisticsInterval(SysApiStatisticsInterval.MINUTE)
                     .build());
+            createApiStatistics(ApiStatisticsCreateDTO.builder()
+                    .startTime(DateUtils.getStartOfNextMinute())
+                    .endTime(DateUtils.getEndOfNextMinute())
+                    .type(SysApiStatisticsType.WHISPER)
+                    .statisticsInterval(SysApiStatisticsInterval.MINUTE)
+                    .build());
         } catch (Exception e) {
-            log.error("新建下一分钟LLM API统计失败", e);
+            log.error("新建下一分钟 API统计失败", e);
         }
     }
 
-    @XxlJob("llmApiStatisticsDayCreate")
+    @XxlJob("apiStatisticsDayCreate")
     public void llmApiStatisticsDailyCreate() {
-        log.info("新建明天LLM API统计");
+        log.info("新建明天 API统计");
         try {
             createApiStatistics(ApiStatisticsCreateDTO.builder()
                     .startTime(DateUtils.getStartOfNextDay())
@@ -66,8 +78,14 @@ public class SysApiStatisticsHandler {
                     .type(SysApiStatisticsType.LLM)
                     .statisticsInterval(SysApiStatisticsInterval.DAY)
                     .build());
+            createApiStatistics(ApiStatisticsCreateDTO.builder()
+                    .startTime(DateUtils.getStartOfNextDay())
+                    .endTime(DateUtils.getEndOfNextDay())
+                    .type(SysApiStatisticsType.WHISPER)
+                    .statisticsInterval(SysApiStatisticsInterval.DAY)
+                    .build());
         } catch (Exception e) {
-            log.error("新建明天LLM API统计失败", e);
+            log.error("新建明天 API统计失败", e);
         }
     }
 

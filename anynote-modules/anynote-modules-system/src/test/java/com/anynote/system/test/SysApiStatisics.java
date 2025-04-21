@@ -27,8 +27,8 @@ public class SysApiStatisics {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         // 设置开始和结束时间
-        LocalDateTime start = LocalDateTime.of(2024, 8, 1, 0, 0, 0);
-        LocalDateTime end = LocalDateTime.of(2025, 4, 18, 23, 59, 59);
+        LocalDateTime start = LocalDateTime.of(2025, 3, 1, 0, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2025, 4, 26, 23, 59, 59);
 
         // 当前时间从开始时间开始
         LocalDateTime current = start;
@@ -49,8 +49,8 @@ public class SysApiStatisics {
                 int llmHourUsageCount = 0;
                 int whisperHourUsageCount = 0;
                 while (current.isBefore(nextHour)) {
-                    int llmMinuteUsageCount = new Random().nextInt(25);
-                    int whisperMinuteUsageCount = new Random().nextInt(25);
+                    int llmMinuteUsageCount = new Random().nextInt(3);
+                    int whisperMinuteUsageCount = new Random().nextInt(3);
                     llmHourUsageCount += llmMinuteUsageCount;
                     whisperHourUsageCount += whisperMinuteUsageCount;
                     sysApiStatisticsPOS.add(SysApiStatisticsPO.builder()

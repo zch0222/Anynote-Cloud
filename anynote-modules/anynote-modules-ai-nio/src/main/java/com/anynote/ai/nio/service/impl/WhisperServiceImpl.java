@@ -23,12 +23,15 @@ import com.anynote.common.rocketmq.properties.RocketMQProperties;
 import com.anynote.common.rocketmq.tags.WhisperTagsEnum;
 import com.anynote.common.security.token.TokenUtil;
 import com.anynote.core.constant.SecurityConstants;
+import com.anynote.core.constant.SysApiStatisticsType;
 import com.anynote.core.exception.BusinessException;
 import com.anynote.core.utils.RemoteResDataUtil;
 import com.anynote.core.utils.StringUtils;
 import com.anynote.file.api.RemoteFileService;
 import com.anynote.file.api.model.dto.DownloadObjectDTO;
+import com.anynote.system.api.RemoteSysApiStatisticsService;
 import com.anynote.system.api.model.bo.LoginUser;
+import com.anynote.system.api.model.dto.IncreaseApiUsageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.core.io.FileSystemResource;
@@ -88,6 +91,9 @@ public class WhisperServiceImpl implements WhisperService {
     private Executor ffmpegExecutor;
 
     @Resource
+    private Executor ioExecutor;
+
+    @Resource
     private RemoteFileService remoteFileService;
 
     @Resource
@@ -95,6 +101,9 @@ public class WhisperServiceImpl implements WhisperService {
 
     @Resource
     private WhisperTaskMQService whisperTaskMQService;
+
+    @Resource
+    private RemoteSysApiStatisticsService remoteSysApiStatisticsService;
 
 
 
@@ -156,9 +165,27 @@ public class WhisperServiceImpl implements WhisperService {
     }
 
     /**
+     * 记录whisper调用次数
+     */
+    public void increaseWhisperUsageCount() {
+        try {
+            Date now = new Date();
+            ioExecutor.execute(() -> {
+                RemoteResDataUtil.getResData(remoteSysApiStatisticsService.increaseUsage(IncreaseApiUsageDTO.builder()
+                        .time(now)
+                        .type(SysApiStatisticsType.WHISPER)
+                        .build(), SecurityConstants.INNER));
+            });
+        } catch (Exception e) {
+            log.error("记录Whisper调用次数失败", e);
+        }
+    }
+
+    /**
      * 调用远程Whisper服务
      */
     private String remoteWhisper(String audioPath, String language) {
+        increaseWhisperUsageCount();
         WhisperConfig whisperConfig = gson.fromJson(configService.getWhisperConfig(), WhisperConfig.class);
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("file", new FileSystemResource(audioPath));
