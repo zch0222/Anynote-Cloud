@@ -27,7 +27,7 @@ public class SysApiStatisticsHandler {
     }
 
     @XxlJob("apiStatisticsHourCreate")
-    public void llmApiStatisticsHourCreate() {
+    public void apiStatisticsHourCreate() {
         log.info("新建下一小时 API统计");
         try {
             createApiStatistics(ApiStatisticsCreateDTO.builder()
@@ -48,7 +48,7 @@ public class SysApiStatisticsHandler {
     }
 
     @XxlJob("apiStatisticsMinuteCreate")
-    public void llmApiStatisticsMinuteCreate() {
+    public void apiStatisticsMinuteCreate() {
         log.info("新建下一分钟 API统计");
         try {
             createApiStatistics(ApiStatisticsCreateDTO.builder()
@@ -69,7 +69,7 @@ public class SysApiStatisticsHandler {
     }
 
     @XxlJob("apiStatisticsDayCreate")
-    public void llmApiStatisticsDailyCreate() {
+    public void apiStatisticsDailyCreate() {
         log.info("新建明天 API统计");
         try {
             createApiStatistics(ApiStatisticsCreateDTO.builder()
