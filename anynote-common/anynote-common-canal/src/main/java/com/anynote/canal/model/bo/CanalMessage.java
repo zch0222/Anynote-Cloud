@@ -71,6 +71,7 @@ public class CanalMessage {
         Type type = TypeToken.getParameterized(List.class, clazz).getType();
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .setFieldNamingStrategy(new FieldNamingStrategy() {
                     @Override
                     public String translateName(Field field) {
