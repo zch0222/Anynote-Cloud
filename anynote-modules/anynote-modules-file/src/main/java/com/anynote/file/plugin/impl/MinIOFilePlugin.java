@@ -111,8 +111,8 @@ public class MinIOFilePlugin implements FilePlugin {
             log.info("PreSignedObjectUrl: {}", url);
             return url;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw new BusinessException("获取上传签名失败");
+            log.error("Get MinIO Upload signature failed，message: {}", e.getMessage(), e);
+            throw new BusinessException("获取上传签名失败", e);
         }
 
     }
