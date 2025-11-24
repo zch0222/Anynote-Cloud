@@ -26,6 +26,11 @@ public class BusinessException extends RuntimeException {
         this.code = ResCode.BUSINESS_ERROR;
     }
 
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
+        this.message = message;
+    }
+
     public BusinessException(String message, ResCode resCode) {
         this.message = message;
         this.code = resCode;
