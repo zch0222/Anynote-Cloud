@@ -5,7 +5,9 @@ import com.anynote.common.datascope.enums.PermissionEnum;
 import com.anynote.common.datascope.mapper.PermissionRuleMapper;
 import com.anynote.common.datascope.model.bo.EntityPermissionQueryParam;
 import com.anynote.common.datascope.model.bo.PermissionAuthBO;
+import com.anynote.common.datascope.model.bo.UserAssociatedPermissionQueryParam;
 import com.anynote.common.datascope.model.po.EntityPermissionPO;
+import com.anynote.common.datascope.model.po.UserAssociatedEntityPermissionPO;
 import com.anynote.common.datascope.service.PermissionService;
 import com.anynote.core.constant.SecurityConstants;
 import com.anynote.core.exception.BusinessException;
@@ -89,6 +91,32 @@ public class PermissionServiceImpl implements PermissionService {
         throw new BusinessException("未知异常请，联系管理员");
     }
 
+    /**
+     * 获取用户关联的权限
+     * @param permissionRule 权限对象
+     * @param entityId 实体id
+     * @param userId 用户id
+     * @return
+     */
+    public int getUserAssociatedPermission(SysPermissionRule permissionRule, Long entityId, Long userId) {
+        if (StringUtils.isNull(permissionRule.getUserAssociated()) || 1 != permissionRule.getUserAssociated()) {
+            return 0;
+        }
+        UserAssociatedEntityPermissionPO userAssociatedEntityPermissionPO = permissionRuleMapper
+                .selectUserAssociatedPermission(UserAssociatedPermissionQueryParam.builder()
+                        .entityId(entityId)
+                        .userId(userId)
+                        .userAssociatedTableName(permissionRule.getUserAssociatedTableName())
+                        .build());
+        if (StringUtils.isNull(userAssociatedEntityPermissionPO) ||
+                StringUtils.isNull(userAssociatedEntityPermissionPO.getPermission())) {
+            // 关联不存在或者权限字段为null
+            return 0;
+        }
+        // 返回关联的权限
+        return userAssociatedEntityPermissionPO.getPermission();
+    }
+
 
 
     @Override
@@ -100,6 +128,8 @@ public class PermissionServiceImpl implements PermissionService {
             throw new BusinessException("实体不存在");
         }
         int permission = 0;
+        // 获取关联的权限
+        permission = getUserAssociatedPermission(permissionRule, entityId, userId);
         String permissions = entityPermissionPO.getPermissions();
         // 是创建者
         if (userId.equals(entityPermissionPO.getCreateBy())) {

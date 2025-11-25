@@ -11,6 +11,16 @@
         <collection property="knowledgeBaseIds" ofType="java.lang.Long" column="knowledge_base_id"/>
     </resultMap>
 
+    <resultMap id="UserAssociatedEntityPermissionPOResultMap"
+               type="com.anynote.common.datascope.model.po.UserAssociatedEntityPermissionPO">
+        <!-- 联合主键 -->
+        <id property="entityId" column="entity_id"/>
+        <id property="userId" column="user_id"/>
+
+        <result property="permission" column="permission"/>
+        <result property="deleted" column="is_delete"/>
+    </resultMap>
+
     <select id="selectEntityPermissionOneToOne" resultMap="EntityPermissionPOResultMap">
         SELECT
             ${entityIdFieldName} as entity_id, ${permissionFieldName} as permissions,
@@ -27,5 +37,17 @@
 
     </select>
 
+    <select id="selectUserAssociatedPermission" resultMap="UserAssociatedEntityPermissionPOResultMap">
+        SELECT
+            entity_id, user_id, permission
+        FROM
+            ${userAssociatedTableName}
+        WHERE
+            is_delete = 0
+          AND
+            entity_id = #{entityId}
+          AND
+            user_id = #{userId}
+    </select>
 
 </mapper>

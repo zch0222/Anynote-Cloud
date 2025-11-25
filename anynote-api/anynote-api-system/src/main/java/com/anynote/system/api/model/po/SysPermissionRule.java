@@ -64,6 +64,17 @@ public class SysPermissionRule extends BaseEntity {
      */
     private String associationTableName;
 
+    /**
+     * 是否有用户资源关联表(0表示没有，1表示有)
+     */
+    @TableField("is_user_associated")
+    private Integer userAssociated;
+
+    /**
+     * 用户资源关联表名称
+     */
+    private String userAssociatedTableName;
+
     @TableLogic
     @TableField("is_delete")
     private Integer deleted;
