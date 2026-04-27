@@ -145,7 +145,7 @@ services:
       JAVA_OPT_EXT: -Xms256m -Xmx256m -Xmn128m
       TZ: Asia/Shanghai
     ports:
-      - "127.0.0.1:${ROCKETMQ_NAMESRV_PORT:-9876}:9876"
+      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_NAMESRV_PORT:-9876}:9876"
     volumes:
       - rocketmq-namesrv-logs:/home/rocketmq/logs
     healthcheck:
@@ -182,9 +182,9 @@ services:
         EOF
         exec sh mqbroker -n rocketmq-namesrv:9876 -c /tmp/broker.conf
     ports:
-      - "127.0.0.1:${ROCKETMQ_BROKER_FAST_PORT:-10909}:10909"
-      - "127.0.0.1:${ROCKETMQ_BROKER_PORT:-10911}:10911"
-      - "127.0.0.1:${ROCKETMQ_BROKER_HA_PORT:-10912}:10912"
+      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_BROKER_FAST_PORT:-10909}:10909"
+      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_BROKER_PORT:-10911}:10911"
+      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_BROKER_HA_PORT:-10912}:10912"
     volumes:
       - rocketmq-broker-logs:/home/rocketmq/logs
       - rocketmq-broker-store:/home/rocketmq/store

@@ -112,8 +112,8 @@ MYSQL_APP_PASSWORD=your_app_password
 # MinIO 密码
 MINIO_ROOT_PASSWORD=your_minio_password
 
-# RocketMQ Broker 对外 IP（宿主机 IP，非容器 IP）
-ROCKETMQ_BROKER_IP=192.168.1.100   # 改为宿主机实际 IP
+# RocketMQ 对外地址（同时控制端口绑定和 Broker 注册 IP），默认 127.0.0.1 仅本机访问
+ROCKETMQ_BROKER_IP=127.0.0.1
 
 # Nacos namespace（与 bootstrap.yml 保持一致）
 NACOS_NAMESPACE=0587fa28-1301-43db-a7a1-599c00fc3f70

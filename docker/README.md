@@ -20,7 +20,7 @@ cp .env.example .env
 - `REDIS_PASSWORD`：Redis 密码，留空时不启用 Redis requirepass。
 - `MINIO_ROOT_USER`、`MINIO_ROOT_PASSWORD`：MinIO 控制台账号。
 - `NACOS_NAMESPACE`：应用 `bootstrap.yml` 使用的 Nacos namespace。
-- `ROCKETMQ_BROKER_IP`：宿主机访问 RocketMQ Broker 时使用的 IP，默认 `127.0.0.1`。
+- `ROCKETMQ_BROKER_IP`：同时控制 RocketMQ 端口绑定地址和 Broker 注册地址，默认 `127.0.0.1` 仅本机访问。设为宿主机 IP 即可开放跨机器访问。
 - `GATEWAY_PORT`、`AUTH_PORT`、`MYSQL_PORT` 等端口变量：只影响宿主机端口映射，容器间仍使用服务名和内部端口。
 
 `.env` 已加入 `.gitignore`，不要提交真实密码。
