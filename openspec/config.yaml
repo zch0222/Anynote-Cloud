@@ -1,0 +1,39 @@
+schema: spec-driven
+
+context: |
+  本项目是 Anynote Cloud，一个基于 Java 8、Maven 多模块、Spring Boot 2.7.x 与 Spring Cloud Alibaba 的微服务后端项目。
+
+  模块结构：
+  - anynote-common：公共能力与基础设施封装，包括 core、security、redis、rocketmq、elasticsearch、swagger、datascope 等。
+  - anynote-api：按领域拆分的 Feign/API 契约，例如 note、file、ai、notify、system。
+  - anynote-auth、anynote-gateway、anynote-admin：独立服务模块。
+  - anynote-modules：业务服务模块，包括 system、note、file、manage、ai、ai-nio、notify、job、external-api。
+  - sql：数据库结构、初始化数据和配置 SQL；config：辅助 JSON 配置。
+
+  开发约定：
+  - Java 代码使用 UTF-8、4 空格缩进，并保持 Java 8 兼容。
+  - 包名遵循 com.anynote.<domain> 或既有模块包根。
+  - 类型后缀保持一致：Controller、Service、ServiceImpl、Mapper、DTO、VO、BO、PO。
+  - 优先复用 anynote-common 中已有工具、常量、异常、返回模型和基础设施封装。
+  - 新增跨模块契约时优先放在 anynote-api；新增公共能力时优先放在 anynote-common。
+  - 涉及数据库、Nacos 配置、中间件端点或存储配置的变更，必须在规格和任务中明确说明迁移与配置影响。
+  - 测试优先放在对应模块的 src/test/java；集成测试需要说明依赖的 Nacos、Redis、数据库、MinIO、Elasticsearch、RocketMQ 等外部服务。
+  - 常用验证命令包括 ./mvnw test、./mvnw clean package，以及 ./mvnw -pl <module> -am test。
+
+rules:
+  proposal:
+    - 使用简体中文编写。
+    - 明确说明变更目标、动机、影响模块、非目标和风险。
+    - 如果涉及 SQL、配置、外部服务或 API 契约，必须单独列出影响。
+  specs:
+    - 使用简体中文编写。
+    - 使用可验证的 SHALL/必须 风格需求描述。
+    - 场景需覆盖主要成功路径、权限/异常路径和跨服务交互。
+  design:
+    - 使用简体中文编写。
+    - 说明模块边界、数据流、接口契约、事务边界和中间件依赖。
+    - 复用现有架构模式，避免引入未论证的新框架或全局抽象。
+  tasks:
+    - 使用简体中文编写。
+    - 任务按模块拆分，并包含实现、测试、配置/SQL 更新和验证步骤。
+    - 每个任务应可独立检查完成状态。
