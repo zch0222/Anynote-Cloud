@@ -1,0 +1,13 @@
+xxl:
+  job:
+    admin:
+      addresses: http://xxl-job-admin:8080/xxl-job-admin
+      accessToken: default_token
+      timeout: 3
+    executor:
+      appname: anynote-job
+      address:
+      ip:
+      port: -1
+      logpath: /tmp/xxl-job-logs/jobhandler
+      logretentiondays: 30

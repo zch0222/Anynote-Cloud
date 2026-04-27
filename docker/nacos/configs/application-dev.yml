@@ -1,0 +1,83 @@
+spring:
+  http:
+    multipart:
+      enabled: false
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:mysql}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:anynote}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: ${MYSQL_APP_USER:anynote}
+    password: ${MYSQL_APP_PASSWORD:Anynote*1832}
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+
+anynote:
+  jwt-setting:
+    tokenExpireTime: 10080
+    secret: yxlm
+  data:
+    rocketmq:
+      note-task-topic: note_task_topic
+      note-task-group: note_task_group
+      note-topic: note_topic
+      note-group: note_group
+      note-whisper-task-group: note_whisper_task_group
+      doc-topic: doc_topic
+      doc-group: doc_group
+      rag-topic: rag_topic
+      rag-group: rag_group
+      ai-chat-topic: ai_chat_topic
+      ai-chat-group: ai_chat_group
+      ai-chat-whisper-task-group: ai_chat_whisper_task_group
+      notify-topic: notify-topic
+      notify-group: notify-group
+      notify-note-group: notify-note-group
+      whisper-group: whisper-group
+      file-whisper-task-group: file_whisper_task_group
+      canal-topic: canal_topic
+      canal-mooc-group: canal_mooc_group
+      canal-system-config-group: canal_system_config_group
+  external-resources:
+    allowed-domains:
+      - anynote.obs.cn-east-3.myhuaweicloud.com
+  ai-fastapi:
+    address: ${AI_FASTAPI_ADDRESS:http://host.docker.internal:8000}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+  mapper-locations: classpath*:mapper/*.xml
+
+rocketmq:
+  name-server: ${ROCKETMQ_NAME_SERVER:rocketmq-namesrv:9876}
+  producer:
+    group: note-group
+
+elasticsearch:
+  url: http://${ELASTICSEARCH_HOST:elasticsearch}:${ELASTICSEARCH_PORT:9200}
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'

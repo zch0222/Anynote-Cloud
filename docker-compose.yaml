@@ -1,0 +1,294 @@
+name: ${COMPOSE_PROJECT_NAME:-anynote}
+
+x-health-defaults: &health-defaults
+  interval: 10s
+  timeout: 5s
+  retries: 20
+  start_period: 30s
+
+x-app-environment: &app-environment
+  JAVA_OPTS: ${JAVA_OPTS:--Xms256m -Xmx512m}
+  TZ: Asia/Shanghai
+  SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+  SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR: nacos:8848
+  SPRING_CLOUD_NACOS_CONFIG_SERVER_ADDR: nacos:8848
+  SPRING_CLOUD_NACOS_DISCOVERY_NAMESPACE: ${NACOS_NAMESPACE:-0587fa28-1301-43db-a7a1-599c00fc3f70}
+  SPRING_CLOUD_NACOS_CONFIG_NAMESPACE: ${NACOS_NAMESPACE:-0587fa28-1301-43db-a7a1-599c00fc3f70}
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-anynote}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+  SPRING_DATASOURCE_USERNAME: ${MYSQL_APP_USER:-anynote}
+  SPRING_DATASOURCE_PASSWORD: ${MYSQL_APP_PASSWORD:-Anynote*1832}
+  SPRING_REDIS_HOST: redis
+  SPRING_REDIS_PORT: 6379
+  SPRING_REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+  MYSQL_HOST: mysql
+  MYSQL_PORT: 3306
+  MYSQL_DATABASE: ${MYSQL_DATABASE:-anynote}
+  MYSQL_APP_USER: ${MYSQL_APP_USER:-anynote}
+  MYSQL_APP_PASSWORD: ${MYSQL_APP_PASSWORD:-Anynote*1832}
+  REDIS_HOST: redis
+  REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+  ROCKETMQ_NAME_SERVER: rocketmq-namesrv:9876
+  ELASTICSEARCH_HOST: elasticsearch
+  ELASTICSEARCH_PORT: 9200
+  ELASTICSEARCH_URL: http://elasticsearch:9200
+  AI_FASTAPI_ADDRESS: ${AI_FASTAPI_ADDRESS:-http://host.docker.internal:8000}
+  ANYNOTE_AI_FASTAPI_ADDRESS: ${AI_FASTAPI_ADDRESS:-http://host.docker.internal:8000}
+  XXL_JOB_ADMIN_ADDRESSES: http://xxl-job-admin:8080/xxl-job-admin
+  XXL_JOB_ADMIN_ACCESSTOKEN: default_token
+  XXL_JOB_ADMIN_TIMEOUT: 3
+  XXL_JOB_EXECUTOR_LOGPATH: /tmp/xxl-job-logs/jobhandler
+  XXL_JOB_EXECUTOR_LOGRETENTIONDAYS: 30
+
+x-app-common: &app-common
+  depends_on:
+    nacos:
+      condition: service_healthy
+  networks:
+    - anynote-net
+  extra_hosts:
+    - host.docker.internal:host-gateway
+  healthcheck:
+    <<: *health-defaults
+    test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:$${SERVER_PORT}/actuator/health >/dev/null || exit 1"]
+
+services:
+  mysql:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: mysql
+
+  redis:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: redis
+
+  nacos:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: nacos
+
+  nacos-init:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: nacos-init
+
+  elasticsearch:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: elasticsearch
+
+  rocketmq-namesrv:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: rocketmq-namesrv
+
+  rocketmq-broker:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: rocketmq-broker
+
+  minio:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: minio
+
+  xxl-job-admin:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: xxl-job-admin
+
+  anynote-gateway:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-gateway:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-gateway
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-gateway
+      SERVER_PORT: 8080
+    ports:
+      - "${GATEWAY_PORT:-8080}:8080"
+
+  anynote-auth:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-auth:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-auth
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-auth
+      SERVER_PORT: 8083
+    ports:
+      - "${AUTH_PORT:-8083}:8083"
+
+  anynote-admin:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-admin:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-admin
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-admin
+      SERVER_PORT: 8079
+    ports:
+      - "${ADMIN_PORT:-8079}:8079"
+
+  anynote-modules-system:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-system:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-system
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-system
+      SERVER_PORT: 8091
+    ports:
+      - "${SYSTEM_PORT:-8091}:8091"
+
+  anynote-modules-note:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-note:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-note
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-note
+      SERVER_PORT: 18091
+    ports:
+      - "${NOTE_PORT:-18091}:18091"
+
+  anynote-modules-file:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-file:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-file
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-file
+      SERVER_PORT: 8095
+    ports:
+      - "${FILE_PORT:-8095}:8095"
+
+  anynote-modules-ai:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-ai:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-ai
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-ai
+      SERVER_PORT: 9210
+    ports:
+      - "${AI_PORT:-9210}:9210"
+
+  anynote-modules-ai-nio:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-ai-nio:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-ai-nio
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-ai-nio
+      SERVER_PORT: 9065
+    ports:
+      - "${AI_NIO_PORT:-9065}:9065"
+
+  anynote-modules-manage:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-manage:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-manage
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-manage
+      SERVER_PORT: 18092
+    ports:
+      - "${MANAGE_PORT:-18092}:18092"
+
+  anynote-modules-notify:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-notify:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-notify
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-notify
+      SERVER_PORT: 9066
+    ports:
+      - "${NOTIFY_PORT:-9066}:9066"
+
+  anynote-modules-job:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-job:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-job
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-job
+      SERVER_PORT: 8093
+      XXL_JOB_EXECUTOR_APPNAME: anynote-job
+    ports:
+      - "${JOB_PORT:-8093}:8093"
+
+  anynote-modules-external-api:
+    <<: *app-common
+    image: ${APP_IMAGE_PREFIX:-anynote}/anynote-modules-external-api:local
+    build:
+      context: .
+      dockerfile: ${APP_DOCKERFILE:-Dockerfile.local}
+      args:
+        MODULE: anynote-modules/anynote-modules-external-api
+    environment:
+      <<: *app-environment
+      SPRING_APPLICATION_NAME: anynote-external-api
+      SERVER_PORT: 8097
+    ports:
+      - "${EXTERNAL_API_PORT:-8097}:8097"
+
+networks:
+  anynote-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  redis-data:
+  nacos-logs:
+  elasticsearch-data:
+  rocketmq-namesrv-logs:
+  rocketmq-broker-logs:
+  rocketmq-broker-store:
+  minio-data:
+  xxl-job-logs:

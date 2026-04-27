@@ -1,0 +1,95 @@
+spring:
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: '*'
+            allowed-methods: '*'
+            allowed-headers: '*'
+            allow-credentials: true
+            exposedHeaders: Content-Disposition,Content-Type,Cache-Control
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+          enabled: true
+      routes:
+        - id: anynote-system
+          uri: lb://anynote-system
+          predicates:
+            - Path=/api/system/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-ai-nio
+          uri: lb://anynote-ai-nio
+          predicates:
+            - Path=/api/aiNio/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-notify
+          uri: lb://anynote-notify
+          predicates:
+            - Path=/api/notify/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-ai
+          uri: lb://anynote-ai
+          predicates:
+            - Path=/api/ai/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-auth
+          uri: lb://anynote-auth
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-note
+          uri: lb://anynote-note
+          predicates:
+            - Path=/api/note/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-manage
+          uri: lb://anynote-manage
+          predicates:
+            - Path=/api/manage/**
+          filters:
+            - StripPrefix=2
+        - id: anynote-file
+          uri: lb://anynote-file
+          predicates:
+            - Path=/api/file/**
+          filters:
+            - StripPrefix=2
+
+anynote:
+  module:
+    name: anynote-gateway
+
+security:
+  manage:
+    urls:
+      - /api/manage/**
+  captcha:
+    enabled: true
+    type: math
+  xss:
+    enabled: true
+    excludeUrls:
+      - /system/notice
+  ignore:
+    whites:
+      - /auth/logout
+      - /api/auth/login
+      - /api/auth/register
+      - /auth/register
+      - /*/v2/api-docs
+      - /csrf
+      - /api/note/docs/home
+      - /api/note/docs/public/*
+      - /api/ai/rag//public/**

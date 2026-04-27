@@ -1,0 +1,19 @@
+FROM amazoncorretto:8-alpine-jre
+
+WORKDIR /app
+ARG MODULE=anynote-gateway
+
+RUN apk add --no-cache curl tzdata \
+    && addgroup -S anynote \
+    && adduser -S anynote -G anynote \
+    && chown -R anynote:anynote /app
+
+COPY --chown=anynote:anynote ${MODULE}/target/*.jar /app/app.jar
+
+ENV JAVA_OPTS="" \
+    TZ=Asia/Shanghai
+
+EXPOSE 8080
+USER anynote
+
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
