@@ -14,6 +14,7 @@
 - [x] 2.6 定义统一自定义网络 `anynote-net`（bridge 模式）并在所有服务中引用
 - [x] 2.7 所有镜像版本、端口、密码通过 `.env` 中的变量引用（`${VAR:-default}`）
 - [x] 2.8 配置 RocketMQ Broker 的 `brokerIP1` 环境变量，解决宿主机访问问题
+- [x] 2.9 所有端口映射绑定 `127.0.0.1`（格式 `"127.0.0.1:${PORT:-default}:container_port"`），防止服务暴露到公网
 
 ## 3. Nacos 初始配置导入
 

@@ -25,7 +25,7 @@ services:
       XXL_JOB_DB_NAME: ${XXL_JOB_DB_NAME:-anynote_xxl_job}
       TZ: Asia/Shanghai
     ports:
-      - "${MYSQL_PORT:-3306}:3306"
+      - "127.0.0.1:${MYSQL_PORT:-3306}:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
@@ -50,7 +50,7 @@ services:
         fi
         exec redis-server --appendonly yes
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
     healthcheck:
@@ -78,9 +78,9 @@ services:
       JVM_XMN: 128m
       TZ: Asia/Shanghai
     ports:
-      - "${NACOS_HTTP_PORT:-8848}:8848"
-      - "${NACOS_GRPC_PORT:-9848}:9848"
-      - "${NACOS_RAFT_PORT:-9849}:9849"
+      - "127.0.0.1:${NACOS_HTTP_PORT:-8848}:8848"
+      - "127.0.0.1:${NACOS_GRPC_PORT:-9848}:9848"
+      - "127.0.0.1:${NACOS_RAFT_PORT:-9849}:9849"
     volumes:
       - nacos-logs:/home/nacos/logs
     depends_on:
@@ -123,8 +123,8 @@ services:
       ES_JAVA_OPTS: -Xms512m -Xmx512m
       TZ: Asia/Shanghai
     ports:
-      - "${ELASTICSEARCH_PORT:-9200}:9200"
-      - "${ELASTICSEARCH_TRANSPORT_PORT:-9300}:9300"
+      - "127.0.0.1:${ELASTICSEARCH_PORT:-9200}:9200"
+      - "127.0.0.1:${ELASTICSEARCH_TRANSPORT_PORT:-9300}:9300"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     ulimits:
@@ -145,7 +145,7 @@ services:
       JAVA_OPT_EXT: -Xms256m -Xmx256m -Xmn128m
       TZ: Asia/Shanghai
     ports:
-      - "${ROCKETMQ_NAMESRV_PORT:-9876}:9876"
+      - "127.0.0.1:${ROCKETMQ_NAMESRV_PORT:-9876}:9876"
     volumes:
       - rocketmq-namesrv-logs:/home/rocketmq/logs
     healthcheck:
@@ -182,9 +182,9 @@ services:
         EOF
         exec sh mqbroker -n rocketmq-namesrv:9876 -c /tmp/broker.conf
     ports:
-      - "${ROCKETMQ_BROKER_FAST_PORT:-10909}:10909"
-      - "${ROCKETMQ_BROKER_PORT:-10911}:10911"
-      - "${ROCKETMQ_BROKER_HA_PORT:-10912}:10912"
+      - "127.0.0.1:${ROCKETMQ_BROKER_FAST_PORT:-10909}:10909"
+      - "127.0.0.1:${ROCKETMQ_BROKER_PORT:-10911}:10911"
+      - "127.0.0.1:${ROCKETMQ_BROKER_HA_PORT:-10912}:10912"
     volumes:
       - rocketmq-broker-logs:/home/rocketmq/logs
       - rocketmq-broker-store:/home/rocketmq/store
@@ -207,8 +207,8 @@ services:
       MINIO_BROWSER_REDIRECT_URL: http://localhost:${MINIO_CONSOLE_PORT:-9001}
       TZ: Asia/Shanghai
     ports:
-      - "${MINIO_API_PORT:-9000}:9000"
-      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+      - "127.0.0.1:${MINIO_API_PORT:-9000}:9000"
+      - "127.0.0.1:${MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
       - minio-data:/data
     healthcheck:
@@ -229,7 +229,7 @@ services:
         --xxl.job.accessToken=default_token
       TZ: Asia/Shanghai
     ports:
-      - "${XXL_JOB_PORT:-10086}:8080"
+      - "127.0.0.1:${XXL_JOB_PORT:-10086}:8080"
     volumes:
       - xxl-job-logs:/data/applogs
     depends_on:

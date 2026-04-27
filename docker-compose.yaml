@@ -110,7 +110,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-gateway
       SERVER_PORT: 8080
     ports:
-      - "${GATEWAY_PORT:-8080}:8080"
+      - "127.0.0.1:${GATEWAY_PORT:-8080}:8080"
 
   anynote-auth:
     <<: *app-common
@@ -125,7 +125,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-auth
       SERVER_PORT: 8083
     ports:
-      - "${AUTH_PORT:-8083}:8083"
+      - "127.0.0.1:${AUTH_PORT:-8083}:8083"
 
   anynote-admin:
     <<: *app-common
@@ -140,7 +140,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-admin
       SERVER_PORT: 8079
     ports:
-      - "${ADMIN_PORT:-8079}:8079"
+      - "127.0.0.1:${ADMIN_PORT:-8079}:8079"
 
   anynote-modules-system:
     <<: *app-common
@@ -155,7 +155,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-system
       SERVER_PORT: 8091
     ports:
-      - "${SYSTEM_PORT:-8091}:8091"
+      - "127.0.0.1:${SYSTEM_PORT:-8091}:8091"
 
   anynote-modules-note:
     <<: *app-common
@@ -170,7 +170,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-note
       SERVER_PORT: 18091
     ports:
-      - "${NOTE_PORT:-18091}:18091"
+      - "127.0.0.1:${NOTE_PORT:-18091}:18091"
 
   anynote-modules-file:
     <<: *app-common
@@ -185,7 +185,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-file
       SERVER_PORT: 8095
     ports:
-      - "${FILE_PORT:-8095}:8095"
+      - "127.0.0.1:${FILE_PORT:-8095}:8095"
 
   anynote-modules-ai:
     <<: *app-common
@@ -200,7 +200,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-ai
       SERVER_PORT: 9210
     ports:
-      - "${AI_PORT:-9210}:9210"
+      - "127.0.0.1:${AI_PORT:-9210}:9210"
 
   anynote-modules-ai-nio:
     <<: *app-common
@@ -215,7 +215,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-ai-nio
       SERVER_PORT: 9065
     ports:
-      - "${AI_NIO_PORT:-9065}:9065"
+      - "127.0.0.1:${AI_NIO_PORT:-9065}:9065"
 
   anynote-modules-manage:
     <<: *app-common
@@ -230,7 +230,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-manage
       SERVER_PORT: 18092
     ports:
-      - "${MANAGE_PORT:-18092}:18092"
+      - "127.0.0.1:${MANAGE_PORT:-18092}:18092"
 
   anynote-modules-notify:
     <<: *app-common
@@ -245,7 +245,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-notify
       SERVER_PORT: 9066
     ports:
-      - "${NOTIFY_PORT:-9066}:9066"
+      - "127.0.0.1:${NOTIFY_PORT:-9066}:9066"
 
   anynote-modules-job:
     <<: *app-common
@@ -261,7 +261,7 @@ services:
       SERVER_PORT: 8093
       XXL_JOB_EXECUTOR_APPNAME: anynote-job
     ports:
-      - "${JOB_PORT:-8093}:8093"
+      - "127.0.0.1:${JOB_PORT:-8093}:8093"
 
   anynote-modules-external-api:
     <<: *app-common
@@ -276,7 +276,7 @@ services:
       SPRING_APPLICATION_NAME: anynote-external-api
       SERVER_PORT: 8097
     ports:
-      - "${EXTERNAL_API_PORT:-8097}:8097"
+      - "127.0.0.1:${EXTERNAL_API_PORT:-8097}:8097"
 
 networks:
   anynote-net:

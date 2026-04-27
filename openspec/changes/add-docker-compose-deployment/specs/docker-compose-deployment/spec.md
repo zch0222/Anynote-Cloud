@@ -114,3 +114,19 @@ MySQL 容器首次启动时必须自动执行 `sql/` 目录下的所有初始化
 
 - **WHEN** 应用服务容器启动完成
 - **THEN** 健康检查访问 `/actuator/health`，返回 200 则标记为 `healthy`
+
+---
+
+### Requirement: 端口仅绑定本地回环地址
+
+所有服务的端口映射必须绑定 `127.0.0.1`，不允许使用 `0.0.0.0` 或省略绑定地址（Docker 默认行为），防止中间件和应用服务直接暴露到公网。
+
+#### Scenario: 中间件端口不暴露到公网
+
+- **WHEN** 执行 `docker compose -f docker-compose-middleware.yaml up -d`
+- **THEN** MySQL、Redis、Nacos、Elasticsearch、RocketMQ、MinIO、XXL-Job 的端口仅监听 `127.0.0.1`，外部网络无法直接访问
+
+#### Scenario: 应用服务端口不暴露到公网
+
+- **WHEN** 执行 `docker compose up -d`
+- **THEN** 所有应用服务（Gateway、Auth、各 Module）的端口仅监听 `127.0.0.1`，仅本机能通过 `http://127.0.0.1:<port>` 访问

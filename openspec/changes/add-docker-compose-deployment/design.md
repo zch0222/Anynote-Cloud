@@ -66,6 +66,16 @@ Anynote Cloud 是一个 Spring Cloud Alibaba 微服务项目，依赖 7 项基�
 
 ---
 
+### 决策 7：端口仅绑定本地回环地址
+
+**选择**：所有服务的 `ports` 映射统一绑定 `127.0.0.1`，格式为 `"127.0.0.1:${HOST_PORT:-default}:container_port"`。
+
+**理由**：Docker Compose 默认将端口映射到 `0.0.0.0`（所有网卡接口），这会导致中间件和应用服务直接暴露到公网。绑定 `127.0.0.1` 仅允许本机访问，生产环境应通过反向代理（如 Nginx）对外暴露必要的 HTTP 端口。
+
+**备选方案**：使用 `expose` 代替 `ports` —— 但 `expose` 仅对同一网络内的容器开放，宿主机无法访问，不利于本地调试。
+
+---
+
 ### 决策 6：配置差异化管理
 
 **选择**：应用服务通过环境变量 `SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR=nacos:8848` 覆盖 `bootstrap.yml` 中的默认值，无需修改源码中的配置文件。
