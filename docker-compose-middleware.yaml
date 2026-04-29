@@ -133,6 +133,8 @@ services:
         hard: -1
     healthcheck:
       <<: *health-defaults
+      # ES 8.x 冷启动较慢，给足 start_period，避免上层应用过早 depends_on 失败
+      start_period: 90s
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9200/_cluster/health >/dev/null"]
     networks:
       - anynote-net
@@ -145,7 +147,7 @@ services:
       JAVA_OPT_EXT: -Xms256m -Xmx256m -Xmn128m
       TZ: Asia/Shanghai
     ports:
-      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_NAMESRV_PORT:-9876}:9876"
+      - "${ROCKETMQ_BROKER_BIND_IP:-127.0.0.1}:${ROCKETMQ_NAMESRV_PORT:-9876}:9876"
     volumes:
       - rocketmq-namesrv-logs:/home/rocketmq/logs
     healthcheck:
@@ -160,8 +162,10 @@ services:
     user: root
     environment:
       JAVA_OPT_EXT: -Xms512m -Xmx512m -Xmn256m
-      ROCKETMQ_BROKER_IP: ${ROCKETMQ_BROKER_IP:-127.0.0.1}
-      brokerIP1: ${ROCKETMQ_BROKER_IP:-127.0.0.1}
+      # broker 注册到 namesrv 的可达地址（brokerIP1）
+      # 必须是其他容器/客户端能解析并连通的地址，默认走 docker service 名
+      ROCKETMQ_BROKER_ADVERTISE_IP: ${ROCKETMQ_BROKER_ADVERTISE_IP:-rocketmq-broker}
+      brokerIP1: ${ROCKETMQ_BROKER_ADVERTISE_IP:-rocketmq-broker}
       TZ: Asia/Shanghai
     command:
       - sh
@@ -172,7 +176,7 @@ services:
         brokerName=broker-a
         brokerId=0
         namesrvAddr=rocketmq-namesrv:9876
-        brokerIP1=$${ROCKETMQ_BROKER_IP}
+        brokerIP1=$${ROCKETMQ_BROKER_ADVERTISE_IP}
         listenPort=10911
         autoCreateTopicEnable=true
         autoCreateSubscriptionGroup=true
@@ -182,9 +186,9 @@ services:
         EOF
         exec sh mqbroker -n rocketmq-namesrv:9876 -c /tmp/broker.conf
     ports:
-      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_BROKER_FAST_PORT:-10909}:10909"
-      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_BROKER_PORT:-10911}:10911"
-      - "${ROCKETMQ_BROKER_IP:-127.0.0.1}:${ROCKETMQ_BROKER_HA_PORT:-10912}:10912"
+      - "${ROCKETMQ_BROKER_BIND_IP:-127.0.0.1}:${ROCKETMQ_BROKER_FAST_PORT:-10909}:10909"
+      - "${ROCKETMQ_BROKER_BIND_IP:-127.0.0.1}:${ROCKETMQ_BROKER_PORT:-10911}:10911"
+      - "${ROCKETMQ_BROKER_BIND_IP:-127.0.0.1}:${ROCKETMQ_BROKER_HA_PORT:-10912}:10912"
     volumes:
       - rocketmq-broker-logs:/home/rocketmq/logs
       - rocketmq-broker-store:/home/rocketmq/store

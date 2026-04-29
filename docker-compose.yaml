@@ -43,6 +43,11 @@ x-app-common: &app-common
   depends_on:
     nacos:
       condition: service_healthy
+    # ES 与 RocketMQ broker 在大多数模块启动期就会被使用，等待健康再起，避免因 brokerIP 错误或 ES 冷启动慢导致首次连接失败
+    elasticsearch:
+      condition: service_healthy
+    rocketmq-broker:
+      condition: service_healthy
   networks:
     - anynote-net
   extra_hosts:
