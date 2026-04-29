@@ -201,6 +201,32 @@ services:
     networks:
       - anynote-net
 
+  logstash:
+    image: docker.elastic.co/logstash/logstash:${LOGSTASH_VERSION:-8.7.0}
+    container_name: anynote-logstash
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx512m
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9200
+      TZ: Asia/Shanghai
+    ports:
+      - "127.0.0.1:${LOGSTASH_TCP_PORT:-4560}:4560"
+      - "127.0.0.1:${LOGSTASH_BEATS_PORT:-5044}:5044"
+      - "127.0.0.1:${LOGSTASH_API_PORT:-9600}:9600"
+    volumes:
+      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./docker/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - logstash-data:/usr/share/logstash/data
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      <<: *health-defaults
+      start_period: 60s
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9600 >/dev/null"]
+    networks:
+      - anynote-net
+
   minio:
     image: minio/minio:${MINIO_VERSION:-latest}
     container_name: anynote-minio
@@ -257,5 +283,6 @@ volumes:
   rocketmq-namesrv-logs:
   rocketmq-broker-logs:
   rocketmq-broker-store:
+  logstash-data:
   minio-data:
   xxl-job-logs:

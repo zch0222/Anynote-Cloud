@@ -92,6 +92,11 @@ services:
       file: docker-compose-middleware.yaml
       service: rocketmq-broker
 
+  logstash:
+    extends:
+      file: docker-compose-middleware.yaml
+      service: logstash
+
   minio:
     extends:
       file: docker-compose-middleware.yaml
@@ -295,5 +300,6 @@ volumes:
   rocketmq-namesrv-logs:
   rocketmq-broker-logs:
   rocketmq-broker-store:
+  logstash-data:
   minio-data:
   xxl-job-logs:
