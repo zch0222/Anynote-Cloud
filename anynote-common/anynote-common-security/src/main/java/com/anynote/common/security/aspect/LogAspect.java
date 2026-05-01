@@ -58,7 +58,7 @@ public class LogAspect {
                     logBO.setNickName(loginUser.getSysUser().getNickname());
                 }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("Log Request Error", e);
         }
 
@@ -74,7 +74,7 @@ public class LogAspect {
             else {
                 try {
                     logBO.setErrorMsg(new Gson().toJson(e));
-                } catch (Exception ex) {
+                } catch (Throwable ex) {
                     log.error("Get Error Message Error", ex);
                 }
             }
@@ -87,7 +87,7 @@ public class LogAspect {
             logBO.setTimeConsuming(System.currentTimeMillis() - startTime);
             logBO.setResponse(new Gson().toJson(result));
             printLog(logBO);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("Log Response Error", e);
         }
         return result;
@@ -96,7 +96,7 @@ public class LogAspect {
     private void printLog(LogBO logBO) {
         try {
             log.info(new Gson().toJson(logBO));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("Print Log Error", e);
         }
     }

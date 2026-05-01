@@ -63,7 +63,11 @@ public class LogAspectWebFlux {
             logBO.setIp(((InetSocketAddress)ctx.get(SecurityConstants.IP_ADDRESS)).toString());
             logBO.setUrl(ctx.get(SecurityConstants.URI).toString());
             logBO.setMethod(ctx.get(SecurityConstants.METHOD).toString());
-            logBO.setRequestArgs(new Gson().toJson(args));
+            try {
+                logBO.setRequestArgs(new Gson().toJson(args));
+            } catch (Throwable ex) {
+                log.error("序列化请求参数失败", ex);
+            }
             logBO.setUserId(loginUser.getUserId());
             logBO.setNickName(loginUser.getSysUser().getNickname());
             logBO.setUserName(loginUser.getUsername());
@@ -90,7 +94,7 @@ public class LogAspectWebFlux {
         logBO.setTimeConsuming(System.currentTimeMillis() - startTime);
         try {
             logBO.setResponse(new Gson().toJson(response));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("序列化响应失败", e);
         }
         printLog(logBO);
@@ -110,7 +114,7 @@ public class LogAspectWebFlux {
     private void printLog(LogBO logBO) {
         try {
             log.info(new Gson().toJson(logBO));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("日志打印失败", e);
         }
     }

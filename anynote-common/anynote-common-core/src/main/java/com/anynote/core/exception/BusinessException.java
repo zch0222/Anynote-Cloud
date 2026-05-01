@@ -22,6 +22,7 @@ public class BusinessException extends RuntimeException {
     public BusinessException() {}
 
     public BusinessException(String message) {
+        super(message);
         this.message = message;
         this.code = ResCode.BUSINESS_ERROR;
     }
@@ -32,11 +33,13 @@ public class BusinessException extends RuntimeException {
     }
 
     public BusinessException(String message, ResCode resCode) {
+        super(message);
         this.message = message;
         this.code = resCode;
     }
 
     public BusinessException(ResCode resCode) {
+        super(resCode.getMsg());
         this.message = resCode.getMsg();
         this.code = resCode;
     }
